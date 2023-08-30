@@ -1,0 +1,25 @@
+﻿@model Admin_Panel_ITI.ViewModels.HomePageViewModel
+
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<div>
+    <label for="intakeDropdown">Select Intake:</label>
+    <select id="intakeDropdown">
+        <option value="1">Intake 43</option>
+        <option value="2">Intake 44</option>
+    </select>
+</div>
+
+<div>
+    Intake Number: <span id="intakeNumber">@Model.IntakeNumber</span><br />
+    Track Number: <span id="trackNumber">@Model.TrackNumber</span><br />
+    Student Number: <span id="studentNumber">@Model.StudentNumber</span><br />
+    Instructor Number: <span id="instructorNumber">@Model.InstructorNumber</span><br />
+    Course Number: <span id="courseNumber">@Model.CourseNumber</span><br />
+</div>
