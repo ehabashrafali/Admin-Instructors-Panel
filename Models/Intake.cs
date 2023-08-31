@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Admin_Panel_ITI.Models;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Admin_Panel_ITI.Models
 {
@@ -16,11 +17,13 @@ namespace Admin_Panel_ITI.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required, Column(TypeName = "date")]
+        [DisplayName("Start Date")]
         public DateTime StartDate { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required, Column(TypeName = "date")]
+        [DisplayName("End Date")]
         public DateTime EndDate { get; set; }
 
         [Required, Range(3, 12)]
@@ -29,15 +32,15 @@ namespace Admin_Panel_ITI.Models
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Required, Column(TypeName = "date")]
-        public DateTime CreationDate { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? CreationDate { get; set; }
 
 
 
 
 
         [ForeignKey(nameof(Admin))]
-        public string AdminID { get; set; }
+        public string? AdminID { get; set; }
         public virtual Admin? Admin { get; set; }
 
 

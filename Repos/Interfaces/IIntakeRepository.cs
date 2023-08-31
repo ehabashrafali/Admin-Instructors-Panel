@@ -24,5 +24,11 @@ namespace Admin_Panel_ITI.Repos
 
         public void CreateIntake(Intake intake);
 
+
+
+        //---------------------- asem_updates ---------------------------------------//
+
+        public List<Intake> GetAllIntakes();
+
     }
 }

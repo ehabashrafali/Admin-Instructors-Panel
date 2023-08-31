@@ -19,6 +19,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using System.ComponentModel;
+using Admin_Panel_ITI.Repos;
+using Admin_Panel_ITI.Repos.Interfaces;
 
 namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
 {
@@ -27,22 +30,31 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
         private readonly IUserStore<AppUser> _userStore;
-        //private readonly IUserEmailStore<CustomIdentityUser> _emailStore;
+        private readonly IUserEmailStore<AppUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
+        private readonly IAdminRepository adminRepository;
+        private readonly IStudentRepository studentRepository;
+        private readonly IInstructorRepository instructorRepository;
         //private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<AppUser> userManager,
             IUserStore<AppUser> userStore,
             SignInManager<AppUser> signInManager,
-            ILogger<RegisterModel> logger)
-            /*IEmailSender emailSender*/
+            ILogger<RegisterModel> logger, 
+            IAdminRepository _adminRepository, 
+            IStudentRepository _studentRepository, 
+            IInstructorRepository _instructorRepository)
+            //IEmailSender emailSender
         {
             _userManager = userManager;
             _userStore = userStore;
-            //_emailStore = GetEmailStore();
+            _emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
+            adminRepository = _adminRepository;
+            studentRepository = _studentRepository;
+            instructorRepository = _instructorRepository;
             //_emailSender = emailSender;
         }
 
@@ -61,17 +73,24 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
         {
 
             [Required, MaxLength(50)]
-            public string Name { get; set; }
+            [DisplayName("Full Name")]
+            public string FullName { get; set; }
 
 
             [Required , MaxLength(50)]
             public string Username { get; set; }
 
 
-            //[Required]
-            //[EmailAddress]
-            //[Display(UserName = "Username")]
-            //public string Username { get; set; }
+            [Required]
+            [EmailAddress]
+            [RegularExpression("^[a-zA-Z0-9._%+-]+@(gmail\\.com|yahoo\\.com|outlook\\.com)$")]
+            public string Email { get; set; }
+
+
+            [Required]
+            [Phone , MaxLength(11)]
+            [RegularExpression("^(011|012|010|015)\\d{8}$")]
+            public string PhoneNumber { get; set; }
 
 
             [Required]
@@ -102,14 +121,14 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                user.FullName = Input.Name;
-
-                await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
-
-                //await _emailStore.SetEmailAsync(user, Input.Username, CancellationToken.None);
-              
-
+                user.FullName = Input.FullName;
+                user.PhoneNumber = Input.PhoneNumber;   
+                await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None); 
+                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
+
+
 
                 if (result.Succeeded)
                 {
@@ -135,8 +154,18 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
                     //{
 
                     user.LockoutEnabled = false;
-                    await _userManager.AddToRoleAsync(user, "Admin"); //add role
+                    await _userManager.AddToRoleAsync(user, "Admin"); //add role  //only admins can register in system, other users only login
                     await _signInManager.SignInAsync(user, isPersistent: false); //create cookie 
+                    
+                    if (await _userManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        Admin newAdmin = new()
+                        {
+                            Id = user.Id,
+                        };
+                        adminRepository.CreateAdmin(user.Id);
+                    }
+
                     return LocalRedirect(returnUrl);
 
 
@@ -169,13 +198,13 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
 
 
 
-        //private IUserEmailStore<CustomIdentityUser> GetEmailStore()
-        //{
-        //    if (!_userManager.SupportsUserEmail)
-        //    {
-        //        throw new NotSupportedException("The default UI requires a user store with email support.");
-        //    }
-        //    return (IUserEmailStore<CustomIdentityUser>)_userStore;
-        //}
+        private IUserEmailStore<AppUser> GetEmailStore()
+        {
+            if (!_userManager.SupportsUserEmail)
+            {
+                throw new NotSupportedException("The default UI requires a user store with email support.");
+            }
+            return (IUserEmailStore<AppUser>)_userStore;
+        }
     }
 }
