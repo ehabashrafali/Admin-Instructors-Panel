@@ -1,0 +1,44 @@
+﻿@model Admin_Panel_ITI.Models.Student
+
+@{
+    ViewData["Title"] = "Edit Student";
+}
+
+<h2>Edit Student</h2>
+
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsGraduated" class="control-label"></label>
+                <input asp-for="IsGraduated" class="form-check-input" />
+                <span asp-validation-for="IsGraduated" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreationDate" class="control-label"></label>
+                <input asp-for="CreationDate" class="form-control" />
+                <span asp-validation-for="CreationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdminID" class="control-label"></label>
+                <select asp-for="AdminID" asp-items="ViewBag.AllAdmins" class="form-control"></select>
+                <span asp-validation-for="AdminID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IntakeID" class="control-label"></label>
+                <select asp-for="IntakeID" asp-items="ViewBag.AllIntakes" class="form-control"></select>
+                <span asp-validation-for="IntakeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrackID" class="control-label"></label>
+                <select asp-for="TrackID" asp-items="ViewBag.AllTracks" class="form-control"></select>
+                <span asp-validation-for="TrackID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a asp-action="StdsIndex" class="btn btn-secondary">Back to List</a>
+            </div>
+</form>

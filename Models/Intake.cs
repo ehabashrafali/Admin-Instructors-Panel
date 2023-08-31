@@ -1,6 +1,6 @@
-﻿using Admin_Panel_ITI.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Admin_Panel_ITI.Models
 {
