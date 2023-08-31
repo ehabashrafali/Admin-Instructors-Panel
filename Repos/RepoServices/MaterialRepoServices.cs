@@ -62,7 +62,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
-        void IMaterialRepository.RemoveInstructor(int instructorID)
+        void IMaterialRepository.RemoveInstructor(string instructorID)
         {
             var materials = Context.Materials.Where(m => m.InstructorID == instructorID.ToString()).ToList();
             foreach (var material in materials)

@@ -13,7 +13,7 @@ namespace Admin_Panel_ITI.Repos
 
 
 
-        public List<Course> GetCourses();
+        public List<Course> GetCourses(int pageNumber, int pageSize);
 
 
         public void UpdateCourse(int CourseID, Course course);

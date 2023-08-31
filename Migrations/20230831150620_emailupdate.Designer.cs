@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Admin_Panel_ITI.Migrations
 {
     [DbContext(typeof(MainDBContext))]
-    [Migration("20230830150743_add_tables")]
-    partial class add_tables
+    [Migration("20230831150620_emailupdate")]
+    partial class emailupdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,7 +38,6 @@ namespace Admin_Panel_ITI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -485,21 +484,6 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasIndex("ManagerID");
 
                     b.ToTable("Track");
-                });
-
-            modelBuilder.Entity("Admin_Panel_ITI.Models.Track_Course", b =>
-                {
-                    b.Property<int>("TrackID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CourseID")
-                        .HasColumnType("int");
-
-                    b.HasKey("TrackID", "CourseID");
-
-                    b.HasIndex("CourseID");
-
-                    b.ToTable("Track_Course");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -957,25 +941,6 @@ namespace Admin_Panel_ITI.Migrations
                     b.Navigation("Manager");
                 });
 
-            modelBuilder.Entity("Admin_Panel_ITI.Models.Track_Course", b =>
-                {
-                    b.HasOne("Admin_Panel_ITI.Models.Course", "Course")
-                        .WithMany("TrackCourses")
-                        .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Admin_Panel_ITI.Models.Track", "Track")
-                        .WithMany("TrackCourses")
-                        .HasForeignKey("TrackID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Track");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1097,8 +1062,6 @@ namespace Admin_Panel_ITI.Migrations
                     b.Navigation("IntakeTrackCourse");
 
                     b.Navigation("StudentCourses");
-
-                    b.Navigation("TrackCourses");
                 });
 
             modelBuilder.Entity("Admin_Panel_ITI.Models.CourseDay", b =>
@@ -1143,8 +1106,6 @@ namespace Admin_Panel_ITI.Migrations
                     b.Navigation("IntakeTrackCourse");
 
                     b.Navigation("IntakeTracks");
-
-                    b.Navigation("TrackCourses");
                 });
 
             modelBuilder.Entity("Admin_Panel_ITI.Models.Admin", b =>

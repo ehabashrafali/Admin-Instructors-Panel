@@ -7,7 +7,7 @@ namespace Admin_Panel_ITI.Repos
 {
     public class CourseRepoServices : ICourseRepository
     {
-        private readonly ITrack_CourseRepository track_CourseRepository;
+        private readonly IIntake_Track_CourseRepository intake_track_CourseRepository;
         private readonly IInstructor_CourseRepository instructor_CourseRepository;
         private readonly IStudent_CourseRepository student_CourseRepository;
         private readonly ICourse_Day_MaterialRepository course_Day_MaterialRepository;
@@ -16,10 +16,10 @@ namespace Admin_Panel_ITI.Repos
 
         public MainDBContext Context { get; set; }
 
-        public CourseRepoServices(MainDBContext context, ITrack_CourseRepository track_CourseRepository, IInstructor_CourseRepository instructor_CourseRepository, IStudent_CourseRepository student_CourseRepository, ICourse_Day_MaterialRepository course_Day_MaterialRepository, ICourseDayRepository courseDayRepository, IMaterialRepository materialRepository)
+        public CourseRepoServices(MainDBContext context, IIntake_Track_CourseRepository Intake_track_CourseRepository, IInstructor_CourseRepository instructor_CourseRepository, IStudent_CourseRepository student_CourseRepository, ICourse_Day_MaterialRepository course_Day_MaterialRepository, ICourseDayRepository courseDayRepository, IMaterialRepository materialRepository)
         {
             Context = context;
-            this.track_CourseRepository = track_CourseRepository;
+            this.intake_track_CourseRepository = Intake_track_CourseRepository;
             this.instructor_CourseRepository = instructor_CourseRepository;
             this.student_CourseRepository = student_CourseRepository;
             this.course_Day_MaterialRepository = course_Day_MaterialRepository;
@@ -37,7 +37,7 @@ namespace Admin_Panel_ITI.Repos
         {
 
             // Delete track course records
-            track_CourseRepository.DeleteTrack_CourseByCourseID(courseID);
+            intake_track_CourseRepository.DeleteIntake_Track_CoursebyCourseID(courseID);
 
             // Delete Instructor Course records
             instructor_CourseRepository.DeleteInstructor_CourseByCourseID(courseID);
@@ -53,11 +53,33 @@ namespace Admin_Panel_ITI.Repos
 
             var course = Context.Courses.FirstOrDefault(c => c.ID == courseID);
             Context.Courses.Remove(course);
+            Context.SaveChanges();
         }
 
         Course ICourseRepository.GetCoursebyID(int courseID)
         {
-            var course = Context.Courses.Include(c=>c.Admin).FirstOrDefault(c => c.ID == courseID);
+            var course = Context.Courses
+                .Include(c=>c.Admin)
+                .Include(c => c.IntakeTrackCourse)
+                    .ThenInclude(itc => itc.Track)
+                .FirstOrDefault(c => c.ID == courseID);
+
+            if (course != null)
+            {
+                var uniqueTracks = course.IntakeTrackCourse
+                    .Select(itc => itc.Track)
+                    .Distinct()
+                    .ToList();
+
+                course.IntakeTrackCourse = uniqueTracks
+                    .Select(track => new Intake_Track_Course
+                    {
+                        Track = track,
+                        Course = course
+                    })
+                    .ToList();
+            }
+
             return course;
         }
 
@@ -71,12 +93,21 @@ namespace Admin_Panel_ITI.Repos
             return Context.Intake_Track_Courses.Where(itc=>itc.IntakeID == intakeID).Count();
         }
 
-        List<Course> ICourseRepository.GetCourses()
+        List<Course> ICourseRepository.GetCourses(int pageNumber, int pageSize)
         {
-            return Context.Courses.Include(c=>c.Admin)
-                                  .Include(c=>c.InstructorCourses)
-                                  .Include(c=>c.TrackCourses)
-                                  .ToList();
+            if(pageNumber < 1)
+            {
+                pageNumber =1;
+            }
+            var courses = Context.Courses
+                .Include(c => c.Admin)
+                .Include(c => c.InstructorCourses)
+                .Include(c => c.IntakeTrackCourse)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return courses;
         }
 
         void ICourseRepository.UpdateCourse(int CourseID, Course course)

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Admin_Panel_ITI.Migrations
 {
     /// <inheritdoc />
-    public partial class add_tables : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -561,30 +561,6 @@ namespace Admin_Panel_ITI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Track_Course",
-                columns: table => new
-                {
-                    TrackID = table.Column<int>(type: "int", nullable: false),
-                    CourseID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Track_Course", x => new { x.TrackID, x.CourseID });
-                    table.ForeignKey(
-                        name: "FK_Track_Course_Course_CourseID",
-                        column: x => x.CourseID,
-                        principalTable: "Course",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_Track_Course_Track_TrackID",
-                        column: x => x.TrackID,
-                        principalTable: "Track",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Std_Quest_Exam",
                 columns: table => new
                 {
@@ -826,11 +802,6 @@ namespace Admin_Panel_ITI.Migrations
                 name: "IX_Track_ManagerID",
                 table: "Track",
                 column: "ManagerID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Track_Course_CourseID",
-                table: "Track_Course",
-                column: "CourseID");
         }
 
         /// <inheritdoc />
@@ -877,9 +848,6 @@ namespace Admin_Panel_ITI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Student_Submission");
-
-            migrationBuilder.DropTable(
-                name: "Track_Course");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

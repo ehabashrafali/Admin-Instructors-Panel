@@ -26,6 +26,6 @@ namespace Admin_Panel_ITI.Repos.Interfaces
         public int GetMaterialNumber(int courseID, int crsDayID);
 
 
-        public void RemoveInstructor(int instructorID);
+        public void RemoveInstructor(string instructorID);
     }
 }

@@ -36,7 +36,6 @@ namespace Admin_Panel_ITI.Models
         public virtual Admin? Admin { get; set; }
 
 
-        public virtual IEnumerable<Track_Course>? TrackCourses { get; set; }
         public virtual IEnumerable<Intake_Track>? IntakeTracks { get; set; }
         public virtual IEnumerable<Intake_Track_Course>? IntakeTrackCourse { get; set; }
 

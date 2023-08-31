@@ -1,0 +1,84 @@
+﻿@model Admin_Panel_ITI.Models.Instructor
+
+@{
+    ViewData["Title"] = "Details";
+    List<string> tracksNames = (List<string>)ViewData["tracks"];
+    List<string> intakesNames = (List<string>)ViewData["intakes"];
+    List<string> coursesNames = (List<string>)ViewData["courses"];
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Instructor</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Admin)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Admin.FullName)
+        </dd>
+        <dt class="col-sm-2">
+            Tracks Contributed in
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                foreach (var trackName in tracksNames)
+                {
+                    <p>@trackName</p>
+                }
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Intakes Contributed in
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                foreach (var intakesName in intakesNames)
+                {
+                    <p>@intakesName</p>
+                }
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Courses Taught
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                foreach (var courseName in coursesNames)
+                {
+                    <p>@courseName</p>
+                }
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

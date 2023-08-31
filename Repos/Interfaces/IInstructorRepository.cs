@@ -13,17 +13,17 @@ namespace Admin_Panel_ITI.Repos.Interfaces
 
 
 
-        public Instructor GetInstructorbyID(int instructorID);
+        public Instructor GetInstructorbyID(string instructorID);
 
 
 
-        public List<Instructor> GetInstructors();
+        public List<Instructor> GetInstructors(int pageNumber, int pageSize);
 
 
-        public void UpdateInstructor(int instructorID, Instructor instructor);
+        public void UpdateInstructor(string instructorID, Instructor instructor);
 
 
-        public void DeleteInstructor(int instructorID);
+        public void DeleteInstructor(string instructorID);
 
 
         public void CreateInstructor(Instructor instructor);

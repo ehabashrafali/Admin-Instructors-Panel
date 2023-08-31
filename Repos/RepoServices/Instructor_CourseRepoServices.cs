@@ -40,8 +40,10 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         {
             var instructor_course = Context.Instructor_Courses.SingleOrDefault(ic=>ic.CourseID==courseID && ic.InstructorID == instructorID.ToString());
             Context.Instructor_Courses.Remove(instructor_course);
-        }  
-        
+            Context.SaveChanges();
+
+        }
+
         void IInstructor_CourseRepository.DeleteInstructor_CourseByCourseID(int courseID)
         {
             var instructor_course = Context.Instructor_Courses.Where(ic => ic.CourseID == courseID).ToList();
@@ -93,7 +95,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
-        void IInstructor_CourseRepository.DeleteInstructor_Course(int instructorID)
+        void IInstructor_CourseRepository.DeleteInstructor_Course(string instructorID)
         {
             var records = Context.Instructor_Courses.Where(ins => ins.InstructorID == instructorID.ToString()).ToList();
             foreach (var item in records)

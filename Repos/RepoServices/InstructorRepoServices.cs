@@ -11,17 +11,19 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         private readonly IExamRepository examRepository;
         private readonly IMaterialRepository materialRepository;
         private readonly IInstructor_CourseRepository instructor_CourseRepository;
+        private readonly IIntake_InstructorRepository intake_InstructorRepository;
 
         public MainDBContext Context { get; set; }
 
 
-        public InstructorRepoServices(MainDBContext context, ITrackRepository trackRepository, IExamRepository examRepository, IMaterialRepository materialRepository, IInstructor_CourseRepository instructor_CourseRepository)
+        public InstructorRepoServices(MainDBContext context, ITrackRepository trackRepository, IExamRepository examRepository, IMaterialRepository materialRepository, IInstructor_CourseRepository instructor_CourseRepository, IIntake_InstructorRepository intake_InstructorRepository )
         {
             Context = context;
             this.trackRepository = trackRepository;
             this.examRepository = examRepository;
             this.materialRepository = materialRepository;
             this.instructor_CourseRepository = instructor_CourseRepository;
+            this.intake_InstructorRepository = intake_InstructorRepository;
         }
 
 
@@ -31,7 +33,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
-        void IInstructorRepository.DeleteInstructor(int instructorID)
+        void IInstructorRepository.DeleteInstructor(string instructorID)
         {
 
             // make manager of track na or null
@@ -47,13 +49,24 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             instructor_CourseRepository.DeleteInstructor_Course(instructorID);
 
 
+            // delete record of intake_instructor
+            intake_InstructorRepository.deleteIntake_InstructorbyInstructorID(instructorID);
+
             var ins = Context.Instructors.FirstOrDefault(i => i.Id == instructorID.ToString());
-            Context.Instructors.Remove(ins);    
+            Context.Instructors.Remove(ins);
+            Context.SaveChanges();
         }
 
-        Instructor IInstructorRepository.GetInstructorbyID(int instructorID)
+        Instructor IInstructorRepository.GetInstructorbyID(string instructorID)
         {
-            var ins = Context.Instructors.FirstOrDefault(i => i.Id == instructorID.ToString());
+            var ins = Context.Instructors
+                             .Include(i=>i.Admin)
+                             .Include(i=>i.Tracks)
+                             .Include(i=>i.InstructorCourses)
+                             .ThenInclude(it=>it.Course)
+                             .Include(i=>i.IntakeInstructors)
+                             .ThenInclude(ii=>ii.Intake)
+                             .FirstOrDefault(i => i.Id == instructorID.ToString());
             return ins;
         }
 
@@ -69,18 +82,36 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
         }
 
-        List<Instructor> IInstructorRepository.GetInstructors()
+         List<Instructor> IInstructorRepository.GetInstructors(int pageNumber, int pageSize)
         {
-            return Context.Instructors.Include(i=>i.Tracks).Include(i => i.InstructorCourses).ThenInclude(ic=>ic.Course).ToList();
-        }
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
 
-        void IInstructorRepository.UpdateInstructor(int instructorID, Instructor instructor)
+            var instructors = Context.Instructors
+                .Include(i=>i.Admin)
+                .Include(i => i.Tracks)
+                .Include(i => i.InstructorCourses)
+                .ThenInclude(ic => ic.Course)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return instructors;
+        }
+         
+
+
+        void IInstructorRepository.UpdateInstructor(string instructorID, Instructor instructor)
         {
             var instructor_updated = Context.Instructors.FirstOrDefault(i=>i.Id == instructorID.ToString());
             instructor_updated.FullName = instructor.FullName;
             instructor_updated.UserName = instructor.UserName;
             instructor_updated.AdminID = instructor.AdminID;
-
+            instructor_updated.Email = instructor.Email;
+            instructor_updated.Phone = instructor.Phone;
+            instructor_updated.CreationDate = instructor.CreationDate;
             Context.SaveChanges();
         }
     }

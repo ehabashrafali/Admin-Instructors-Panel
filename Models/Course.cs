@@ -38,7 +38,6 @@ namespace Admin_Panel_ITI.Models
         //Many to Many navigation properties//
         public virtual IEnumerable<Student_Course>? StudentCourses { get; set; }
         public virtual IEnumerable<Instructor_Course>? InstructorCourses { get; set; }
-        public virtual IEnumerable<Track_Course>? TrackCourses { get; set; }
         public virtual IEnumerable<Course_Day_Material>? CourseDayMaterials { set; get; }
         public virtual IEnumerable<Intake_Track_Course>? IntakeTrackCourse { get; set; }
 

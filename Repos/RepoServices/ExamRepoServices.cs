@@ -89,7 +89,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
 
         //check null or na
-        void IExamRepository.RemoveInstructor(int instructorID)
+        void IExamRepository.RemoveInstructor(string instructorID)
         {
             var exams = Context.Exams.Where(e => e.InstructorID == instructorID.ToString()).ToList();
             foreach (var exam in exams)

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Admin_Panel_ITI.Models.Instructor>
+
+@{
+    ViewData["Title"] = "List of Instructors";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Admin)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var instructor in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => instructor.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => instructor.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => instructor.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => instructor.CreationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => instructor.Admin.FullName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@instructor.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@instructor.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@instructor.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

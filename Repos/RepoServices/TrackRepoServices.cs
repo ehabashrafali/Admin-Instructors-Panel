@@ -8,21 +8,22 @@ namespace Admin_Panel_ITI.Repos
     public class TrackRepoServices : ITrackRepository
     {
         private readonly IStudentRepository _studentRepository;
-        private readonly ITrack_CourseRepository _track_courseRepository;
         private readonly IIntake_TrackRepository _intake_trackRepository;
+        private readonly IIntake_Track_CourseRepository _intake_Track_CourseRepository;
+
+    
 
         public MainDBContext Context { get; set; }
-        public TrackRepoServices( MainDBContext context, IStudentRepository studentRepository, ITrack_CourseRepository track_courseRepository, IIntake_TrackRepository intake_trackRepository)
+        public TrackRepoServices( MainDBContext context, IStudentRepository studentRepository, IIntake_TrackRepository intake_trackRepository, IIntake_Track_CourseRepository intake_Track_CourseRepository)
         {
             Context = context;
             _studentRepository = studentRepository;
-            _track_courseRepository = track_courseRepository;
             _intake_trackRepository = intake_trackRepository;
+            _intake_Track_CourseRepository = intake_Track_CourseRepository;
         }
         Track ITrackRepository.getTrackbyID(int trackID)
         {
             var track =  Context.Tracks.Include(t=>t.Manager)
-                                       .Include(t2 => t2.TrackCourses)
                                        .Include(t3=>t3.IntakeTracks)
                                        .FirstOrDefault(t=> t.ID == trackID);
             return track;
@@ -41,7 +42,7 @@ namespace Admin_Panel_ITI.Repos
         List<Track> ITrackRepository.getTracks()
         {
             return Context.Tracks.Include(t => t.Manager)
-                                .Include(t => t.TrackCourses)
+                                .Include(t => t.IntakeTrackCourse)
                                 .Include(t => t.IntakeTracks).ToList();
         }
 
@@ -65,7 +66,7 @@ namespace Admin_Panel_ITI.Repos
             if (students.Count == 0)
             {
 
-                _track_courseRepository.DeleteTrack_Course(trackID);
+                _intake_Track_CourseRepository.DeleteIntake_Track_CoursebyTrackID(trackID);
                 _intake_trackRepository.DeleteIntake_Track(trackID);
 
                 var track = Context.Tracks.FirstOrDefault(t => t.ID == trackID);
@@ -87,7 +88,7 @@ namespace Admin_Panel_ITI.Repos
 
         // check null or na
 
-        void ITrackRepository.RemoveManager(int managerID)
+        void ITrackRepository.RemoveManager(string managerID)
         {
             var tracks = Context.Tracks.Where(t=>t.ManagerID == managerID.ToString()).ToList();
             foreach (var track in tracks)

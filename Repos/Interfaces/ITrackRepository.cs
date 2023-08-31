@@ -26,6 +26,6 @@ namespace Admin_Panel_ITI.Repos
 
 
 
-        public void RemoveManager(int managerID);
+        public void RemoveManager(string managerID);
     }
 }

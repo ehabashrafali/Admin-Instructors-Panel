@@ -28,7 +28,6 @@ namespace Admin_Panel_ITI.Data
         public virtual DbSet<Student_Course> Student_Courses { get; set; }
         public virtual DbSet<Student_Submission> Student_Submissions { get; set; }
         public virtual DbSet<Track> Tracks { get; set; }
-        public virtual DbSet<Track_Course> Track_Courses { get; set; }
         public virtual DbSet<Course_Day_Material> Course_Day_Materials { get; set; }
         public virtual DbSet<Intake_Track_Course> Intake_Track_Courses { get; set; }
         public virtual DbSet<Intake_Instructor> Intake_Instructors { get; set; }
@@ -55,8 +54,7 @@ namespace Admin_Panel_ITI.Data
             modelBuilder.Entity<Student_Course>()
                 .HasKey(sc => new { sc.StudentID, sc.CourseID });
 
-            modelBuilder.Entity<Track_Course>()
-                .HasKey(tc => new { tc.TrackID, tc.CourseID });
+           
 
             modelBuilder.Entity<Course_Day_Material>()
                 .HasKey(cdm => new { cdm.CourseID, cdm.CourseDayID, cdm.MaterialID });

@@ -1,83 +1,76 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Admin_Panel_ITI.Models;
+using Admin_Panel_ITI.Repos.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Admin_Panel_ITI.Controllers
 {
     public class InstructorController : Controller
     {
+        private readonly IInstructorRepository instructorRepository;
+
+        public InstructorController(IInstructorRepository instructorRepository) {
+            this.instructorRepository = instructorRepository;
+        }
         // GET: InstructorController
-        public ActionResult Index()
+        public ActionResult Index(int pageNumber)
         {
-            return View();
+            var instructors = instructorRepository.GetInstructors(pageNumber, 10);
+            return View(instructors);
         }
 
         // GET: InstructorController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
-            return View();
+            var instructor = instructorRepository.GetInstructorbyID(id);
+            ViewData["tracks"] = instructor.Tracks.Select(t=>t.Name).Distinct().ToList();
+            ViewData["intakes"] = instructor.IntakeInstructors
+                    .Select(itc => itc.Intake.Name)
+                    .Distinct()
+                    .ToList();
+            ViewData["courses"] = instructor.InstructorCourses
+                    .Select(itc => itc.Course.Name)
+                    .Distinct()
+                    .ToList();
+
+            return View(instructor);
         }
 
-        // GET: InstructorController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: InstructorController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
+        
         // GET: InstructorController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            return View();
+            var instructor = instructorRepository.GetInstructorbyID(id);
+            return View(instructor);
         }
 
         // POST: InstructorController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(string id, Instructor instructor)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                instructorRepository.UpdateInstructor(id, instructor);
+                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(instructor);
         }
 
         // GET: InstructorController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-            return View();
+            var instructor = instructorRepository.GetInstructorbyID(id);
+            return View(instructor);
         }
 
         // POST: InstructorController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(string id, Instructor instructor)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            instructorRepository.DeleteInstructor(id);
+            return RedirectToAction("index");
         }
     }
 }

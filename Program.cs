@@ -50,7 +50,8 @@ namespace Admin_Panel_ITI
             builder.Services.AddScoped<IStudent_CourseRepository, Student_CourseRepoServices>();
             builder.Services.AddScoped<IStudent_SubmissionRepository, Student_SubmissionRepoServices>();
             builder.Services.AddScoped<IStudentRepository, StudentRepoServices>();
-            builder.Services.AddScoped<ITrack_CourseRepository, Track_CourseRepoServices>();
+            builder.Services.AddScoped<IIntake_Track_CourseRepository, Intake_Track_CourseRepoServices>();
+            builder.Services.AddScoped<IIntake_InstructorRepository, Intake_InstructorRepoServices>();
             builder.Services.AddScoped<ITrackRepository, TrackRepoServices>();
 
 
