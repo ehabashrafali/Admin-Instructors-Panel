@@ -110,7 +110,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             instructor_updated.UserName = instructor.UserName;
             instructor_updated.AdminID = instructor.AdminID;
             instructor_updated.Email = instructor.Email;
-            instructor_updated.Phone = instructor.Phone;
+            instructor_updated.PhoneNumber = instructor.PhoneNumber;
             instructor_updated.CreationDate = instructor.CreationDate;
             Context.SaveChanges();
         }

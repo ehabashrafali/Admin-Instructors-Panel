@@ -163,7 +163,7 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
                         {
                             Id = user.Id,
                         };
-                        adminRepository.CreateAdmin(user.Id);
+                        adminRepository.CreateAdmin(newAdmin);
                     }
 
                     return LocalRedirect(returnUrl);
