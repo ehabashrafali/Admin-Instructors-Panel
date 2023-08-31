@@ -2,8 +2,6 @@
 {
     public interface IAdminRepository
     {
-
-
         public int GetAdminNumber();
 
 
@@ -20,6 +18,11 @@
 
         public void DeleteAdmin(int adminID);
 
+
         public void CreateAdmin(Admin admin);
+
+
+        ////---//
+        //public void CreateAdmin(string adminID);
     }
 }

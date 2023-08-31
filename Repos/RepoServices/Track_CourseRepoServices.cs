@@ -5,7 +5,6 @@ namespace Admin_Panel_ITI.Repos
 {
     public class Track_CourseRepoServices : ITrack_CourseRepository
     {
-
         public MainDBContext Context { get; set; }
 
         public Track_CourseRepoServices(MainDBContext context)

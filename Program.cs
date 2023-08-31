@@ -53,6 +53,9 @@ namespace Admin_Panel_ITI
             builder.Services.AddScoped<ITrack_CourseRepository, Track_CourseRepoServices>();
             builder.Services.AddScoped<ITrackRepository, TrackRepoServices>();
 
+            //---//
+            builder.Services.AddScoped<IAdminRepository, AdminRepoServices>();
+
 
             var app = builder.Build();
 

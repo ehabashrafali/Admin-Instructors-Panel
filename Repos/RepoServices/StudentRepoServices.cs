@@ -13,7 +13,10 @@ namespace Admin_Panel_ITI.Repos
 
         public MainDBContext Context { get; set; }
 
-        public StudentRepoServices(MainDBContext context, IStudent_CourseRepository student_CourseRepository, IStudent_SubmissionRepository student_SubmissionRepository, IExam_Std_QuestionRepository exam_Std_QuestionRepository)
+        public StudentRepoServices(MainDBContext context, 
+            IStudent_CourseRepository student_CourseRepository, 
+            IStudent_SubmissionRepository student_SubmissionRepository, 
+            IExam_Std_QuestionRepository exam_Std_QuestionRepository)
         {
             Context = context;
             this.student_CourseRepository = student_CourseRepository;
@@ -28,7 +31,6 @@ namespace Admin_Panel_ITI.Repos
 
         void IStudentRepository.DeleteStudent(int studentID)
         {
-
             student_CourseRepository.DeleteStudent_Course(studentID);
             student_SubmissionRepository.DeleteStudent_Submission(studentID);
             exam_Std_QuestionRepository.DeleteExam_Std_Question(studentID);
@@ -71,10 +73,10 @@ namespace Admin_Panel_ITI.Repos
         }        
         
          List<Student> IStudentRepository.getStudentsbyIntakeID(int intakeID)
-        {
+         {
             var students = Context.Students.Where(s => s.IntakeID == intakeID).ToList();
             return students;
-        }
+         }
 
         void IStudentRepository.UpdateStudent(int studentID, Student student)
         {

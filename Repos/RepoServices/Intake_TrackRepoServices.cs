@@ -25,7 +25,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
         void IIntake_TrackRepository.CreateIntake_Track(List<int> intakeIds, int trackid, int numberofStudents)
         {
-
             foreach (var id in intakeIds)
             {
                 Intake_Track itk = new Intake_Track()
@@ -45,7 +44,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             var intake_track = Context.Intake_Tracks.SingleOrDefault(it=>it.TrackID == trackID && it.IntakeID == intakeID);
             Context.Intake_Tracks.Remove(intake_track);
             Context.SaveChanges();
-
         }
 
 
