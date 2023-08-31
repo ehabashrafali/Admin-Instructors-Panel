@@ -34,13 +34,13 @@ namespace Admin_Panel_ITI.Repos
             Context.SaveChanges();
         }
 
-        void IStudent_CourseRepository.DeleteStudent_Course(int studentID, int courseID)
+        void IStudent_CourseRepository.DeleteStudent_Course(string studentID, int courseID)
         {
             var student_course = Context.Student_Courses.SingleOrDefault(sc=>sc.StudentID==studentID.ToString() && sc.CourseID==courseID);
             Context.Student_Courses.Remove(student_course);
             Context.SaveChanges();
         }
-        void IStudent_CourseRepository.DeleteStudent_Course(int studentID)
+        void IStudent_CourseRepository.DeleteStudent_Course(string studentID)
         {
             var student_course = Context.Student_Courses.Where(sc=>sc.StudentID==studentID.ToString());
             foreach (var item in student_course)

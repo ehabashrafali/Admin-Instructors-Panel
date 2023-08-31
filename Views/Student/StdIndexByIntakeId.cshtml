@@ -1,5 +1,4 @@
-﻿@model X.PagedList.IPagedList<Admin_Panel_ITI.Models.Student>
-@using X.PagedList.Mvc.Core
+﻿@model IEnumerable<Admin_Panel_ITI.Models.Student>
 
 <h1>Students by Intake</h1>
 
@@ -28,7 +27,3 @@
         }
     </tbody>
 </table>
-<div class="pagination-container">
-    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    @Html.PagedListPager(Model, page => Url.Action("StdIndexByIntakeId", new { page }))
-</div>

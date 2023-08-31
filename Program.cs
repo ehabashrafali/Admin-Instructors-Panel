@@ -83,7 +83,23 @@ namespace Admin_Panel_ITI
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+
+            app.MapControllerRoute(
+           name: "studentByTrack",
+           pattern: "Student/StdIndexByTrackId/{Trackid}/{pageNumber}",
+           defaults: new { controller = "Student", action = "StdIndexByTrackId" });
             
+            
+            app.MapControllerRoute(
+           name: "studentByTrack",
+           pattern: "Student/StdIndexByIntakeId/{IntakeId}/{pageNumber}",
+           defaults: new { controller = "Student", action = "StdIndexByIntakeId" });
+
+
+
+
+
+
 
             app.MapRazorPages();
 

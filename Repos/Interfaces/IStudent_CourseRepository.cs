@@ -18,9 +18,9 @@ namespace Admin_Panel_ITI.Repos
         public void UpdateStudent_Course(int studentID, int courseID, Student_Course student_course);
 
 
-        public void DeleteStudent_Course(int studentID, int courseID);
+        public void DeleteStudent_Course(string studentID, int courseID);
         public void DeleteStudent_CourseByCourseID(int courseID);
-        public void DeleteStudent_Course(int studentID);
+        public void DeleteStudent_Course(string studentID);
 
 
         public void CreateStudent_Course(Student_Course student_course);

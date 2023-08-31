@@ -9,21 +9,23 @@ namespace Admin_Panel_ITI.Repos
 
 
 
-        public Student getStudentbyID(int studentbyID);
+        public Student getStudentbyID(string studentbyID);
 
 
 
-        public List<Student> getStudents();
+        public List<Student> getStudents(int pageNumber, int pageSize);
 
 
-        public void UpdateStudent(int studentID, Student student);
+        public void UpdateStudent(string studentID, Student student);
 
 
-        public void DeleteStudent(int studentID);
-        public List<Student> getStudentsbyTrackID(int trackid);
+        public void DeleteStudent(string studentID);
+        public List<Student> getStudentsbyTrackID(int trackid, int pageNumber, int pageSize);
+        public List<Student> getStudentsbyTrackID(int trackID);
 
 
         public void CreateStudent(Student student);
+        public List<Student> getStudentsbyIntakeID(int intakeID, int pageNumber, int pageSize);
         public List<Student> getStudentsbyIntakeID(int intakeID);
     }
 }

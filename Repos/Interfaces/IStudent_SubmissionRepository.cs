@@ -24,8 +24,8 @@ namespace Admin_Panel_ITI.Repos
 
 
 
-        public void DeleteStudent_Submission(int studentID, int courseID);
-        public void DeleteStudent_Submission(int studentID);
+        public void DeleteStudent_Submission(string studentID, int courseID);
+        public void DeleteStudent_Submission(string studentID);
         public void DeleteStudent_SubmissionbyCourseDayID(int courseDayID);
 
 

@@ -27,14 +27,14 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
 
 
-        void IExam_Std_QuestionRepository.DeleteExam_Std_Question(int examID, int studentID, int questionID)
+        void IExam_Std_QuestionRepository.DeleteExam_Std_Question(int examID, string studentID, int questionID)
         {
             var esq = Context.Exam_Std_Questions.SingleOrDefault(esq => esq.ExamID == examID && esq.StudentID == studentID.ToString() && esq.QuestionID == questionID);
             Context.Exam_Std_Questions.Remove(esq);
             Context.SaveChanges();
         }        
         
-        void IExam_Std_QuestionRepository.DeleteExam_Std_Question(int studentID)
+        void IExam_Std_QuestionRepository.DeleteExam_Std_Question(string studentID)
         {
             var esq = Context.Exam_Std_Questions.Where(esq=> esq.StudentID == studentID.ToString() );
             foreach (var item in esq)

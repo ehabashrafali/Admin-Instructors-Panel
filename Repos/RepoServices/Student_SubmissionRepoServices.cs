@@ -65,7 +65,7 @@ namespace Admin_Panel_ITI.Repos
             Context.SaveChanges();
         }
 
-        void IStudent_SubmissionRepository.DeleteStudent_Submission(int studentID, int courseDayID)
+        void IStudent_SubmissionRepository.DeleteStudent_Submission(string studentID, int courseDayID)
         {
             var student_submission = Context.Student_Submissions.SingleOrDefault(ss => ss.StudentID == studentID.ToString() && ss.CourseDayID == courseDayID );
             Context.Student_Submissions.Remove(student_submission);
@@ -84,7 +84,7 @@ namespace Admin_Panel_ITI.Repos
         //}
 
 
-        void IStudent_SubmissionRepository.DeleteStudent_Submission(int studentID)
+        void IStudent_SubmissionRepository.DeleteStudent_Submission(string studentID)
         {
             var student_submission = Context.Student_Submissions.Where(ss => ss.StudentID == studentID.ToString() );
             foreach (var item in student_submission)

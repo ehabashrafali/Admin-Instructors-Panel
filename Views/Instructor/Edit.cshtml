@@ -39,7 +39,43 @@
                 <span asp-validation-for="AdminID" class="text-danger"></span>
             </div>
 
-            @* You can add more form fields for other properties as needed. *@
+           
+
+            <div class="form-group">
+                <label for="SelectedCourses">Select Courses:</label>
+                <select name="SelectedCourses" class="form-control" multiple>
+                    <optgroup label="Available Courses">
+                        @foreach (var course in (SelectList)ViewData["CourseList"])
+                        {
+                            var isSelected = Model.InstructorCourses.Any(ic => ic.CourseID.ToString() == course.Value);
+
+                            if (!isSelected)
+                            {
+                                <option value="@course.Value">@course.Text</option>
+                            }
+                        }
+                    </optgroup>
+                    <optgroup label="Selected Courses">
+                        @foreach (var course in Model.InstructorCourses)
+                        {
+                            <option value="@course.CourseID" disabled>
+                                @course.Course.Name
+                                <button class="btn btn-link btn-sm" onclick="deleteCourse('@course.CourseID')">Delete</button>
+                            </option>
+                        }
+                    </optgroup>
+                </select>
+            </div>
+
+            <script>
+                function deleteCourse(courseId) {
+                    // Implement your delete logic here
+                    // You can make an AJAX request to delete the course from the instructor
+                    // and then update the select list accordingly
+                }
+            </script>
+
+
 
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

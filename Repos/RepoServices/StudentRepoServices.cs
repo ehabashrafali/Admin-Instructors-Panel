@@ -2,6 +2,8 @@
 using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using NuGet.DependencyResolver;
+using System.Drawing.Printing;
 
 namespace Admin_Panel_ITI.Repos
 {
@@ -29,7 +31,7 @@ namespace Admin_Panel_ITI.Repos
             Context.Students.Add(student);
         }
 
-        void IStudentRepository.DeleteStudent(int studentID)
+        void IStudentRepository.DeleteStudent(string studentID)
         {
             student_CourseRepository.DeleteStudent_Course(studentID);
             student_SubmissionRepository.DeleteStudent_Submission(studentID);
@@ -40,9 +42,13 @@ namespace Admin_Panel_ITI.Repos
             Context.SaveChanges();
         }
 
-        Student IStudentRepository.getStudentbyID(int studentID)
+        Student IStudentRepository.getStudentbyID(string studentID)
         {
-            var student = Context.Students.FirstOrDefault(s => s.Id == studentID.ToString());
+            var student = Context.Students
+                                 .Include(s=>s.Intake)
+                                 .Include(s=>s.Track)
+                                 .Include(s=>s.Admin)
+                                 .FirstOrDefault(s => s.Id == studentID);
             return student;
         }
 
@@ -56,29 +62,73 @@ namespace Admin_Panel_ITI.Repos
             return Context.Students.Where(s=>s.IntakeID== intakeID).Count();
         }
 
-        List<Student> IStudentRepository.getStudents()
+        List<Student> IStudentRepository.getStudents(int pageNumber, int pageSize)
         {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
             return Context.Students.Include(s=>s.Admin)
                                    .Include(s=>s.Intake)
                                    .Include(s=>s.Track)
                                    .Include(s=>s.StudentCourses)
+                                   .Skip((pageNumber - 1) * pageSize)
+                                   .Take(pageSize)
                                    .ToList();
         }
 
 
-        List<Student> IStudentRepository.getStudentsbyTrackID(int trackid)
+        List<Student> IStudentRepository.getStudentsbyTrackID(int trackid, int pageNumber, int pageSize)
         {
-            var students = Context.Students.Where(s => s.TrackID == trackid).ToList();
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+            var students = Context.Students.Include(s => s.Admin)
+                                   .Include(s => s.Intake)
+                                   .Include(s => s.Track)
+                                   .Include(s => s.StudentCourses)
+                                   .Where(s=>s.TrackID== trackid)
+                                   .Skip((pageNumber - 1) * pageSize)
+                                   .Take(pageSize)
+                                   .ToList();
+            return students;
+        }         
+        
+        List<Student> IStudentRepository.getStudentsbyTrackID(int trackID)
+        {
+            var students = Context.Students
+                                   .Where(s=>s.TrackID== trackID)
+                                
+                                   .ToList();
             return students;
         }        
         
-         List<Student> IStudentRepository.getStudentsbyIntakeID(int intakeID)
+         List<Student> IStudentRepository.getStudentsbyIntakeID(int intakeID, int pageNumber, int pageSize)
          {
-            var students = Context.Students.Where(s => s.IntakeID == intakeID).ToList();
-            return students;
-         }
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+            return Context.Students.Include(s => s.Admin)
+                                  .Include(s => s.Intake)
+                                  .Include(s => s.Track)
+                                  .Include(s => s.StudentCourses)
+                                  .Where(s => s.IntakeID == intakeID)
+                                  .Skip((pageNumber - 1) * pageSize)
+                                  .Take(pageSize)
+                                  .ToList();
+        }  
+        
+        List<Student> IStudentRepository.getStudentsbyIntakeID(int intakeID)
+         {
+            return Context.Students
+                                  .Where(s => s.IntakeID == intakeID)
+                                 
+                                  .ToList();
+        }
 
-        void IStudentRepository.UpdateStudent(int studentID, Student student)
+        void IStudentRepository.UpdateStudent(string studentID, Student student)
         {
             var studentUpdated = Context.Students.FirstOrDefault(s=> s.Id == studentID.ToString());
 

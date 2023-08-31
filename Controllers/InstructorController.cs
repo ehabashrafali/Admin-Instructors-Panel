@@ -1,16 +1,22 @@
 ﻿using Admin_Panel_ITI.Models;
+using Admin_Panel_ITI.Repos;
 using Admin_Panel_ITI.Repos.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Admin_Panel_ITI.Controllers
 {
     public class InstructorController : Controller
     {
         private readonly IInstructorRepository instructorRepository;
+        private readonly ICourseRepository courseRepository;
+        private readonly IInstructor_CourseRepository instructor_CourseRepository;
 
-        public InstructorController(IInstructorRepository instructorRepository) {
+        public InstructorController(IInstructorRepository instructorRepository, ICourseRepository courseRepository, IInstructor_CourseRepository instructor_CourseRepository) {
             this.instructorRepository = instructorRepository;
+            this.courseRepository = courseRepository;
+            this.instructor_CourseRepository = instructor_CourseRepository;
         }
         // GET: InstructorController
         public ActionResult Index(int pageNumber)
@@ -41,6 +47,8 @@ namespace Admin_Panel_ITI.Controllers
         public ActionResult Edit(string id)
         {
             var instructor = instructorRepository.GetInstructorbyID(id);
+            var courses = courseRepository.GetCourses();
+            ViewData["CourseList"] = new SelectList(courses, "ID", "Name");
             return View(instructor);
         }
 
@@ -49,9 +57,19 @@ namespace Admin_Panel_ITI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(string id, Instructor instructor)
         {
+            var selectedCourses = Request.Form["SelectedCourses"];
             if (ModelState.IsValid)
             {
                 instructorRepository.UpdateInstructor(id, instructor);
+                foreach (var item in selectedCourses)
+                {
+                    Instructor_Course ic_record = new Instructor_Course() {
+                        CourseID = int.Parse(item),
+                        InstructorID = id
+                  
+                    };
+                    instructor_CourseRepository.CreateInstructor_Course(ic_record);
+                }
                 return RedirectToAction("Index");
             }
             return View(instructor);

@@ -109,6 +109,17 @@ namespace Admin_Panel_ITI.Repos
 
             return courses;
         }
+        List<Course> ICourseRepository.GetCourses()
+        {
+            
+            var courses = Context.Courses
+                .Include(c => c.Admin)
+                .Include(c => c.InstructorCourses)
+                .Include(c => c.IntakeTrackCourse)
+                .ToList();
+
+            return courses;
+        }
 
         void ICourseRepository.UpdateCourse(int CourseID, Course course)
         {

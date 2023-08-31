@@ -29,74 +29,75 @@ namespace Admin_Panel_ITI.Controllers
             this.intake_TrackRepository = intake_TrackRepository;
             IntakeRepository = intakeRepository;
         }
-        public ActionResult StdsIndex(int? page)
+        public ActionResult Index(int pageNumber)
         {
-            int pageSize = 30;
-            int pageNumber = page ?? 1;
-            var students = studentRepository.getStudents().ToPagedList(pageNumber, pageSize);
+        
+            var students = studentRepository.getStudents(pageNumber,10);
             return View(students);
         }
 
-        public ActionResult StdIndexByTrackId(int Trackid, int? page)
+        public ActionResult StdIndexByTrackId(int Trackid, int pageNumber)
         {
-            int pageSize = 30;
-            int pageNumber = page ?? 1;
-            var students = studentRepository.getStudentsbyTrackID(Trackid).ToPagedList(pageNumber, pageSize);
+            
+            var students = studentRepository.getStudentsbyTrackID(Trackid, pageNumber, 10);
             return View(students);
         }
 
-        public ActionResult StdIndexByIntakeId(int IntakeId, int? page)
+        public ActionResult StdIndexByIntakeId(int IntakeId, int pageNumber)
         {
-            int pageSize = 30;
-            int pageNumber = page ?? 1;
-            var students = studentRepository.getStudentsbyIntakeID(IntakeId).ToPagedList(pageNumber, pageSize);
+
+            var students = studentRepository.getStudentsbyIntakeID(IntakeId, pageNumber,10);
             return View(students);
         }
 
-        // GET: StudentController/Create
-        public ActionResult Create()
-        {
-            var Tracks = trackRepository.getTracks();
-            ViewBag.AllTracks = new SelectList(Tracks, "ID", "Name");
-            return View();
-        }
+        //// GET: StudentController/Create
+        //public ActionResult Create()
+        //{
+        //    var Tracks = trackRepository.getTracks();
+        //    var Intakes = IntakeRepository.GetAllIntakes();
+        //    ViewBag.AllTracks = new SelectList(Tracks, "ID", "Name");
+        //    ViewBag.AllIntakes = new SelectList(Intakes, "ID", "Name");
+        //    return View();
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateStudent(Student student)
-        {
-            if (ModelState.IsValid)
-            {
-                studentRepository.CreateStudent(student);
-                return RedirectToAction(nameof(StdsIndex));
-            }
-            return View(student);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult CreateStudent(Student student)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        studentRepository.CreateStudent(student);
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(student);
+        //}
 
-        public ActionResult StudentDetails(int id)
+        public ActionResult Details(string id)
         {
             return View(studentRepository.getStudentbyID(id));
         }
 
 
         // GET: StudentController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
 
-            var Intake = IntakeRepository.GetIntakes();
-            ViewBag.AllIntakes = new SelectList(Intake, "ID", "Name");
+            var Intakes = IntakeRepository.GetIntakes();
+            var trackes = trackRepository.getTracks();
+            ViewBag.AllIntakes = new SelectList(Intakes, "ID", "Name");
+            ViewBag.AllTracks = new SelectList(trackes, "ID", "Name");
             var student = studentRepository.getStudentbyID(id);
             return View(student);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Student student)
+        public ActionResult Edit(string id, Student student)
         {
             if (ModelState.IsValid)
             {
                 studentRepository.UpdateStudent(id, student);
-                return RedirectToAction(nameof(StdsIndex));
+                return RedirectToAction(nameof(Index));
             }
             return View(student);
         }
@@ -113,10 +114,10 @@ namespace Admin_Panel_ITI.Controllers
 
         // GET: StudentController/Delete/5
 
-        public IActionResult Delete(int id)
+        public IActionResult Delete(string id)
         {
             studentRepository.DeleteStudent(id);
-            return RedirectToAction(nameof(StdsIndex));
+            return RedirectToAction(nameof(Index));
         }
 
 

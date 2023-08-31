@@ -18,8 +18,8 @@ namespace Admin_Panel_ITI.Repos.Interfaces
         public void UpdateExam_Std_Question(int examID, int studentID, int questionID, Exam_Std_Question esq);
 
 
-        public void DeleteExam_Std_Question(int examID, int studentID, int questionID);
-        public void DeleteExam_Std_Question(int studentID);
+        public void DeleteExam_Std_Question(int examID, string studentID, int questionID);
+        public void DeleteExam_Std_Question(string studentID);
 
 
         public void CreateExam_Std_Question(Exam_Std_Question esq);
