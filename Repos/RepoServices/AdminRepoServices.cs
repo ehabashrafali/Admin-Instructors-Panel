@@ -5,11 +5,8 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 {
     public class AdminRepoServices : IAdminRepository
     {
-
         public MainDBContext Context { get; set; }
-
-
-        AdminRepoServices(MainDBContext context)
+        public AdminRepoServices(MainDBContext context)
         {
             Context = context;
         }
@@ -19,8 +16,15 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         {
             Context.Admins.Add(admin);
             Context.SaveChanges();
-
         }
+
+        //void IAdminRepository.CreateAdmin(string adminID)
+        //{
+        //    var admin = Context.Admins.FirstOrDefault(a => a.Id == adminID);
+        //    Console.WriteLine(admin);
+        //    //Context.Admins.Add(admin);
+        //    //Context.SaveChanges();
+        //}
 
         void IAdminRepository.DeleteAdmin(int adminID)
         {
@@ -55,7 +59,5 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             admin_Updated.PhoneNumber = admin.PhoneNumber;
             Context.SaveChanges();
         }
-
-  
     }
 }

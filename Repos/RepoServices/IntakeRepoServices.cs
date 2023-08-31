@@ -9,10 +9,11 @@ namespace Admin_Panel_ITI.Repos
     {
         private readonly IStudentRepository studentRepository;
         private readonly IIntake_TrackRepository intake_TrackRepository;
-
         public MainDBContext Context { get; set; }
-
-        public IntakeRepoServices(MainDBContext context, IStudentRepository studentRepository, IIntake_TrackRepository intake_TrackRepository)
+        public IntakeRepoServices(
+            MainDBContext context, 
+            IStudentRepository studentRepository, 
+            IIntake_TrackRepository intake_TrackRepository)
         {
             Context = context;
             this.studentRepository = studentRepository;
@@ -25,22 +26,17 @@ namespace Admin_Panel_ITI.Repos
             Context.SaveChanges();
         }
 
-        void IIntakeRepository.DeleteIntake(int intakeID)
-        {
+        //void IIntakeRepository.DeleteIntake(int intakeID)
+        //{
+        //    var intake_students = studentRepository.getStudentsbyIntakeID(intakeID);
 
-            var intake_students = studentRepository.getStudentsbyIntakeID(intakeID);
-
-
-            if(intake_students.Count() == 0)
-            {
-                intake_TrackRepository.DeleteIntake_Track(intakeID);
-                var intake = Context.Intakes.FirstOrDefault(i => i.ID == intakeID);
-                Context.Intakes.Remove(intake);
-            }
-
-
-
-        }
+        //    if(intake_students.Count() == 0)
+        //    {
+        //        intake_TrackRepository.DeleteIntake_Track(intakeID);
+        //        var intake = Context.Intakes.FirstOrDefault(i => i.ID == intakeID);
+        //        Context.Intakes.Remove(intake);
+        //    }
+        //}
 
         Intake IIntakeRepository.getIntakebyID(int intakeID)
         {
@@ -60,9 +56,12 @@ namespace Admin_Panel_ITI.Repos
                                  .ToList();
         }
 
+
+
         void IIntakeRepository.UpdateIntake(int IntakeID, Intake intake)
         {
             var intakeUpdated = Context.Intakes.FirstOrDefault(i => i.ID == IntakeID);
+
             intakeUpdated.Name = intake.Name;
             intakeUpdated.StartDate = intake.StartDate;
             intakeUpdated.EndDate = intake.EndDate;
@@ -71,6 +70,30 @@ namespace Admin_Panel_ITI.Repos
             intakeUpdated.AdminID = intake.AdminID;
 
             Context.SaveChanges();
+        }
+
+
+
+        //---------------------- asem_updates ---------------------------------------//
+
+        public List<Intake> GetAllIntakes()
+        {
+            return Context.Intakes.Include(i => i.Admin).ToList();
+        }
+
+
+        void IIntakeRepository.DeleteIntake(int intakeID)
+        {
+            var intake_students = studentRepository.getStudentsbyIntakeID(intakeID);
+
+            if (intake_students.Count() == 0)
+            {
+                intake_TrackRepository.DeleteIntake_Track(intakeID);
+
+
+                var intake = Context.Intakes.FirstOrDefault(i => i.ID == intakeID);
+                Context.Intakes.Remove(intake);
+            }
         }
     }
 }

@@ -28,7 +28,6 @@ namespace Admin_Panel_ITI.Controllers
 
         public IActionResult Index()
         {
-
             HomePageViewModel hmPageViewModel = new HomePageViewModel()
             {
                 IntakeNumber = intakeRepository.getIntakeNumber(),
