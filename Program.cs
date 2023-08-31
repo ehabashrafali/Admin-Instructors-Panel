@@ -96,6 +96,10 @@ namespace Admin_Panel_ITI
            defaults: new { controller = "Student", action = "StdIndexByIntakeId" });
 
 
+            app.MapControllerRoute(
+            name: "TrackByIntake",
+            pattern: "track/GetTrackByInakeId/{IntakeId}/{pageNumber}",
+            defaults: new { controller = "Track", action = "GetTrackByInakeId" });
 
 
 

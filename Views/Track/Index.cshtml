@@ -1,5 +1,5 @@
-﻿@model X.PagedList.IPagedList<Admin_Panel_ITI.Models.Track>
-@using X.PagedList.Mvc.Core
+﻿@model IEnumerable<Admin_Panel_ITI.Models.Track>
+
 
 <h1>Tracks</h1>
 <br />
@@ -57,7 +57,3 @@
 </table>
 
 <br />
-<div class="pagination-container">
-    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
-</div>

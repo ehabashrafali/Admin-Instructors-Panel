@@ -2,6 +2,7 @@
 using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using NuGet.DependencyResolver;
 
 namespace Admin_Panel_ITI.Repos
 {
@@ -46,6 +47,38 @@ namespace Admin_Panel_ITI.Repos
                                 .Include(t => t.IntakeTracks).ToList();
         }
 
+        List<Track> ITrackRepository.getTracks(int pageNumber, int pageSize)
+        {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+            var tracks =  Context.Tracks.Include(t => t.Manager)
+                                           .Include(t => t.IntakeTrackCourse)
+                                           .Include(t => t.IntakeTracks).ToList()
+                                           .Skip((pageNumber - 1) * pageSize)
+                                           .Take(pageSize)
+                                           .ToList();
+
+            return tracks;
+        }
+
+        List<Intake_Track> ITrackRepository.getTrackbyIntakeID(int intakeID, int pageNumber, int pageSize)
+        {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+            var tracks = Context.Intake_Tracks.Include(t => t.Intake)
+                                          .Include(t => t.Track).ToList()
+                                          .Where(t => t.IntakeID == intakeID)
+                                          .Skip((pageNumber - 1) * pageSize)
+                                          .Take(pageSize)
+                                          .ToList();
+            return tracks;
+
+        }
+
 
         // Check should we update virtual navigation properties 
         void ITrackRepository.UpdateTrack(int trackID, Track track)
@@ -72,8 +105,6 @@ namespace Admin_Panel_ITI.Repos
                 var track = Context.Tracks.FirstOrDefault(t => t.ID == trackID);
                 Context.Tracks.Remove(track);
                 Context.SaveChanges();
-
-
             }
 
         }
@@ -96,5 +127,7 @@ namespace Admin_Panel_ITI.Repos
             }
             Context.SaveChanges();
         }
+
+        
     }
 }

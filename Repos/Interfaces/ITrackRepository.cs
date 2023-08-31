@@ -7,13 +7,12 @@ namespace Admin_Panel_ITI.Repos
         public int getTrackNumber();
         public int getTrackNumberbyIntakeID(int intakeID);
 
-
-
         public Track getTrackbyID(int trackID);
 
-
-
         public List<Track> getTracks();
+
+        public List<Track> getTracks(int pageNumber, int pageSize);
+        List<Intake_Track> getTrackbyIntakeID(int intakeID, int pageNumber, int pageSize);
 
 
         public void UpdateTrack(int trackID, Track track);

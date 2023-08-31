@@ -3,6 +3,7 @@ using X.PagedList;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Admin_Panel_ITI.Repos;
 using Admin_Panel_ITI.Models;
+using NuGet.DependencyResolver;
 
 namespace Admin_Panel_ITI.Controllers
 {
@@ -17,12 +18,9 @@ namespace Admin_Panel_ITI.Controllers
             this.intakeRepository = intakeRepository;
         }
         // GET: TrackController
-        public ActionResult Index(int? page)
+        public ActionResult Index(int pageNumber)
         {
-
-            int pageSize = 30;
-            int pageNumber = page ?? 1;
-            var Tracks = trackRepositry.getTracks().ToPagedList(pageNumber, pageSize);
+            var Tracks = trackRepositry.getTracks(pageNumber, 10);
             return View(Tracks);
         }
 
@@ -30,6 +28,12 @@ namespace Admin_Panel_ITI.Controllers
         public ActionResult Details(int id)
         {
             return View(trackRepositry.getTrackbyID(id));
+        }
+
+        public ActionResult GetTrackByInakeId(int id, int pageNumber)
+        {
+            var tracks = trackRepositry.getTrackbyIntakeID(id, pageNumber, 10);
+            return View(tracks);
         }
 
         // GET: TrackController/Create
