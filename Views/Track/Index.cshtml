@@ -1,0 +1,63 @@
+﻿@model X.PagedList.IPagedList<Admin_Panel_ITI.Models.Track>
+@using X.PagedList.Mvc.Core
+
+<h1>Tracks</h1>
+<br />
+
+<p>
+    <a asp-action="Create">Create New Track</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Creation Date
+            </th>
+            <th>
+                Manager
+            </th>
+            <th>
+                Admin
+            </th>
+            <th>
+                Edit
+            </th>
+            <th>
+                Details
+            </th>
+            <th>
+                Delete
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var track in Model)
+        {
+            <tr>
+                <td>@track.Name</td>
+                <td>@track.CreationDate</td>
+                <td>@track.Manager.FullName</td>
+                <td>@track.Admin.FullName</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@track.ID" class="btn btn-primary">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@track.ID" class="btn btn-info">Details</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@track.ID" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<div class="pagination-container">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div>

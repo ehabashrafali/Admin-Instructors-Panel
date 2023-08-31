@@ -1,0 +1,38 @@
+﻿@model X.PagedList.IPagedList<Admin_Panel_ITI.Models.Student>
+@using X.PagedList.Mvc.Core
+
+@{
+    ViewData["Title"] = "Students by Track";
+}
+
+<h1>Students by Track</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>Full Name</th>
+            <th>Username</th>
+            <th>Is Graduated</th>
+            <th>Creation Date</th>
+            <th>Intake</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.Id</td>
+                <td>@student.FullName</td>
+                <td>@student.UserName</td>
+                <td>@(student.IsGraduated ? "Yes" : "No")</td>
+                <td>@student.CreationDate.ToString("yyyy-MM-dd")</td>
+                <td>@student.Intake.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="pagination-container">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("StdIndexByTrackId", new { page }))
+</div>

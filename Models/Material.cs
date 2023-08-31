@@ -1,5 +1,6 @@
-﻿using Admin_Panel_ITI.Models;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Admin_Panel_ITI.Models
 {
@@ -19,3 +20,4 @@ namespace Admin_Panel_ITI.Models
         public virtual IEnumerable<Course_Day_Material>? CourseDayMaterials { set; get; }
     }
 }
+

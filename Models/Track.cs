@@ -1,6 +1,6 @@
-﻿using Admin_Panel_ITI.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Admin_Panel_ITI.Models
 {
@@ -18,11 +18,6 @@ namespace Admin_Panel_ITI.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required, Column(TypeName = "date")]
         public DateTime CreationDate { get; set; }
-
-
-
-
-
 
 
         [ForeignKey(nameof(Manager))]
