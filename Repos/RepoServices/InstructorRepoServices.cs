@@ -16,7 +16,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         public MainDBContext Context { get; set; }
 
 
-        public InstructorRepoServices(MainDBContext context, ITrackRepository trackRepository, IExamRepository examRepository, IMaterialRepository materialRepository, IInstructor_CourseRepository instructor_CourseRepository, IIntake_InstructorRepository intake_InstructorRepository )
+        public InstructorRepoServices(MainDBContext context, ITrackRepository trackRepository, IExamRepository examRepository, IMaterialRepository materialRepository, IInstructor_CourseRepository instructor_CourseRepository)
         {
             Context = context;
             this.trackRepository = trackRepository;
