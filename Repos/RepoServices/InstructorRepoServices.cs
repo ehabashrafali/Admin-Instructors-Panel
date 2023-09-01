@@ -2,6 +2,7 @@
 using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing.Printing;
 
 namespace Admin_Panel_ITI.Repos.RepoServices
 {
@@ -113,6 +114,13 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             instructor_updated.PhoneNumber = instructor.PhoneNumber;
             instructor_updated.CreationDate = instructor.CreationDate;
             Context.SaveChanges();
+        }
+
+        List<Instructor> IInstructorRepository.GetInstructors()
+        {
+            var instructors = Context.Instructors.ToList();
+
+            return instructors;
         }
     }
 }

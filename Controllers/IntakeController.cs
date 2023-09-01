@@ -3,6 +3,7 @@ using Admin_Panel_ITI.Repos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Admin_Panel_ITI.Controllers
 {
@@ -10,20 +11,29 @@ namespace Admin_Panel_ITI.Controllers
     {
         private readonly IIntakeRepository intakeRepository;
         private readonly UserManager<AppUser> userManager;
-        public IntakeController(IIntakeRepository _intakeRepository, UserManager<AppUser> _userManager)
+        private readonly ITrackRepository trackRepository;
+        private readonly ICourseRepository courseRepository;
+
+        public IntakeController(IIntakeRepository _intakeRepository, UserManager<AppUser> _userManager, ITrackRepository trackRepository, ICourseRepository courseRepository)
         {
             intakeRepository = _intakeRepository;
             userManager = _userManager;
+            this.trackRepository = trackRepository;
+            this.courseRepository = courseRepository;
         }
 
 
         public ActionResult Index()
         {
+           var tracks = trackRepository.getTracks();
+            var courses = courseRepository.GetCourses();
+            
+            ViewBag.AllTracks = new SelectList(tracks, "ID", "Name");
+            ViewBag.AllCourses = new SelectList(courses, "ID", "Name");
             return View(intakeRepository.GetAllIntakes());
         }
 
 
-        /*------------------------------------------------------*/
 
         public ActionResult Details(int id)
         {
@@ -50,8 +60,9 @@ namespace Admin_Panel_ITI.Controllers
 
                 string adminID = userManager.GetUserId(User);  //get the currently logged-in AdminID
 
-                newIntake.CreationDate = DateTime.Now;
-                newIntake.AdminID = adminID;
+                //newIntake.CreationDate = DateTime.Now;
+                //newIntake.AdminID = adminID;
+                newIntake.AdminID = "admin1";
 
                 intakeRepository.CreateIntake(newIntake);
 

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Admin_Panel_ITI.Repos;
 using Admin_Panel_ITI.Models;
 using NuGet.DependencyResolver;
+using Microsoft.AspNetCore.Identity;
+using Admin_Panel_ITI.Repos.Interfaces;
 
 namespace Admin_Panel_ITI.Controllers
 {
@@ -11,11 +13,15 @@ namespace Admin_Panel_ITI.Controllers
     {
         private readonly ITrackRepository trackRepositry;
         public IIntakeRepository intakeRepository { get; }
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IInstructorRepository instructorRepository;
 
-        public TrackController(ITrackRepository trackRepositry, IIntakeRepository intakeRepository)
+        public TrackController(ITrackRepository trackRepositry, IIntakeRepository intakeRepository, UserManager<AppUser> userManager, IInstructorRepository instructorRepository)
         {
             this.trackRepositry = trackRepositry;
             this.intakeRepository = intakeRepository;
+            _userManager = userManager;
+            this.instructorRepository = instructorRepository;
         }
         // GET: TrackController
         public ActionResult Index(int pageNumber)
@@ -39,16 +45,25 @@ namespace Admin_Panel_ITI.Controllers
         // GET: TrackController/Create
         public ActionResult Create()
         {
-            var Intake = intakeRepository.GetIntakes();
-            ViewBag.AllIntakes = new SelectList(Intake, "ID", "Name");
+
+            var instructors = instructorRepository.GetInstructors();
+            ViewBag.AllInstructors = new SelectList(instructors, "Id", "FullName");
             return View();
         }
 
         // POST: TrackController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Track track)
+        async public Task<ActionResult> Create(Track track)
         {
+            var instructors = instructorRepository.GetInstructors();
+            ViewBag.AllInstructors = new SelectList(instructors, "Id", "FullName");
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                string userId = user.Id;
+                track.AdminID = "admin1";
+            }
             if (ModelState.IsValid)
             {
                 trackRepositry.CreateTrack(track);
@@ -60,6 +75,8 @@ namespace Admin_Panel_ITI.Controllers
         // GET: TrackController/Edit/5
         public ActionResult Edit(int id)
         {
+            var instructors = instructorRepository.GetInstructors();
+            ViewBag.AllInstructors = new SelectList(instructors, "Id", "FullName");
             var track = trackRepositry.getTrackbyID(id);
             return View(track);
         }
