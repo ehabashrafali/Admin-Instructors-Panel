@@ -27,7 +27,7 @@ namespace Admin_Panel_ITI.Models
 
 
         [ForeignKey(nameof(Admin))]
-        public string AdminID { get; set; }
+        public string? AdminID { get; set; }
         public virtual Admin? Admin { get; set; }
 
 

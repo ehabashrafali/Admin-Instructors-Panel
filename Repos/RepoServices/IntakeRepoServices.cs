@@ -95,6 +95,7 @@ namespace Admin_Panel_ITI.Repos
 
                 var intake = Context.Intakes.FirstOrDefault(i => i.ID == intakeID);
                 Context.Intakes.Remove(intake);
+                Context.SaveChanges();
             }
         }
     }

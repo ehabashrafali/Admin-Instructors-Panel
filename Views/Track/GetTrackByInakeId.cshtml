@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Admin_Panel_ITI.Models.Track>
+﻿@model IEnumerable<Admin_Panel_ITI.Models.Intake_Track>
 
 @{
     ViewData["Title"] = "GetTrackByInakeId";
@@ -13,16 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Track.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
+                @Html.DisplayNameFor(model => model.Track.CreationDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Manager)
+                @Html.DisplayNameFor(model => model.Track.Manager)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Admin)
+                @Html.DisplayNameFor(model => model.Track.Admin)
             </th>
             <th></th>
         </tr>
@@ -31,21 +31,21 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.Track.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
+                    @Html.DisplayFor(modelItem => item.Track.CreationDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Manager.Id)
+                    @Html.DisplayFor(modelItem => item.Track.Manager.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Admin.Id)
+                    @Html.DisplayFor(modelItem => item.Track.Admin.FullName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.TrackID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.TrackID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.TrackID">Delete</a>
             </td>
         </tr>
 }
