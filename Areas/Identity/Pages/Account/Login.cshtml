@@ -2,49 +2,76 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+    Layout = null; // or false
 }
 
-<h1>@ViewData["Title"]</h1>
+<!-- Your view content goes here -->
 
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.UserName" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                    <label asp-for="Input.UserName" class="form-label">Username</label>
-                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
-                </div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label asp-for="Input.Password" class="form-label">Password</label>
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="checkbox mb-3">
-                    <label asp-for="Input.RememberMe" class="form-label">
-                        <input class="form-check-input" asp-for="Input.RememberMe" />
-                        @Html.DisplayNameFor(m => m.Input.RememberMe)
-                    </label>
-                </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Form by Colorlib</title>
 
-                <div asp-validation-summary="All" class="text-danger"></div>
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="~/register/fonts/material-icon/css/material-design-iconic-font.min.css">
 
-                <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
-                </div>
+    <!-- Main css -->
+    <link rel="stylesheet" href="~/register/css/style.css">
+</head>
+<body>
+    <div class="main">
+        <!-- Sing in  Form -->
+        <section class="sign-in">
+            <div class="container">
+                <div class="screen"></div>
+                <div class="signin-content">
+                    <div class="signin-image">
+                        <div class="logo">
+                            <span class="navbar-brand" style="margin-left: 24px;">
+                                <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
+                            </span>
+                            <div class="navbarvr"></div>
+                            <span>ITI-Hub</span>
+                        </div>
+                    </div>
+                    <div class="signin-form">
+                        <h2 class="form-title">Sign In</h2>
+                        <form  id="account" method="POST" class="register-form" >
+                            <div class="form-group">
+                                <label asp-for="Input.UserName"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input asp-for="Input.UserName" type="text"  placeholder="Enter your username"/>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Input.Password"><i class="zmdi zmdi-lock"></i></label>
+                                <input asp-for="Input.Password"  type="password"  placeholder="Enter your password" />
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Input.RememberMe" type="checkbox"  class="agree-term" />
+                                <label asp-for="Input.RememberMe" class="label-agree-term"><span><span></span></span>Remember me</label>
+                            </div>
+                           @* <div class="form-group form-button">
+                                <a href="../index.html" class="form-submit loginBbtn">Log in</a>
+                            </div>*@
 
-                <br />
-                <div>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
+                            <div class="form-group form-button">
+                                <button id="login-submit" type="submit" class="form-submit loginBbtn" style="width:100%">Log in</button>
+                            </div>
+                        </form>
+
+                        
+                    </div>
                 </div>
-            </form>
+            </div>
         </section>
-    </div>
-</div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+    </div>
+
+    <!-- JS -->
+    <script src="~/register/vendor/jquery/jquery.min.js"></script>
+    <script src="~/register/js/main.js"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
+
