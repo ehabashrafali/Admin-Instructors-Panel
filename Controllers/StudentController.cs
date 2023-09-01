@@ -12,7 +12,6 @@ namespace Admin_Panel_ITI.Controllers
         private readonly IStudentRepository studentRepository;
         private readonly ICourseRepository courseRepository;
         private readonly IStudent_SubmissionRepository student_SubmissionRepository;
-        private readonly IIntake_TrackRepository intake_TrackRepository;
 
         public ITrackRepository trackRepository { get; }
         public IIntakeRepository IntakeRepository { get; }
@@ -20,13 +19,12 @@ namespace Admin_Panel_ITI.Controllers
 
         // GET: StudentController
 
-        public StudentController(IStudentRepository studentRepository, ICourseRepository courseRepository, ITrackRepository trackRepository, IStudent_SubmissionRepository student_SubmissionRepository, IIntake_TrackRepository intake_TrackRepository, IIntakeRepository intakeRepository)
+        public StudentController(IStudentRepository studentRepository, ICourseRepository courseRepository, ITrackRepository trackRepository, IStudent_SubmissionRepository student_SubmissionRepository, IIntakeRepository intakeRepository)
         {
             this.studentRepository = studentRepository;
             this.courseRepository = courseRepository;
             this.trackRepository = trackRepository;
             this.student_SubmissionRepository = student_SubmissionRepository;
-            this.intake_TrackRepository = intake_TrackRepository;
             IntakeRepository = intakeRepository;
         }
         public ActionResult Index(int pageNumber)

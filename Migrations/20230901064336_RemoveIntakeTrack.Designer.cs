@@ -4,6 +4,7 @@ using Admin_Panel_ITI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Admin_Panel_ITI.Migrations
 {
     [DbContext(typeof(MainDBContext))]
-    partial class MainDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230901064336_RemoveIntakeTrack")]
+    partial class RemoveIntakeTrack
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,6 +193,7 @@ namespace Admin_Panel_ITI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("InstructorID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
@@ -316,6 +320,24 @@ namespace Admin_Panel_ITI.Migrations
                     b.ToTable("Intake_Instructors");
                 });
 
+            modelBuilder.Entity("Admin_Panel_ITI.Models.Intake_Track", b =>
+                {
+                    b.Property<int>("TrackID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IntakeID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumOfStdsInTrack")
+                        .HasColumnType("int");
+
+                    b.HasKey("TrackID", "IntakeID");
+
+                    b.HasIndex("IntakeID");
+
+                    b.ToTable("Intake_Track");
+                });
+
             modelBuilder.Entity("Admin_Panel_ITI.Models.Intake_Track_Course", b =>
                 {
                     b.Property<int>("IntakeID")
@@ -345,6 +367,7 @@ namespace Admin_Panel_ITI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("InstructorID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Path")
@@ -440,6 +463,7 @@ namespace Admin_Panel_ITI.Migrations
                         .HasColumnType("date");
 
                     b.Property<string>("ManagerID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
@@ -607,9 +631,6 @@ namespace Admin_Panel_ITI.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("date");
 
-                    b.Property<bool>("CurrentlyWorking")
-                        .HasColumnType("bit");
-
                     b.HasIndex("AdminID");
 
                     b.ToTable("Instructor");
@@ -696,7 +717,9 @@ namespace Admin_Panel_ITI.Migrations
 
                     b.HasOne("Admin_Panel_ITI.Models.Instructor", "Instructor")
                         .WithMany("Exams")
-                        .HasForeignKey("InstructorID");
+                        .HasForeignKey("InstructorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Course");
 
@@ -796,6 +819,25 @@ namespace Admin_Panel_ITI.Migrations
                     b.Navigation("Intake");
                 });
 
+            modelBuilder.Entity("Admin_Panel_ITI.Models.Intake_Track", b =>
+                {
+                    b.HasOne("Admin_Panel_ITI.Models.Intake", "Intake")
+                        .WithMany("IntakeTracks")
+                        .HasForeignKey("IntakeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Admin_Panel_ITI.Models.Track", "Track")
+                        .WithMany("IntakeTracks")
+                        .HasForeignKey("TrackID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Intake");
+
+                    b.Navigation("Track");
+                });
+
             modelBuilder.Entity("Admin_Panel_ITI.Models.Intake_Track_Course", b =>
                 {
                     b.HasOne("Admin_Panel_ITI.Models.Course", "Course")
@@ -827,7 +869,9 @@ namespace Admin_Panel_ITI.Migrations
                 {
                     b.HasOne("Admin_Panel_ITI.Models.Instructor", "Instructor")
                         .WithMany("Materials")
-                        .HasForeignKey("InstructorID");
+                        .HasForeignKey("InstructorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Instructor");
                 });
@@ -878,7 +922,9 @@ namespace Admin_Panel_ITI.Migrations
 
                     b.HasOne("Admin_Panel_ITI.Models.Instructor", "Manager")
                         .WithMany("Tracks")
-                        .HasForeignKey("ManagerID");
+                        .HasForeignKey("ManagerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Admin");
 
@@ -1028,6 +1074,8 @@ namespace Admin_Panel_ITI.Migrations
 
                     b.Navigation("IntakeTrackCourse");
 
+                    b.Navigation("IntakeTracks");
+
                     b.Navigation("Students");
                 });
 
@@ -1046,6 +1094,8 @@ namespace Admin_Panel_ITI.Migrations
             modelBuilder.Entity("Admin_Panel_ITI.Models.Track", b =>
                 {
                     b.Navigation("IntakeTrackCourse");
+
+                    b.Navigation("IntakeTracks");
                 });
 
             modelBuilder.Entity("Admin_Panel_ITI.Models.Admin", b =>

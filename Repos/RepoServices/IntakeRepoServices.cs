@@ -8,16 +8,16 @@ namespace Admin_Panel_ITI.Repos
     public class IntakeRepoServices : IIntakeRepository
     {
         private readonly IStudentRepository studentRepository;
-        private readonly IIntake_TrackRepository intake_TrackRepository;
+        private readonly IIntake_Track_CourseRepository intake_Track_CourseRepository;
         public MainDBContext Context { get; set; }
         public IntakeRepoServices(
             MainDBContext context, 
             IStudentRepository studentRepository, 
-            IIntake_TrackRepository intake_TrackRepository)
+             IIntake_Track_CourseRepository intake_Track_CourseRepository)
         {
             Context = context;
             this.studentRepository = studentRepository;
-            this.intake_TrackRepository = intake_TrackRepository;
+            this.intake_Track_CourseRepository = intake_Track_CourseRepository;
         }
 
         void IIntakeRepository.CreateIntake(Intake intake)
@@ -52,7 +52,7 @@ namespace Admin_Panel_ITI.Repos
         List<Intake> IIntakeRepository.GetIntakes()
         {
             return Context.Intakes.Include(c=>c.Admin)
-                                 .Include(c=>c.IntakeTracks)
+                                 .Include(c=>c.IntakeTrackCourse)
                                  .ToList();
         }
 
@@ -90,8 +90,9 @@ namespace Admin_Panel_ITI.Repos
 
             if (intake_students.Count() == 0)
             {
-                intake_TrackRepository.DeleteIntake_Track(intakeID);
+                //intake_TrackRepository.DeleteIntake_Track(intakeID);
 
+                intake_Track_CourseRepository.DeleteIntake_Track_CoursebyIntakeID(intakeID);
 
                 var intake = Context.Intakes.FirstOrDefault(i => i.ID == intakeID);
                 Context.Intakes.Remove(intake);

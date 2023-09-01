@@ -20,7 +20,6 @@ namespace Admin_Panel_ITI.Data
         public virtual DbSet<Exam> Exams { get; set; }
         public virtual DbSet<Instructor_Course> Instructor_Courses { get; set; }
         public virtual DbSet<Intake> Intakes { get; set; }
-        public virtual DbSet<Intake_Track> Intake_Tracks { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<Exam_Std_Question> Exam_Std_Questions { get; set; }
         public virtual DbSet<Exam_Question> Exam_Questions { get; set; }
@@ -44,8 +43,7 @@ namespace Admin_Panel_ITI.Data
             modelBuilder.Entity<Intake_Instructor>()
                 .HasKey(ii => new { ii.InstructorID, ii.IntakeID });
 
-            modelBuilder.Entity<Intake_Track>()
-                .HasKey(it => new { it.TrackID, it.IntakeID });
+            
 
             modelBuilder.Entity<Exam_Std_Question>()
                 .HasKey(sqe => new { sqe.StudentID, sqe.QuestionID, sqe.ExamID });

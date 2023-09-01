@@ -43,7 +43,6 @@ namespace Admin_Panel_ITI
             builder.Services.AddScoped<IExamRepository, ExamRepoServices>();
             builder.Services.AddScoped<IInstructor_CourseRepository, Instructor_CourseRepoServices>();
             builder.Services.AddScoped<IInstructorRepository, InstructorRepoServices>();
-            builder.Services.AddScoped<IIntake_TrackRepository, Intake_TrackRepoServices>();
             builder.Services.AddScoped<IIntakeRepository, IntakeRepoServices>();
             builder.Services.AddScoped<IMaterialRepository, MaterialRepoServices>();
             builder.Services.AddScoped<IQuestionRepository, QuestionRepoServices>();

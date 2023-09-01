@@ -9,17 +9,15 @@ namespace Admin_Panel_ITI.Repos
     public class TrackRepoServices : ITrackRepository
     {
         private readonly IStudentRepository _studentRepository;
-        private readonly IIntake_TrackRepository _intake_trackRepository;
         private readonly IIntake_Track_CourseRepository _intake_Track_CourseRepository;
 
     
 
         public MainDBContext Context { get; set; }
-        public TrackRepoServices( MainDBContext context, IStudentRepository studentRepository, IIntake_TrackRepository intake_trackRepository, IIntake_Track_CourseRepository intake_Track_CourseRepository)
+        public TrackRepoServices( MainDBContext context, IStudentRepository studentRepository,  IIntake_Track_CourseRepository intake_Track_CourseRepository)
         {
             Context = context;
             _studentRepository = studentRepository;
-            _intake_trackRepository = intake_trackRepository;
             _intake_Track_CourseRepository = intake_Track_CourseRepository;
         }
         Track ITrackRepository.getTrackbyID(int trackID)
@@ -37,14 +35,17 @@ namespace Admin_Panel_ITI.Repos
         
         int ITrackRepository.getTrackNumberbyIntakeID(int intakeID)
         {
-            return Context.Intake_Tracks.Where(it=>it.IntakeID == intakeID).Count();
+            return Context.Intake_Track_Courses.Where(it => it.IntakeID == intakeID)
+                                                .Select(it => it.CourseID) // Select the CourseID to identify duplicates
+                                                .Distinct() // Remove duplicates
+                                                .Count();
         }
 
         List<Track> ITrackRepository.getTracks()
         {
             return Context.Tracks.Include(t => t.Manager)
                                 .Include(t => t.IntakeTrackCourse)
-                                .Include(t => t.IntakeTracks).ToList();
+                                .Include(t => t.IntakeTrackCourse).ToList();
         }
 
         List<Track> ITrackRepository.getTracks(int pageNumber, int pageSize)
@@ -56,7 +57,6 @@ namespace Admin_Panel_ITI.Repos
             var tracks =  Context.Tracks.Include(t => t.Manager)
                                            .Include(t=>t.Admin)
                                            .Include(t => t.IntakeTrackCourse)
-                                           .Include(t => t.IntakeTracks).ToList()
                                            .Skip((pageNumber - 1) * pageSize)
                                            .Take(pageSize)
                                            .ToList();
@@ -64,13 +64,13 @@ namespace Admin_Panel_ITI.Repos
             return tracks;
         }
 
-        List<Intake_Track> ITrackRepository.getTrackbyIntakeID(int intakeID, int pageNumber, int pageSize)
+        List<Intake_Track_Course> ITrackRepository.getTrackbyIntakeID(int intakeID, int pageNumber, int pageSize)
         {
             if (pageNumber < 1)
             {
                 pageNumber = 1;
             }
-            var tracks = Context.Intake_Tracks
+            var tracks = Context.Intake_Track_Courses
                                           .Include(t => t.Intake)
                                           .Include(t => t.Track)
                                           .ThenInclude(t=>t.Manager)
@@ -104,9 +104,8 @@ namespace Admin_Panel_ITI.Repos
             if (students.Count == 0)
             {
 
+                //_intake_trackRepository.DeleteIntake_Track(trackID);
                 _intake_Track_CourseRepository.DeleteIntake_Track_CoursebyTrackID(trackID);
-                _intake_trackRepository.DeleteIntake_Track(trackID);
-
                 var track = Context.Tracks.FirstOrDefault(t => t.ID == trackID);
                 Context.Tracks.Remove(track);
                 Context.SaveChanges();

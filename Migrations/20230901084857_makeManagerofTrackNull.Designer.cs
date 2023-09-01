@@ -4,6 +4,7 @@ using Admin_Panel_ITI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Admin_Panel_ITI.Migrations
 {
     [DbContext(typeof(MainDBContext))]
-    partial class MainDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230901084857_makeManagerofTrackNull")]
+    partial class makeManagerofTrackNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,6 +193,7 @@ namespace Admin_Panel_ITI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("InstructorID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
@@ -345,6 +349,7 @@ namespace Admin_Panel_ITI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("InstructorID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Path")
@@ -607,9 +612,6 @@ namespace Admin_Panel_ITI.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("date");
 
-                    b.Property<bool>("CurrentlyWorking")
-                        .HasColumnType("bit");
-
                     b.HasIndex("AdminID");
 
                     b.ToTable("Instructor");
@@ -696,7 +698,9 @@ namespace Admin_Panel_ITI.Migrations
 
                     b.HasOne("Admin_Panel_ITI.Models.Instructor", "Instructor")
                         .WithMany("Exams")
-                        .HasForeignKey("InstructorID");
+                        .HasForeignKey("InstructorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Course");
 
@@ -827,7 +831,9 @@ namespace Admin_Panel_ITI.Migrations
                 {
                     b.HasOne("Admin_Panel_ITI.Models.Instructor", "Instructor")
                         .WithMany("Materials")
-                        .HasForeignKey("InstructorID");
+                        .HasForeignKey("InstructorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Instructor");
                 });

@@ -1,4 +1,5 @@
 ﻿using Admin_Panel_ITI.Data;
+using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
 
 namespace Admin_Panel_ITI.Repos.RepoServices
@@ -21,5 +22,12 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             }
             Context.SaveChanges();
         }
+
+        void IIntake_InstructorRepository.AddIntake_Instructor(Intake_Instructor itc)
+        {
+            Context.Intake_Instructors.Add(itc);
+            Context.SaveChanges();
+        }
+
     }
 }

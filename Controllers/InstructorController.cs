@@ -12,11 +12,15 @@ namespace Admin_Panel_ITI.Controllers
         private readonly IInstructorRepository instructorRepository;
         private readonly ICourseRepository courseRepository;
         private readonly IInstructor_CourseRepository instructor_CourseRepository;
+        private readonly IIntakeRepository intakeRepository;
+        private readonly IIntake_InstructorRepository intake_InstructorRepository;
 
-        public InstructorController(IInstructorRepository instructorRepository, ICourseRepository courseRepository, IInstructor_CourseRepository instructor_CourseRepository) {
+        public InstructorController(IInstructorRepository instructorRepository, ICourseRepository courseRepository, IInstructor_CourseRepository instructor_CourseRepository, IIntakeRepository intakeRepository, IIntake_InstructorRepository intake_InstructorRepository) {
             this.instructorRepository = instructorRepository;
             this.courseRepository = courseRepository;
             this.instructor_CourseRepository = instructor_CourseRepository;
+            this.intakeRepository = intakeRepository;
+            this.intake_InstructorRepository = intake_InstructorRepository;
         }
         // GET: InstructorController
         public ActionResult Index(int pageNumber)
@@ -48,7 +52,9 @@ namespace Admin_Panel_ITI.Controllers
         {
             var instructor = instructorRepository.GetInstructorbyID(id);
             var courses = courseRepository.GetCourses();
+            var intakes = intakeRepository.GetIntakes();
             ViewData["CourseList"] = new SelectList(courses, "ID", "Name");
+            ViewData["IntakeList"] = new SelectList(intakes, "ID", "Name");
             return View(instructor);
         }
 
@@ -58,6 +64,7 @@ namespace Admin_Panel_ITI.Controllers
         public ActionResult Edit(string id, Instructor instructor)
         {
             var selectedCourses = Request.Form["SelectedCourses"];
+            var selectedIntakes = Request.Form["selectedIntakes"];
             if (ModelState.IsValid)
             {
                 instructorRepository.UpdateInstructor(id, instructor);
@@ -70,6 +77,17 @@ namespace Admin_Panel_ITI.Controllers
                     };
                     instructor_CourseRepository.CreateInstructor_Course(ic_record);
                 }
+                foreach (var item in selectedIntakes)
+                {
+                    Intake_Instructor ic_record = new Intake_Instructor()
+                    {
+                        IntakeID = int.Parse(item),
+                        InstructorID = id
+
+                    };
+                    intake_InstructorRepository.AddIntake_Instructor(ic_record);
+                }
+
                 return RedirectToAction("Index");
             }
             return View(instructor);

@@ -13,7 +13,7 @@ namespace Admin_Panel_ITI.Models
 
 
         [ForeignKey(nameof(Instructor))]
-        public string InstructorID { get; set; }
+        public string? InstructorID { get; set; }
         public virtual Instructor? Instructor { get; set; }
 
 

@@ -4,6 +4,7 @@ using Admin_Panel_ITI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Admin_Panel_ITI.Migrations
 {
     [DbContext(typeof(MainDBContext))]
-    partial class MainDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230901085940_allowNulls")]
+    partial class allowNulls
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -606,9 +609,6 @@ namespace Admin_Panel_ITI.Migrations
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("date");
-
-                    b.Property<bool>("CurrentlyWorking")
-                        .HasColumnType("bit");
 
                     b.HasIndex("AdminID");
 
