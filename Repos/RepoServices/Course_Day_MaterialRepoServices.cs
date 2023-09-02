@@ -27,7 +27,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
         void ICourse_Day_MaterialRepository.DeleteCourseDayMaterial(int courseID, int courseDayID, int materialID)
         {
-            var cdm = Context.Course_Day_Materials.FirstOrDefault(cdm => cdm.CourseDayID == courseDayID && cdm.CourseID == courseID && cdm.MaterialID == materialID);
+            var cdm = Context.Course_Day_Materials.SingleOrDefault(cdm => cdm.CourseDayID == courseDayID && cdm.CourseID == courseID && cdm.MaterialID == materialID);
             Context.Course_Day_Materials.Remove(cdm);
             Context.SaveChanges();
         }    

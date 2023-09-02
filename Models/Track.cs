@@ -21,7 +21,7 @@ namespace Admin_Panel_ITI.Models
 
 
         [ForeignKey(nameof(Manager))]
-        public string ManagerID { get; set; }  //InstructorID, string because it will be GUID (hashed password)
+        public string? ManagerID { get; set; }  //InstructorID, string because it will be GUID (hashed password)
         public virtual Instructor? Manager { get; set; }
 
 
@@ -31,7 +31,6 @@ namespace Admin_Panel_ITI.Models
         public virtual Admin? Admin { get; set; }
 
 
-        public virtual IEnumerable<Intake_Track>? IntakeTracks { get; set; }
         public virtual IEnumerable<Intake_Track_Course>? IntakeTrackCourse { get; set; }
 
 

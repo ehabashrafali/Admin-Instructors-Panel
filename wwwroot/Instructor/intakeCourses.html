@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../assets/js/bootstrap.bundle.js"></script>
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html" style="margin-left: 24px;">
+                <img src="../assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
+            </a>
+            <div class="navbarvr"></div>
+            <span class="collapse navbar-collapse  navbar-brand">ITI-Hub</span>
+            <div class="justify-content-end" id="navbarSupportedContent">
+                <div class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-right: 20px;">
+                    <a href="../register/login.html" class="btn logoutbtn" style="margin-right: 48px;">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar">
+                <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary" style="width: 280px; height: 93vh;">
+                    <span class="d-flex align-items-center mb-3 mb-md-0 me-md-auto ">
+                        <span class="nav-title">Navigation</span>
+                    </span>
+                    <hr>
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item navs">
+                            <a href="index.html" class="nav-link link-body-emphasis" aria-current="page">
+                                <img src="../assets/images/Gray/intake.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                Intakes
+                            </a>
+                        </li>
+                        <li class="nav-item navs">
+                            <a href="managedTracks.html" class="nav-link link-body-emphasis act">
+                                <img src="../assets/images/White/track.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                <span style="color: white;">Tracks you manage</span>
+                            </a>
+                        </li>
+                        <li class="nav-item navs">
+                            <a href="teachedTracks.html" class="nav-link link-body-emphasis">
+                                <img src="../assets/images/Gray/track.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                Tracks you teach in
+                            </a>
+                        </li>
+                        <li class="nav-item navs">
+                            <a href="courses.html"  class="nav-link link-body-emphasis">
+                                <img src="../assets/images/Gray/courses.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                Courses you teach in
+                            </a>
+                        </li>
+                        <li class="nav-item navs">
+                            <a href="../intakes.html" class="nav-link link-body-emphasis">
+                                <img src="../assets/images/Gray/intake.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                Intakes
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-10 text-center content">
+                <div class="container-fluid">
+                    <div class="list-group" style="margin: 48px 40px;">
+                        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="mb-1">C# Course</h5>
+                                <small>Details</small>
+                            </div>
+                            <p class="mb-1">Some placeholder content in a paragraph.</p>
+                            <small>And some small print.</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">List group item heading</h5>
+                                <small class="text-body-secondary">3 days ago</small>
+                            </div>
+                            <p class="mb-1">Some placeholder content in a paragraph.</p>
+                            <small class="text-body-secondary">And some muted small print.</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">List group item heading</h5>
+                                <small class="text-body-secondary">3 days ago</small>
+                            </div>
+                            <p class="mb-1">Some placeholder content in a paragraph.</p>
+                            <small class="text-body-secondary">And some muted small print.</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-10 text-center content">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <h2>Course 1</h2>
+                    </li>
+                    <li class="list-group-item">
+                        <h2>Course 1</h2>
+                    </li>
+                    <li class="list-group-item">
+                        <h2>Course 1</h2>
+                    </li>
+                    <li class="list-group-item">
+                        <h2>Course 1</h2>
+                    </li>
+                    <li class="list-group-item">
+                        <h2>Course 1</h2>
+                    </li>
+                    <li class="list-group-item">
+                        <h2>Course 1</h2>
+                    </li>
+                    <li class="list-group-item">
+                        <h2>Course 1</h2>
+                    </li>
+                    <li class="list-group-item">
+                        <h2>Course 1</h2>
+                    </li>
+                </ul> -->
+                <!-- <div class="container-fluid">
+                    <div class="container" style="flex-wrap: wrap; justify-content: center; width: 999px;">
+                        <a class="box">
+                            <h2>Course 1</h2>
+                        </a>
+                        <a class="box">
+                            <h2>Course 2</h2>
+                        </a>
+                        <a class="box">
+                            <h2>Course 3</h2>
+                        </a>
+                        <a class="box">
+                            <h2>Course 4</h2>
+                        </a>
+                        <a class="box">
+                            <h2>Course 5</h2>
+                        </a>
+                        <a class="box">
+                            <h2>Course 6</h2>
+                        </a>
+                        <a class="box">
+                            <h2>Course 7</h2>
+                        </a>
+                        <a class="box">
+                            <h2>Course 8</h2>
+                        </a>
+                        <a class="box">
+                            <h2>Course 9</h2>
+                        </a>
+                        <a class="box">
+                            <h2>Course 10</h2>
+                        </a>
+                        <a class="box">
+                            <h2>Course 11</h2>
+                        </a>
+                        <a class="box">
+                            <h2>Course 12</h2>
+                        </a>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

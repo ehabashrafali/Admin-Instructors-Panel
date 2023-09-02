@@ -15,20 +15,65 @@ namespace Admin_Panel_ITI.Controllers
         public IIntakeRepository intakeRepository { get; }
         private readonly UserManager<AppUser> _userManager;
         private readonly IInstructorRepository instructorRepository;
+        private readonly IStudentRepository studentRepository;
 
-        public TrackController(ITrackRepository trackRepositry, IIntakeRepository intakeRepository, UserManager<AppUser> userManager, IInstructorRepository instructorRepository)
+        public TrackController(ITrackRepository trackRepositry, IIntakeRepository intakeRepository, UserManager<AppUser> userManager, IInstructorRepository instructorRepository, IStudentRepository studentRepository)
         {
             this.trackRepositry = trackRepositry;
             this.intakeRepository = intakeRepository;
             _userManager = userManager;
             this.instructorRepository = instructorRepository;
+            this.studentRepository = studentRepository;
         }
         // GET: TrackController
         public ActionResult Index(int pageNumber)
         {
+            var intakes = intakeRepository.GetAllIntakes();
             var Tracks = trackRepositry.getTracks(pageNumber, 10);
+            List<int> studentNumsforTrack = new List<int>();
+            foreach (var track in Tracks)
+            {
+                var studentNuminTrack = studentRepository.getStudentNumberbyTrackID(track.ID);
+                studentNumsforTrack.Add(studentNuminTrack);
+            }
+            ViewData["NumOfStudsInEachTrack"] = studentNumsforTrack;
+            ViewData["Intakes"] = new SelectList(intakes, "ID", "Name"); // Add this line
+            ViewBag.PageNumber = pageNumber;
             return View(Tracks);
         }
+
+
+        public ActionResult UpdateTableData(int intakeID, int pageNumber)
+        {
+            var intakes = intakeRepository.GetAllIntakes();
+            List<Track> tracksByIntake;
+
+            if (intakeID == 0)
+            {
+                // Get all tracks without filtering by intake ID
+                tracksByIntake = trackRepositry.getTracks(pageNumber, 10);
+            }
+            else
+            {
+                // Get tracks filtered by intake ID
+                var Tracks = trackRepositry.getTrackbyIntakeID(intakeID, pageNumber, 10);
+                tracksByIntake = Tracks.Select(t => t.Track).ToList();
+            }
+
+            List<int> studentNumsforTrack = new List<int>();
+            foreach (var track in tracksByIntake)
+            {
+                var studentNuminTrack = studentRepository.getStudentNumberbyTrackID(track.ID);
+                studentNumsforTrack.Add(studentNuminTrack);
+            }
+
+            ViewData["NumOfStudsInEachTrack"] = studentNumsforTrack;
+            ViewData["Intakes"] = new SelectList(intakes, "ID", "Name");
+            ViewBag.PageNumber = pageNumber;
+
+            return PartialView("_TableDataPartial", tracksByIntake);
+        }
+
 
         // GET: TrackController/Details/5
         public ActionResult Details(int id)

@@ -68,9 +68,12 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
 
         //public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-
+        public enum UserType { Admin, Instructor, Student }
         public class InputModel
         {
+            public UserType userType { get; set; }
+
+
 
             [Required, MaxLength(50)]
             [DisplayName("Full Name")]
@@ -154,20 +157,34 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
                     //{
 
                     user.LockoutEnabled = false;
-                    await _userManager.AddToRoleAsync(user, "Admin"); //add role  //only admins can register in system, other users only login
-                    await _signInManager.SignInAsync(user, isPersistent: false); //create cookie 
-                    
+
+                    if (Input.userType == UserType.Admin)
+                    {
+                        await _userManager.AddToRoleAsync(user, "Admin");
+                    }
+                    else if (Input.userType == UserType.Instructor)
+                    {
+                        await _userManager.AddToRoleAsync(user, "Instructor");
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, "Student");
+                    }
+
+
                     if (await _userManager.IsInRoleAsync(user, "Admin"))
                     {
                         Admin newAdmin = new()
                         {
-                            Id = user.Id,
+                            AspNetUserID = user.Id,
                         };
+
                         adminRepository.CreateAdmin(newAdmin);
                     }
 
-                    return LocalRedirect(returnUrl);
+                    await _signInManager.SignInAsync(user, isPersistent: false); //create cookie 
 
+                    return LocalRedirect(returnUrl);
 
                     //}
                 }

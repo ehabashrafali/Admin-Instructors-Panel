@@ -99,7 +99,9 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User logged in.");
+                        returnUrl = Url.Action("Index", "Home");
                         return LocalRedirect(returnUrl);
+                        //return RedirectToAction("Index", "Home");
                     }
                     else
                     {

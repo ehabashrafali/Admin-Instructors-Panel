@@ -28,6 +28,17 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             {
                 Context.Intake_Track_Courses.Remove(record);
             }
+            Context.SaveChanges();
+        }
+
+
+        void IIntake_Track_CourseRepository.DeleteIntake_Track_CoursebyIntakeID(int intakeID)
+        {
+            var records = Context.Intake_Track_Courses.Where(itc => itc.IntakeID == intakeID).ToList();
+            foreach (var record in records)
+            {
+                Context.Intake_Track_Courses.Remove(record);
+            }
         }
     }
 }

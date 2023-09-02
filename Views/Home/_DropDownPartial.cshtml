@@ -1,0 +1,37 @@
+﻿<div class="d1">
+    <h2 class="allintakes">All Intakes Data</h2>
+    <div class="dropdown">
+        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="selectedIntakeBtn">
+            Intake Number
+        </button>
+        <div class="dropdown-content" style="height: 250px; overflow-y: auto;">
+            <a href="javascript:void(0);" onclick="loadIntakeData(0,'All Intakes')">All Intakes</a>
+            @foreach (var intake in ViewData["Intakes"] as List<Intake>)
+            {
+                <a href="javascript:void(0);" onclick="loadIntakeData(@intake.ID, '@intake.Name')">@intake.Name</a>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    function loadIntakeData(intakeID, intakeName) {
+       
+            $.ajax({
+                url: '@Url.Action("IntakesData", "Home")', // Replace with your controller name
+                type: 'GET',
+                data: { intakeID: intakeID },
+                success: function (result) {
+                    // Replace the content of a specific div with the returned HTML
+                    $('#intakeDataContainer').html(result);
+
+                    // Update the button text to reflect the selected intake
+                    $('#selectedIntakeBtn').text(intakeName);
+                },
+                error: function () {
+                    alert('Error loading data.');
+                }
+            });
+        
+    }
+</script>

@@ -1,4 +1,4 @@
-﻿@model Admin_Panel_ITI.Models.Instructor
+﻿@*@model Admin_Panel_ITI.Models.Instructor
 
 @{
     ViewData["Title"] = "Edit";
@@ -60,20 +60,38 @@
                         {
                             <option value="@course.CourseID" disabled>
                                 @course.Course.Name
-                                <button class="btn btn-link btn-sm" onclick="deleteCourse('@course.CourseID')">Delete</button>
                             </option>
                         }
                     </optgroup>
                 </select>
             </div>
 
-            <script>
-                function deleteCourse(courseId) {
-                    // Implement your delete logic here
-                    // You can make an AJAX request to delete the course from the instructor
-                    // and then update the select list accordingly
-                }
-            </script>
+            <div class="form-group">
+                <label for="selectedIntakes">Select Intakes:</label>
+                <select name="selectedIntakes" class="form-control" multiple>
+                    <optgroup label="Available Intakes">
+                        @foreach (var intake in (SelectList)ViewData["IntakeList"])
+                        {
+                            var isSelected = Model.IntakeInstructors.Any(ic => ic.IntakeID.ToString() == intake.Value);
+
+                            if (!isSelected)
+                            {
+                                <option value="@intake.Value">@intake.Text</option>
+                            }
+                        }
+                    </optgroup>
+                    <optgroup label="Selected Intakes">
+                        @foreach (var intake in Model.IntakeInstructors)
+                        {
+                            <option value="@intake.IntakeID" disabled>
+                                @intake.Intake.Name
+                            </option>
+                        }
+                    </optgroup>
+                </select>
+            </div>
+
+           
 
 
 
@@ -93,3 +111,4 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+*@

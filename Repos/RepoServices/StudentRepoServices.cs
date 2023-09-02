@@ -37,7 +37,7 @@ namespace Admin_Panel_ITI.Repos
             student_SubmissionRepository.DeleteStudent_Submission(studentID);
             exam_Std_QuestionRepository.DeleteExam_Std_Question(studentID);
 
-            var student = Context.Students.FirstOrDefault(s => s.Id == studentID.ToString());
+            var student = Context.Students.FirstOrDefault(s => s.AspNetUserID == studentID.ToString());
             Context.Students.Remove(student);
             Context.SaveChanges();
         }
@@ -48,7 +48,7 @@ namespace Admin_Panel_ITI.Repos
                                  .Include(s=>s.Intake)
                                  .Include(s=>s.Track)
                                  .Include(s=>s.Admin)
-                                 .FirstOrDefault(s => s.Id == studentID);
+                                 .FirstOrDefault(s => s.AspNetUserID == studentID);
             return student;
         }
 
@@ -60,6 +60,11 @@ namespace Admin_Panel_ITI.Repos
         int IStudentRepository.getStudentNumberbyIntakeID(int intakeID)
         {
             return Context.Students.Where(s=>s.IntakeID== intakeID).Count();
+        }
+
+        int IStudentRepository.getStudentNumberbyTrackID(int trackID)
+        {
+            return Context.Students.Where(s => s.TrackID == trackID).Count();
         }
 
         List<Student> IStudentRepository.getStudents(int pageNumber, int pageSize)
@@ -130,11 +135,11 @@ namespace Admin_Panel_ITI.Repos
 
         void IStudentRepository.UpdateStudent(string studentID, Student student)
         {
-            var studentUpdated = Context.Students.FirstOrDefault(s=> s.Id == studentID.ToString());
+            var studentUpdated = Context.Students.FirstOrDefault(s=> s.AspNetUserID == studentID.ToString());
 
             studentUpdated.IsGraduated = student.IsGraduated;
-            studentUpdated.FullName = student.FullName;
-            studentUpdated.UserName = student.UserName;
+            studentUpdated.AspNetUser.FullName = student.AspNetUser.FullName;
+            studentUpdated.AspNetUser.UserName = student.AspNetUser.UserName;
             studentUpdated.AdminID = student.AdminID;
             studentUpdated.IntakeID = student.IntakeID;
             studentUpdated.TrackID = student.TrackID;

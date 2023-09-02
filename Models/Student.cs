@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Admin_Panel_ITI.Models
 {
     [Table("Student")]
-    public class Student : AppUser
+    public class Student 
     {
         public bool IsGraduated { get; set; }
 
@@ -19,9 +19,7 @@ namespace Admin_Panel_ITI.Models
 
 
 
-        [ForeignKey(nameof(Admin))]
-        public string AdminID { get; set; }
-        public virtual Admin? Admin { get; set; }
+       
 
 
 
@@ -35,6 +33,19 @@ namespace Admin_Panel_ITI.Models
         public int TrackID { get; set; }
         public virtual Track? Track { get; set; }
 
+
+
+        [ForeignKey(nameof(AspNetUser))]
+        [Key]
+        public string? AspNetUserID { get; set; }
+        public virtual AppUser? AspNetUser { get; set; }
+
+
+
+
+        [ForeignKey(nameof(Admin))]
+        public string? AdminID { get; set; }
+        public virtual AppUser? Admin { get; set; }
 
 
         //Many to Many navigation properties//

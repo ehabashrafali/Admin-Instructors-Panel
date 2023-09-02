@@ -5,8 +5,19 @@ using System.ComponentModel.DataAnnotations;
 namespace Admin_Panel_ITI.Models
 {
     [Table("Admin")]
-    public class Admin : AppUser
+    public class Admin 
     {
+
+        [ForeignKey(nameof(AspNetUser))]
+        [Key]
+        public string? AspNetUserID { get; set; }
+        public virtual AppUser? AspNetUser { get; set; }
+
+
+
+
+        
+
         public virtual IEnumerable<Intake>? Intakes { get; set; }
         public virtual IEnumerable<Track>? Tracks { get; set; }
         public virtual IEnumerable<Student>? Students { get; set; }

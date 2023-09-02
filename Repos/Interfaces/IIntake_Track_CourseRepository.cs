@@ -5,5 +5,6 @@
 
         public void DeleteIntake_Track_CoursebyCourseID(int courseID);
         public void DeleteIntake_Track_CoursebyTrackID(int trackID);
+        public void DeleteIntake_Track_CoursebyIntakeID(int intakeID);
     }
 }
