@@ -6,6 +6,8 @@ namespace Admin_Panel_ITI.Repos
     {
         public int getStudentNumber();
         public int getStudentNumberbyIntakeID(int intakeID);
+        public int getStudentNumberbyTrackID(int trackID);
+        
 
 
 

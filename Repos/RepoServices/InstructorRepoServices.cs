@@ -53,7 +53,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             // delete record of intake_instructor
             intake_InstructorRepository.deleteIntake_InstructorbyInstructorID(instructorID);
 
-            var ins = Context.Instructors.FirstOrDefault(i => i.Id == instructorID.ToString());
+            var ins = Context.Instructors.FirstOrDefault(i => i.AspNetUserID == instructorID.ToString());
             Context.Instructors.Remove(ins);
             Context.SaveChanges();
         }
@@ -67,7 +67,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
                              .ThenInclude(it=>it.Course)
                              .Include(i=>i.IntakeInstructors)
                              .ThenInclude(ii=>ii.Intake)
-                             .FirstOrDefault(i => i.Id == instructorID.ToString());
+                             .FirstOrDefault(i => i.AspNetUserID == instructorID.ToString());
             return ins;
         }
 
@@ -106,12 +106,12 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
         void IInstructorRepository.UpdateInstructor(string instructorID, Instructor instructor)
         {
-            var instructor_updated = Context.Instructors.FirstOrDefault(i=>i.Id == instructorID.ToString());
-            instructor_updated.FullName = instructor.FullName;
-            instructor_updated.UserName = instructor.UserName;
+            var instructor_updated = Context.Instructors.FirstOrDefault(i=>i.AspNetUserID == instructorID.ToString());
+            instructor_updated.AspNetUser.FullName = instructor.AspNetUser.FullName;
+            instructor_updated.AspNetUser.UserName = instructor.AspNetUser.UserName;
             instructor_updated.AdminID = instructor.AdminID;
-            instructor_updated.Email = instructor.Email;
-            instructor_updated.PhoneNumber = instructor.PhoneNumber;
+            instructor_updated.AspNetUser.Email = instructor.AspNetUser.Email;
+            instructor_updated.AspNetUser.PhoneNumber = instructor.AspNetUser.PhoneNumber;
             instructor_updated.CreationDate = instructor.CreationDate;
             Context.SaveChanges();
         }

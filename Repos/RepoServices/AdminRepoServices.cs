@@ -28,7 +28,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
         void IAdminRepository.DeleteAdmin(int adminID)
         {
-            var admin = Context.Admins.FirstOrDefault(ad=>ad.Id == adminID.ToString());
+            var admin = Context.Admins.FirstOrDefault(ad=>ad.AspNetUserID == adminID.ToString());
             Context.Admins.Remove(admin);
             Context.SaveChanges();
 
@@ -36,7 +36,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
         Admin IAdminRepository.GetAdminbyID(int adminID)
         {
-            var admin = Context.Admins.FirstOrDefault(ad => ad.Id == adminID.ToString());
+            var admin = Context.Admins.FirstOrDefault(ad => ad.AspNetUserID == adminID.ToString());
             return admin;
         }
 
@@ -52,11 +52,10 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
         void IAdminRepository.UpdateAdmin(int adminID, Admin admin)
         {
-            var admin_Updated = Context.Admins.FirstOrDefault(ad => ad.Id == adminID.ToString());
-            admin_Updated.FullName = admin.FullName;
-            admin_Updated.UserName = admin.UserName;
-            admin_Updated.PasswordHash = admin.PasswordHash;
-            admin_Updated.PhoneNumber = admin.PhoneNumber;
+            var admin_Updated = Context.Admins.FirstOrDefault(ad => ad.AspNetUserID == adminID.ToString());
+            admin_Updated.AspNetUser.FullName = admin.AspNetUser.FullName;
+            admin_Updated.AspNetUser.UserName = admin.AspNetUser.UserName;
+            admin_Updated.AspNetUser.PhoneNumber = admin.AspNetUser.PhoneNumber;
             Context.SaveChanges();
         }
     }

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Admin_Panel_ITI.Models
 {
     [Table("Instructor")]
-    public class Instructor : AppUser
+    public class Instructor
     {
 
         [DataType(DataType.Date)]
@@ -19,14 +19,25 @@ namespace Admin_Panel_ITI.Models
 
 
 
-        [ForeignKey(nameof(Admin))]
-        public string AdminID { get; set; }
 
 
         public bool CurrentlyWorking { get; set; } = true;
 
-        public virtual Admin? Admin { get; set; }
 
+
+
+
+        [ForeignKey(nameof(AspNetUser))]
+        [Key]
+        public string? AspNetUserID { get; set; }
+        public virtual AppUser? AspNetUser { get; set; }
+
+
+
+
+        [ForeignKey(nameof(Admin))]
+        public string? AdminID { get; set; }
+        public virtual AppUser? Admin { get; set; }
 
         public virtual IEnumerable<Track>? Tracks { get; set; }
         public virtual IEnumerable<Exam>? Exams { get; set; }

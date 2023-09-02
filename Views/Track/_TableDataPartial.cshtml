@@ -1,0 +1,45 @@
+﻿@{
+    var numOfStudsInEachTrackList = (List<int>)ViewData["NumOfStudsInEachTrack"];
+    var trackList = ((IEnumerable<Admin_Panel_ITI.Models.Track>)Model).ToList();
+}
+
+<div id="partialTable" class="row col-md-11">
+    <table class="table table-hover" id="myTable">
+        <thead class="table-secondary">
+            <tr>
+                <th><input type="checkbox" name="all" id="all" class="all" onclick="checkUncheck(this)"></th>
+                <th>
+                    Name
+                    <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                    </svg>
+                </th>
+                <th>
+                    No. of Students
+                    <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                    </svg>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < trackList.Count; i++)
+            {
+                <tr>
+                    <td><input type="checkbox" name="data" value="@trackList[i].ID"></td>
+                    <td>@trackList[i].Name</td>
+                    <td>@numOfStudsInEachTrackList[i]</td>
+                    <td>
+                        <div class="options-menu">
+                            <span type="button" class="threedots" data-container="body" data-toggle="popover" data-bs-placement="left" data-content="<div style='display:flex; justify-content: space-between;align-items:flex-start;'><a href='#'><a href='#'><img style='width: 20px; height: 20px; margin-top:' src='assets/images/eye.png' alt='details'></a><a style='margin: 0 4px 0 7px;' href='#'><img style='width: 20px; height: 20px;' src='assets/images/edit.png' alt='details'></a><a href='#'><a onclick='clicked()' href='#'><img style='width: 20px; height: 20px;' src='assets/images/delete.png' alt='details'></a></div>">
+                                <i class="fas fa-ellipsis-v" style="color: gray;"></i>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

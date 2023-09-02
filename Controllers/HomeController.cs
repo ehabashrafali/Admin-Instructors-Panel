@@ -33,7 +33,12 @@ namespace Admin_Panel_ITI.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                ViewData["Intakes"] = intakeRepository.GetAllIntakes();
+                ViewData["Intakes"] = intakeRepository.GetAllIntakes().Select(intake => new Intake
+                {
+                    ID = intake.ID, // Replace with the actual property name for the ID
+                    Name = intake.Name // Replace with the actual property name for the display name
+                })
+        .ToList(); ;
                 HomePageViewModel hmPageViewModel = new HomePageViewModel()
                 {
                     IntakeNumber = intakeRepository.getIntakeNumber(),
@@ -63,13 +68,11 @@ namespace Admin_Panel_ITI.Controllers
 
         public ActionResult IntakesData(int intakeID)
         {
-            // Fetch updated data from your data source
             var intakeNumber = intakeRepository.getIntakeNumber();
-            var studentNumber = studentRepository.getStudentNumberbyIntakeID(intakeID);
-            var trackNumber = trackRepository.getTrackNumberbyIntakeID(intakeID);
-            var instructorNumber = instructorRepository.GetInstructorNumberbyIntakeID(intakeID);
-            var courseNumber = courseRepository.GetCourseNumberbyIntakeID(intakeID);
-            // Return a partial view with the updated data
+            var studentNumber = intakeID != 0 ? studentRepository.getStudentNumberbyIntakeID(intakeID) : studentRepository.getStudentNumber();
+            var trackNumber = intakeID != 0 ? trackRepository.getTrackNumberbyIntakeID(intakeID) : trackRepository.getTrackNumber();
+            var instructorNumber = intakeID != 0 ? instructorRepository.GetInstructorNumberbyIntakeID(intakeID) : instructorRepository.GetInstructorNumber();
+            var courseNumber = intakeID != 0 ? courseRepository.GetCourseNumberbyIntakeID(intakeID) : courseRepository.GetCourseNumber();
 
             var viewModel = new HomePageViewModel
             {
@@ -82,6 +85,7 @@ namespace Admin_Panel_ITI.Controllers
 
             return PartialView("_NumbersPartial", viewModel);
         }
+
 
 
         public IActionResult Privacy()
