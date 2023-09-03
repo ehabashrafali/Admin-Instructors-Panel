@@ -14,26 +14,12 @@ namespace Admin_Panel_ITI.Models
         public DateTime CreationDate { get; set; }
 
 
-
-
-
-
-
-
-
-        public bool CurrentlyWorking { get; set; } = true;
-
-
-
-
+        public bool? CurrentlyWorking { get; set; } = true;
 
         [ForeignKey(nameof(AspNetUser))]
         [Key]
         public string? AspNetUserID { get; set; }
         public virtual AppUser? AspNetUser { get; set; }
-
-
-
 
         [ForeignKey(nameof(Admin))]
         public string? AdminID { get; set; }
@@ -42,11 +28,9 @@ namespace Admin_Panel_ITI.Models
         public virtual IEnumerable<Track>? Tracks { get; set; }
         public virtual IEnumerable<Exam>? Exams { get; set; }
 
-
         public virtual IEnumerable<Instructor_Course>? InstructorCourses { get; set; }
         public virtual IEnumerable<Intake_Instructor>? IntakeInstructors { get; set; }
         public virtual IEnumerable<Material>? Materials { get; set; }
-
 
 
     }

@@ -8,10 +8,6 @@ namespace Admin_Panel_ITI.Models
         public string FullName { get; set; }
 
 
-<<<<<<< HEAD
-        //public string Phone { get; set; }
-
-=======
 
         [InverseProperty("Admin")]
         public virtual IEnumerable<Instructor>? Instructors_Admin { get; set; }
@@ -29,7 +25,6 @@ namespace Admin_Panel_ITI.Models
         public virtual IEnumerable<Student>? Students_AspNetUser { get; set; }
         [InverseProperty("Admin")]
         public virtual IEnumerable<Student>? Students_Admin { get; set; }
->>>>>>> cbb690302566e79f4db45c8f80be5fbf54c1d2f0
 
     }
 }

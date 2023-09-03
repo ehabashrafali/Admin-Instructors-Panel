@@ -119,7 +119,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
         List<Instructor> IInstructorRepository.GetInstructors()
         {
-            var instructors = Context.Instructors.ToList();
+            var instructors = Context.Instructors.Include(i => i.AspNetUser).ToList();
 
             return instructors;
         }

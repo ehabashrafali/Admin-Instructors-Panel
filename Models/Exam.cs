@@ -11,7 +11,7 @@ namespace Admin_Panel_ITI.Models
         public int ID { get; set; }
 
         [Required, MaxLength(100)]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [Required]
         public int Duration { get; set; }
@@ -24,9 +24,6 @@ namespace Admin_Panel_ITI.Models
 
 
 
-
-
-
         [ForeignKey(nameof(Instructor))]
         public string? InstructorID { get; set; }
         public virtual Instructor? Instructor { get; set; }
@@ -34,7 +31,7 @@ namespace Admin_Panel_ITI.Models
 
 
         [ForeignKey(nameof(Course))]
-        public int CourseID { get; set; }
+        public int? CourseID { get; set; }
         public virtual Course? Course { get; set; }
 
 

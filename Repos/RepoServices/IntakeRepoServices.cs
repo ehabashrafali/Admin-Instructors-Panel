@@ -11,8 +11,8 @@ namespace Admin_Panel_ITI.Repos
         private readonly IIntake_Track_CourseRepository intake_Track_CourseRepository;
         public MainDBContext Context { get; set; }
         public IntakeRepoServices(
-            MainDBContext context, 
-            IStudentRepository studentRepository, 
+            MainDBContext context,
+            IStudentRepository studentRepository,
              IIntake_Track_CourseRepository intake_Track_CourseRepository)
         {
             Context = context;
@@ -51,8 +51,8 @@ namespace Admin_Panel_ITI.Repos
 
         List<Intake> IIntakeRepository.GetIntakes()
         {
-            return Context.Intakes.Include(c=>c.Admin)
-                                 .Include(c=>c.IntakeTrackCourse)
+            return Context.Intakes.Include(c => c.Admin)
+                                 .Include(c => c.IntakeTrackCourse)
                                  .ToList();
         }
 

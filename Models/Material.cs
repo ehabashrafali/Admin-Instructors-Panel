@@ -11,7 +11,6 @@ namespace Admin_Panel_ITI.Models
         public string Path { get; set; }
 
 
-
         [ForeignKey(nameof(Instructor))]
         public string? InstructorID { get; set; }
         public virtual Instructor? Instructor { get; set; }
