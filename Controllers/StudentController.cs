@@ -52,9 +52,9 @@ namespace Admin_Panel_ITI.Controllers
         //public ActionResult Create()
         //{
         //    var Tracks = trackRepository.getTracks();
-        //    var Intakes = IntakeRepository.GetAllIntakes();
+        //    var IntakesIDs = IntakeRepository.GetAllIntakes();
         //    ViewBag.AllTracks = new SelectList(Tracks, "ID", "Name");
-        //    ViewBag.AllIntakes = new SelectList(Intakes, "ID", "Name");
+        //    ViewBag.AllIntakes = new SelectList(IntakesIDs, "ID", "Name");
         //    return View();
         //}
 

@@ -48,6 +48,7 @@ namespace Admin_Panel_ITI.Models
         public virtual AppUser? Admin { get; set; }
 
 
+
         //Many to Many navigation properties//
         public virtual IEnumerable<Student_Course>? StudentCourses { get; set; }
         public virtual IEnumerable<Exam_Std_Question>? Student_Quest_Exam { get; set; }

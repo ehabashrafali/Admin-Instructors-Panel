@@ -1,5 +1,7 @@
 ﻿using Admin_Panel_ITI.Data;
+using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Admin_Panel_ITI.Repos.RepoServices
 {
@@ -39,6 +41,17 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             {
                 Context.Intake_Track_Courses.Remove(record);
             }
+        }
+
+
+        //---//
+        public List<Intake_Track_Course> GetTracksByIntakeID(int intakeID)
+        {
+            return Context.Intake_Track_Courses
+                .Where(i => i.IntakeID == intakeID)
+                .Include(i => i.Intake)
+                .Include(i=> i.Track)
+                .ToList();
         }
     }
 }

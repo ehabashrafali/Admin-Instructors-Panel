@@ -33,12 +33,13 @@ namespace Admin_Panel_ITI.Repos
         //    if(intake_students.Count() == 0)
         //    {
         //        intake_TrackRepository.DeleteIntake_Track(intakeID);
-        //        var intake = Context.Intakes.FirstOrDefault(i => i.ID == intakeID);
-        //        Context.Intakes.Remove(intake);
+        //        var intake = Context.IntakesIDs.FirstOrDefault(i => i.ID == intakeID);
+        //        Context.IntakesIDs.Remove(intake);
         //    }
         //}
 
-        Intake IIntakeRepository.getIntakebyID(int intakeID)
+
+        public Intake getIntakebyID(int intakeID)
         {
             var intake = Context.Intakes.FirstOrDefault(i => i.ID == intakeID);
             return intake;
@@ -80,6 +81,25 @@ namespace Admin_Panel_ITI.Repos
         {
             return Context.Intakes.Include(i => i.Admin).ToList();
         }
+
+        public List<Intake> GetCurrentAvIntakes()
+        {
+            return Context.Intakes.Where(i => i.EndDate >= DateTime.Now).ToList();
+        }
+
+        public List<Intake> getIntakesbyIDs(int[] intakeIDs)
+        {
+            List<Intake> selectedIntakes = new List<Intake>();
+            foreach(int id in intakeIDs)
+            {
+                selectedIntakes.Add(getIntakebyID(id));
+            }
+
+            return selectedIntakes;
+        }
+
+
+
 
 
 

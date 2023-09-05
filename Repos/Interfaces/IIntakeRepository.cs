@@ -29,6 +29,7 @@ namespace Admin_Panel_ITI.Repos
         //---------------------- asem_updates ---------------------------------------//
 
         public List<Intake> GetAllIntakes();
-
+        public List<Intake> GetCurrentAvIntakes();
+        public List<Intake> getIntakesbyIDs(int[] intakeID);
     }
 }

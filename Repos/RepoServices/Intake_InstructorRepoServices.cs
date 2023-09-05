@@ -29,5 +29,19 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
+
+        //---//
+        public void AddIntake_Instructor(int IntakeID, string instructorID)
+        {
+            Intake_Instructor intake_Instructor = new Intake_Instructor()
+            {
+                IntakeID = IntakeID,
+                InstructorID = instructorID
+            };
+
+            Context.Intake_Instructors.Add(intake_Instructor);
+            Context.SaveChanges();
+        }
+
     }
 }

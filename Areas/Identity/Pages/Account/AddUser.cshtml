@@ -1,0 +1,213 @@
+﻿@page
+@using Admin_Panel_ITI.Models;
+@using Admin_Panel_ITI.Repos.Interfaces;
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@model AddUserModel
+
+@{
+    Layout = null;
+    var allIntakes = (SelectList)ViewData["AllIntakes"];
+
+    //var allTracks = (SelectList)ViewData["AllTracks"];
+    //string selectedType = (string)ViewData["type"];
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up </title>
+
+   <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <script src="~/assets/js/bootstrap.bundle.js"></script>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="~/register/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="/register/css/style.css">
+</head>
+<body>
+
+    <div class="main">
+
+        <!-- Sign up form -->
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="screen"></div>
+                    <div class="signin-image">
+                        <div class="logo">
+                            <span class="navbar-brand" style="margin-left: 24px;">
+                                <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
+                            </span>
+                            <div class="navbarvr"></div>
+                            <span>ITI-Hub</span>
+                        </div>
+                    </div>
+                    <div class="signup-form">
+                        <h2 class="form-title">Add New User</h2>
+                       
+                        <form method="post" id="registerForm" asp-route-returnUrl="@Model.ReturnUrl">
+                           
+                            <div class="col-lg-5 form-group">
+                                <label for="roles"><i class="zmdi zmdi-accounts material-icons-name"></i> Choose user role:</label>
+                                <div style="margin-left: 190px;">
+                                    <select asp-for="Input.userType" id="userTypeSelect" class="form-select-sm" aria-label="Small select example">
+@*                                        @if(selectedType == "Admin")
+                                        {
+                                            <option selected value="Admin">Admin</option>
+                                            <option value="Instructor">Instructor</option>
+                                            <option value="Student">Student</option>
+                                        }else if(selectedType == "Instructor")
+                                        {
+                                            <option value="Admin">Admin</option>
+                                            <option selected value="Instructor">Instructor</option>
+                                            <option value="Student">Student</option>
+                                        } else
+                                        {
+                                            <option value="Admin">Admin</option>
+                                            <option value="Instructor">Instructor</option>
+                                            <option selected value="Student">Student</option>
+                                        }*@
+                                        <option selected value="Admin">Admin</option>
+                                        <option value="Instructor">Instructor</option>
+                                        <option value="Student">Student</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="username"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input asp-for="Input.Username" placeholder="Username" />
+                                <span asp-validation-for="Input.Username" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input asp-for="Input.Password"  placeholder="Password" />
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                                <input asp-for="Input.ConfirmPassword"  placeholder="Confirm password" />
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input asp-for="Input.FullName"  placeholder="Fullname" />
+                                <span asp-validation-for="Input.FullName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="email"><i class="zmdi zmdi-email"></i></label>
+                                <input asp-for="Input.Email"  placeholder="Email" />
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone"><i class="zmdi zmdi-phone"></i></label>
+                                <input asp-for="Input.PhoneNumber"  placeholder="Phone Number" />
+                                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                            </div>
+
+
+                            <!--Instructor Fields-->
+                            <div class="col-lg-5 form-group" id="instructorFields">
+                                <label>Choose Intakes: </label>
+                                <div style="margin-left: 190px;">
+                                    <select asp-for="Input.IntakesIDs" asp-items="@allIntakes" multiple="multiple" size="2" id ="roles" class="form-select-sm" aria-label="Small select example">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!--Student Fields-->
+@*                            <div class="col-lg-5 form-group" id="studentFields1">
+                                <label>Choose Intakes: </label>
+                                <div style="margin-left: 190px;">
+                                    <select asp-for="Input.IntakesIDs" asp-items="@allIntakes" id="SelecftedIntakeID" class="form-select-sm" aria-label="Small select example">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 form-group" id="studentFields2">
+                                <label>Choose Intakes: </label>
+                                <div style="margin-left: 190px;">
+                                    <select asp-for="Input.TrackssID" asp-items="@allTracks"  class="form-select-sm" aria-label="Small select example">
+                                    </select>
+                                </div>
+                            </div>*@
+
+                            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary form-submit" style="font-size:20px">Add</button>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- JS -->
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/js/main.js"></script>
+
+
+
+    <script>
+
+        const userTypeSelect = document.getElementById("userTypeSelect");
+        const instructorFields = document.getElementById("instructorFields");
+
+        function toggleFormElements(userType) 
+        {
+            instructorFields.style.display = "none";
+
+            if (userType === "Instructor") {
+                instructorFields.style.display = "block";
+            } 
+
+        }
+
+        toggleFormElements(userTypeSelect.value);
+
+        userTypeSelect.addEventListener("change", function ()
+        {
+            toggleFormElements(this.value); 
+        });
+
+        //$(document).ready(function () {
+        //    $("#userTypeSelect").change(function () {
+
+        //        var selectedType = $(this).val();
+
+        //        $.ajax({
+        //            url: "/AddUser?handler=OnGetAsync&userType=" + selectedType,
+                    
+        //            type: "GET",
+        //            success: function (data) {
+        //                //$("#additionalFieldsContainer").html(data); 
+        //                toggleFormElements(selectedType); 
+        //            },
+        //            error: function () {
+        //                //console.error("Failed to load additional fields.");
+        //            }
+        //        });  
+        //    });
+        //});
+    </script>
+
+
+</body>
+</html>
+
+
+
+<!-- client side validations -->
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+

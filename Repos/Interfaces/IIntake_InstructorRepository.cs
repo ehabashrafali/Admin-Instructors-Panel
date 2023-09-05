@@ -7,5 +7,8 @@ namespace Admin_Panel_ITI.Repos.Interfaces
 
         public void deleteIntake_InstructorbyInstructorID(string instructorID);
         public void AddIntake_Instructor(Intake_Instructor itc);
+
+        //---//
+        public void AddIntake_Instructor(int IntakeID, string instructorID);
     }
 }

@@ -1,3 +1,4 @@
+using Admin_Panel_ITI.Areas.Identity.Pages.Account;
 using Admin_Panel_ITI.Data;
 using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Principal;
 
 namespace Admin_Panel_ITI
 {
@@ -81,18 +83,27 @@ namespace Admin_Panel_ITI
 
             app.UseAuthorization();
 
+
+
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}"); 
-            
-            
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
             app.MapAreaControllerRoute(
-                name: "default",
-                areaName: "Identity",
-                pattern: "{controller=Account}/{action=Login}");
+             name: "default",
+             areaName: "Identity",
+             pattern: "{controller=Account}/{action=Login}");
 
 
-           
+            app.MapAreaControllerRoute(
+            name: "AddNewUSer",
+            areaName: "Identity",
+            pattern: "{controller=Account}/{action=AddUSer}");
+
+
+
+
 
             app.MapControllerRoute(
            name: "studentByTrack",
@@ -110,8 +121,6 @@ namespace Admin_Panel_ITI
             name: "TrackByIntake",
             pattern: "track/GetTrackByInakeId/{IntakeId}/{pageNumber}",
             defaults: new { controller = "Track", action = "GetTrackByInakeId" });
-
-
 
 
             app.MapRazorPages();

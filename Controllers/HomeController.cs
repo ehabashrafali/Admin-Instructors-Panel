@@ -37,8 +37,8 @@ namespace Admin_Panel_ITI.Controllers
                 {
                     ID = intake.ID, // Replace with the actual property name for the ID
                     Name = intake.Name // Replace with the actual property name for the display name
-                })
-        .ToList(); ;
+                }).ToList(); 
+
                 HomePageViewModel hmPageViewModel = new HomePageViewModel()
                 {
                     IntakeNumber = intakeRepository.getIntakeNumber(),
@@ -48,6 +48,7 @@ namespace Admin_Panel_ITI.Controllers
                     CourseNumber = courseRepository.GetCourseNumber(),
 
                 };
+
                 var user = userManager.GetUserAsync(User).Result; // Get the current user
 
                 if (user != null)
@@ -60,10 +61,7 @@ namespace Admin_Panel_ITI.Controllers
             else
             {
                 return RedirectToPage("/Account/Login", new { area = "Identity" });
-
             }
-
-
         }
 
         public ActionResult IntakesData(int intakeID)

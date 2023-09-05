@@ -1,5 +1,5 @@
 ﻿@model Admin_Panel_ITI.ViewModels.HomePageViewModel
-
+@using Microsoft.AspNetCore.Mvc
 
 @{
     ViewData["Title"] = "Home Page";
@@ -11,35 +11,38 @@
 
 
 
+@{
+    ViewData["Title"] = "Home";
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <script src="assets/js/bootstrap.bundle.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/styles.css">
+    <script src="~/assets/js/bootstrap.bundle.js"></script>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Bootstrap JS (if not already included) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.min.js"></script>
-
 </head>
 <body>
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html" style="margin-left: 24px;">
-                <img src="assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
+            <a class="navbar-brand" href="~/index.html" style="margin-left: 24px;">
+                <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
             </a>
             <div class="navbarvr"></div>
             <span class="collapse navbar-collapse  navbar-brand">ITI-Hub</span>
             <div class="justify-content-end" id="navbarSupportedContent">
                 <div class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-right: 20px;">
-                    <a href="register/register.html" class="btn regbtn">Add User</a>
+                    <a asp-area="Identity" asp-page="/Account/AddUser" class="btn regbtn">Add User</a>
                     <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                         <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Logout</button>
                     </form>
