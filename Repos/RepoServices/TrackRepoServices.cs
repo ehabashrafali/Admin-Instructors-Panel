@@ -94,7 +94,6 @@ namespace Admin_Panel_ITI.Repos
             trackUpdated.Name = track.Name;
             trackUpdated.CreationDate = track.CreationDate;
             trackUpdated.ManagerID = track.ManagerID;
-            trackUpdated.AdminID = track.AdminID;
             Context.SaveChanges();
         }
 

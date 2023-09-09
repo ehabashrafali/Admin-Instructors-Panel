@@ -54,7 +54,7 @@ namespace Admin_Panel_ITI.Controllers
             {
                 // Get all tracks without filtering by intake ID
                 tracksByIntake = trackRepositry.getTracks(pageNumber, 10);
-                if(tracksByIntake.Count == 0 && pageNumber >= 1)
+                if(tracksByIntake.Count == 0 && pageNumber > 1)
                 {
                     tracksByIntake = trackRepositry.getTracks(pageNumber - 1, 10);
                     pageNumber--;
@@ -65,7 +65,7 @@ namespace Admin_Panel_ITI.Controllers
             {
                 // Get tracks filtered by intake ID
                  tracksByIntake = trackRepositry.getTrackbyIntakeID(intakeID, pageNumber, 10).Select(t => t.Track).Distinct().ToList();
-                if (tracksByIntake.Count == 0 && pageNumber >= 1)
+                if (tracksByIntake.Count == 0 && pageNumber > 1)
                 {
                     tracksByIntake = trackRepositry.getTrackbyIntakeID(intakeID, pageNumber -1, 10).Select(t => t.Track).Distinct().ToList();
                     pageNumber--;
@@ -148,6 +148,7 @@ namespace Admin_Panel_ITI.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 var Intake = intakeRepository.GetIntakes();
                 ViewBag.AllIntakes = new SelectList(Intake, "AspNetUserID", "AspNetUser.FullName");
                 trackRepositry.UpdateTrack(id, track);

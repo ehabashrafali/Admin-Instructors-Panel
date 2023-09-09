@@ -26,7 +26,24 @@ namespace Admin_Panel_ITI.Controllers
         public ActionResult Index(int pageNumber)
         {
             var instructors = instructorRepository.GetInstructors(pageNumber, 10);
+            ViewBag.PageNumber = pageNumber;
             return View(instructors);
+        }
+
+        public ActionResult UpdateTableData(int pageNumber)
+        {
+
+
+            var instructors = instructorRepository.GetInstructors(pageNumber, 10);
+            if (instructors.Count == 0 && pageNumber > 1)
+            {
+                instructors = instructorRepository.GetInstructors(pageNumber - 1, 10);
+                pageNumber--;
+            }
+
+
+            ViewBag.PageNumber = pageNumber;
+            return PartialView("_TableDataPartial", instructors);
         }
 
         // GET: InstructorController/Details/5
