@@ -88,14 +88,11 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             }
             Context.SaveChanges();
         }
-
         List<Exam_Question> IExam_QuestionRepository.GetExambyqid(int qid)
         {
             var exam_question = Context.Exam_Questions.Include( eq=>eq.Exam).Where(eq => eq.QuestionID == qid).ToList();
             return exam_question;
         }
-
-    
 
         int IExam_QuestionRepository.GetQuestionNumbersInExam(int examiD)
         {

@@ -1,7 +1,9 @@
 ﻿using Admin_Panel_ITI.Data;
 using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
 
 namespace Admin_Panel_ITI.Repos.RepoServices
 {
@@ -41,18 +43,54 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
         }
 
+        //Exam IExamRepository.GetExambyID(int examID)
+        //{
+        //    var exam = Context.Exams
+        //        .Include(e => e.Instructor).ThenInclude(i => i.AspNetUser)
+        //        .Include(e => e.Course)
+        //        .Include(e => e.Exam_Question).ThenInclude(eq => eq.Exam)
+        //        .FirstOrDefault(ex => ex.ID == examID); 
+
+        //    return exam;
+        //}
+
         Exam IExamRepository.GetExambyID(int examID)
         {
             var exam = Context.Exams
-                .Include(e => e.Exam_Question)
-                .Include(e=>e.Instructor)
+                .Include(e => e.Instructor).ThenInclude(i => i.AspNetUser)
                 .Include(e => e.Course)
-                .FirstOrDefault(ex=>ex.ID==examID);
+                .Include(e => e.Exam_Question)
+                    .ThenInclude(eq => eq.Question)
+                .FirstOrDefault(ex => ex.ID == examID);
+
             return exam;
         }
+
+        List<Exam> IExamRepository.GetExams(int pageNumber, int pageSize)
+        {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
+            return Context.Exams
+                .Include(e => e.Instructor)
+                .ThenInclude(i => i.AspNetUser)
+                .Include(e => e.Course)
+                .Include(e => e.Student_Quest_Exam)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+        }
+
+
         List<Exam> IExamRepository.GetExamsbycourseID(int courseID)
         {
-            var exams = Context.Exams.Include(e => e.Instructor).Where(e => e.CourseID == courseID).ToList();
+            var exams = Context.Exams.Include(e => e.Instructor).ThenInclude(i => i.AspNetUser)
+                                .Include(e => e.Course)
+                                    .Where(e => e.CourseID == courseID)
+                                       .Include(e => e.Student_Quest_Exam)
+                                            .ToList();
             return exams;
         }
 
@@ -64,19 +102,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         int IExamRepository.GetExamNumbersForCourse(int courseID)
         {
             return Context.Exams.Where(e=>e.CourseID==courseID).Count();
-        }
-
-        List<Exam> IExamRepository.GetExams(int pageNumber, int pageSize)
-        {
-            if (pageNumber < 1)
-            {
-                pageNumber = 1;
-            }
-            return Context.Exams.Include(e => e.Instructor)
-                                   .Include(e => e.Course)
-                                   .Skip((pageNumber - 1) * pageSize)
-                                   .Take(pageSize)
-                                   .ToList();
         }
 
        

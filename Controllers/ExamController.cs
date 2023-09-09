@@ -15,10 +15,14 @@ namespace Admin_Panel_ITI.Controllers
         private readonly IExam_QuestionRepository exam_QuestionRepository;
         private readonly IExam_Std_QuestionRepository exam_Std_QuestionRepository;
         private readonly IInstructorRepository instructorRepository;
+        private readonly IQuestionRepository questionRepository;
 
         public ICourseRepository CourseRepository { get; }
 
-        public ExamController(IExamRepository examRepository , ITrackRepository trackRepository , IIntakeRepository intakeRepository, IExam_QuestionRepository exam_QuestionRepository, IExam_Std_QuestionRepository exam_Std_QuestionRepository, IInstructorRepository  instructorRepository , ICourseRepository courseRepository)
+        public ExamController(IExamRepository examRepository, ITrackRepository trackRepository, IIntakeRepository intakeRepository, IExam_QuestionRepository exam_QuestionRepository,
+            IExam_Std_QuestionRepository exam_Std_QuestionRepository,
+            IInstructorRepository instructorRepository,
+            ICourseRepository courseRepository, IQuestionRepository questionRepository)
         {
             this.examRepository = examRepository;
             this.trackRepository = trackRepository;
@@ -27,8 +31,8 @@ namespace Admin_Panel_ITI.Controllers
             this.exam_Std_QuestionRepository = exam_Std_QuestionRepository;
             this.instructorRepository = instructorRepository;
             CourseRepository = courseRepository;
+            this.questionRepository = questionRepository;
         }
-
 
         // GET: ExamController
         public ActionResult Index(int pageNumber)
@@ -45,9 +49,9 @@ namespace Admin_Panel_ITI.Controllers
             return View(exam);
         }
 
-        public ActionResult DetailsByCourseID(int crsid)
+        public ActionResult DetailsByCourseID(int Id)
         {
-            return View(examRepository.GetExamsbycourseID(crsid));
+            return View(examRepository.GetExamsbycourseID(Id));
         }
 
         // GET: ExamController/Delete/5
@@ -56,7 +60,6 @@ namespace Admin_Panel_ITI.Controllers
             examRepository.DeleteExam(id);
             return RedirectToAction(nameof(Index));
         }
-
 
         // GET: ExamController/Create
         public ActionResult Create()
@@ -101,7 +104,7 @@ namespace Admin_Panel_ITI.Controllers
 
         public ActionResult Edit(int id, Exam exam)
         {
-          
+
             if (ModelState.IsValid)
             {
                 try
@@ -111,33 +114,62 @@ namespace Admin_Panel_ITI.Controllers
                 }
                 catch (Exception)
                 {
-                    
+
                     ModelState.AddModelError(string.Empty, "An error occurred while updating the exam.");
                 }
             }
 
             // If ModelState is not valid or an error occurred, re-populate the ViewBag and return to the Edit view.
-            
+
             return View(exam);
 
         }
 
 
-   
 
-        //// POST: ExamController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        //------------------------------------------------------------------------------------//
+
+        public ActionResult CreateQuestionForExam(int Id)
+        {
+            var exam = examRepository.GetExambyID(Id);
+            var question = new Question();
+
+            ViewBag.Exam = exam;
+            return View(question);
+        }
+
+        [HttpPost]
+        public IActionResult CreateQuestionForExam(int Id, Question question)
+        {
+            if (ModelState.IsValid)
+            {
+                var exam = examRepository.GetExambyID(Id);
+
+                var newQuestion = new Question
+                {
+                    Type = question.Type,
+                    Body = question.Body,
+                    Answer = question.Answer,
+                    Mark = question.Mark,
+                
+                };
+
+                questionRepository.CreateQuestion(newQuestion);
+
+                var examQuestion = new Exam_Question
+                {
+                    QuestionID = newQuestion.ID,
+                    ExamID = exam.ID
+                };
+
+                exam_QuestionRepository.CreateExam_Question(examQuestion);
+
+                return RedirectToAction("Details", new { id = Id });
+            }
+
+            ViewBag.Exam = examRepository.GetExambyID(Id);
+            return View(question);
+        }
+
     }
 }

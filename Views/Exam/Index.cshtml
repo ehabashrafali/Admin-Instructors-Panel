@@ -22,6 +22,9 @@
                 @Html.DisplayNameFor(model => model.First().CreationDate)
             </th>
             <th>
+                Students submitted
+            </th>
+            <th>
                 Instructor
             </th>
             <th>
@@ -53,7 +56,10 @@
                     @Html.DisplayFor(modelItem => item.CreationDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Instructor.AspNetUserID)
+                    @item.Student_Quest_Exam.Count()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Instructor.AspNetUser.FullName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Course.Name)
