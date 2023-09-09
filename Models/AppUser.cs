@@ -11,6 +11,7 @@ namespace Admin_Panel_ITI.Models
 
         [InverseProperty("Admin")]
         public virtual IEnumerable<Instructor>? Instructors_Admin { get; set; }
+
         [InverseProperty("AspNetUser")]
         public virtual IEnumerable<Instructor>? Instructors_AspNetUser { get; set; }
 

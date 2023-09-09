@@ -35,6 +35,7 @@ namespace Admin_Panel_ITI.Models
 
 
 
+
         [ForeignKey(nameof(Admin))]
         public string? AdminID { get; set; }
         public virtual AppUser? Admin { get; set; }

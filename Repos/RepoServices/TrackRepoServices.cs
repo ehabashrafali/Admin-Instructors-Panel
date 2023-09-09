@@ -36,7 +36,7 @@ namespace Admin_Panel_ITI.Repos
         int ITrackRepository.getTrackNumberbyIntakeID(int intakeID)
         {
             return Context.Intake_Track_Courses.Where(it => it.IntakeID == intakeID)
-                                                .Select(it => it.CourseID) // Select the CourseID to identify duplicates
+                                                .Select(it => it.TrackID) // Select the CourseID to identify duplicates
                                                 .Distinct() // Remove duplicates
                                                 .Count();
         }
@@ -77,6 +77,7 @@ namespace Admin_Panel_ITI.Repos
                                           .Include(t => t.Track)
                                           .ThenInclude(t => t.Admin)
                                           .Where(t => t.IntakeID == intakeID)
+                                          
                                           .Skip((pageNumber - 1) * pageSize)
                                           .Take(pageSize)
                                           .ToList();
@@ -110,6 +111,30 @@ namespace Admin_Panel_ITI.Repos
                 Context.Tracks.Remove(track);
                 Context.SaveChanges();
             }
+
+        }
+
+
+        void ITrackRepository.DeleteTrack(List<int> trackIDs)
+        {
+
+            List<Track> trackstoDelete = new List<Track>();
+            foreach (var trackID in trackIDs)
+            {
+                var students = _studentRepository.getStudentsbyTrackID(trackID);
+                if (students.Count == 0)
+                {   
+                    //_intake_trackRepository.DeleteIntake_Track(trackID);
+                    _intake_Track_CourseRepository.DeleteIntake_Track_CoursebyTrackID(trackID);
+                    var track = Context.Tracks.SingleOrDefault(t => t.ID == trackID);
+                    trackstoDelete.Add(track);
+                }
+            }
+            
+            Context.Tracks.RemoveRange(trackstoDelete);
+            Context.SaveChanges();
+
+
 
         }
 

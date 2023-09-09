@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Admin_Panel_ITI.Migrations
 {
     [DbContext(typeof(MainDBContext))]
-    [Migration("20230831234105_editadminintrack")]
-    partial class editadminintrack
+    [Migration("20230904004521_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,16 @@ namespace Admin_Panel_ITI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Admin_Panel_ITI.Models.Admin", b =>
+                {
+                    b.Property<string>("AspNetUserID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("AspNetUserID");
+
+                    b.ToTable("Admin");
+                });
 
             modelBuilder.Entity("Admin_Panel_ITI.Models.AppUser", b =>
                 {
@@ -92,8 +102,6 @@ namespace Admin_Panel_ITI.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Admin_Panel_ITI.Models.Course", b =>
@@ -180,7 +188,7 @@ namespace Admin_Panel_ITI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("AdminId")
+                    b.Property<string>("AdminAspNetUserID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CourseID")
@@ -193,7 +201,6 @@ namespace Admin_Panel_ITI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("InstructorID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
@@ -203,7 +210,7 @@ namespace Admin_Panel_ITI.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("AdminId");
+                    b.HasIndex("AdminAspNetUserID");
 
                     b.HasIndex("CourseID");
 
@@ -253,6 +260,32 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasIndex("QuestionID");
 
                     b.ToTable("Std_Quest_Exam");
+                });
+
+            modelBuilder.Entity("Admin_Panel_ITI.Models.Instructor", b =>
+                {
+                    b.Property<string>("AspNetUserID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AdminAspNetUserID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AdminID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("date");
+
+                    b.Property<bool>("CurrentlyWorking")
+                        .HasColumnType("bit");
+
+                    b.HasKey("AspNetUserID");
+
+                    b.HasIndex("AdminAspNetUserID");
+
+                    b.HasIndex("AdminID");
+
+                    b.ToTable("Instructor");
                 });
 
             modelBuilder.Entity("Admin_Panel_ITI.Models.Instructor_Course", b =>
@@ -320,24 +353,6 @@ namespace Admin_Panel_ITI.Migrations
                     b.ToTable("Intake_Instructors");
                 });
 
-            modelBuilder.Entity("Admin_Panel_ITI.Models.Intake_Track", b =>
-                {
-                    b.Property<int>("TrackID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IntakeID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumOfStdsInTrack")
-                        .HasColumnType("int");
-
-                    b.HasKey("TrackID", "IntakeID");
-
-                    b.HasIndex("IntakeID");
-
-                    b.ToTable("Intake_Track");
-                });
-
             modelBuilder.Entity("Admin_Panel_ITI.Models.Intake_Track_Course", b =>
                 {
                     b.Property<int>("IntakeID")
@@ -367,7 +382,6 @@ namespace Admin_Panel_ITI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("InstructorID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Path")
@@ -406,6 +420,42 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Question");
+                });
+
+            modelBuilder.Entity("Admin_Panel_ITI.Models.Student", b =>
+                {
+                    b.Property<string>("AspNetUserID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AdminAspNetUserID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AdminID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("IntakeID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsGraduated")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TrackID")
+                        .HasColumnType("int");
+
+                    b.HasKey("AspNetUserID");
+
+                    b.HasIndex("AdminAspNetUserID");
+
+                    b.HasIndex("AdminID");
+
+                    b.HasIndex("IntakeID");
+
+                    b.HasIndex("TrackID");
+
+                    b.ToTable("Student");
                 });
 
             modelBuilder.Entity("Admin_Panel_ITI.Models.Student_Course", b =>
@@ -463,7 +513,6 @@ namespace Admin_Panel_ITI.Migrations
                         .HasColumnType("date");
 
                     b.Property<string>("ManagerID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
@@ -615,54 +664,13 @@ namespace Admin_Panel_ITI.Migrations
 
             modelBuilder.Entity("Admin_Panel_ITI.Models.Admin", b =>
                 {
-                    b.HasBaseType("Admin_Panel_ITI.Models.AppUser");
+                    b.HasOne("Admin_Panel_ITI.Models.AppUser", "AspNetUser")
+                        .WithMany("Admins")
+                        .HasForeignKey("AspNetUserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.ToTable("Admin");
-                });
-
-            modelBuilder.Entity("Admin_Panel_ITI.Models.Instructor", b =>
-                {
-                    b.HasBaseType("Admin_Panel_ITI.Models.AppUser");
-
-                    b.Property<string>("AdminID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("date");
-
-                    b.HasIndex("AdminID");
-
-                    b.ToTable("Instructor");
-                });
-
-            modelBuilder.Entity("Admin_Panel_ITI.Models.Student", b =>
-                {
-                    b.HasBaseType("Admin_Panel_ITI.Models.AppUser");
-
-                    b.Property<string>("AdminID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("date");
-
-                    b.Property<int>("IntakeID")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsGraduated")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("TrackID")
-                        .HasColumnType("int");
-
-                    b.HasIndex("AdminID");
-
-                    b.HasIndex("IntakeID");
-
-                    b.HasIndex("TrackID");
-
-                    b.ToTable("Student");
+                    b.Navigation("AspNetUser");
                 });
 
             modelBuilder.Entity("Admin_Panel_ITI.Models.Course", b =>
@@ -707,7 +715,7 @@ namespace Admin_Panel_ITI.Migrations
                 {
                     b.HasOne("Admin_Panel_ITI.Models.Admin", null)
                         .WithMany("Exams")
-                        .HasForeignKey("AdminId");
+                        .HasForeignKey("AdminAspNetUserID");
 
                     b.HasOne("Admin_Panel_ITI.Models.Course", "Course")
                         .WithMany("Exams")
@@ -717,9 +725,7 @@ namespace Admin_Panel_ITI.Migrations
 
                     b.HasOne("Admin_Panel_ITI.Models.Instructor", "Instructor")
                         .WithMany("Exams")
-                        .HasForeignKey("InstructorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InstructorID");
 
                     b.Navigation("Course");
 
@@ -772,6 +778,27 @@ namespace Admin_Panel_ITI.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("Admin_Panel_ITI.Models.Instructor", b =>
+                {
+                    b.HasOne("Admin_Panel_ITI.Models.Admin", null)
+                        .WithMany("Instructors")
+                        .HasForeignKey("AdminAspNetUserID");
+
+                    b.HasOne("Admin_Panel_ITI.Models.AppUser", "Admin")
+                        .WithMany("Instructors_Admin")
+                        .HasForeignKey("AdminID");
+
+                    b.HasOne("Admin_Panel_ITI.Models.AppUser", "AspNetUser")
+                        .WithMany("Instructors_AspNetUser")
+                        .HasForeignKey("AspNetUserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Admin");
+
+                    b.Navigation("AspNetUser");
+                });
+
             modelBuilder.Entity("Admin_Panel_ITI.Models.Instructor_Course", b =>
                 {
                     b.HasOne("Admin_Panel_ITI.Models.Course", "Course")
@@ -819,25 +846,6 @@ namespace Admin_Panel_ITI.Migrations
                     b.Navigation("Intake");
                 });
 
-            modelBuilder.Entity("Admin_Panel_ITI.Models.Intake_Track", b =>
-                {
-                    b.HasOne("Admin_Panel_ITI.Models.Intake", "Intake")
-                        .WithMany("IntakeTracks")
-                        .HasForeignKey("IntakeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Admin_Panel_ITI.Models.Track", "Track")
-                        .WithMany("IntakeTracks")
-                        .HasForeignKey("TrackID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Intake");
-
-                    b.Navigation("Track");
-                });
-
             modelBuilder.Entity("Admin_Panel_ITI.Models.Intake_Track_Course", b =>
                 {
                     b.HasOne("Admin_Panel_ITI.Models.Course", "Course")
@@ -869,11 +877,46 @@ namespace Admin_Panel_ITI.Migrations
                 {
                     b.HasOne("Admin_Panel_ITI.Models.Instructor", "Instructor")
                         .WithMany("Materials")
-                        .HasForeignKey("InstructorID")
+                        .HasForeignKey("InstructorID");
+
+                    b.Navigation("Instructor");
+                });
+
+            modelBuilder.Entity("Admin_Panel_ITI.Models.Student", b =>
+                {
+                    b.HasOne("Admin_Panel_ITI.Models.Admin", null)
+                        .WithMany("Students")
+                        .HasForeignKey("AdminAspNetUserID");
+
+                    b.HasOne("Admin_Panel_ITI.Models.AppUser", "Admin")
+                        .WithMany("Students_Admin")
+                        .HasForeignKey("AdminID");
+
+                    b.HasOne("Admin_Panel_ITI.Models.AppUser", "AspNetUser")
+                        .WithMany("Students_AspNetUser")
+                        .HasForeignKey("AspNetUserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Instructor");
+                    b.HasOne("Admin_Panel_ITI.Models.Intake", "Intake")
+                        .WithMany("Students")
+                        .HasForeignKey("IntakeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Admin_Panel_ITI.Models.Track", "Track")
+                        .WithMany()
+                        .HasForeignKey("TrackID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Admin");
+
+                    b.Navigation("AspNetUser");
+
+                    b.Navigation("Intake");
+
+                    b.Navigation("Track");
                 });
 
             modelBuilder.Entity("Admin_Panel_ITI.Models.Student_Course", b =>
@@ -922,9 +965,7 @@ namespace Admin_Panel_ITI.Migrations
 
                     b.HasOne("Admin_Panel_ITI.Models.Instructor", "Manager")
                         .WithMany("Tracks")
-                        .HasForeignKey("ManagerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ManagerID");
 
                     b.Navigation("Admin");
 
@@ -984,61 +1025,28 @@ namespace Admin_Panel_ITI.Migrations
 
             modelBuilder.Entity("Admin_Panel_ITI.Models.Admin", b =>
                 {
-                    b.HasOne("Admin_Panel_ITI.Models.AppUser", null)
-                        .WithOne()
-                        .HasForeignKey("Admin_Panel_ITI.Models.Admin", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Exams");
+
+                    b.Navigation("Instructors");
+
+                    b.Navigation("Intakes");
+
+                    b.Navigation("Students");
+
+                    b.Navigation("Tracks");
                 });
 
-            modelBuilder.Entity("Admin_Panel_ITI.Models.Instructor", b =>
+            modelBuilder.Entity("Admin_Panel_ITI.Models.AppUser", b =>
                 {
-                    b.HasOne("Admin_Panel_ITI.Models.Admin", "Admin")
-                        .WithMany("Instructors")
-                        .HasForeignKey("AdminID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Admins");
 
-                    b.HasOne("Admin_Panel_ITI.Models.AppUser", null)
-                        .WithOne()
-                        .HasForeignKey("Admin_Panel_ITI.Models.Instructor", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Instructors_Admin");
 
-                    b.Navigation("Admin");
-                });
+                    b.Navigation("Instructors_AspNetUser");
 
-            modelBuilder.Entity("Admin_Panel_ITI.Models.Student", b =>
-                {
-                    b.HasOne("Admin_Panel_ITI.Models.Admin", "Admin")
-                        .WithMany("Students")
-                        .HasForeignKey("AdminID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Students_Admin");
 
-                    b.HasOne("Admin_Panel_ITI.Models.AppUser", null)
-                        .WithOne()
-                        .HasForeignKey("Admin_Panel_ITI.Models.Student", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Admin_Panel_ITI.Models.Intake", "Intake")
-                        .WithMany("Students")
-                        .HasForeignKey("IntakeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Admin_Panel_ITI.Models.Track", "Track")
-                        .WithMany()
-                        .HasForeignKey("TrackID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Admin");
-
-                    b.Navigation("Intake");
-
-                    b.Navigation("Track");
+                    b.Navigation("Students_AspNetUser");
                 });
 
             modelBuilder.Entity("Admin_Panel_ITI.Models.Course", b =>
@@ -1068,13 +1076,24 @@ namespace Admin_Panel_ITI.Migrations
                     b.Navigation("Student_Quest_Exam");
                 });
 
+            modelBuilder.Entity("Admin_Panel_ITI.Models.Instructor", b =>
+                {
+                    b.Navigation("Exams");
+
+                    b.Navigation("InstructorCourses");
+
+                    b.Navigation("IntakeInstructors");
+
+                    b.Navigation("Materials");
+
+                    b.Navigation("Tracks");
+                });
+
             modelBuilder.Entity("Admin_Panel_ITI.Models.Intake", b =>
                 {
                     b.Navigation("IntakeInstructors");
 
                     b.Navigation("IntakeTrackCourse");
-
-                    b.Navigation("IntakeTracks");
 
                     b.Navigation("Students");
                 });
@@ -1091,39 +1110,6 @@ namespace Admin_Panel_ITI.Migrations
                     b.Navigation("Student_Quest_Exam");
                 });
 
-            modelBuilder.Entity("Admin_Panel_ITI.Models.Track", b =>
-                {
-                    b.Navigation("IntakeTrackCourse");
-
-                    b.Navigation("IntakeTracks");
-                });
-
-            modelBuilder.Entity("Admin_Panel_ITI.Models.Admin", b =>
-                {
-                    b.Navigation("Exams");
-
-                    b.Navigation("Instructors");
-
-                    b.Navigation("Intakes");
-
-                    b.Navigation("Students");
-
-                    b.Navigation("Tracks");
-                });
-
-            modelBuilder.Entity("Admin_Panel_ITI.Models.Instructor", b =>
-                {
-                    b.Navigation("Exams");
-
-                    b.Navigation("InstructorCourses");
-
-                    b.Navigation("IntakeInstructors");
-
-                    b.Navigation("Materials");
-
-                    b.Navigation("Tracks");
-                });
-
             modelBuilder.Entity("Admin_Panel_ITI.Models.Student", b =>
                 {
                     b.Navigation("StudentCourses");
@@ -1131,6 +1117,11 @@ namespace Admin_Panel_ITI.Migrations
                     b.Navigation("Student_Quest_Exam");
 
                     b.Navigation("StudentsSubmissions");
+                });
+
+            modelBuilder.Entity("Admin_Panel_ITI.Models.Track", b =>
+                {
+                    b.Navigation("IntakeTrackCourse");
                 });
 #pragma warning restore 612, 618
         }

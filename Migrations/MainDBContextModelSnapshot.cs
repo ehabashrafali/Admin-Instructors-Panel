@@ -264,9 +264,6 @@ namespace Admin_Panel_ITI.Migrations
                     b.Property<string>("AspNetUserID")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AdminAspNetUserID")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("AdminID")
                         .HasColumnType("nvarchar(450)");
 
@@ -277,8 +274,6 @@ namespace Admin_Panel_ITI.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("AspNetUserID");
-
-                    b.HasIndex("AdminAspNetUserID");
 
                     b.HasIndex("AdminID");
 
@@ -424,9 +419,6 @@ namespace Admin_Panel_ITI.Migrations
                     b.Property<string>("AspNetUserID")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AdminAspNetUserID")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("AdminID")
                         .HasColumnType("nvarchar(450)");
 
@@ -443,8 +435,6 @@ namespace Admin_Panel_ITI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("AspNetUserID");
-
-                    b.HasIndex("AdminAspNetUserID");
 
                     b.HasIndex("AdminID");
 
@@ -777,10 +767,6 @@ namespace Admin_Panel_ITI.Migrations
 
             modelBuilder.Entity("Admin_Panel_ITI.Models.Instructor", b =>
                 {
-                    b.HasOne("Admin_Panel_ITI.Models.Admin", null)
-                        .WithMany("Instructors")
-                        .HasForeignKey("AdminAspNetUserID");
-
                     b.HasOne("Admin_Panel_ITI.Models.AppUser", "Admin")
                         .WithMany("Instructors_Admin")
                         .HasForeignKey("AdminID");
@@ -881,10 +867,6 @@ namespace Admin_Panel_ITI.Migrations
 
             modelBuilder.Entity("Admin_Panel_ITI.Models.Student", b =>
                 {
-                    b.HasOne("Admin_Panel_ITI.Models.Admin", null)
-                        .WithMany("Students")
-                        .HasForeignKey("AdminAspNetUserID");
-
                     b.HasOne("Admin_Panel_ITI.Models.AppUser", "Admin")
                         .WithMany("Students_Admin")
                         .HasForeignKey("AdminID");
@@ -1024,11 +1006,7 @@ namespace Admin_Panel_ITI.Migrations
                 {
                     b.Navigation("Exams");
 
-                    b.Navigation("Instructors");
-
                     b.Navigation("Intakes");
-
-                    b.Navigation("Students");
 
                     b.Navigation("Tracks");
                 });

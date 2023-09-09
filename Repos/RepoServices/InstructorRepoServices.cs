@@ -92,9 +92,8 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
             var instructors = Context.Instructors
                 .Include(i=>i.Admin)
+                .Include(i=>i.AspNetUser)
                 .Include(i => i.Tracks)
-                .Include(i => i.InstructorCourses)
-                .ThenInclude(ic => ic.Course)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -118,7 +117,11 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
         List<Instructor> IInstructorRepository.GetInstructors()
         {
-            var instructors = Context.Instructors.ToList();
+            var instructors = Context.Instructors
+                .Include(i => i.Admin)
+                .Include(i => i.AspNetUser)
+                .Include(i => i.Tracks)
+                .ToList();
 
             return instructors;
         }
