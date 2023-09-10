@@ -58,6 +58,36 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
+        void IInstructorRepository.DeleteInstructor(List<String> instructorIDs)
+        {
+
+
+            foreach (var id in instructorIDs)
+            {
+                // make manager of track na or null
+                trackRepository.RemoveManager(id);
+
+                // make instructor id of exam na or null
+                examRepository.RemoveInstructor(id);
+
+                // make instructor id of material na or null
+                materialRepository.RemoveInstructor(id);
+
+                //delete record of instructor_course
+                instructor_CourseRepository.DeleteInstructor_Course(id);
+
+
+                // delete record of intake_instructor
+                intake_InstructorRepository.deleteIntake_InstructorbyInstructorID(id);
+
+                var ins = Context.Instructors.FirstOrDefault(i => i.AspNetUserID == id);
+                Context.Instructors.Remove(ins);
+            }
+            
+            Context.SaveChanges();
+        }
+
+
         Instructor IInstructorRepository.GetInstructorbyID(string instructorID)
         {
             var ins = Context.Instructors

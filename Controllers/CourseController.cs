@@ -139,7 +139,8 @@ namespace Admin_Panel_ITI.Controllers
                 instructorsSelected.Add(item.Instructor);
             }
             ViewBag.SelectedInstructors = instructorsSelected;
-            ViewBag.AllInstructors = instructors.Except(instructorsSelected);
+            ViewBag.AllInstructors = new SelectList(instructors.Except(instructorsSelected), "AspNetUserID", "AspNetUser.FullName");
+
 
             return View(course);
         }
@@ -147,10 +148,21 @@ namespace Admin_Panel_ITI.Controllers
         // POST: CourseController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Course course)
+        public ActionResult Edit(int id, Course course, List<string> SelectedInstructorIds)
         {
             if (ModelState.IsValid)
             {
+
+                foreach (var item in SelectedInstructorIds)
+                {
+                    Instructor_Course ins = new Instructor_Course()
+                    {
+                        InstructorID = item,
+                        CourseID = id
+                    };
+                    instructor_CourseRepository.CreateInstructor_Course(ins);
+
+                }
 
                 var Tracks = trackRepository.getTracks(); // for filter by track
                 ViewData["Tracks"] = new SelectList(Tracks, "ID", "Name");
@@ -158,6 +170,13 @@ namespace Admin_Panel_ITI.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(course);
+        }
+        
+        [HttpPost]
+        public ActionResult RemoveInstructor_Course(string insID,int crsID)
+        {
+            instructor_CourseRepository.DeleteInstructor_Course(crsID, insID);
+            return RedirectToAction("Edit", new { id = crsID });
         }
 
         // GET: CourseController/Delete/5
