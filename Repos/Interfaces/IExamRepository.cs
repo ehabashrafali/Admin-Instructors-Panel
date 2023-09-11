@@ -7,7 +7,6 @@ namespace Admin_Panel_ITI.Repos.Interfaces
         public int GetExamNumbers();
 
 
-
         public Exam GetExambyID(int examID);
 
 
@@ -15,7 +14,7 @@ namespace Admin_Panel_ITI.Repos.Interfaces
         public List<Exam> GetExamsbycourseID(int courseID);
 
 
-        public List<Exam> GetExams();
+        public List<Exam> GetExams(int pageNumber, int pageSize);
 
 
         public void UpdateExam(int examID, Exam exam);

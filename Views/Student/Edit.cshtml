@@ -1,45 +1,40 @@
-﻿@*@model Admin_Panel_ITI.Models.Student
+@model Admin_Panel_ITI.Models.Student
 
-@{
-    ViewData["Title"] = "Edit Student";
-}
+<div class="container-fluid col-md-6">
+    <h3 style="margin-top: 32px;">Edit Student</h3>
 
-<h2>Edit Student</h2>
+    <form id="myformstudent" asp-controller="Student" asp-action="Edit" method="post">
+        <!-- Include the student ID as a hidden field -->
+        <input asp-for="AspNetUserID" type="hidden" />
 
-<form asp-action="Edit" asp-route-id="@Model.Id" method="post">
-            <div class="form-group">
-                <label asp-for="FullName" class="control-label"></label>
-                <input asp-for="FullName" class="form-control" />
-                <span asp-validation-for="FullName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IsGraduated" class="control-label"></label>
-                <input asp-for="IsGraduated" class="form-check-input" />
-                <span asp-validation-for="IsGraduated" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreationDate" class="control-label"></label>
-                <input asp-for="CreationDate" class="form-control" />
-                <span asp-validation-for="CreationDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AdminID" class="control-label"></label>
-                <input asp-for="AdminID" class="form-control" value=@Model.AdminID readonly />
-                <span asp-validation-for="AdminID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IntakeID" class="control-label"></label>
-                <select asp-for="IntakeID" asp-items="ViewBag.AllIntakes" class="form-control"></select>
-                <span asp-validation-for="IntakeID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TrackID" class="control-label"></label>
-                <select asp-for="TrackID" asp-items="ViewBag.AllTracks" class="form-control"></select>
-                <span asp-validation-for="TrackID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Save</button>
-                <a asp-action="StdsIndex" class="btn btn-secondary">Back to List</a>
-            </div>
-</form>
-*@
+        <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
+            <span class="input-group-text" style="width: 170px; font-size: 20px;">Full Name</span>
+            <input asp-for="AspNetUser.FullName" class="form-control" aria-label="Sizing example input" placeholder="Enter full name">
+        </div>
+
+
+        <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
+            <span class="input-group-text" style="width: 170px; font-size: 20px;">Is Graduated</span>
+            <input asp-for="IsGraduated" class="form-check-input" />
+            <span asp-validation-for="IsGraduated" class="text-danger"></span>
+        </div>
+
+        <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
+            <span class="input-group-text" style="width: 170px; font-size: 20px;">Creation Date</span>
+            <input asp-for="CreationDate" class="form-control" aria-label="Sizing example input" placeholder="Enter creation date">
+        </div>
+        <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
+            <span class="input-group-text" style="width: 170px; font-size: 20px;">Intake</span>
+            <select asp-for="IntakeID" asp-items="ViewBag.AllIntakes" class="form-control"></select>
+        </div>
+
+        <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
+            <span class="input-group-text" style="width: 170px; font-size: 20px;">Track</span>
+            <select asp-for="TrackID" asp-items="ViewBag.AllTracks" class="form-control"></select>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Edit Student" class="btn btn-primary" />
+        </div>
+    </form>
+</div>

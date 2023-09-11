@@ -1,55 +1,88 @@
-﻿@*@model IEnumerable<Admin_Panel_ITI.Models.Student>
+﻿@model IEnumerable<Admin_Panel_ITI.Models.Student>
 
-@{
-    ViewBag.Title = "All Students";
-}
+<div class="col-md-10 text-center content">
+    <div class="container-fluid">
+        <div class="row col-md-12">
+            <div class="r1">
+                <h3 style="padding-left: 33px;">Students' Table</h3>
+                <div class="dropdown" id="intakeDropdown" style="margin: 0 0 0 16px;">
+                    <button class="btn" id="intakeDropdownBtn">
+                        <!-- Added an ID to the button -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
+                            <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"></path>
+                        </svg>
+                        Filter by intakes
+                    </button>
 
-<h2>All Students</h2>
+                    <div class="dropdown-content" style="right: 10px; border-radius: 8px; overflow-y: auto; height: 150px;">
+                        <a href="#" class="intake-link" data-intake-value="0">All Intakes</a>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Student ID</th>
-            <th>Full Name</th>
-            <th>Username</th>
-            <th>Is Graduated</th>
-            <th>Creation Date</th>
-            <th>Track</th>
-            <th>
-                Edit
-            </th>
-            <th>
-                Details
-            </th>
-            <th>
-                Delete
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var student in Model)
-        {
-            <tr>
-                <td>@student.Id</td>
-                <td>@student.FullName</td>
-                <td>@student.UserName</td>
-                <td>@(student.IsGraduated ? "Yes" : "No")</td>
-                <td>@student.CreationDate.ToString("yyyy-MM-dd")</td>
-                <td>@student.Track.Name</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@student.Id" class="btn btn-primary">Edit</a>
+                        @foreach (var intake in ViewData["Intakes"] as SelectList)
+                        {
+                            <a href="#" class="intake-link" data-intake-value="@intake.Value">@intake.Text</a>
+                            <hr style="padding: 0; margin: 0; color: gray;">
+                        }
+                    </div>
+                    
+                </div>
+                <div>
+                    <button type="button" id="customdeletebtn_kordy" class="btn logoutbtn deletebtn" style=" margin: 0 0 0 8px; ">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
+                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
+                        </svg>
+                        Delete
+                    </button>
+                    <a asp-controller="Student" asp-action="Create" class="btn btn-primary" style="margin-left: 8px;">+ Create new Student</a>
+                </div>
+            </div>
+        </div>
+        <partial name="_TableDataPartial" />
+    </div>
+</div>
 
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@student.Id" class="btn btn-info">Details</a>
+@*    <script>
+    var selectedIntakeId = 0;
 
-                </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@student.Id" class="btn btn-danger">Delete</a>
+    // Function to handle dropdown <a> click event
+    $('.intake-link').on('click', function (e) {
+        e.preventDefault();
+        var clickedIntakeId = $(this).data('intake-value');
 
-                </td>
-            </tr>
+        if (selectedIntakeId === clickedIntakeId) {
+            // If the same intake is clicked again, set IntakeId to 0
+            selectedIntakeId = 0;
+            filterStudentsByIntake(selectedIntakeId);
+        } else {
+            selectedIntakeId = clickedIntakeId; // Update selectedIntakeId
+            filterStudentsByIntake(selectedIntakeId);
         }
-    </tbody>
-</table>
-*@
+
+        var selectedIntakeName = $(this).text();
+
+        console.log('Link clicked!');
+        console.log('Selected Intake ID: ' + selectedIntakeId);
+        console.log('Selected Intake Name: ' + selectedIntakeName);
+
+        $('#intakeDropdownBtn').html(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
+                <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"></path>
+            </svg>
+            Filter by intakes: ${selectedIntakeName}
+        `);
+    });
+
+    // Function to filter students by intake
+    function filterStudentsByIntake(intakeId) {
+        $.ajax({
+            url: '@Url.Action("StdIndexByIntakeId", "Student")',
+            type: 'GET',
+            data: { Id: intakeId, pageNumber: 1 },
+            success: function (result) {
+                $('#partialTable').html(result);
+            },
+            error: function () {
+                alert('Error occurred while fetching data.');
+            }
+        });
+    }
+</script> *@

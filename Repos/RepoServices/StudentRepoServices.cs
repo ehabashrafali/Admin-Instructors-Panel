@@ -31,14 +31,35 @@ namespace Admin_Panel_ITI.Repos
             Context.Students.Add(student);
         }
 
+        void IStudentRepository.DeleteStudent(List<string> studentIDs)
+        {
+            foreach (var id in studentIDs)
+            {
+                student_CourseRepository.DeleteStudent_Course(id);
+                student_SubmissionRepository.DeleteStudent_Submission(id);
+                exam_Std_QuestionRepository.DeleteExam_Std_Question(id);
+                var student = Context.Students.FirstOrDefault(s => s.AspNetUserID == id);
+                if (student != null)
+                {
+                    Context.Students.Remove(student);
+                }
+            }
+            
+            Context.SaveChanges();
+        }
+
+
         void IStudentRepository.DeleteStudent(string studentID)
         {
             student_CourseRepository.DeleteStudent_Course(studentID);
             student_SubmissionRepository.DeleteStudent_Submission(studentID);
             exam_Std_QuestionRepository.DeleteExam_Std_Question(studentID);
+            var student = Context.Students.FirstOrDefault(s => s.AspNetUserID == studentID);
+            if (student != null)
+            {
+                Context.Students.Remove(student);
+            }
 
-            var student = Context.Students.FirstOrDefault(s => s.AspNetUserID == studentID.ToString());
-            Context.Students.Remove(student);
             Context.SaveChanges();
         }
 
@@ -47,6 +68,7 @@ namespace Admin_Panel_ITI.Repos
             var student = Context.Students
                                  .Include(s=>s.Intake)
                                  .Include(s=>s.Track)
+                                 .Include(s => s.AspNetUser)
                                  .Include(s=>s.Admin)
                                  .FirstOrDefault(s => s.AspNetUserID == studentID);
             return student;
@@ -76,6 +98,7 @@ namespace Admin_Panel_ITI.Repos
             return Context.Students.Include(s=>s.Admin)
                                    .Include(s=>s.Intake)
                                    .Include(s=>s.Track)
+                                   .Include(s=>s.AspNetUser)
                                    .Include(s=>s.StudentCourses)
                                    .Skip((pageNumber - 1) * pageSize)
                                    .Take(pageSize)
@@ -118,6 +141,7 @@ namespace Admin_Panel_ITI.Repos
             return Context.Students.Include(s => s.Admin)
                                   .Include(s => s.Intake)
                                   .Include(s => s.Track)
+                                  .Include(s => s.AspNetUser)
                                   .Include(s => s.StudentCourses)
                                   .Where(s => s.IntakeID == intakeID)
                                   .Skip((pageNumber - 1) * pageSize)
@@ -135,12 +159,10 @@ namespace Admin_Panel_ITI.Repos
 
         void IStudentRepository.UpdateStudent(string studentID, Student student)
         {
-            var studentUpdated = Context.Students.FirstOrDefault(s=> s.AspNetUserID == studentID.ToString());
+            var studentUpdated = Context.Students.Include(s => s.AspNetUser).FirstOrDefault(s=> s.AspNetUserID == studentID.ToString());
 
             studentUpdated.IsGraduated = student.IsGraduated;
             studentUpdated.AspNetUser.FullName = student.AspNetUser.FullName;
-            studentUpdated.AspNetUser.UserName = student.AspNetUser.UserName;
-            studentUpdated.AdminID = student.AdminID;
             studentUpdated.IntakeID = student.IntakeID;
             studentUpdated.TrackID = student.TrackID;
 
