@@ -1,4 +1,5 @@
 ﻿using Admin_Panel_ITI.Data;
+using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
 
 namespace Admin_Panel_ITI.Repos.RepoServices
@@ -33,6 +34,24 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             var records = Context.Intake_Track_Courses.Where(itc => itc.IntakeID == intakeID).ToList();
             Context.Intake_Track_Courses.RemoveRange(records);
 
+        }
+
+        List<int> IIntake_Track_CourseRepository.computeStudentsNumberForIntakes(List<Intake> intakes)
+        {
+            List<int> studentNumsforIntake = new List<int>();
+            int c = 0;
+            foreach (var intake in intakes)
+            {
+                var records = Context.Intake_Track_Courses.Where(itc => itc.IntakeID == intake.ID);
+
+                foreach (var item in records)
+                {
+                    c = c + item.numOfStudentsInCourse;
+                }
+                studentNumsforIntake.Add(c);
+                c = 0;
+            }
+            return studentNumsforIntake;
         }
     }
 }

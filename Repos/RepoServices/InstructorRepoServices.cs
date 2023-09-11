@@ -136,12 +136,12 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         void IInstructorRepository.UpdateInstructor(string instructorID, Instructor instructor)
         {
             var instructor_updated = Context.Instructors.FirstOrDefault(i=>i.AspNetUserID == instructorID.ToString());
-            instructor_updated.AspNetUser.FullName = instructor.AspNetUser.FullName;
-            instructor_updated.AspNetUser.UserName = instructor.AspNetUser.UserName;
-            instructor_updated.AdminID = instructor.AdminID;
-            instructor_updated.AspNetUser.Email = instructor.AspNetUser.Email;
-            instructor_updated.AspNetUser.PhoneNumber = instructor.AspNetUser.PhoneNumber;
-            instructor_updated.CreationDate = instructor.CreationDate;
+            //instructor_updated.AspNetUser.FullName = instructor.AspNetUser.FullName;
+            //instructor_updated.AspNetUser.UserName = instructor.AspNetUser.UserName;
+            //instructor_updated.AdminID = instructor.AdminID;
+            //instructor_updated.AspNetUser.Email = instructor.AspNetUser.Email;
+            //instructor_updated.AspNetUser.PhoneNumber = instructor.AspNetUser.PhoneNumber;
+            instructor_updated.CurrentlyWorking = instructor.CurrentlyWorking;
             Context.SaveChanges();
         }
 

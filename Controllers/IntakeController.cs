@@ -1,5 +1,6 @@
 ﻿using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos;
+using Admin_Panel_ITI.Repos.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,27 +14,74 @@ namespace Admin_Panel_ITI.Controllers
         private readonly UserManager<AppUser> userManager;
         private readonly ITrackRepository trackRepository;
         private readonly ICourseRepository courseRepository;
+        private readonly UserManager<AppUser> _userManager;
 
-        public IntakeController(IIntakeRepository _intakeRepository, UserManager<AppUser> _userManager, ITrackRepository trackRepository, ICourseRepository courseRepository)
+        private readonly IIntake_Track_CourseRepository intake_Track_CourseRepository;
+
+        public IntakeController(IIntakeRepository _intakeRepository, UserManager<AppUser> _userManager, ITrackRepository trackRepository, ICourseRepository courseRepository, IIntake_Track_CourseRepository intake_Track_CourseRepository, UserManager<AppUser> userManager)
         {
             intakeRepository = _intakeRepository;
             userManager = _userManager;
             this.trackRepository = trackRepository;
             this.courseRepository = courseRepository;
+            this.intake_Track_CourseRepository = intake_Track_CourseRepository;
+            this._userManager = userManager;
         }
 
 
-        public ActionResult Index()
+        public ActionResult Index(int pageNumber)
         {
-           var tracks = trackRepository.getTracks();
-            var courses = courseRepository.GetCourses();
-            
-            ViewBag.AllTracks = new SelectList(tracks, "ID", "Name");
-            ViewBag.AllCourses = new SelectList(courses, "ID", "Name");
-            return View(intakeRepository.GetAllIntakes());
+            var intakes = intakeRepository.GetAllIntakes(pageNumber,10);
+
+
+
+            List<int> studentNumsforIntake = intake_Track_CourseRepository.computeStudentsNumberForIntakes(intakes);
+
+            ViewData["NumOfStudsInEachIntake"] = studentNumsforIntake;
+            ViewData["Intakes"] = new SelectList(intakes, "ID", "Name"); // Add this line
+            ViewBag.PageNumber = 1;
+            ViewBag.duration = 0;
+
+            return View(intakes);
         }
 
+        public ActionResult UpdateTableData(int duration, int pageNumber)
+        {
 
+            var intakes = intakeRepository.GetAllIntakes();
+            List<Intake> intakesbyduration;
+
+            if (duration == 0)
+            {
+                // Get all tracks without filtering by intake ID
+                intakesbyduration = intakeRepository.GetAllIntakes(pageNumber, 10);
+                if (intakesbyduration.Count == 0 && pageNumber > 1)
+                {
+                    intakesbyduration = intakeRepository.GetAllIntakes(pageNumber - 1, 10);
+                    pageNumber--;
+                }
+
+            }
+            else
+            {
+                // Get tracks filtered by intake ID
+                intakesbyduration = intakeRepository.GetIntakesbyDuration(duration, pageNumber, 10);
+                if (intakesbyduration.Count == 0 && pageNumber > 1)
+                {
+                    intakesbyduration = intakeRepository.GetIntakesbyDuration(duration, pageNumber - 1, 10);
+                    pageNumber--;
+                }
+            }
+
+            List<int> studentNumsforIntake = intake_Track_CourseRepository.computeStudentsNumberForIntakes(intakesbyduration);
+
+
+            ViewData["NumOfStudsInEachIntake"] = studentNumsforIntake;
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.duration = duration;
+
+            return PartialView("_TableDataPartial", intakesbyduration);
+        }
 
         public ActionResult Details(int id)
         {
@@ -46,34 +94,35 @@ namespace Admin_Panel_ITI.Controllers
 
         public ActionResult Create()
         {
+
             return View();
         }
 
+
+
+
+        //POST: TrackController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Intake newIntake)
+        async public Task<ActionResult> Create(Intake intake)
         {
+           
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                string userId = user.Id;
+                intake.AdminID = "admin1";
+            }
             if (ModelState.IsValid)
             {
-                //var user = userManager.GetUserAsync(User).Result; 
-
-
-                string adminID = userManager.GetUserId(User);  //get the currently logged-in AdminID
-
-                //newIntake.CreationDate = DateTime.Now;
-                //newIntake.AdminID = adminID;
-                newIntake.AdminID = "admin1";
-
-                intakeRepository.CreateIntake(newIntake);
-
+                intakeRepository.CreateIntake(intake);
                 return RedirectToAction(nameof(Index));
             }
-
-            return View();
+            return View(intake);
         }
 
 
-       /*------------------------------------------------------*/
+        /*------------------------------------------------------*/
 
 
         public ActionResult Edit(int id) //id = intake ID
@@ -88,13 +137,7 @@ namespace Admin_Panel_ITI.Controllers
         {
             if(ModelState.IsValid)
             {
-                //Intake oldIntake = intakeRepository.getIntakebyID(id);
-                //oldIntake.Name = editedIntake.Name; 
-                //oldIntake.Duration = editedIntake.Duration;
-                //oldIntake.StartDate = editedIntake.StartDate;
-                //oldIntake.EndDate = editedIntake.EndDate;
-
-                //intakeRepository.CreateIntake(oldIntake); 
+            ; 
 
                 intakeRepository.UpdateIntake(id, editedIntake);
                 
@@ -105,28 +148,66 @@ namespace Admin_Panel_ITI.Controllers
         }
 
 
-        /*------------------------------------------------------*/
-
-
-        public ActionResult Delete(int id) //id = Intake ID
+        public ActionResult Add_Track_Courses(List<int> intakeIDs)
         {
-            intakeRepository.DeleteIntake(id);
-            return RedirectToAction(nameof(Index));
+            List<String> intakes = new List<String>();
+
+            foreach (var intake in intakeIDs)
+            {
+                var mainIntake = intakeRepository.getIntakebyID(intake);
+                intakes.Add(mainIntake.Name);
+            }
+
+            ViewBag.intakeNames = intakes;
+            ViewBag.intakeIDs = intakes;
+            return View();
         }
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+
+
+        [HttpGet]
+        public ActionResult Delete(List<int> selectedIntakeIds, int duration, int pageNumber)
         {
-            try
+
+            intakeRepository.DeleteIntake(selectedIntakeIds);
+            ViewBag.AlertMessage = "Intakes with any number of students will not be deleted";
+
+
+            var intakes = intakeRepository.GetAllIntakes();
+            List<Intake> intakesbyduration;
+
+            if (duration == 0)
             {
-                return RedirectToAction(nameof(Index));
+                // Get all tracks without filtering by intake ID
+                intakesbyduration = intakeRepository.GetAllIntakes(pageNumber, 10);
+                if (intakesbyduration.Count == 0 && pageNumber > 1)
+                {
+                    intakesbyduration = intakeRepository.GetAllIntakes(pageNumber - 1, 10);
+                    pageNumber--;
+                }
+
             }
-            catch
+            else
             {
-                return View();
+                // Get tracks filtered by intake ID
+                intakesbyduration = intakeRepository.GetIntakesbyDuration(duration, pageNumber, 10);
+                if (intakesbyduration.Count == 0 && pageNumber > 1)
+                {
+                    intakesbyduration = intakeRepository.GetIntakesbyDuration(duration, pageNumber - 1, 10);
+                    pageNumber--;
+                }
             }
+
+            List<int> studentNumsforIntake = intake_Track_CourseRepository.computeStudentsNumberForIntakes(intakes);
+
+
+            ViewData["NumOfStudsInEachIntake"] = studentNumsforIntake;
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.duration = duration;
+
+            return PartialView("_TableDataPartial", intakesbyduration);
+
         }
     }
 }

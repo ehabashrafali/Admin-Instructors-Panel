@@ -67,7 +67,6 @@ namespace Admin_Panel_ITI.Repos
             intakeUpdated.EndDate = intake.EndDate;
             intakeUpdated.Duration = intake.Duration;
             intakeUpdated.CreationDate = intake.CreationDate;
-            intakeUpdated.AdminID = intake.AdminID;
 
             Context.SaveChanges();
         }
@@ -81,7 +80,27 @@ namespace Admin_Panel_ITI.Repos
             return Context.Intakes.Include(i => i.Admin).ToList();
         }
 
+        public List<Intake> GetAllIntakes(int pageNumber,int pageSize)
+        {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+            return Context.Intakes.Include(i => i.Admin)
+                                  .Skip((pageNumber - 1) * pageSize)
+                                  .Take(pageSize)
+                                  .ToList();
+        }
 
+
+        public List<Intake> GetIntakesbyDuration(int duration, int pageNumber, int pageSize)
+        {
+            return Context.Intakes.Include(i => i.Admin)
+                                  .Where(i=>i.Duration == duration)
+                                  .Skip((pageNumber - 1) * pageSize)
+                                  .Take(pageSize)
+                                  .ToList();
+        }
 
 
         void IIntakeRepository.DeleteIntake(int intakeID)
@@ -98,6 +117,28 @@ namespace Admin_Panel_ITI.Repos
                 Context.Intakes.Remove(intake);
                 Context.SaveChanges();
             }
+        }
+
+
+        void IIntakeRepository.DeleteIntake(List<int> selectedIntakeIds)
+        {
+
+            foreach (var intakeID in selectedIntakeIds)
+            {
+                var intake_students = studentRepository.getStudentsbyIntakeID(intakeID);
+
+                if (intake_students.Count() == 0)
+                {
+                    //intake_TrackRepository.DeleteIntake_Track(intakeID);
+
+                    intake_Track_CourseRepository.DeleteIntake_Track_CoursebyIntakeID(intakeID);
+
+                    var intake = Context.Intakes.FirstOrDefault(i => i.ID == intakeID);
+                    Context.Intakes.Remove(intake);
+                }
+            }
+            Context.SaveChanges();
+
         }
     }
 }

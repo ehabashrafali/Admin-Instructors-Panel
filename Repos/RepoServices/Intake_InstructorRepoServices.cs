@@ -29,5 +29,16 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
+        void IIntake_InstructorRepository.deleteIntake_Instructor(string intakeID, string insID)
+        {
+            Intake_Instructor ii = new Intake_Instructor()
+            {
+
+                IntakeID = int.Parse(intakeID),
+                InstructorID = insID,
+            };
+            Context.Intake_Instructors.Remove(ii);
+            Context.SaveChanges();
+        }
     }
 }
