@@ -9,7 +9,10 @@ namespace Admin_Panel_ITI.Repos
         public List<Intake> GetIntakes();
         public void UpdateIntake(int IntakeID, Intake intake);
         public void DeleteIntake(int intakeID);
+        public void DeleteIntake(List<int> intakeIDs);
 
+        public void CreateIntake(Intake intake);
+        public List<Intake> GetIntakesbyDuration(int duration, int pageNumber, int pageSize);
 
 
 
@@ -17,6 +20,7 @@ namespace Admin_Panel_ITI.Repos
         //---------------------- asem_updates ---------------------------------------//
 
         public List<Intake> GetAllIntakes();
+        public List<Intake> GetAllIntakes(int pageNumber, int pageSize);
 
     }
 }

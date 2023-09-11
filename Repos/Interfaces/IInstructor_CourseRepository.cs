@@ -15,6 +15,7 @@ namespace Admin_Panel_ITI.Repos.Interfaces
         public void DeleteInstructor_Course(int courseID, int instructorID);
         public void DeleteInstructor_Course( string instructorID);
         public void DeleteInstructor_CourseByCourseID( int courseID);
+        public void DeleteInstructor_Course(int courseID, string instructorID);
         public void CreateInstructor_Course(Instructor_Course instructor_course);
         public void CreateInstructor_Course(List<int> courseIds, int instructorId);
         public int GetInstructor_CourseNumberbyInstructorID(int instructorID);

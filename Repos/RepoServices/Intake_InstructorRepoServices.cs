@@ -2,6 +2,7 @@
 using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 
 namespace Admin_Panel_ITI.Repos.RepoServices
 {
@@ -31,6 +32,8 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         }
 
 
+        
+
         //---// //Admin
         public void AddIntake_Instructor(int IntakeID, string instructorID)
         {
@@ -43,6 +46,8 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.Intake_Instructors.Add(intake_Instructor);
             Context.SaveChanges();
         }
+
+
 
     }
 }

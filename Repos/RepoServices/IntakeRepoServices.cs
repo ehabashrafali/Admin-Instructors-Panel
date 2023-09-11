@@ -97,7 +97,7 @@ namespace Admin_Panel_ITI.Repos
             return selectedIntakes;
         }
 
-        public List<Intake> GetAllIntakes(int pageNumber,int pageSize)
+        public List<Intake> GetAllIntakes(int pageNumber, int pageSize)
         {
             if (pageNumber < 1)
             {
