@@ -1,0 +1,14 @@
+﻿@using Admin_Panel_ITI.Models
+
+@model IEnumerable<Track>
+
+@*<div class="col-lg-5 form-group">
+<label>Choose Track </label>
+<div>*@
+
+<select class="form-select" asp-for="FirstOrDefault().ID" asp-items="Model.Select(track => new SelectListItem { Text = track.Name, Value = track.ID.ToString() })">
+    <option value="">Select a Track</option>
+</select>
+
+@*</div>
+</div>*@

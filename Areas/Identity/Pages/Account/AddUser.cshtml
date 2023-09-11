@@ -120,26 +120,19 @@
                             <div class="col-lg-5 form-group" id="instructorFields">
                                 <label>Choose Intakes: </label>
                                 <div style="margin-left: 190px;">
-                                    <select asp-for="Input.IntakesIDs" asp-items="@allIntakes" multiple="multiple" size="2" id ="roles" class="form-select-sm" aria-label="Small select example">
+                                    <select asp-for="Input.IntakesIDs" asp-items="@allIntakes" multiple="multiple" size="2" class="form-select-sm" aria-label="Small select example">
                                     </select>
                                 </div>
                             </div>
 
                             <!--Student Fields-->
-@*                            <div class="col-lg-5 form-group" id="studentFields1">
-                                <label>Choose Intakes: </label>
-                                <div style="margin-left: 190px;">
-                                    <select asp-for="Input.IntakesIDs" asp-items="@allIntakes" id="SelecftedIntakeID" class="form-select-sm" aria-label="Small select example">
-                                    </select>
-                                </div>
+                            <select asp-for="Input.IntakesIDs" id="studentFields1" asp-items="@allIntakes" class="form-select">
+                             <option>Select an Intake</option>
+                            </select>
+
+                            <div id="studentFields2">
+
                             </div>
-                            <div class="col-lg-5 form-group" id="studentFields2">
-                                <label>Choose Intakes: </label>
-                                <div style="margin-left: 190px;">
-                                    <select asp-for="Input.TrackssID" asp-items="@allTracks"  class="form-select-sm" aria-label="Small select example">
-                                    </select>
-                                </div>
-                            </div>*@
 
                             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary form-submit" style="font-size:20px">Add</button>
 
@@ -156,49 +149,95 @@
     <script src="~/js/main.js"></script>
 
 
+<script>
+    const userTypeSelect = document.getElementById("userTypeSelect");
+    const instructorFields = document.getElementById("instructorFields");
+    const studentFields1 = document.getElementById("studentFields1");
+    const studentFields2 = document.getElementById("studentFields2");
 
-    <script>
 
-        const userTypeSelect = document.getElementById("userTypeSelect");
-        const instructorFields = document.getElementById("instructorFields");
+    function toggleFormElements(userType) 
+    {
+        instructorFields.style.display = "none";
+        studentFields1.style.display = "none";
+        studentFields2.style.display = "none";
 
-        function toggleFormElements(userType) 
-        {
+        if (userType === "Instructor") {
+            instructorFields.style.display = "block";
+            studentFields1.style.display = "none";
+            studentFields2.style.display = "none";
+        } 
+        else if(userType === "Student") {
             instructorFields.style.display = "none";
-
-            if (userType === "Instructor") {
-                instructorFields.style.display = "block";
-            } 
-
+            studentFields1.style.display = "block";
+            studentFields2.style.display = "block";
         }
+    }
 
-        toggleFormElements(userTypeSelect.value);
+    toggleFormElements(userTypeSelect.value);
 
-        userTypeSelect.addEventListener("change", function ()
-        {
-            toggleFormElements(this.value); 
+    userTypeSelect.addEventListener("change", function ()
+    {
+        toggleFormElements(this.value); 
+    });
+
+
+    $(document).ready(function () {
+        $('#studentFields1').on('change' , function () {
+
+            var selectedType = $(this).val();
+
+            $.ajax({
+                url: '/AddUser?handler=Tracks&intakeID=' + selectedType,  
+                type: "GET",
+                success: function () {
+                     $('#studentFields2').load('/AddUser?handler=Tracks&intakeID=' + selectedIntakeID);
+                     consol.log('hiiasd');
+                },
+                error: function () {
+                    alert('something wrong');
+                }
+            });  
         });
+    });
 
-        //$(document).ready(function () {
-        //    $("#userTypeSelect").change(function () {
 
-        //        var selectedType = $(this).val();
 
-        //        $.ajax({
-        //            url: "/AddUser?handler=OnGetAsync&userType=" + selectedType,
+
+    $(function () {
+            $('#studentFields1').on('change', function () {
+                var selectedIntakeID = $(this).val();
+                $('#studentFields2').load('/AddUser?handler=Tracks&intakeID=' + selectedIntakeID);
+        });
+    });
+
+
+
+
+
+    //$(document).ready(function () {
+    //    $("#userTypeSelect").change(function () {
+
+    //        var selectedType = $(this).val();
+
+    //        $.ajax({
+    //            url: "/AddUser?handler=OnGetAsync&userType=" + selectedType,
                     
-        //            type: "GET",
-        //            success: function (data) {
-        //                //$("#additionalFieldsContainer").html(data); 
-        //                toggleFormElements(selectedType); 
-        //            },
-        //            error: function () {
-        //                //console.error("Failed to load additional fields.");
-        //            }
-        //        });  
-        //    });
-        //});
-    </script>
+    //            type: "GET",
+    //            success: function (data) {
+    //                //$("#additionalFieldsContainer").html(data); 
+    //                toggleFormElements(selectedType); 
+    //            },
+    //            error: function () {
+    //                //console.error("Failed to load additional fields.");
+    //            }
+    //        });  
+    //    });
+    //});
+
+</script>
+
+
 
 
 </body>

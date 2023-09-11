@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../assets/js/bootstrap.bundle.js"></script>
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html" style="margin-left: 24px;">
+                <img src="../assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
+            </a>
+            <div class="navbarvr"></div>
+            <span class="collapse navbar-collapse  navbar-brand">ITI-Hub</span>
+            <div class="justify-content-end" id="navbarSupportedContent">
+                <div class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-right: 20px;">
+                    <a href="../register/login.html" class="btn logoutbtn" style="margin-right: 48px;">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar">
+                <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary" style="width: 280px; height: 93vh;">
+                    <span class="d-flex align-items-center mb-3 mb-md-0 me-md-auto ">
+                        <span class="nav-title">Navigation</span>
+                    </span>
+                    <hr>
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item navs">
+                            <a href="index.html" class="nav-link link-body-emphasis" aria-current="page">
+                                <img src="../assets/images/Gray/intake.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                Intakes
+                            </a>
+                        </li>
+                        <li class="nav-item navs">
+                            <a href="managedTracks.html" class="nav-link link-body-emphasis">
+                                <img src="../assets/images/Gray/track.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                Tracks
+                            </a>
+                        </li>
+                        <li class="nav-item navs">
+                            <a href="courses.html" class="nav-link link-body-emphasis act">
+                                <img src="../assets/images/White/course.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                <span style="color: white;">Courses you teach</span>
+                                
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Main (tales + btns) -->
+            <div class="col-md-10 text-center content">
+                <div class="container-fluid">
+                    <div class="row col-md-12">
+                        <div class="r1">
+                            <h3 style="padding-left: 33px;">Students in .Net track</h3>
+                        </div>
+                    </div>
+                    <div class="row col-md-11">
+                        <table class="table table-hover" id="myTable">
+                            <thead class="table-secondary">
+                                <tr>
+                                    <th style="padding-left: 24px;">
+                                        Students' Name
+                                        <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                        </svg>
+                                    </th>
+                                    <th>
+                                        Assign grades
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding-left: 24px; padding-top: 14px;">Kordy</td>
+                                    <td style="padding-right: 100px;">
+                                        <input type="number" name="" id="" style="width: 50px; margin-top: 4px;">
+                                        <input type="submit" class="btn courseBtns" style="padding: 4px 8px; margin-bottom: 4px;" value="save">
+                                    </td>
+                                    <td style="text-align: right; padding-right: 16px;">
+                                        <a href="" download class="btn btn-primary" style="padding: 6px;">Download submission</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 24px; padding-top: 14px;">Assem</td>
+                                    <td style="padding-right: 100px;">
+                                        <input type="number" name="" id="" style="width: 50px; margin-top: 4px;">
+                                        <input type="submit" class="btn courseBtns" style="padding: 4px 8px; margin-bottom: 4px;" value="save">
+                                    </td>                                    
+                                    <td style="text-align: right; padding-right: 16px;">
+                                        <a href="" download class="btn btn-primary" style="padding: 6px;">Download submission</a>
+                                    </td>
+                                </tr>                        
+                                <tr>
+                                    <td style="padding-left: 24px; padding-top: 14px;">Ehab</td>
+                                    <td style="padding-right: 100px;">
+                                        <input type="number" name="" id="" style="width: 50px; margin-top: 4px;">
+                                        <input type="submit" class="btn courseBtns" style="padding: 4px 8px; margin-bottom: 4px;" value="save">
+                                    </td>                                    
+                                    <td style="text-align: right; padding-right: 16px;">
+                                        <a href="" download class="btn btn-primary" style="padding: 6px;">Download submission</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 24px; padding-top: 14px;">Ali 34an mayz3l4</td>
+                                    <td style="padding-right: 100px;">
+                                        <input type="number" name="" id="" style="width: 50px; margin-top: 4px;">
+                                        <input type="submit" class="btn courseBtns" style="padding: 4px 8px; margin-bottom: 4px;" value="save">
+                                    </td>
+                                    <td style="text-align: right; padding-right: 16px;">
+                                        <a href="" download class="btn btn-primary" style="padding: 6px;">Download submission</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 24px; padding-top: 14px;">Ibrahim Ali</td>
+                                    <td style="padding-right: 100px;">
+                                        <input type="number" name="" id="" style="width: 50px; margin-top: 4px;">
+                                        <input type="submit" class="btn courseBtns" style="padding: 4px 8px; margin-bottom: 4px;" value="save">
+                                    </td>
+                                    <td style="text-align: right; padding-right: 16px;">
+                                        <a href="" download class="btn btn-primary" style="padding: 6px;">Download submission</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 24px; padding-top: 14px;">Mahmoud Taher</td>
+                                    <td style="padding-right: 100px;">
+                                        <input type="number" name="" id="" style="width: 50px; margin-top: 4px;">
+                                        <input type="submit" class="btn courseBtns" style="padding: 4px 8px; margin-bottom: 4px;" value="save">
+                                    </td>
+                                    <td style="text-align: right; padding-right: 16px;">
+                                        <a href="" download class="btn btn-primary" style="padding: 6px;">Download submission</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 24px; padding-top: 14px;">*********</td>
+                                    <td style="padding-right: 100px;">
+                                        <input type="number" name="" id="" style="width: 50px; margin-top: 4px;">
+                                        <input type="submit" class="btn courseBtns" style="padding: 4px 8px; margin-bottom: 4px;" value="save">
+                                    </td>
+                                    <td style="text-align: right; padding-right: 16px;">
+                                        <a href="" download class="btn btn-primary" style="padding: 6px;">Download submission</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 24px; padding-top: 14px;">*********</td>
+                                    <td style="padding-right: 100px;">
+                                        <input type="number" name="" id="" style="width: 50px; margin-top: 4px;">
+                                        <input type="submit" class="btn courseBtns" style="padding: 4px 8px; margin-bottom: 4px;" value="save">
+                                    </td>
+                                    <td style="text-align: right; padding-right: 16px;">
+                                        <a href="" download class="btn btn-primary" style="padding: 6px;">Download submission</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="footer">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-end">
+                                <li class="page-item disabled">
+                                    <a class="page-link">Previous</a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>

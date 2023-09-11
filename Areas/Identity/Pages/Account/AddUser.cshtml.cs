@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using Admin_Panel_ITI.Models;
 using Microsoft.AspNetCore.Identity;
@@ -7,7 +6,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel;
 using Admin_Panel_ITI.Repos;
 using Admin_Panel_ITI.Repos.Interfaces;
-using Microsoft.AspNetCore.Http.HttpResults;
+using PartialViewResult = Microsoft.AspNetCore.Mvc.PartialViewResult;
+using CompareAttribute = System.ComponentModel.DataAnnotations.CompareAttribute;
 
 namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
 {
@@ -23,7 +23,8 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
         private readonly IInstructorRepository instructorRepository;
         private readonly IIntakeRepository intakeRepository;
         private readonly IIntake_InstructorRepository intakeInstructorRepository;
-        private readonly IIntake_Track_CourseRepository intakeTrackCourseRepository;
+        private readonly ITrackRepository trackRepository;
+
         public AddUserModel(
             UserManager<AppUser> userManager,
             IUserStore<AppUser> userStore,
@@ -33,8 +34,8 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
             IStudentRepository _studentRepository,
             IInstructorRepository _instructorRepository, 
             IIntakeRepository _intakeRepository,
-            IIntake_InstructorRepository _intakeInstructorRepository, 
-            IIntake_Track_CourseRepository _intakeTrackCourseRepository)
+            IIntake_InstructorRepository _intakeInstructorRepository,
+            ITrackRepository _trackRepository)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -46,16 +47,14 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
             instructorRepository = _instructorRepository;
             intakeRepository = _intakeRepository;
             intakeInstructorRepository = _intakeInstructorRepository;
-            intakeTrackCourseRepository = _intakeTrackCourseRepository;
+            trackRepository = _trackRepository;
         }
 
 
         [BindProperty]
         public InputModel Input { get; set; }
 
-
         public string ReturnUrl { get; set; }
-
 
         public enum UserType { Admin, Instructor, Student }
 
@@ -109,9 +108,14 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
 
             var AllIntakes = intakeRepository.GetCurrentAvIntakes();
             ViewData["AllIntakes"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(AllIntakes, "ID", "Name");
+        }
 
-            var AllTracks = new List<Intake_Track_Course>();
-            ViewData["AllTracks"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(AllTracks, "ID", "Name");
+
+        public PartialViewResult OnGetTracks(int intakeID)
+        {
+            var AllTracks = trackRepository.GetTracksByIntakeID(intakeID);
+
+            return Partial("_TracksParialView", AllTracks);
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -176,8 +180,7 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, "Student");
                     }
 
-
-
+                    #region NN
                     //if (await _userManager.IsInRoleAsync(user, "Admin"))
                     //{
                     //    Admin newAdmin = new()
@@ -186,7 +189,8 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
                     //    };
 
                     //    adminRepository.CreateAdmin(newAdmin);
-                    //}
+                    //} 
+                    #endregion
 
                     await _signInManager.SignInAsync(user, isPersistent: false); //create cookie 
 
@@ -202,9 +206,6 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
-
-
-
 
 
 

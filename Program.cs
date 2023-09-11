@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Debug;
 using System.Security.Principal;
 
 namespace Admin_Panel_ITI
@@ -23,7 +24,17 @@ namespace Admin_Panel_ITI
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<MainDBContext>(options =>
-                options.UseSqlServer(connectionString));
+            {
+                // Configure logging for EF Core
+                var serviceProvider = builder.Services.BuildServiceProvider();
+               
+                var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+
+                loggerFactory.AddProvider(new DebugLoggerProvider());
+
+                options.UseSqlServer(connectionString);
+            });
+                
 
 
 
@@ -56,8 +67,6 @@ namespace Admin_Panel_ITI
             builder.Services.AddScoped<IIntake_Track_CourseRepository, Intake_Track_CourseRepoServices>();
             builder.Services.AddScoped<IIntake_InstructorRepository, Intake_InstructorRepoServices>();
             builder.Services.AddScoped<ITrackRepository, TrackRepoServices>();
-
-            //---//
             builder.Services.AddScoped<IAdminRepository, AdminRepoServices>();
 
             builder.Services.AddRazorPages();
@@ -84,6 +93,11 @@ namespace Admin_Panel_ITI
             app.UseAuthorization();
 
 
+
+            app.MapAreaControllerRoute(
+            name: "Inst",
+            areaName: "InstructorsArea",
+            pattern: "InstructorsArea/{controller}/{action}/{id?}");
 
             app.MapControllerRoute(
                 name: "default",

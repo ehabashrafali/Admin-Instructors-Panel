@@ -185,9 +185,6 @@ namespace Admin_Panel_ITI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("AdminAspNetUserID")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("CourseID")
                         .HasColumnType("int");
 
@@ -206,8 +203,6 @@ namespace Admin_Panel_ITI.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("AdminAspNetUserID");
 
                     b.HasIndex("CourseID");
 
@@ -654,7 +649,7 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasOne("Admin_Panel_ITI.Models.AppUser", "AspNetUser")
                         .WithMany("Admins")
                         .HasForeignKey("AspNetUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("AspNetUser");
@@ -665,7 +660,7 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasOne("Admin_Panel_ITI.Models.Admin", "Admin")
                         .WithMany()
                         .HasForeignKey("AdminID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Admin");
@@ -676,19 +671,19 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasOne("Admin_Panel_ITI.Models.CourseDay", "CourseDay")
                         .WithMany("CourseDayMaterials")
                         .HasForeignKey("CourseDayID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Admin_Panel_ITI.Models.Course", "Course")
                         .WithMany("CourseDayMaterials")
                         .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Admin_Panel_ITI.Models.Material", "MaterialOfDay")
                         .WithMany("CourseDayMaterials")
                         .HasForeignKey("MaterialID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Course");
@@ -700,14 +695,10 @@ namespace Admin_Panel_ITI.Migrations
 
             modelBuilder.Entity("Admin_Panel_ITI.Models.Exam", b =>
                 {
-                    b.HasOne("Admin_Panel_ITI.Models.Admin", null)
-                        .WithMany("Exams")
-                        .HasForeignKey("AdminAspNetUserID");
-
                     b.HasOne("Admin_Panel_ITI.Models.Course", "Course")
                         .WithMany("Exams")
                         .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Admin_Panel_ITI.Models.Instructor", "Instructor")
@@ -724,13 +715,13 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasOne("Admin_Panel_ITI.Models.Exam", "Exam")
                         .WithMany("Exam_Question")
                         .HasForeignKey("ExamID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Admin_Panel_ITI.Models.Question", "Question")
                         .WithMany("Exam_Question")
                         .HasForeignKey("QuestionID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Exam");
@@ -743,19 +734,19 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasOne("Admin_Panel_ITI.Models.Exam", "Exam")
                         .WithMany("Student_Quest_Exam")
                         .HasForeignKey("ExamID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Admin_Panel_ITI.Models.Question", "Question")
                         .WithMany("Student_Quest_Exam")
                         .HasForeignKey("QuestionID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Admin_Panel_ITI.Models.Student", "Student")
                         .WithMany("Student_Quest_Exam")
                         .HasForeignKey("StudentID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Exam");
@@ -774,7 +765,7 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasOne("Admin_Panel_ITI.Models.AppUser", "AspNetUser")
                         .WithMany("Instructors_AspNetUser")
                         .HasForeignKey("AspNetUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Admin");
@@ -787,13 +778,13 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasOne("Admin_Panel_ITI.Models.Course", "Course")
                         .WithMany("InstructorCourses")
                         .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Admin_Panel_ITI.Models.Instructor", "Instructor")
                         .WithMany("InstructorCourses")
                         .HasForeignKey("InstructorID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Course");
@@ -815,13 +806,13 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasOne("Admin_Panel_ITI.Models.Instructor", "Instructor")
                         .WithMany("IntakeInstructors")
                         .HasForeignKey("InstructorID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Admin_Panel_ITI.Models.Intake", "Intake")
                         .WithMany("IntakeInstructors")
                         .HasForeignKey("IntakeID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Instructor");
@@ -834,19 +825,19 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasOne("Admin_Panel_ITI.Models.Course", "Course")
                         .WithMany("IntakeTrackCourse")
                         .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Admin_Panel_ITI.Models.Intake", "Intake")
                         .WithMany("IntakeTrackCourse")
                         .HasForeignKey("IntakeID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Admin_Panel_ITI.Models.Track", "Track")
                         .WithMany("IntakeTrackCourse")
                         .HasForeignKey("TrackID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Course");
@@ -874,19 +865,19 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasOne("Admin_Panel_ITI.Models.AppUser", "AspNetUser")
                         .WithMany("Students_AspNetUser")
                         .HasForeignKey("AspNetUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Admin_Panel_ITI.Models.Intake", "Intake")
                         .WithMany("Students")
                         .HasForeignKey("IntakeID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Admin_Panel_ITI.Models.Track", "Track")
                         .WithMany()
                         .HasForeignKey("TrackID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Admin");
@@ -903,13 +894,13 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasOne("Admin_Panel_ITI.Models.Course", "Course")
                         .WithMany("StudentCourses")
                         .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Admin_Panel_ITI.Models.Student", "Student")
                         .WithMany("StudentCourses")
                         .HasForeignKey("StudentID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Course");
@@ -922,13 +913,13 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasOne("Admin_Panel_ITI.Models.CourseDay", "CourseDay")
                         .WithMany("StudentsSubmissions")
                         .HasForeignKey("CourseDayID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Admin_Panel_ITI.Models.Student", "Student")
                         .WithMany("StudentsSubmissions")
                         .HasForeignKey("StudentID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("CourseDay");
@@ -956,7 +947,7 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -965,7 +956,7 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasOne("Admin_Panel_ITI.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -974,7 +965,7 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasOne("Admin_Panel_ITI.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -983,13 +974,13 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Admin_Panel_ITI.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -998,14 +989,12 @@ namespace Admin_Panel_ITI.Migrations
                     b.HasOne("Admin_Panel_ITI.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Admin_Panel_ITI.Models.Admin", b =>
                 {
-                    b.Navigation("Exams");
-
                     b.Navigation("Intakes");
 
                     b.Navigation("Tracks");

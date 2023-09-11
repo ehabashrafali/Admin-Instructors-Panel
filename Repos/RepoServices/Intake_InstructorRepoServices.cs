@@ -1,6 +1,7 @@
 ﻿using Admin_Panel_ITI.Data;
 using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Admin_Panel_ITI.Repos.RepoServices
 {
@@ -30,7 +31,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         }
 
 
-        //---//
+        //---// //Admin
         public void AddIntake_Instructor(int IntakeID, string instructorID)
         {
             Intake_Instructor intake_Instructor = new Intake_Instructor()
@@ -41,6 +42,15 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
             Context.Intake_Instructors.Add(intake_Instructor);
             Context.SaveChanges();
+        }
+
+
+
+        /*---------------------------------------------- Instructor Services -----------------------------------------------*/
+
+        public List<Intake_Instructor> GetIntakesByInstructorID(string instructorID)
+        {
+            return Context.Intake_Instructors.Where(ii => ii.InstructorID == instructorID).Include(ii => ii.Intake).ToList();
         }
 
     }

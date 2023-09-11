@@ -291,3 +291,29 @@ input[type="checkbox"] {
     color: #333;
     margin: 16px;
 }
+
+
+/* ********************************************************************* */
+/* upload btn */
+
+.file {
+    position: relative;
+    overflow: hidden;
+}
+
+input[type="file"] {
+    position: absolute;
+    font-size: 50px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+
+.courseBtns {
+    border: 1px solid #c0c0c0;
+    margin-left: 8px;
+}
+
+.courseBtns:hover {
+    background-color: #cececc;
+}

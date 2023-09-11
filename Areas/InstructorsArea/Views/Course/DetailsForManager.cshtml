@@ -1,0 +1,127 @@
+﻿
+@using Admin_Panel_ITI.Areas.InstructorsArea.ViewModels;
+
+@model IEnumerable<InstructorCourseVM>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/styles.css">
+    <script src="~/assets/js/bootstrap.bundle.js"></script>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html" style="margin-left: 24px;">
+                <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
+            </a>
+            <div class="navbarvr"></div>
+            <span class="collapse navbar-collapse  navbar-brand">ITI-Hub</span>
+            <div class="justify-content-end" id="navbarSupportedContent">
+                <div class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-right: 20px;">
+                    <a href="~/register/login.html" class="btn logoutbtn" style="margin-right: 48px;">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="">
+        <div class="row">
+
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar">
+                <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary" style="width: 280px; height: 93vh;">
+                    <span class="d-flex align-items-center mb-3 mb-md-0 me-md-auto ">
+                        <span class="nav-title">Navigation</span>
+                    </span>
+
+                    <hr>
+
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item navs">
+                            <a href="index.html" class="nav-link link-body-emphasis act" aria-current="page">
+                                <img src="~/assets/images/White/intake.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;">
+                                <span style="color: white;">Intakes</span>
+                            </a>
+                        </li>
+                        <li class="nav-item navs">
+                            <a href="managedTracks.html" class="nav-link link-body-emphasis">
+                                <img src="~/assets/images/Gray/track.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;">
+                                Tracks
+                            </a>
+                        </li>
+                        <li class="nav-item navs">
+                            <a href="courses.html" class="nav-link link-body-emphasis">
+                                <img src="~/assets/images/Gray/courses.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;">
+                                Courses you teach
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+            <!--Forward/Back-->
+            <div class="col-md-10 text-center content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="r1">
+                            <div class="row">
+                                <div class="col" style="display:inline-flex">
+                                    <a asp-controller="Intake" asp-action="Index" class="text-primary" style="padding-left:50px ; width:140px">@ViewBag.IntakeName</a>
+                                </div>
+                                <div class="col" style="display:inline-flex">
+                                    <span><i class="fas fa-arrow-right"></i></span>
+                                    <a asp-controller="Track" asp-action="DetailsForManager" asp-route-id="@ViewBag.IntakeID" asp-route-name="@ViewBag.IntakeName" class="text-primary" style="padding-left:15px ; width:153px ">@ViewBag.TrackName Track</a>
+                                </div>
+                                <div class="col" style="display:inline-flex">
+                                    <span><i class="fas fa-arrow-right"></i></span>
+                                    <p style = "padding-left:20px ; font-weight:bold">Courses</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group" style="margin: 0 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; flex-direction: row;">
+                        @foreach (var item in Model)
+                        {
+                            <div class="list-group-item list-group-item-action" aria-current="true" style="margin-bottom: 48px; width: 30%; padding-top: 16px; padding-bottom: 16px;">
+                                <div class="d-flex justify-content-between" style="margin-bottom: 16px;">
+                                    <h5 class="mb-1">@item.CourseName</h5>
+                                    <small>@item.Duration Days</small>
+                                </div>
+                                <p class="mb-1 d-flex">Instructor: @item.InstructorName</p>
+                                <small class="mb-1 d-flex">Created by: @item.AdminName</small>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="footer">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-end">
+                                <li class="page-item disabled">
+                                    <a class="page-link">Previous</a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

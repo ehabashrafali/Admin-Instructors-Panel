@@ -19,9 +19,6 @@ namespace Admin_Panel_ITI.Models
 
 
 
-       
-
-
 
         [ForeignKey(nameof(Intake))]
         public int IntakeID { get; set; }

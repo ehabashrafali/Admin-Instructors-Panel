@@ -11,7 +11,7 @@ namespace Admin_Panel_ITI.Controllers
             return View();
         }
 
-        // GET: Student_SubmissionController/Details/5
+        // GET: Student_SubmissionController/DetailsForManager/5
         public ActionResult Details(int id)
         {
             return View();

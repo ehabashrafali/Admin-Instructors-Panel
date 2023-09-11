@@ -25,9 +25,15 @@ namespace Admin_Panel_ITI.Models
         public virtual CourseDay? CourseDay { get; set; }
 
 
-
+        //old//
         [ForeignKey(nameof(Student))]
         public string StudentID { get; set; }
         public virtual Student? Student { get; set; }
+
+
+        //new//
+        //[ForeignKey(nameof(Student))]
+        //public string StudentID { get; set; }
+        //public virtual AppUser? Student { get; set; }
     }
 }

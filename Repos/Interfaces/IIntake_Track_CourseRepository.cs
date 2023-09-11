@@ -5,8 +5,7 @@ namespace Admin_Panel_ITI.Repos.Interfaces
     public interface IIntake_Track_CourseRepository
     {
         //---//
-        public List<Intake_Track_Course> GetTracksByIntakeID(int intakeID); 
-
+        public List<Intake_Track_Course> GetTracksByIntakeID(int intakeID);
 
         public void DeleteIntake_Track_CoursebyCourseID(int courseID);
         public void DeleteIntake_Track_CoursebyTrackID(int trackID);

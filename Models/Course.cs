@@ -26,10 +26,16 @@ namespace Admin_Panel_ITI.Models
 
 
 
-
+        //old//
         [ForeignKey(nameof(Admin))]
         public string AdminID { get; set; }
         public virtual Admin? Admin { get; set; }
+
+
+        //new//
+        //[ForeignKey(nameof(Admin))]
+        //public string AdminID { get; set; }
+        //public virtual AppUser? Admin { get; set; }
 
 
         public virtual IEnumerable<Exam>? Exams { get; set; }

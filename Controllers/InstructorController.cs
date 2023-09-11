@@ -29,7 +29,7 @@ namespace Admin_Panel_ITI.Controllers
             return View(instructors);
         }
 
-        // GET: InstructorController/Details/5
+        // GET: InstructorController/DetailsForManager/5
         public ActionResult Details(string id)
         {
             var instructor = instructorRepository.GetInstructorbyID(id);

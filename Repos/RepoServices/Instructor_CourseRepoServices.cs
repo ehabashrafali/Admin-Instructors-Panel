@@ -104,5 +104,20 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             }
             Context.SaveChanges();
         }
+
+
+
+
+        /*---------------------------------------------- Instructor Services -----------------------------------------------*/
+
+        public Instructor_Course GetInstructorTeachCourse(int courseId)
+        {
+            var result = Context.Instructor_Courses.Where(ic => ic.CourseID == courseId).Include(ic => ic.Instructor).ThenInclude(i => i.AspNetUser).FirstOrDefault();
+            
+            if (result != null)
+                return result;
+
+            return null;
+        }
     }
 }

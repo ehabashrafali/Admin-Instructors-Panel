@@ -16,13 +16,7 @@ namespace Admin_Panel_ITI.Models
 
 
 
-
-
-
-
-
         public bool CurrentlyWorking { get; set; } = true;
-
 
 
 
@@ -39,6 +33,8 @@ namespace Admin_Panel_ITI.Models
         public string? AdminID { get; set; }
         public virtual AppUser? Admin { get; set; }
 
+
+
         public virtual IEnumerable<Track>? Tracks { get; set; }
         public virtual IEnumerable<Exam>? Exams { get; set; }
 
@@ -46,8 +42,5 @@ namespace Admin_Panel_ITI.Models
         public virtual IEnumerable<Instructor_Course>? InstructorCourses { get; set; }
         public virtual IEnumerable<Intake_Instructor>? IntakeInstructors { get; set; }
         public virtual IEnumerable<Material>? Materials { get; set; }
-
-
-
     }
 }

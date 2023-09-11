@@ -75,7 +75,7 @@ namespace Admin_Panel_ITI.Controllers
         }
 
 
-        // GET: TrackController/Details/5
+        // GET: TrackController/DetailsForManager/5
         public ActionResult Details(int id)
         {
             return View(trackRepositry.getTrackbyID(id));

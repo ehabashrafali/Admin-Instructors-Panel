@@ -12,8 +12,14 @@ namespace Admin_Panel_ITI.Models
         public virtual Intake? Intake { get; set; }
 
 
+        //old//
         [ForeignKey(nameof(Instructor))]
         public string InstructorID { get; set; }
         public virtual Instructor? Instructor { get; set; }
+
+
+        //[ForeignKey(nameof(Instructor))]
+        //public string InstructorID { get; set; }
+        //public virtual AppUser? Instructor { get; set; }
     }
 }

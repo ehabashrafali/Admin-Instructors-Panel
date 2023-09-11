@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="assets/js/bootstrap.bundle.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html" style="margin-left: 24px;">
+                <img src="assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
+            </a>
+            <div class="navbarvr"></div>
+            <span class="collapse navbar-collapse  navbar-brand">ITI-Hub</span>
+            <div class="justify-content-end" id="navbarSupportedContent">
+                <div class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-right: 20px;">
+                    <a href="register/register.html" class="btn regbtn">Create new user</a>
+                    <a href="register/login.html" class="btn" style="padding: 8px 42px 0 8px;">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar">
+                <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary" style="width: 280px; height: 93vh;">
+                    <span class="d-flex align-items-center mb-3 mb-md-0 me-md-auto ">
+                        <span class="nav-title">Navigation</span>
+                    </span>
+                    <hr>
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item navs">
+                            <a href="track.html" class="nav-link link-body-emphasis" aria-current="page">
+                                <img src="assets/images/Gray/track.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                Tracks
+                            </a>
+                        </li>
+                        <li class="nav-item navs">
+                            <a href="courses.html" class="nav-link link-body-emphasis">
+                                <img src="assets/images/Gray/courses.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                Courses
+                            </a>
+                        </li>
+                        <li class="nav-item navs">
+                            <a href="instructors.html" class="nav-link link-body-emphasis">
+                                <img src="assets/images/Gray/instructor.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                Instructors
+                            </a>
+                        </li>
+                        <li class="nav-item navs">
+                            <a href="students.html" class="nav-link link-body-emphasis">
+                                <img src="assets/images/Gray/student.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                Students
+                            </a>
+                        </li>
+                        <li class="nav-item navs">
+                            <a href="students.html" class="nav-link link-body-emphasis act">
+                                <img src="assets/images/White/intake.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                <span style="color: white;">Intakes</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Main (tales + btns) -->
+            <div class="col-md-10 text-center content">
+                <div class="container-fluid">
+                    <div class="row col-md-12">
+                        <div class="r1">
+                            <h3 style="padding-left: 38px;">Add Courses to track</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-md-11 p-lg-5">
+                        <form method="post">
+                            <select class="form-select" id="selectedTrack" aria-label="Default select example" onchange="displayCourses()">
+                                <option selected>Select track</option>
+                                <option value="1">.Net</option>
+                                <option value="2">Web & UI</option>
+                                <option value="3">UI/UX</option>
+                            </select>
+                            <select class="form-select" id="selectedCourse" multiple aria-label="Default select example" style="margin-top: 24px; visibility: hidden;">
+                                <option selected>Select courses for this track</option>
+                                <option value="1">C#</option>
+                                <option value="2">Agile</option>
+                                <option value="3">HTML</option>
+                                <option value="4">CSS</option>
+                                <option value="5">JS</option>
+                            </select>
+                            <input type="submit" class="btn btn-primary" style=" margin-top: 24px;" value="Save">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

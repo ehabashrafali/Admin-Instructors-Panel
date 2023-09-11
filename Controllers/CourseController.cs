@@ -24,7 +24,7 @@ namespace Admin_Panel_ITI.Controllers
         }
 
 
-        // GET: CourseController/Details/5
+        // GET: CourseController/DetailsForManager/5
         public ActionResult Details(int id)
         {
             List<string> tracksNames = new List<string>();

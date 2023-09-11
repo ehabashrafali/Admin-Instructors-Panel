@@ -59,7 +59,7 @@ namespace Admin_Panel_ITI.Repos
         
         int IStudentRepository.getStudentNumberbyIntakeID(int intakeID)
         {
-            return Context.Students.Where(s=>s.IntakeID== intakeID).Count();
+            return Context.Students.Where(s=> s.IntakeID == intakeID).Count();
         }
 
         int IStudentRepository.getStudentNumberbyTrackID(int trackID)
@@ -145,7 +145,21 @@ namespace Admin_Panel_ITI.Repos
             studentUpdated.TrackID = student.TrackID;
 
             Context.SaveChanges();
-
         }
+
+
+
+        /*---------------------------------------------- Instructor Services -----------------------------------------------*/
+        public int GetStudentsNumberbyIntakeTrackID(int intakeID, int trackID)
+        {
+            return Context.Students.Where(s => s.IntakeID == intakeID && s.TrackID ==  trackID).Count();    
+        }
+
+
+        public List<Student> GetStudentsbyIntakeTrackID(int intakeID, int trackID)
+        {
+            return Context.Students.Where(s => s.IntakeID == intakeID && s.TrackID == trackID).Include(s =>s.AspNetUser).ToList();    
+        }
+
     }
 }

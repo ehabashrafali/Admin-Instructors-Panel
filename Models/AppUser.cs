@@ -26,5 +26,22 @@ namespace Admin_Panel_ITI.Models
         [InverseProperty("Admin")]
         public virtual IEnumerable<Student>? Students_Admin { get; set; }
 
+
+
+
+
+
+
+
+
+
+
+        //---//
+        //public virtual IEnumerable<Intake>? Intakes { get; set; }
+        //public virtual IEnumerable<Instructor_Course>? Instructor_Courses { get; set; }
+
+        //public virtual IEnumerable<Track>? Tracks { get; set; }
+        //public virtual IEnumerable<Exam>? Exams { get; set; }
+        //public virtual IEnumerable<Intake_Track_Course>? IntakeTrackCourse { get; set; }
     }
 }

@@ -130,5 +130,37 @@ namespace Admin_Panel_ITI.Repos
             courseUpdated.CreationDate = course.CreationDate;
             Context.SaveChanges();
         }
+
+
+
+
+
+        /*---------------------------------------------- Instructor Services -----------------------------------------------*/
+        public List<Course> GetCoursesByIntakeTrackID(int intakeID, int trackID)
+        {
+            var query =
+                (from c in Context.Courses
+                 join tc in Context.Intake_Track_Courses on c.ID equals tc.CourseID
+                 where tc.TrackID == trackID && tc.IntakeID == intakeID
+                 select c)
+                 .Include(c => c.Admin)
+                 .ThenInclude(a => a.AspNetUser)
+                 .ToList();
+
+            return query;
+        }
+
+
+        public List<Course> GetTeacherCourses(int intakeID, int trackID, string instructorID)
+        {
+            var query = 
+                (from ic in Context.Instructor_Courses
+                where ic.InstructorID == instructorID
+                join itc in Context.Intake_Track_Courses on ic.CourseID equals itc.CourseID
+                where itc.IntakeID == intakeID && itc.TrackID == trackID
+                select ic.Course).ToList();
+
+            return query;
+        }
     }
 }

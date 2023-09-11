@@ -86,8 +86,6 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
 
-            //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(Input.UserName);
@@ -99,9 +97,19 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User logged in.");
-                        returnUrl = Url.Action("Index", "Home");
+
+
+                        // Check the login user Role
+                        if (await _userManager.IsInRoleAsync(user, "Admin"))
+                            returnUrl = Url.Action("Index", "Home");
+                        else if (await _userManager.IsInRoleAsync(user, "Instructor"))
+                            returnUrl = Url.Action("Index", "Intake", new { area = "InstructorsArea" });
+                        else if (await _userManager.IsInRoleAsync(user, "Student"))
+                        {
+                            //Do Some Logic
+                        }
+
                         return LocalRedirect(returnUrl);
-                        //return RedirectToAction("Index", "Home");
                     }
                     else
                     {

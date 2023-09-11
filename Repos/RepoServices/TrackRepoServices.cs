@@ -132,6 +132,53 @@ namespace Admin_Panel_ITI.Repos
             Context.SaveChanges();
         }
 
-        
+
+        //--//
+        public List<Track> GetTracksByIntakeID(int intakeid)
+        {
+            var query = 
+                (from t in Context.Tracks
+                join itc in Context.Intake_Track_Courses on t.ID equals itc.TrackID
+                where itc.IntakeID == intakeid 
+                select t)
+                .Distinct()
+                .ToList();
+
+            return query;
+        }
+
+
+
+
+
+        /*---------------------------------------------- Instructor Services -----------------------------------------------*/
+
+        //get the tracks based on specific intake, and specific manager.
+        public List<Track> getTracks(string ManagerID, int intakeID)
+        {
+            return
+                (from t in Context.Tracks
+                 join itc in Context.Intake_Track_Courses on t.ID equals itc.TrackID
+                 where t.ManagerID == ManagerID && itc.IntakeID == intakeID
+                 select t).Distinct()
+                 .ToList();
+        }
+
+
+
+        //get the tracks a specific Instructor teach in, in a specific intake
+        public List<Track> GetTracksByTeacher(int intakeID, string InstructorID)
+        {
+            var query =
+                (from itc in Context.Intake_Track_Courses
+                 where itc.IntakeID == intakeID
+                 join ic in Context.Instructor_Courses on itc.CourseID equals ic.CourseID
+                 where ic.InstructorID == InstructorID
+                 select itc.Track)
+                .Distinct()
+                .ToList();
+
+            return query;
+        }
     }
 }

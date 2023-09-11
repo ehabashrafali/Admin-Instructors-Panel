@@ -1,6 +1,7 @@
 ﻿using Admin_Panel_ITI.Data;
 using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
+using NuGet.DependencyResolver;
 
 namespace Admin_Panel_ITI.Repos.RepoServices
 {
@@ -71,6 +72,18 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
-     
+
+
+
+        /*---------------------------------------------- Instructor Services -----------------------------------------------*/
+        public List<CourseDay> GetCourseDaysByCourseID(int courseID)
+        {
+            return Context.Course_Day_Materials
+                    .Where(cdm => cdm.CourseID == courseID)
+                    .Select(cdm => cdm.CourseDay)
+                    .Distinct()
+                    .ToList();
+        }
+
     }
 }

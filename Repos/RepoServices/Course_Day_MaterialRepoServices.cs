@@ -73,9 +73,10 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             return cdms;
         }
 
+        //replace cdm.CourseDayID --> CourseID
         List<Course_Day_Material> ICourse_Day_MaterialRepository.GetCourseDaysbyCourseID(int courseID)
         {
-            var cdms = Context.Course_Day_Materials.Where(cdm => cdm.CourseDayID == courseID).Include(cdm=>cdm.CourseDay).Include(cdm => cdm.MaterialOfDay).ToList();
+            var cdms = Context.Course_Day_Materials.Where(cdm => cdm.CourseID == courseID).Include(cdm=>cdm.CourseDay).Include(cdm => cdm.MaterialOfDay).ToList();
             return cdms;
         }
 
@@ -86,10 +87,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             cdm_updated.CourseID = courseDayMaterial.CourseID;
             cdm_updated.MaterialID = courseDayMaterial.MaterialID;
             Context.SaveChanges();
-
-        }
-
-
-       
+        } 
     }
 }

@@ -20,9 +20,16 @@ namespace Admin_Panel_ITI.Models
         public DateTime CreationDate { get; set; }
 
 
+        //old//
         [ForeignKey(nameof(Manager))]
         public string? ManagerID { get; set; }  //InstructorID, string because it will be GUID (hashed password)
         public virtual Instructor? Manager { get; set; }
+
+
+        //new//
+        //[ForeignKey(nameof(Manager))]
+        //public string? ManagerID { get; set; }  //InstructorID, string because it will be GUID (hashed password)
+        //public virtual AppUser? Manager { get; set; }
 
 
 
@@ -32,7 +39,6 @@ namespace Admin_Panel_ITI.Models
 
 
         public virtual IEnumerable<Intake_Track_Course>? IntakeTrackCourse { get; set; }
-
 
     }
 }

@@ -11,7 +11,7 @@ namespace Admin_Panel_ITI.Controllers
             return View();
         }
 
-        // GET: Intake_TrackController/Details/5
+        // GET: Intake_TrackController/DetailsForManager/5
         public ActionResult Details(int id)
         {
             return View();
