@@ -47,7 +47,10 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
-
+        public List<Intake_Instructor> GetIntakesByInstructorID(string instructorID)
+        {
+            return Context.Intake_Instructors.Where(ii => ii.InstructorID == instructorID).Include(ii => ii.Intake).ToList();
+        }
 
     }
 }
