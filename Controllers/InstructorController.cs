@@ -34,7 +34,21 @@ namespace Admin_Panel_ITI.Controllers
             return View(instructors);
         }
 
+        public ActionResult UpdateTableData(int pageNumber)
+        {
 
+
+            var instructors = instructorRepository.GetInstructors(pageNumber, 10);
+            if (instructors.Count == 0 && pageNumber > 1)
+            {
+                instructors = instructorRepository.GetInstructors(pageNumber - 1, 10);
+                pageNumber--;
+            }
+
+
+            ViewBag.PageNumber = pageNumber;
+            return PartialView("_TableDataPartial", instructors);
+        }
 
 
 
