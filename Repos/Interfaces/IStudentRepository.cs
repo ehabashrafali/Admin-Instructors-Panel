@@ -9,8 +9,6 @@ namespace Admin_Panel_ITI.Repos
         public int getStudentNumberbyTrackID(int trackID);
         
 
-
-
         public Student getStudentbyID(string studentbyID);
 
 
@@ -21,7 +19,7 @@ namespace Admin_Panel_ITI.Repos
         public void UpdateStudent(string studentID, Student student);
 
 
-        public void DeleteStudent(string studentID);
+        public void DeleteStudent(List<string> studentIDs);
         public List<Student> getStudentsbyTrackID(int trackid, int pageNumber, int pageSize);
         public List<Student> getStudentsbyTrackID(int trackID);
 

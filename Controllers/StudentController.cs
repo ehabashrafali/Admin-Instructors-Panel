@@ -4,6 +4,7 @@ using X.PagedList;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Admin_Panel_ITI.Repos;
 using Admin_Panel_ITI.Models;
+using System.Drawing.Printing;
 
 namespace Admin_Panel_ITI.Controllers
 {
@@ -27,12 +28,29 @@ namespace Admin_Panel_ITI.Controllers
             this.student_SubmissionRepository = student_SubmissionRepository;
             IntakeRepository = intakeRepository;
         }
-        public ActionResult Index(int pageNumber)
+        public ActionResult Index(int intakeID = 0, int pageNumber = 1)
         {
-        
-            var students = studentRepository.getStudents(pageNumber,10);
-            return View(students);
+            var intakes = IntakeRepository.GetAllIntakes();
+            ViewData["Intakes"] = new SelectList(intakes, "ID", "Name");
+
+            if (intakeID != 0)
+            {
+                // Filter students by intake
+                var students = studentRepository.getStudentsbyIntakeID(intakeID, pageNumber, 10);
+                ViewBag.IntakeID = intakeID;
+                ViewBag.PageNumber = pageNumber;
+                return View(students);
+            }
+            else
+            {
+                // Show all students if no intake filter is applied
+                ViewBag.IntakeID = 0;
+                var students = studentRepository.getStudents(pageNumber, 10);
+                ViewBag.PageNumber = pageNumber;
+                return View(students);
+            }
         }
+
 
         public ActionResult StdIndexByTrackId(int Trackid, int pageNumber)
         {
@@ -41,12 +59,12 @@ namespace Admin_Panel_ITI.Controllers
             return View(students);
         }
 
-        public ActionResult StdIndexByIntakeId(int IntakeId, int pageNumber)
+        public ActionResult StdIndexByIntakeId(int Id, int pageNumber)
         {
-
-            var students = studentRepository.getStudentsbyIntakeID(IntakeId, pageNumber,10);
-            return View(students);
+            var students = studentRepository.getStudentsbyIntakeID(Id, pageNumber, 10);
+            return PartialView("_TableDataPartial", students);
         }
+
 
         //// GET: StudentController/Create
         //public ActionResult Create()
@@ -112,12 +130,48 @@ namespace Admin_Panel_ITI.Controllers
 
         // GET: StudentController/Delete/5
 
-        public IActionResult Delete(string id)
+
+
+
+        public ActionResult UpdateTableData(int intakeID, int pageNumber)
         {
-            studentRepository.DeleteStudent(id);
-            return RedirectToAction(nameof(Index));
+            List<Student> students;
+
+            if (intakeID != 0)
+            {
+                students = studentRepository.getStudentsbyIntakeID(intakeID, pageNumber, 10);
+            }
+            else
+            {
+                students = studentRepository.getStudents(pageNumber, 10);
+            }
+
+            if (students.Count == 0 && pageNumber > 1)
+            {
+                if (intakeID != 0)
+                {
+                    students = studentRepository.getStudentsbyIntakeID(intakeID, pageNumber - 1, 10);
+                }
+                else
+                {
+                    students = studentRepository.getStudents(pageNumber - 1, 10);
+                }
+                pageNumber--;
+            }
+
+            ViewBag.PageNumber = pageNumber;
+            return PartialView("_TableDataPartial", students);
         }
 
+
+
+        [HttpPost]
+        public IActionResult Delete(List<string> Stdids)
+        {
+            studentRepository.DeleteStudent(Stdids);
+
+            return RedirectToAction(nameof(Index));
+        }
 
     }
 }

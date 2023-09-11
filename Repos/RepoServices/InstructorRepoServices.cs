@@ -18,7 +18,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
 
         public InstructorRepoServices(MainDBContext context, ITrackRepository trackRepository, IExamRepository examRepository, IMaterialRepository materialRepository, IInstructor_CourseRepository instructor_CourseRepository, IIntake_InstructorRepository intake_InstructorRepository )
-
         {
             Context = context;
             this.trackRepository = trackRepository;
@@ -93,9 +92,8 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
             var instructors = Context.Instructors
                 .Include(i=>i.Admin)
+                .Include(i=>i.AspNetUser)
                 .Include(i => i.Tracks)
-                .Include(i => i.InstructorCourses)
-                .ThenInclude(ic => ic.Course)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -119,7 +117,11 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
         List<Instructor> IInstructorRepository.GetInstructors()
         {
-            var instructors = Context.Instructors.Include(i => i.AspNetUser).ToList();
+            var instructors = Context.Instructors
+                .Include(i => i.Admin)
+                .Include(i => i.AspNetUser)
+                .Include(i => i.Tracks)
+                .ToList();
 
             return instructors;
         }

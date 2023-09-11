@@ -24,21 +24,15 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         void IIntake_Track_CourseRepository.DeleteIntake_Track_CoursebyTrackID(int trackID)
         {
             var records = Context.Intake_Track_Courses.Where(itc => itc.TrackID == trackID).ToList();
-            foreach (var record in records)
-            {
-                Context.Intake_Track_Courses.Remove(record);
-            }
-            Context.SaveChanges();
+            Context.Intake_Track_Courses.RemoveRange(records);
         }
 
 
         void IIntake_Track_CourseRepository.DeleteIntake_Track_CoursebyIntakeID(int intakeID)
         {
             var records = Context.Intake_Track_Courses.Where(itc => itc.IntakeID == intakeID).ToList();
-            foreach (var record in records)
-            {
-                Context.Intake_Track_Courses.Remove(record);
-            }
+            Context.Intake_Track_Courses.RemoveRange(records);
+
         }
     }
 }

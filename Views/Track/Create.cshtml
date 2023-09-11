@@ -1,43 +1,27 @@
 ﻿@model Admin_Panel_ITI.Models.Track
 
-@{
-    ViewData["Title"] = "Create";
-}
 
-<h1>Create</h1>
 
-<h4>Track</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreationDate" class="control-label"></label>
-                <input asp-for="CreationDate" class="form-control" />
-                <span asp-validation-for="CreationDate" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="ManagerID" class="control-label"></label>
-                <select asp-for="ManagerID" class="form-control" asp-items="ViewBag.AllInstructors"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<div class="container-fluid col-md-6">
+    <h3 style="margin-top: 32px;">Create New Track</h3>
+    <form asp-action="Create">
+        <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
+            <span class="input-group-text" style="width: 170px; font-size: 20px;">Track name</span>
+            <input asp-for="Name" class="form-control" aria-label="Sizing example input" placeholder="Enter track name">
+        </div>
+        <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
+            <span class="input-group-text" style="width: 170px; font-size: 20px;">Creation Date</span>
+            <input asp-for="CreationDate" class="form-control" aria-label="Sizing example input" placeholder="Enter track creation date">
+        </div>
+        <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
+            <span class="input-group-text" style="width: 170px; font-size: 20px;">Manager Name</span>
+            <select asp-for="ManagerID" asp-items="ViewBag.AllInstructors" class="form-control">
+                <option value="">Select manager</option>
+            </select>
+        </div>
+       
+        <div class="form-group">
+            <input type="submit" value="Create Track" class="btn btn-primary" />
+        </div>
+    </form>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
