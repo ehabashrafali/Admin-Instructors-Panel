@@ -31,6 +31,7 @@ namespace Admin_Panel_ITI.Controllers
 
         public IActionResult Index()
         {
+
             if (User.Identity.IsAuthenticated)
             {
                 ViewData["Intakes"] = intakeRepository.GetAllIntakes().Select(intake => new Intake

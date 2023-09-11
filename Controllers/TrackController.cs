@@ -39,12 +39,14 @@ namespace Admin_Panel_ITI.Controllers
             ViewData["NumOfStudsInEachTrack"] = studentNumsforTrack;
             ViewData["Intakes"] = new SelectList(intakes, "ID", "Name"); // Add this line
             ViewBag.PageNumber = pageNumber;
+            ViewBag.IntakeID = 0;
             return View(Tracks);
         }
 
 
         public ActionResult UpdateTableData(int intakeID, int pageNumber)
         {
+
             var intakes = intakeRepository.GetAllIntakes();
             List<Track> tracksByIntake;
 
@@ -52,12 +54,22 @@ namespace Admin_Panel_ITI.Controllers
             {
                 // Get all tracks without filtering by intake ID
                 tracksByIntake = trackRepositry.getTracks(pageNumber, 10);
+                if(tracksByIntake.Count == 0 && pageNumber > 1)
+                {
+                    tracksByIntake = trackRepositry.getTracks(pageNumber - 1, 10);
+                    pageNumber--;
+                }
+              
             }
             else
             {
                 // Get tracks filtered by intake ID
-                var Tracks = trackRepositry.getTrackbyIntakeID(intakeID, pageNumber, 10);
-                tracksByIntake = Tracks.Select(t => t.Track).ToList();
+                 tracksByIntake = trackRepositry.getTrackbyIntakeID(intakeID, pageNumber, 10).Select(t => t.Track).Distinct().ToList();
+                if (tracksByIntake.Count == 0 && pageNumber > 1)
+                {
+                    tracksByIntake = trackRepositry.getTrackbyIntakeID(intakeID, pageNumber -1, 10).Select(t => t.Track).Distinct().ToList();
+                    pageNumber--;
+                }
             }
 
             List<int> studentNumsforTrack = new List<int>();
@@ -70,7 +82,7 @@ namespace Admin_Panel_ITI.Controllers
             ViewData["NumOfStudsInEachTrack"] = studentNumsforTrack;
             ViewData["Intakes"] = new SelectList(intakes, "ID", "Name");
             ViewBag.PageNumber = pageNumber;
-
+            ViewBag.IntakeID = intakeID;
             return PartialView("_TableDataPartial", tracksByIntake);
         }
 
@@ -92,17 +104,20 @@ namespace Admin_Panel_ITI.Controllers
         {
 
             var instructors = instructorRepository.GetInstructors();
-            ViewBag.AllInstructors = new SelectList(instructors, "Id", "FullName");
+            ViewBag.AllInstructors = new SelectList(instructors, "AspNetUserID", "AspNetUser.FullName");
             return View();
         }
 
-        // POST: TrackController/Create
+
+        
+
+        //POST: TrackController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        async public Task<ActionResult> Create(Track track)
+       [ValidateAntiForgeryToken]
+       async public Task<ActionResult> Create(Track track)
         {
             var instructors = instructorRepository.GetInstructors();
-            ViewBag.AllInstructors = new SelectList(instructors, "Id", "FullName");
+            ViewBag.AllInstructors = new SelectList(instructors, "AspNetUserID", "AspNetUser.FullName");
             var user = await _userManager.GetUserAsync(User);
             if (user != null)
             {
@@ -121,7 +136,7 @@ namespace Admin_Panel_ITI.Controllers
         public ActionResult Edit(int id)
         {
             var instructors = instructorRepository.GetInstructors();
-            ViewBag.AllInstructors = new SelectList(instructors, "Id", "FullName");
+            ViewBag.AllInstructors = new SelectList(instructors, "AspNetUserID", "AspNetUser.FullName");
             var track = trackRepositry.getTrackbyID(id);
             return View(track);
         }
@@ -133,8 +148,9 @@ namespace Admin_Panel_ITI.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 var Intake = intakeRepository.GetIntakes();
-                ViewBag.AllIntakes = new SelectList(Intake, "ID", "Name");
+                ViewBag.AllIntakes = new SelectList(Intake, "AspNetUserID", "AspNetUser.FullName");
                 trackRepositry.UpdateTrack(id, track);
                 return RedirectToAction(nameof(Index));
             }
@@ -142,11 +158,51 @@ namespace Admin_Panel_ITI.Controllers
         }
 
         // GET: TrackController/Delete/5
-        public ActionResult Delete(int id)
+        [HttpGet]
+        public ActionResult Delete(List<int> selectedTrackIds, int intakeID, int pageNumber)
         {
-            trackRepositry.DeleteTrack(id);
-            return RedirectToAction(nameof(Index));
+            trackRepositry.DeleteTrack(selectedTrackIds);
+
+            var intakes = intakeRepository.GetAllIntakes();
+            List<Track> tracksByIntake;
+
+            if (intakeID == 0)
+            {
+                // Get all tracks without filtering by intake ID
+                tracksByIntake = trackRepositry.getTracks(pageNumber, 10);
+                if (tracksByIntake.Count == 0 && pageNumber > 1)
+                {
+                    tracksByIntake = trackRepositry.getTracks(pageNumber - 1, 10);
+                    pageNumber--;
+                }
+
+            }
+            else
+            {
+                // Get tracks filtered by intake ID
+                tracksByIntake = trackRepositry.getTrackbyIntakeID(intakeID, pageNumber, 10).Select(t => t.Track).Distinct().ToList();
+                if (tracksByIntake.Count == 0 && pageNumber > 1)
+                {
+                    tracksByIntake = trackRepositry.getTrackbyIntakeID(intakeID, pageNumber - 1, 10).Select(t => t.Track).Distinct().ToList();
+                    pageNumber--;
+                }
+            }
+
+            List<int> studentNumsforTrack = new List<int>();
+            foreach (var track in tracksByIntake)
+            {
+                var studentNuminTrack = studentRepository.getStudentNumberbyTrackID(track.ID);
+                studentNumsforTrack.Add(studentNuminTrack);
+            }
+
+            ViewData["NumOfStudsInEachTrack"] = studentNumsforTrack;
+            ViewData["Intakes"] = new SelectList(intakes, "ID", "Name");
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.IntakeID = intakeID;
+            return PartialView("_TableDataPartial", tracksByIntake);
+
         }
+
 
         //// POST: TrackController/Delete/5
         //[HttpPost]

@@ -1,114 +1,97 @@
-﻿@*@model Admin_Panel_ITI.Models.Instructor
+﻿@model Admin_Panel_ITI.Models.Instructor
 
-@{
-    ViewData["Title"] = "Edit";
-}
+<div class="container-fluid col-md-6">
+    <h3 style="margin-top: 32px;">Edit Instructor</h3>
 
-<h1>Edit</h1>
+    <form id="myformcourse" asp-controller="Instructor" asp-action="Edit" method="post">
+        <!-- Include the course ID as a hidden field -->
 
-<h4>Instructor</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="FullName" class="control-label"></label>
-                <input asp-for="FullName" class="form-control" />
-                <span asp-validation-for="FullName" class="text-danger"></span>
+     @*   <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
+            <span class="input-group-text" style="width: 170px; font-size: 20px;">Course Name</span>
+            <input asp-for="AspNetUser.FullName" class="form-control" aria-label="Sizing example input" placeholder="Enter Name">
+        </div>*@
+
+
+       
+
+
+        <div class="form-group">
+            <label for="intakeSelect">Intakes: </label>
+            <div id="intakeSelect">
+                @foreach (var intake in ViewBag.SelectedIntakes)
+                {
+                    <div class="form-check">
+                        <label class="form-check-label" for="@($"Instructor_{intake.ID}")">
+                            @intake.Name
+                            <span class="red-dash" data-intake-id="@intake.ID">-</span>
+                        </label>
+                    </div>
+                }
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
+            <span class="input-group-text" style="width: 170px; font-size: 20px;">Add Intakes</span>
+            <select name="SelectedIntakeIds" asp-items="ViewBag.AllIntakes" class="form-control" multiple>
+            </select>
+        </div>
+
+        <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
+            @*            <span class="input-group-text" style="width: 170px; font-size: 20px;">Currently Working</span>
+            *@            <div class="form-check form-switch">
+                <input asp-for="CurrentlyWorking" class="form-check-input" type="checkbox">
+                <label class="form-check-label" for="CurrentlyWorking">Is Currently Working</label>
             </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreationDate" class="control-label"></label>
-                <input asp-for="CreationDate" class="form-control" />
-                <span asp-validation-for="CreationDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AdminID" class="control-label"></label>
-                <input asp-for="AdminID" class="form-control" value=@Model.AdminID readonly />
-                <span asp-validation-for="AdminID" class="text-danger"></span>
-            </div>
-
-           
-
-            <div class="form-group">
-                <label for="SelectedCourses">Select Courses:</label>
-                <select name="SelectedCourses" class="form-control" multiple>
-                    <optgroup label="Available Courses">
-                        @foreach (var course in (SelectList)ViewData["CourseList"])
-                        {
-                            var isSelected = Model.InstructorCourses.Any(ic => ic.CourseID.ToString() == course.Value);
-
-                            if (!isSelected)
-                            {
-                                <option value="@course.Value">@course.Text</option>
-                            }
-                        }
-                    </optgroup>
-                    <optgroup label="Selected Courses">
-                        @foreach (var course in Model.InstructorCourses)
-                        {
-                            <option value="@course.CourseID" disabled>
-                                @course.Course.Name
-                            </option>
-                        }
-                    </optgroup>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="selectedIntakes">Select Intakes:</label>
-                <select name="selectedIntakes" class="form-control" multiple>
-                    <optgroup label="Available Intakes">
-                        @foreach (var intake in (SelectList)ViewData["IntakeList"])
-                        {
-                            var isSelected = Model.IntakeInstructors.Any(ic => ic.IntakeID.ToString() == intake.Value);
-
-                            if (!isSelected)
-                            {
-                                <option value="@intake.Value">@intake.Text</option>
-                            }
-                        }
-                    </optgroup>
-                    <optgroup label="Selected Intakes">
-                        @foreach (var intake in Model.IntakeInstructors)
-                        {
-                            <option value="@intake.IntakeID" disabled>
-                                @intake.Intake.Name
-                            </option>
-                        }
-                    </optgroup>
-                </select>
-            </div>
-
-           
-
-
-
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Edit Intake" class="btn btn-primary" />
+        </div>
+    </form>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+<style>
+    /* Add CSS for the red dash */
+    .red-dash {
+        color: red;
+        margin-left: 5px; /* Adjust the spacing as needed */
+        cursor: pointer;
+        font-size: 24px; /* Adjust the font size to make it bigger */ /* Add a pointer cursor to indicate clickability */
     }
-}
-*@
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+    function handleRedDashClick(intakeId, insID) {
+        $.ajax({
+            url: '@Url.Action("RemoveIntake_Instructor", "Instructor")',
+            type: 'POST',
+            data: { intakeID: intakeId, insID: insID },
+            success: function (data) {
+                // Handle the response from the controller if needed
+                console.log('AJAX request successful', data);
+                // Optionally, you can perform any client-side updates here
+                window.location.reload();
+            },
+            error: function (error) {
+                // Handle any errors from the AJAX request
+                console.error('AJAX request error', error);
+            }
+        });
+    }
+
+    // Attach a click event listener to the red dash elements
+    document.addEventListener('DOMContentLoaded', function () {
+        var redDashes = document.querySelectorAll('.red-dash');
+
+        redDashes.forEach(function (redDash) {
+            redDash.addEventListener('click', function () {
+                var intakeID = this.getAttribute('data-intake-id');
+                // Handle the click event here or perform any desired action
+                console.log('Clicked on dash for intake with ID:', intakeID);
+                handleRedDashClick(intakeID, '@Model.AspNetUserID');
+            });
+        });
+    });
+</script>

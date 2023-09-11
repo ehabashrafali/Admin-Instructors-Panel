@@ -25,6 +25,7 @@ namespace Admin_Panel_ITI.Repos.Interfaces
 
 
         public void DeleteInstructor(string instructorID);
+        public void DeleteInstructor(List<string> instructorIDs);
 
 
         public void CreateInstructor(Instructor instructor);

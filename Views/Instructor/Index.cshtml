@@ -1,61 +1,28 @@
-﻿@*@model IEnumerable<Admin_Panel_ITI.Models.Instructor>
+﻿@model IEnumerable<Admin_Panel_ITI.Models.Instructor>
 
-@{
-    ViewData["Title"] = "List of Instructors";
-}
 
-<h1>@ViewData["Title"]</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Admin)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var instructor in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => instructor.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => instructor.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => instructor.PhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => instructor.CreationDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => instructor.Admin.FullName)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@instructor.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@instructor.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@instructor.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-*@
+<div class="col-md-10 text-center content">
+    <div class="container-fluid">
+        <div class="row col-md-12">
+            <div class="r1">
+                <h3 style="padding-left: 33px;">Courses' Table</h3>
+               
+
+
+                <div>
+                    <button type="button" id="customdeletebtn_kordy" class="btn logoutbtn deletebtn" style=" margin: 0 0 0 8px; ">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
+                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
+                        </svg>
+                        Delete
+                    </button>
+                    <a asp-controller="Instructor" asp-action="Create" class="btn btn-primary" style="margin-left: 8px;">+ Create new instructor</a>
+                </div>
+            </div>
+        </div>
+        <partial name="_TableDataPartial" />
+
+
+    </div>
+</div>

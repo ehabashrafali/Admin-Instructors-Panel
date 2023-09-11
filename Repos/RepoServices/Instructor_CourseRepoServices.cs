@@ -36,9 +36,9 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
-        void IInstructor_CourseRepository.DeleteInstructor_Course(int courseID, int instructorID)
+        void IInstructor_CourseRepository.DeleteInstructor_Course(int courseID, string instructorID)
         {
-            var instructor_course = Context.Instructor_Courses.SingleOrDefault(ic=>ic.CourseID==courseID && ic.InstructorID == instructorID.ToString());
+            var instructor_course = Context.Instructor_Courses.SingleOrDefault(ic=>ic.CourseID==courseID && ic.InstructorID == instructorID);
             Context.Instructor_Courses.Remove(instructor_course);
             Context.SaveChanges();
 

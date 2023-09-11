@@ -1,0 +1,37 @@
+﻿
+
+
+
+
+<div class="col-md-10 text-center content">
+                <div class="container-fluid">
+                    <div class="row col-md-12">
+                        <div class="r1">
+                    <h3 style="padding-left: 38px;">You are adding tracks and courses for</h3>
+                            @foreach (var intakeName in ViewBag.intakeNames)
+                            {
+                                <p>@intakeName</p>
+                            }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-md-11 p-lg-5">
+                        <form method="post">
+                            <select class="form-select" id="selectedTrack" aria-label="Default select example" onchange="displayCourses()">
+                                <option selected>Select track</option>
+                                <option value="1">.Net</option>
+                                <option value="2">Web & UI</option>
+                                <option value="3">UI/UX</option>
+                            </select>
+                            <select class="form-select" id="selectedCourse" multiple aria-label="Default select example" style="margin-top: 24px; visibility: hidden;">
+                                <option selected>Select courses for this track</option>
+                                <option value="1">C#</option>
+                                <option value="2">Agile</option>
+                                <option value="3">HTML</option>
+                                <option value="4">CSS</option>
+                                <option value="5">JS</option>
+                            </select>
+                            <input type="submit" class="btn btn-primary" style=" margin-top: 24px;" value="Save">
+                        </form>
+                    </div>
+                </div>

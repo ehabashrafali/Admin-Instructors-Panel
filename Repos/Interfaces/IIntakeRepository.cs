@@ -9,7 +9,7 @@ namespace Admin_Panel_ITI.Repos
         public List<Intake> GetIntakes();
         public void UpdateIntake(int IntakeID, Intake intake);
         public void DeleteIntake(int intakeID);
-        public void CreateIntake(Intake intake);
+
 
 
 
@@ -17,7 +17,6 @@ namespace Admin_Panel_ITI.Repos
         //---------------------- asem_updates ---------------------------------------//
 
         public List<Intake> GetAllIntakes();
-        public List<Intake> GetCurrentAvIntakes();
-        public List<Intake> getIntakesbyIDs(int[] intakeID);
+
     }
 }

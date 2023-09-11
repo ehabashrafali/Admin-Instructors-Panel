@@ -1,62 +1,123 @@
-﻿@*@model IEnumerable<Intake>
-
-<p>
-    <a asp-action="Create" class="btn btn-primary">Add Intake</a>
-</p>
+﻿@model IEnumerable<Admin_Panel_ITI.Models.Intake>
 
 
-<table class="table">
-<thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Duration)
-        </th>
-        <th>
-            Intake Creation Date
-        </th>
-        <th>
-            Admin Name
-        </th>
-    </tr>
-</thead>
-<tbody>
-    @foreach (var intake in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => intake.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => intake.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => intake.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => intake.Duration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => intake.CreationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => intake.Admin.FullName)
-            </td>
-            <td>
-                <a asp-controller="Intake" asp-action="Edit" asp-route-id="@intake.ID" class="btn btn-warning">Edit</a>
-            </td>
-            <td>
-               <a asp-action="Delete" asp-controller="Intake" asp-route-id="@intake.ID" class="btn btn-danger">Delete</a>
-            </td>  
-        </tr>
+
+<div class="col-md-10 text-center content">
+    <div class="container-fluid">
+        <div class="row col-md-12">
+            <div class="r1">
+                <h3 style="padding-left: 33px;">Intakes' Table</h3>
+                <div class="dropdown" id="durationDropdown" style="margin: 0 0 0 16px;">
+                    <button class="btn" id="durationDropdownBtn">
+                        <!-- Added an ID to the button -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
+                            <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"></path>
+                        </svg>
+                        Filter by duration
+                    </button>
+
+                    <div class="dropdown-content" style="right: 10px; border-radius: 8px; overflow-y: auto; height: 150px;">
+                        <a href="#" class="duration-link" data-duration-value=0>All Intakes</a>
+                        <hr style="padding: 0; margin: 0; color: gray;">
+                        @{
+                            for(int i = 1; i <= 12; i++)
+                            {
+                                <a href="#" class="duration-link" data-duration-value=@i>@i</a>
+                                <hr style="padding: 0; margin: 0; color: gray;">
+                            }
+                        }
+                    </div>
+                </div>
+
+
+                <div>
+                    <button type="button" id="customdeletebtn_kordy" class="btn logoutbtn deletebtn" style=" margin: 0 0 0 8px; ">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
+                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
+                        </svg>
+                        Delete
+                    </button>
+                    <a asp-controller="Intake" asp-action="Create" class="btn btn-primary" style="margin-left: 8px;">+ Create new intake</a>
+                    <a id="addTrackAndCoursesBtn" class="btn btn-primary" style="margin-left: 8px;">Add track and courses</a>
+                </div>
+            </div>
+        </div>
+        <partial name="_TableDataPartial" />
+
+       
+    </div>
+</div>
+<script>
+
+    var selectedDuration = 0; // Default value
+    // Function to handle dropdown <a> click event
+    // Function to handle dropdown <a> click event
+    $('.duration-link').on('click', function (e) {
+        e.preventDefault(); // Prevent default link behavior
+        selectedDuration = $(this).data('duration-value');
+        console.log("herererere");
+        console.log(selectedDuration);
+        // Update the button text with the selected intake name
+        var selectedDurationName = $(this).text();
+        $('#durationDropdownBtn').html(`
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
+                        <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"></path>
+                    </svg>
+                        Filter by duration: ${selectedDurationName}
+                `);
+
+        // Make an AJAX call to the UpdateTableData action
+        $.ajax({
+            url: '@Url.Action("UpdateTableData", "Intake")', // Use Url.Action to generate the correct URL
+            type: 'GET',
+            data: { duration: selectedDuration, pageNumber: 1 }, // Pass the selected intake ID and current page number as parameters
+            success: function (result) {
+                // Replace the content of the partialTable div with the updated HTML
+                $('#partialTable').html(result);
+            },
+            error: function () {
+                alert('Error occurred while fetching data.');
+            }
+        });
+    });
+
+
+
+    // Function to get the selected intake IDs
+    function getSelectedIntakeIds() {
+        var selectedIntakeIds = $('input[name="selectedIntakeIds[]"]:checked').map(function () {
+            return parseInt($(this).val());
+        }).get();
+        return selectedIntakeIds;
     }
-</tbody>
-</table>*@
+
+
+    $('#addTrackAndCoursesBtn').on('click', function (e) {
+        e.preventDefault();
+
+        var selectedIntakeIds = getSelectedIntakeIds();
+
+        console.log(selectedIntakeIds);
+
+        if (selectedIntakeIds.length === 0) {
+            alert("Please select at least one intake to add tracks and courses.");
+            return;
+        }
+
+        // Make an AJAX POST request to your action
+        $.ajax({
+            url: '@Url.Action("Add_Track_Courses", "Intake")',
+            type: 'POST',
+            data: { intakeIDs: selectedIntakeIds },
+            success: function (result) {
+                // Handle the success response as needed
+                // For example, you can redirect to another page or display a message
+                console.log('Intake IDs sent successfully');
+            },
+            error: function () {
+                alert('Error occurred while sending intake IDs.');
+            }
+        });
+    });
+    
+</script>
