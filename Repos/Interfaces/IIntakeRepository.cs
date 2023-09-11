@@ -21,6 +21,7 @@ namespace Admin_Panel_ITI.Repos
 
         public List<Intake> GetAllIntakes();
         public List<Intake> GetAllIntakes(int pageNumber, int pageSize);
+        public List<Intake> GetCurrentAvIntakes();
 
     }
 }

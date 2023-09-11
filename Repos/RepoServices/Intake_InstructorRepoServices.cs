@@ -52,5 +52,18 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             return Context.Intake_Instructors.Where(ii => ii.InstructorID == instructorID).Include(ii => ii.Intake).ToList();
         }
 
+        void IIntake_InstructorRepository.deleteIntake_Instructor(string intakeID, string insID)
+        {
+            Intake_Instructor ii = new Intake_Instructor()
+            {
+
+                IntakeID = int.Parse(intakeID),
+                InstructorID = insID,
+            };
+            Context.Intake_Instructors.Remove(ii);
+            Context.SaveChanges();
+        }
+
+
     }
 }

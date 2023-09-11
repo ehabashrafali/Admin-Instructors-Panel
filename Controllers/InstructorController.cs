@@ -34,22 +34,27 @@ namespace Admin_Panel_ITI.Controllers
             return View(instructors);
         }
 
-        // GET: InstructorController/Details/5
-        public ActionResult Details(string id)
-        {
 
 
-            var instructors = instructorRepository.GetInstructors(pageNumber, 10);
-            if (instructors.Count == 0 && pageNumber > 1)
-            {
-                instructors = instructorRepository.GetInstructors(pageNumber - 1, 10);
-                pageNumber--;
-            }
 
 
-            ViewBag.PageNumber = pageNumber;
-            return PartialView("_TableDataPartial", instructors);
-        }
+
+
+        //public ActionResult Details(string id)
+        //{
+        //    var instructor = instructorRepository.GetInstructorbyID(id);
+        //    ViewData["tracks"] = instructor.Tracks.Select(t => t.Name).Distinct().ToList();
+        //    ViewData["intakes"] = instructor.IntakeInstructors
+        //            .Select(itc => itc.Intake.Name)
+        //            .Distinct()
+        //            .ToList();
+        //    ViewData["courses"] = instructor.InstructorCourses
+        //            .Select(itc => itc.Course.Name)
+        //            .Distinct()
+        //            .ToList();
+
+        //    return View(instructor);
+        //}
 
         // GET: InstructorController/Details/5
         //public ActionResult Details(string id)

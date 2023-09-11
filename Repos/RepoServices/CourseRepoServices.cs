@@ -172,6 +172,20 @@ namespace Admin_Panel_ITI.Repos
 
             return query;
         }
+
+        List<Course> ICourseRepository.GetCoursesbyTrackID(int trackID, int pageNumber, int pageSize)
+        {
+            var courses = Context.Intake_Track_Courses
+            .Where(t => t.TrackID == trackID)
+            .Select(t => t.Course)
+            .Distinct()
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+            return courses;
+
+        }
         public List<Course> GetTeacherCourses(int intakeID, int trackID, string instructorID)
         {
             var query =

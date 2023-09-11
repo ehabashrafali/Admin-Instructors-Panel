@@ -12,7 +12,7 @@ namespace Admin_Panel_ITI.Repos.Interfaces
         public void UpdateInstructor_Course(int CourseID, int intstructorID, Instructor_Course instructor_course);
 
 
-        public void DeleteInstructor_Course(int courseID, int instructorID);
+        //public void DeleteInstructor_Course(int courseID, int instructorID);
         public void DeleteInstructor_Course( string instructorID);
         public void DeleteInstructor_CourseByCourseID( int courseID);
         public void DeleteInstructor_Course(int courseID, string instructorID);

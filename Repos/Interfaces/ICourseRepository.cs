@@ -8,6 +8,7 @@ namespace Admin_Panel_ITI.Repos
         public int GetCourseNumberbyIntakeID(int intakeID);
         public Course GetCoursebyID(int courseID);
         public List<Course> GetCourses(int pageNumber, int pageSize);
+        public List<Course> GetCoursesbyTrackID(int trackID, int pageNumber, int pageSize);
         //public List<Course> GetCoursesbyTrackID(int trackID,int pageNumber, int pageSize);
         public List<Course> GetCourses();
         public void UpdateCourse(int CourseID, Course course);
