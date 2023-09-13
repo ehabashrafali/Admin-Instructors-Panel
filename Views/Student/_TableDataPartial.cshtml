@@ -97,46 +97,29 @@
 
 <script>
 
-    var selectedIntakeId = 0;
+    var selectedIntakeId = 0; // Default value
+    // Function to handle dropdown <a> click event
+    // Function to handle dropdown <a> click event
     $('.intake-link').on('click', function (e) {
-        e.preventDefault();
-       selectedIntakeId = $(this).data('intake-value');
+        e.preventDefault(); // Prevent default link behavior
+        selectedIntakeId = $(this).data('intake-value'); // Get the selected intake ID
 
-        // // Update the button text with the selected intake name
-        // var selectedIntakeName = $(this).text();
-        // $('#intakeDropdownBtn').html(`
-        //             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
-        //                 <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"></path>
-        //             </svg>
-        //             Filter by intakes: ${selectedIntakeName}
-        //         `);
-
-        // if (selectedIntakeId === clickedIntakeId) {
-        //     // If the same intake is clicked again, set IntakeId to 0
-        //     selectedIntakeId = 0;
-        //     filterStudentsByIntake(selectedIntakeId);
-        // } else {
-        //     selectedIntakeId = clickedIntakeId; // Update selectedIntakeId
-        //     filterStudentsByIntake(selectedIntakeId);
-        // }
-
+        // Update the button text with the selected intake name
         var selectedIntakeName = $(this).text();
-        console.log('Link clicked!');
-        console.log('Selected Intake ID: ' + selectedIntakeId);
-        console.log('Selected Intake Name: ' + selectedIntakeName);
         $('#intakeDropdownBtn').html(`
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
-                    <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"></path>
-                </svg>
-                Filter by intakes: ${selectedIntakeName}
-            `);
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
+                        <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"></path>
+                    </svg>
+                    Filter by intakes: ${selectedIntakeName}
+                `);
 
-    // Function to filter students by intake
+        // Make an AJAX call to the UpdateTableData action
         $.ajax({
-            url: '@Url.Action("StdIndexByIntakeId", "Student")',
+            url: '@Url.Action("UpdateTableData", "Track")', // Use Url.Action to generate the correct URL
             type: 'GET',
-            data: {Id: selectedIntakeId, pageNumber: 1 },
+            data: { intakeID: selectedIntakeId, pageNumber: 1 }, // Pass the selected intake ID and current page number as parameters
             success: function (result) {
+                // Replace the content of the partialTable div with the updated HTML
                 $('#partialTable').html(result);
             },
             error: function () {
@@ -144,6 +127,7 @@
             }
         });
     });
+
 
     // Function to handle the "Next" button click event
     $('#nextPageBtn').on('click', function (e) {
@@ -206,17 +190,21 @@
             return;
         }
 
+        // Get the intake ID and page number from the hidden input fields
+        var intakeID = parseInt(@ViewBag.IntakeID);
+        var pageNumber = parseInt(@ViewBag.PageNumber);
         // Make an AJAX POST request to the Delete action with parameters
         $.ajax({
             url: '@Url.Action("Delete", "Student")',
             type: 'POST',
             traditional: true,
             data: {
-                Stdids: selectedStudentIds
+                Stdids: selectedStudentIds,
+                intakeID: intakeID,
+                pageNumber: pageNumber
             },
             success: function (result) {
                 $('#partialTable').html(result);
-                window.location.href = '@Url.Action("Index", "Student")';
             },
             error: function () {
                 // Handle errors here

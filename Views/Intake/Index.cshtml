@@ -39,6 +39,9 @@
                     </button>
                     <a asp-controller="Intake" asp-action="Create" class="btn btn-primary" style="margin-left: 8px;">+ Create new intake</a>
                     <a id="addTrackAndCoursesBtn" class="btn btn-primary" style="margin-left: 8px;">Add track and courses</a>
+                    <form id="addTrackAndCoursesForm" asp-action="Add_Track_Courses" asp-controller="Intake">
+                        @Html.Hidden("intakeIDs", "") <!-- This hidden input will hold the selected intake IDs -->
+                    </form>
                 </div>
             </div>
         </div>
@@ -55,8 +58,7 @@
     $('.duration-link').on('click', function (e) {
         e.preventDefault(); // Prevent default link behavior
         selectedDuration = $(this).data('duration-value');
-        console.log("herererere");
-        console.log(selectedDuration);
+      
         // Update the button text with the selected intake name
         var selectedDurationName = $(this).text();
         $('#durationDropdownBtn').html(`
@@ -81,7 +83,7 @@
         });
     });
 
-
+   
 
     // Function to get the selected intake IDs
     function getSelectedIntakeIds() {
@@ -91,33 +93,21 @@
         return selectedIntakeIds;
     }
 
-
     $('#addTrackAndCoursesBtn').on('click', function (e) {
         e.preventDefault();
 
         var selectedIntakeIds = getSelectedIntakeIds();
-
-        console.log(selectedIntakeIds);
 
         if (selectedIntakeIds.length === 0) {
             alert("Please select at least one intake to add tracks and courses.");
             return;
         }
 
-        // Make an AJAX POST request to your action
-        $.ajax({
-            url: '@Url.Action("Add_Track_Courses", "Intake")',
-            type: 'POST',
-            data: { intakeIDs: selectedIntakeIds },
-            success: function (result) {
-                // Handle the success response as needed
-                // For example, you can redirect to another page or display a message
-                console.log('Intake IDs sent successfully');
-            },
-            error: function () {
-                alert('Error occurred while sending intake IDs.');
-            }
-        });
+        // Set the selected intake IDs in the hidden input
+        $('#intakeIDs').val(selectedIntakeIds.join(','));
+
+        // Submit the form
+        $('#addTrackAndCoursesForm').submit();
     });
     
 </script>

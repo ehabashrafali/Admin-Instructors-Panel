@@ -15,10 +15,10 @@ namespace Admin_Panel_ITI.Controllers
         private readonly ITrackRepository trackRepository;
         private readonly ICourseRepository courseRepository;
         private readonly UserManager<AppUser> _userManager;
-
+        private readonly IStudentRepository studentRepository;
         private readonly IIntake_Track_CourseRepository intake_Track_CourseRepository;
 
-        public IntakeController(IIntakeRepository _intakeRepository, UserManager<AppUser> _userManager, ITrackRepository trackRepository, ICourseRepository courseRepository, IIntake_Track_CourseRepository intake_Track_CourseRepository, UserManager<AppUser> userManager)
+        public IntakeController(IIntakeRepository _intakeRepository, UserManager<AppUser> _userManager, ITrackRepository trackRepository, ICourseRepository courseRepository, IIntake_Track_CourseRepository intake_Track_CourseRepository, UserManager<AppUser> userManager, IStudentRepository studentRepository)
         {
             intakeRepository = _intakeRepository;
             userManager = _userManager;
@@ -26,6 +26,7 @@ namespace Admin_Panel_ITI.Controllers
             this.courseRepository = courseRepository;
             this.intake_Track_CourseRepository = intake_Track_CourseRepository;
             this._userManager = userManager;
+            this.studentRepository = studentRepository;
         }
 
 
@@ -35,7 +36,7 @@ namespace Admin_Panel_ITI.Controllers
 
 
 
-            List<int> studentNumsforIntake = intake_Track_CourseRepository.computeStudentsNumberForIntakes(intakes);
+            List<int> studentNumsforIntake = studentRepository.getStudentNumberforIntakes(intakes);
 
             ViewData["NumOfStudsInEachIntake"] = studentNumsforIntake;
             ViewData["Intakes"] = new SelectList(intakes, "ID", "Name"); // Add this line
@@ -73,7 +74,7 @@ namespace Admin_Panel_ITI.Controllers
                 }
             }
 
-            List<int> studentNumsforIntake = intake_Track_CourseRepository.computeStudentsNumberForIntakes(intakesbyduration);
+            List<int> studentNumsforIntake = studentRepository.getStudentNumberforIntakes(intakesbyduration);
 
 
             ViewData["NumOfStudsInEachIntake"] = studentNumsforIntake;
@@ -147,22 +148,42 @@ namespace Admin_Panel_ITI.Controllers
             return View();
         }
 
-
-        public ActionResult Add_Track_Courses(List<int> intakeIDs)
+        [HttpPost]
+        public ActionResult Add_Track_Courses(string intakeIDs)
         {
+            List<int> selectedIntakeIds = intakeIDs.Split(',').Select(int.Parse).ToList();
             List<String> intakes = new List<String>();
+            List<Track> tracks = new List<Track>();
+            List<Course> courses = new List<Course>();
+            tracks = trackRepository.getTracks();
+            courses = courseRepository.GetCourses();
 
-            foreach (var intake in intakeIDs)
+            foreach (var intake in selectedIntakeIds)
             {
                 var mainIntake = intakeRepository.getIntakebyID(intake);
                 intakes.Add(mainIntake.Name);
             }
 
             ViewBag.intakeNames = intakes;
-            ViewBag.intakeIDs = intakes;
+            ViewBag.intakeIDs = selectedIntakeIds;
+            ViewBag.tracks = new SelectList(tracks, "ID", "Name");
+            ViewBag.courses = new SelectList(courses,"ID", "Name");
             return View();
         }
 
+        [HttpPost]
+        public void SaveSelectedTrackAndCourses(int selectedTrackId, List<int> selectedCourseIds, List<string> selectedIntakeIds)
+        {
+            foreach (var intake in selectedIntakeIds)
+            {
+                foreach (var course in selectedCourseIds)
+                {
+
+                    intake_Track_CourseRepository.CreateIntake_Track_Course(int.Parse(intake), selectedTrackId, course);
+                }
+
+            }
+        }
 
 
 
@@ -199,7 +220,7 @@ namespace Admin_Panel_ITI.Controllers
                 }
             }
 
-            List<int> studentNumsforIntake = intake_Track_CourseRepository.computeStudentsNumberForIntakes(intakes);
+            List<int> studentNumsforIntake = studentRepository.getStudentNumberforIntakes(intakesbyduration);
 
 
             ViewData["NumOfStudsInEachIntake"] = studentNumsforIntake;

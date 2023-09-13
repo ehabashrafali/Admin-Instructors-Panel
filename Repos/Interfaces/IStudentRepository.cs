@@ -23,6 +23,7 @@ namespace Admin_Panel_ITI.Repos
         public void CreateStudent(Student student);
         public List<Student> getStudentsbyIntakeID(int intakeID, int pageNumber, int pageSize);
         public List<Student> getStudentsbyIntakeID(int intakeID);
+        public List<int> getStudentNumberforIntakes(List<Intake> intakes);
 
 
 

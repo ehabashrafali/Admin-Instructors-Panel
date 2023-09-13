@@ -15,7 +15,7 @@ namespace Admin_Panel_ITI.Controllers
         private readonly IStudent_SubmissionRepository student_SubmissionRepository;
 
         public ITrackRepository trackRepository { get; }
-        public IIntakeRepository IntakeRepository { get; }
+        public IIntakeRepository intakeRepository { get; }
 
 
         // GET: StudentController
@@ -26,44 +26,68 @@ namespace Admin_Panel_ITI.Controllers
             this.courseRepository = courseRepository;
             this.trackRepository = trackRepository;
             this.student_SubmissionRepository = student_SubmissionRepository;
-            IntakeRepository = intakeRepository;
+            this.intakeRepository = intakeRepository;
         }
-        public ActionResult Index(int intakeID = 0, int pageNumber = 1)
+        public ActionResult Index(int pageNumber)
         {
-            var intakes = IntakeRepository.GetAllIntakes();
+            var intakes = intakeRepository.GetAllIntakes();
             ViewData["Intakes"] = new SelectList(intakes, "ID", "Name");
 
-            if (intakeID != 0)
-            {
-                // Filter students by intake
-                var students = studentRepository.getStudentsbyIntakeID(intakeID, pageNumber, 10);
-                ViewBag.IntakeID = intakeID;
-                ViewBag.PageNumber = pageNumber;
-                return View(students);
-            }
-            else
-            {
-                // Show all students if no intake filter is applied
-                ViewBag.IntakeID = 0;
-                var students = studentRepository.getStudents(pageNumber, 10);
-                ViewBag.PageNumber = pageNumber;
-                return View(students);
-            }
-        }
+            var students = studentRepository.getStudents(pageNumber, 10);
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.IntakeID = 0;
 
-
-        public ActionResult StdIndexByTrackId(int Trackid, int pageNumber)
-        {
-            
-            var students = studentRepository.getStudentsbyTrackID(Trackid, pageNumber, 10);
             return View(students);
         }
 
-        public ActionResult StdIndexByIntakeId(int Id, int pageNumber)
+
+        public ActionResult UpdateTableData(int intakeID, int pageNumber)
         {
-            var students = studentRepository.getStudentsbyIntakeID(Id, pageNumber, 10);
-            return PartialView("_TableDataPartial", students);
+            var intakes = intakeRepository.GetAllIntakes();
+
+            List<Student> studentsbyintake;
+            if (intakeID == 0)
+            {
+                // Get all tracks without filtering by intake ID
+                studentsbyintake = studentRepository.getStudents(pageNumber, 10);
+                if(studentsbyintake.Count == 0 && pageNumber > 1)
+                {
+                    studentsbyintake = studentRepository.getStudents(pageNumber - 1, 10);
+                    pageNumber--;
+                }
+              
+            }
+            else
+            {
+                // Get tracks filtered by intake ID
+                studentsbyintake = studentRepository.getStudentsbyIntakeID(intakeID, pageNumber, 10);
+                if (studentsbyintake.Count == 0 && pageNumber > 1)
+                {
+                    studentsbyintake = studentRepository.getStudentsbyIntakeID(intakeID, pageNumber, 10);
+                    pageNumber--;
+                }
+            }
+
+           
+            ViewData["Intakes"] = new SelectList(intakes, "ID", "Name");
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.IntakeID = intakeID;
+            return PartialView("_TableDataPartial", studentsbyintake);
         }
+
+
+        //public ActionResult StdIndexByTrackId(int Trackid, int pageNumber)
+        //{
+            
+        //    var students = studentRepository.getStudentsbyTrackID(Trackid, pageNumber, 10);
+        //    return View(students);
+        //}
+
+        //public ActionResult StdIndexByIntakeId(int Id, int pageNumber)
+        //{
+        //    var students = studentRepository.getStudentsbyIntakeID(Id, pageNumber, 10);
+        //    return PartialView("_TableDataPartial", students);
+        //}
 
 
         //// GET: StudentController/Create
@@ -98,7 +122,7 @@ namespace Admin_Panel_ITI.Controllers
         public ActionResult Edit(string id)
         {
 
-            var Intakes = IntakeRepository.GetIntakes();
+            var Intakes = intakeRepository.GetIntakes();
             var trackes = trackRepository.getTracks();
             ViewBag.AllIntakes = new SelectList(Intakes, "ID", "Name");
             ViewBag.AllTracks = new SelectList(trackes, "ID", "Name");
@@ -133,44 +157,44 @@ namespace Admin_Panel_ITI.Controllers
 
 
 
-        public ActionResult UpdateTableData(int intakeID, int pageNumber)
-        {
-            List<Student> students;
-
-            if (intakeID != 0)
-            {
-                students = studentRepository.getStudentsbyIntakeID(intakeID, pageNumber, 10);
-            }
-            else
-            {
-                students = studentRepository.getStudents(pageNumber, 10);
-            }
-
-            if (students.Count == 0 && pageNumber > 1)
-            {
-                if (intakeID != 0)
-                {
-                    students = studentRepository.getStudentsbyIntakeID(intakeID, pageNumber - 1, 10);
-                }
-                else
-                {
-                    students = studentRepository.getStudents(pageNumber - 1, 10);
-                }
-                pageNumber--;
-            }
-
-            ViewBag.PageNumber = pageNumber;
-            return PartialView("_TableDataPartial", students);
-        }
-
+       
 
 
         [HttpPost]
-        public IActionResult Delete(List<string> Stdids)
+        public IActionResult Delete(List<string> Stdids, int intakeID, int pageNumber)
         {
             studentRepository.DeleteStudent(Stdids);
 
-            return RedirectToAction(nameof(Index));
+            var intakes = intakeRepository.GetAllIntakes();
+
+            List<Student> studentsbyintake;
+            if (intakeID == 0)
+            {
+                // Get all tracks without filtering by intake ID
+                studentsbyintake = studentRepository.getStudents(pageNumber, 10);
+                if (studentsbyintake.Count == 0 && pageNumber > 1)
+                {
+                    studentsbyintake = studentRepository.getStudents(pageNumber - 1, 10);
+                    pageNumber--;
+                }
+
+            }
+            else
+            {
+                // Get tracks filtered by intake ID
+                studentsbyintake = studentRepository.getStudentsbyIntakeID(intakeID, pageNumber, 10);
+                if (studentsbyintake.Count == 0 && pageNumber > 1)
+                {
+                    studentsbyintake = studentRepository.getStudentsbyIntakeID(intakeID, pageNumber, 10);
+                    pageNumber--;
+                }
+            }
+
+
+            ViewData["Intakes"] = new SelectList(intakes, "ID", "Name");
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.IntakeID = intakeID;
+            return PartialView("_TableDataPartial", studentsbyintake);
         }
 
     }

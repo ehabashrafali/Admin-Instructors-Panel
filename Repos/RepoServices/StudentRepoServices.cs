@@ -29,6 +29,7 @@ namespace Admin_Panel_ITI.Repos
         void IStudentRepository.CreateStudent(Student student)
         {
             Context.Students.Add(student);
+            
         }
 
         void IStudentRepository.DeleteStudent(List<string> studentIDs)
@@ -82,6 +83,16 @@ namespace Admin_Panel_ITI.Repos
         int IStudentRepository.getStudentNumberbyIntakeID(int intakeID)
         {
             return Context.Students.Where(s=> s.IntakeID == intakeID).Count();
+        }
+
+        List<int> IStudentRepository.getStudentNumberforIntakes(List<Intake> intakes)
+        {
+            List<int> nums = new List<int>();
+            foreach (var intake in intakes)
+            {
+                nums.Add(Context.Students.Where(s => s.IntakeID == intake.ID).Count());
+            }
+            return nums;
         }
 
         int IStudentRepository.getStudentNumberbyTrackID(int trackID)

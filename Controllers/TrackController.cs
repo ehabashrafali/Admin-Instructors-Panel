@@ -204,6 +204,25 @@ namespace Admin_Panel_ITI.Controllers
         }
 
 
+        public IActionResult GetTracksForIntake(int intakeID)
+        {
+            // Retrieve tracks for the selected intake based on intakeID
+            // Generate HTML <option> elements for the select list
+
+            // Example code (replace with your actual logic):
+            var tracks = trackRepositry.GetTracksByIntakeID(intakeID);
+
+            // Generate HTML options
+            var options = tracks.Select(track =>
+                $"<option value='{track.ID}'>{track.Name}</option>");
+
+            // Combine the options into a string
+            var selectListHtml = string.Join("", options);
+
+            return Content(selectListHtml);
+        }
+
+
         //// POST: TrackController/Delete/5
         //[HttpPost]
         //[ValidateAntiForgeryToken]

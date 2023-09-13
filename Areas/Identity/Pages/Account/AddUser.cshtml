@@ -117,22 +117,36 @@
 
 
                             <!--Instructor Fields-->
-                            <div class="col-lg-5 form-group" id="instructorFields">
+                           @* <div class="col-lg-5 form-group" id="instructorFields">
                                 <label>Choose Intakes: </label>
-                                <div style="margin-left: 190px;">
-                                    <select asp-for="Input.IntakesIDs" asp-items="@allIntakes" multiple="multiple" size="2" class="form-select-sm" aria-label="Small select example">
+                                <br >
+                                <div >
+                                    <select asp-for="Input.IntakesIDs" asp-items="@allIntakes" multiple="multiple"  class="form-select-sm" >
+                                    </select>
+                                </div>
+                            </div>*@
+                            <div class="form-group" id="instructorFields">
+                                <select asp-for="Input.IntakesIDs"  asp-items="@allIntakes" class="form-select" multiple>
+                                    <option disabled>Select an Intake</option>
+                                </select>
+                            </div>
+
+                            <!-- Student Fields - Intake Selection -->
+                            <div class="form-group">
+                                <select  id="studentFields1" asp-items="@allIntakes" class="form-select">
+                                    <option >Select an Intake</option>
+                                </select>
+                            </div>
+
+                            <!-- Student Fields - Track Selection -->
+                            <div class="form-group">
+                                <div id="studentFields2">
+                                    <select class="form-select">
+                                        <option>Select a Track</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <!--Student Fields-->
-                            <select asp-for="Input.IntakesIDs" id="studentFields1" asp-items="@allIntakes" class="form-select">
-                             <option>Select an Intake</option>
-                            </select>
-
-                            <div id="studentFields2">
-
-                            </div>
 
                             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary form-submit" style="font-size:20px">Add</button>
 
@@ -148,7 +162,7 @@
     <script src="~/vendor/jquery/jquery.min.js"></script>
     <script src="~/js/main.js"></script>
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     const userTypeSelect = document.getElementById("userTypeSelect");
     const instructorFields = document.getElementById("instructorFields");
@@ -181,63 +195,30 @@
         toggleFormElements(this.value); 
     });
 
-
+   
     $(document).ready(function () {
-        $('#studentFields1').on('change' , function () {
+        // Your existing code...
 
-            var selectedType = $(this).val();
+        $('#studentFields1').on('change', function () {
+            var selectedIntakeID = $(this).val();
 
+            console.log("herere");
+            // Make an AJAX request to your desired URL
             $.ajax({
-                url: '/AddUser?handler=Tracks&intakeID=' + selectedType,  
-                type: "GET",
-                success: function () {
-                     $('#studentFields2').load('/AddUser?handler=Tracks&intakeID=' + selectedIntakeID);
-                     consol.log('hiiasd');
+                url: '/Track/GetTracksForIntake?intakeID=' + selectedIntakeID,
+                type: 'GET',
+                success: function (data) {
+                    // Handle the success response, populate the second dropdown (#studentFields2)
+                    $('#studentFields2').html('<select asp-for="Input.TrackID" class="form-select">' + data + '</select>');
                 },
                 error: function () {
-                    alert('something wrong');
+                    alert('Something went wrong with the AJAX request.');
                 }
-            });  
+            });
         });
     });
-
-
-
-
-    $(function () {
-            $('#studentFields1').on('change', function () {
-                var selectedIntakeID = $(this).val();
-                $('#studentFields2').load('/AddUser?handler=Tracks&intakeID=' + selectedIntakeID);
-        });
-    });
-
-
-
-
-
-    //$(document).ready(function () {
-    //    $("#userTypeSelect").change(function () {
-
-    //        var selectedType = $(this).val();
-
-    //        $.ajax({
-    //            url: "/AddUser?handler=OnGetAsync&userType=" + selectedType,
-                    
-    //            type: "GET",
-    //            success: function (data) {
-    //                //$("#additionalFieldsContainer").html(data); 
-    //                toggleFormElements(selectedType); 
-    //            },
-    //            error: function () {
-    //                //console.error("Failed to load additional fields.");
-    //            }
-    //        });  
-    //    });
-    //});
 
 </script>
-
-
 
 
 </body>

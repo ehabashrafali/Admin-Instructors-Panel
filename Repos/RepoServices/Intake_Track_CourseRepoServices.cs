@@ -1,6 +1,7 @@
 ﻿using Admin_Panel_ITI.Data;
 using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
 
 namespace Admin_Panel_ITI.Repos.RepoServices
@@ -37,23 +38,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
         }
 
-        List<int> IIntake_Track_CourseRepository.computeStudentsNumberForIntakes(List<Intake> intakes)
-        {
-            List<int> studentNumsforIntake = new List<int>();
-            int c = 0;
-            foreach (var intake in intakes)
-            {
-                var records = Context.Intake_Track_Courses.Where(itc => itc.IntakeID == intake.ID);
-
-                foreach (var item in records)
-                {
-                    c = c + item.numOfStudentsInCourse;
-                }
-                studentNumsforIntake.Add(c);
-                c = 0;
-            }
-            return studentNumsforIntake;
-        }
+       
 
 
         //---//
@@ -65,6 +50,22 @@ namespace Admin_Panel_ITI.Repos.RepoServices
                 .Include(i=> i.Track)
                 .ToList();
         }
+
+
+        void IIntake_Track_CourseRepository.CreateIntake_Track_Course(int intakeID, int trackID, int courseID)
+        {
+            Intake_Track_Course itc = new Intake_Track_Course()
+            {
+                IntakeID = intakeID,
+                TrackID = trackID,
+                CourseID = courseID,
+
+            };
+            Context.Intake_Track_Courses.Add(itc);
+            Context.SaveChanges();
+        }
+
+        
 
     }
 }
