@@ -34,7 +34,9 @@
     <link rel="stylesheet" href="/register/css/style.css">
 </head>
 <body>
-
+    <div id="alertMessage" style="display: none;">
+        <!-- Alert content goes here -->
+    </div>
     <div class="main">
 
         <!-- Sign up form -->
@@ -49,12 +51,13 @@
                             </span>
                             <div class="navbarvr"></div>
                             <span>ITI-Hub</span>
+
                         </div>
                     </div>
                     <div class="signup-form">
                         <h2 class="form-title">Add New User</h2>
                        
-                        <form method="post" id="registerForm" asp-route-returnUrl="@Model.ReturnUrl">
+                        <form method="post" id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" >
                            
                             <div class="col-lg-5 form-group">
                                 <label for="roles"><i class="zmdi zmdi-accounts material-icons-name"></i> Choose user role:</label>
@@ -82,35 +85,37 @@
                                     </select>
                                 </div>
                             </div>
-
-
                             <div class="form-group">
-                                <label for="username"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input asp-for="Input.Username" placeholder="Username" />
+                                <label asp-for="Input.Username"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input asp-for="Input.Username" type="text" placeholder="Enter your username" />
                                 <span asp-validation-for="Input.Username" class="text-danger"></span>
+
                             </div>
+
+                           
                             <div class="form-group">
-                                <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input asp-for="Input.Password"  placeholder="Password" />
+                                <label asp-for="Input.Password"><i class="zmdi zmdi-lock"></i></label>
+                                <input asp-for="Input.Password" type="password" placeholder="Password" />
                                 <span asp-validation-for="Input.Password" class="text-danger"></span>
                             </div>
+
                             <div class="form-group">
-                                <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                                <label asp-for="Input.ConfirmPassword"><i class="zmdi zmdi-lock-outline"></i></label>
                                 <input asp-for="Input.ConfirmPassword"  placeholder="Confirm password" />
                                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <label asp-for="Input.FullName"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <input asp-for="Input.FullName"  placeholder="Fullname" />
                                 <span asp-validation-for="Input.FullName" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label for="email"><i class="zmdi zmdi-email"></i></label>
+                                <label asp-for="Input.Email"><i class="zmdi zmdi-email"></i></label>
                                 <input asp-for="Input.Email"  placeholder="Email" />
                                 <span asp-validation-for="Input.Email" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label for="phone"><i class="zmdi zmdi-phone"></i></label>
+                                <label asp-for="Input.PhoneNumber"><i class="zmdi zmdi-phone"></i></label>
                                 <input asp-for="Input.PhoneNumber"  placeholder="Phone Number" />
                                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
                             </div>
@@ -133,18 +138,16 @@
 
                             <!-- Student Fields - Intake Selection -->
                             <div class="form-group">
-                                <select  id="studentFields1" asp-items="@allIntakes" class="form-select">
+                                <select asp-for ="Input.IntakeID" id="studentFields1" asp-items="@allIntakes" class="form-select">
                                     <option >Select an Intake</option>
                                 </select>
                             </div>
 
                             <!-- Student Fields - Track Selection -->
-                            <div class="form-group">
-                                <div id="studentFields2">
-                                    <select class="form-select">
-                                        <option>Select a Track</option>
-                                    </select>
-                                </div>
+                            <div id="studentFields2HTML" class="form-group">
+                                <select asp-for="Input.TrackID" id="studentFields2" class="form-select">
+                                    <option>Select a Track</option>
+                                </select>
                             </div>
 
 
@@ -167,7 +170,7 @@
     const userTypeSelect = document.getElementById("userTypeSelect");
     const instructorFields = document.getElementById("instructorFields");
     const studentFields1 = document.getElementById("studentFields1");
-    const studentFields2 = document.getElementById("studentFields2");
+    const studentFields2 = document.getElementById("studentFields2HTML");
 
 
     function toggleFormElements(userType) 
@@ -196,27 +199,28 @@
     });
 
    
-    $(document).ready(function () {
-        // Your existing code...
+        $(document).ready(function () {
+            $('#studentFields1').on('change', function () {
+                var selectedIntakeID = $(this).val();
+                var url = '/Track/GetTracksForIntake?intakeID=' + selectedIntakeID;
 
-        $('#studentFields1').on('change', function () {
-            var selectedIntakeID = $(this).val();
+                $.getJSON(url, function (data) {
+                    var dropdown = $('#studentFields2');
+                    dropdown.empty();
 
-            console.log("herere");
-            // Make an AJAX request to your desired URL
-            $.ajax({
-                url: '/Track/GetTracksForIntake?intakeID=' + selectedIntakeID,
-                type: 'GET',
-                success: function (data) {
-                    // Handle the success response, populate the second dropdown (#studentFields2)
-                    $('#studentFields2').html('<select asp-for="Input.TrackID" class="form-select">' + data + '</select>');
-                },
-                error: function () {
-                    alert('Something went wrong with the AJAX request.');
-                }
+                    $.each(data, function (index, item) {
+                        dropdown.append($('<option>', {
+                            value: item.value,
+                            text: item.text
+                        }));
+                    });
+                });
             });
+            
         });
-    });
+
+        
+        
 
 </script>
 
@@ -229,5 +233,7 @@
 <!-- client side validations -->
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+
 
 

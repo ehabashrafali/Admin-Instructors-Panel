@@ -29,6 +29,7 @@ namespace Admin_Panel_ITI.Repos
         void IStudentRepository.CreateStudent(Student student)
         {
             Context.Students.Add(student);
+            Context.SaveChanges();
             
         }
 

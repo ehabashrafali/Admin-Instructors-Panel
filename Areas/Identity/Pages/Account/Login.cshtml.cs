@@ -104,10 +104,10 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
                             returnUrl = Url.Action("Index", "Home");
                         else if (await _userManager.IsInRoleAsync(user, "Instructor"))
                             returnUrl = Url.Action("Index", "Intake", new { area = "InstructorsArea" });
-                        else if (await _userManager.IsInRoleAsync(user, "Student"))
-                        {
-                            //Do Some Logic
-                        }
+                        //else if (await _userManager.IsInRoleAsync(user, "Student"))
+                        //{
+                        //    //Do Some Logic
+                        //}
 
                         return LocalRedirect(returnUrl);
                     }

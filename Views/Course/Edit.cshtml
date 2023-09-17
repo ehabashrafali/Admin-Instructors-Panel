@@ -22,17 +22,25 @@
         <div class="form-group">
             <label for="instructorSelect">Instructors Teaching this course:</label>
             <div id="instructorSelect">
-                @foreach (var instructor in ViewBag.SelectedInstructors)
+                @if (ViewBag.SelectedInstructors.Count > 0)
                 {
-                    <div class="form-check">
-                        <label class="form-check-label" for="@($"Instructor_{instructor.AspNetUserID}")">
-                            @instructor.AspNetUser.FullName
-                            <span class="red-dash" data-instructor-id="@instructor.AspNetUserID">-</span>
-                        </label>
-                    </div>
+                    @foreach (var instructor in ViewBag.SelectedInstructors)
+                    {
+                        <div class="form-check">
+                            <label class="form-check-label" for="@($"Instructor_{instructor.AspNetUserID}")">
+                                @instructor.AspNetUser.FullName
+                                <span class="red-dash" data-instructor-id="@instructor.AspNetUserID">-</span>
+                            </label>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No Instructors</p>
                 }
             </div>
         </div>
+
         <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
             <span class="input-group-text" style="width: 170px; font-size: 20px;">Add Instructors</span>
             <select name="SelectedInstructorIds" asp-items="ViewBag.AllInstructors" class="form-control" multiple>

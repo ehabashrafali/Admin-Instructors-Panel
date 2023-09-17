@@ -34,30 +34,40 @@ namespace Admin_Panel_ITI.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                ViewData["Intakes"] = intakeRepository.GetAllIntakes().Select(intake => new Intake
+                
+                if (User.IsInRole("Instructor"))
                 {
-                    ID = intake.ID, // Replace with the actual property name for the ID
-                    Name = intake.Name // Replace with the actual property name for the display name
-                }).ToList(); 
+                    return LocalRedirect( Url.Action("Index", "Intake", new { area = "InstructorsArea" }));
 
-                HomePageViewModel hmPageViewModel = new HomePageViewModel()
-                {
-                    IntakeNumber = intakeRepository.getIntakeNumber(),
-                    TrackNumber = trackRepository.getTrackNumber(),
-                    StudentNumber = studentRepository.getStudentNumber(),
-                    InstructorNumber = instructorRepository.GetInstructorNumber(),
-                    CourseNumber = courseRepository.GetCourseNumber(),
-
-                };
-
-                var user = userManager.GetUserAsync(User).Result; // Get the current user
-
-                if (user != null)
-                {
-                    // You can pass user-related data to the view here
-                    ViewData["FullName"] = user.FullName;
                 }
-                return View(hmPageViewModel);
+                else
+                {
+                    ViewData["Intakes"] = intakeRepository.GetAllIntakes().Select(intake => new Intake
+                    {
+                        ID = intake.ID, // Replace with the actual property name for the ID
+                        Name = intake.Name // Replace with the actual property name for the display name
+                    }).ToList();
+
+                    HomePageViewModel hmPageViewModel = new HomePageViewModel()
+                    {
+                        IntakeNumber = intakeRepository.getIntakeNumber(),
+                        TrackNumber = trackRepository.getTrackNumber(),
+                        StudentNumber = studentRepository.getStudentNumber(),
+                        InstructorNumber = instructorRepository.GetInstructorNumber(),
+                        CourseNumber = courseRepository.GetCourseNumber(),
+
+                    };
+
+                    var user = userManager.GetUserAsync(User).Result; // Get the current user
+
+                    if (user != null)
+                    {
+                        // You can pass user-related data to the view here
+                        ViewData["FullName"] = user.FullName;
+                    }
+                    return View(hmPageViewModel);
+                }
+                
             }
             else
             {

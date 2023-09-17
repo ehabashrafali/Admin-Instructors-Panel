@@ -6,6 +6,8 @@ using Admin_Panel_ITI.Models;
 using NuGet.DependencyResolver;
 using Microsoft.AspNetCore.Identity;
 using Admin_Panel_ITI.Repos.Interfaces;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.CodeAnalysis.Options;
 
 namespace Admin_Panel_ITI.Controllers
 {
@@ -210,32 +212,49 @@ namespace Admin_Panel_ITI.Controllers
             // Generate HTML <option> elements for the select list
 
             // Example code (replace with your actual logic):
-            var tracks = trackRepositry.GetTracksByIntakeID(intakeID);
+            //var tracks = trackRepositry.GetTracksByIntakeID(intakeID);
 
-            // Generate HTML options
-            var options = tracks.Select(track =>
-                $"<option value='{track.ID}'>{track.Name}</option>");
+            // Generate HTML options with asp-for attribute
+            //var options = tracks.Select(track =>
+            //    $"<option asp-for='Input.TrackID' value='{track.ID}'>{track.Name}</option>");
 
             // Combine the options into a string
-            var selectListHtml = string.Join("", options);
+            //var selectListHtml = string.Join("", options);
 
-            return Content(selectListHtml);
+            //var selectList = new SelectList(tracks, "ID", "Name");
+            //ViewBag.tracks = selectList;
+            //var finalHTML = "<select asp-for ='Input.TrackID' id='studentFields2' asp-items='@ViewBag.tracks' class='form-select'> < option > Select a Track</ option ></ select > ";
+            //return Content(finalHTML);
+
+
+            var tracks = trackRepositry.GetTracksByIntakeID(intakeID);
+            var selectList = new SelectList(tracks, "ID", "Name");
+            var trackList = selectList.Select(item => new SelectListItem
+            {
+                Value = item.Value,
+                Text = item.Text
+            });
+
+            return Json(trackList);
+
+
+
         }
-
-
-        //// POST: TrackController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
     }
+
+
+    //// POST: TrackController/Delete/5
+    //[HttpPost]
+    //[ValidateAntiForgeryToken]
+    //public ActionResult Delete(int id, IFormCollection collection)
+    //{
+    //    try
+    //    {
+    //        return RedirectToAction(nameof(Index));
+    //    }
+    //    catch
+    //    {
+    //        return View();
+    //    }
+    //}
 }

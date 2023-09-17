@@ -97,6 +97,11 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
 
 
             public int[]? IntakesIDs { get; set; }
+
+            public int? IntakeID { get; set; }
+
+
+            public int? TrackID { get; set; }
             //public int TrackssID { get; set; }
         }
 
@@ -104,6 +109,7 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            TempData["showSuccessAlert"] = false; // Initialize it as false initially
             ReturnUrl = returnUrl;
 
             var AllIntakes = intakeRepository.GetCurrentAvIntakes();
@@ -121,87 +127,108 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+            returnUrl ??= Url.Content("~/Identity/Account/AddUser");
 
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+
+            //}
+
+            var user = CreateUser();
+
+            user.FullName = Input.FullName;
+            user.PhoneNumber = Input.PhoneNumber;
+            await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
+            await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+            var result = await _userManager.CreateAsync(user, Input.Password); //new instructor created in AspNetUsers table.
+
+
+            if (result.Succeeded)
             {
-                var user = CreateUser();
-
-                user.FullName = Input.FullName;
-                user.PhoneNumber = Input.PhoneNumber;
-                await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-
-                var result = await _userManager.CreateAsync(user, Input.Password); //new instructor created in AspNetUsers table.
 
 
-                if (result.Succeeded)
+                user.LockoutEnabled = false;
+
+                if (Input.userType == UserType.Admin)
                 {
-                    user.LockoutEnabled = false;
+                    string NewAdminID = await _userManager.GetUserIdAsync(user); //get the new added Admin id
 
-                    if (Input.userType == UserType.Admin)
+                    Admin newAdmin = new()
                     {
-                        string NewAdminID = await _userManager.GetUserIdAsync(user); //get the new added Admin id
+                        AspNetUserID = NewAdminID
+                    };
 
-                        Admin newAdmin = new()
-                        {
-                            AspNetUserID = NewAdminID
-                        };
+                    adminRepository.CreateAdmin(newAdmin);
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                }
+                else if (Input.userType == UserType.Instructor)
+                {
+                    //1
+                    string NewInstructorID = await _userManager.GetUserIdAsync(user); //get the new added instructor id
 
-                        adminRepository.CreateAdmin(newAdmin);
-                        await _userManager.AddToRoleAsync(user, "Admin");
-                    }
-                    else if (Input.userType == UserType.Instructor)
+                    Instructor newInstructor = new Instructor()
                     {
-                        //1
-                        string NewInstructorID = await _userManager.GetUserIdAsync(user); //get the new added instructor id
+                        AspNetUserID = NewInstructorID,
+                        CreationDate = DateTime.Now,
+                        AdminID = _userManager.GetUserId(User),
+                    };
+                    instructorRepository.CreateInstructor(newInstructor); //add the instructor to the Instructor Table in db
 
-                        Instructor newInstructor = new Instructor()
+                    //2 
+                    if (Input.IntakesIDs != null)
+                    {
+                        foreach (int intakeID in Input.IntakesIDs)
                         {
-                            AspNetUserID = NewInstructorID,
-                            CreationDate = DateTime.Now,
-                            AdminID = _userManager.GetUserId(User),
-                        };
-                        instructorRepository.CreateInstructor(newInstructor); //add the instructor to the Instructor Table in db
-
-                        //2 
-                        if(Input.IntakesIDs != null)
-                        {
-                            foreach(int intakeID in Input.IntakesIDs)
-                            {
-                                intakeInstructorRepository.AddIntake_Instructor(intakeID, NewInstructorID); //add the instructor and intake to the Intake_Instructor Table in db
-                            }
+                            intakeInstructorRepository.AddIntake_Instructor(intakeID, NewInstructorID); //add the instructor and intake to the Intake_Instructor Table in db
                         }
-
-                        //3
-                        await _userManager.AddToRoleAsync(user, "Instructor"); //assign his role
-                    }
-                    else
-                    {
-                        await _userManager.AddToRoleAsync(user, "Student");
                     }
 
-                    #region NN
-                    //if (await _userManager.IsInRoleAsync(user, "Admin"))
-                    //{
-                    //    Admin newAdmin = new()
-                    //    {
-                    //        AspNetUserID = user.Id,
-                    //    };
-
-                    //    adminRepository.CreateAdmin(newAdmin);
-                    //} 
-                    #endregion
-
-                    await _signInManager.SignInAsync(user, isPersistent: false); //create cookie 
-
-                    return LocalRedirect(returnUrl);
+                    //3
+                    await _userManager.AddToRoleAsync(user, "Instructor"); //assign his role
                 }
-
-                foreach (var error in result.Errors)
+                else
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    string newStudentID = await _userManager.GetUserIdAsync(user); //get the new added instructor id
+
+                    if (Input.IntakeID != null && Input.TrackID != null)
+                    {
+                        Student std = new Student()
+                        {
+                            AspNetUserID = newStudentID,
+                            IsGraduated = false,
+                            CreationDate = DateTime.Now,
+                            IntakeID = Input.IntakeID ?? default(int),
+                            TrackID = Input.TrackID ?? default(int),
+                            AdminID = _userManager.GetUserId(User)
+                        };
+                        studentRepository.CreateStudent(std);
+                    }
+
+
+                    await _userManager.AddToRoleAsync(user, "Student");
                 }
+
+                #region NN
+                //if (await _userManager.IsInRoleAsync(user, "Admin"))
+                //{
+                //    Admin newAdmin = new()
+                //    {
+                //        AspNetUserID = user.Id,
+                //    };
+
+                //    adminRepository.CreateAdmin(newAdmin);
+                //} 
+                #endregion
+
+                //await _signInManager.SignInAsync(user, isPersistent: false); //create cookie 
+
+                return LocalRedirect(returnUrl);
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
             }
 
             // If we got this far, something failed, redisplay form

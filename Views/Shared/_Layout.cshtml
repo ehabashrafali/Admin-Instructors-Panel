@@ -17,27 +17,20 @@
 </head>
 <body>
 
-    <!-- floating screen -->
-    <div class="overlay"></div>
-    <div class="floating-screen" id="floating-screen">
-        <h2>Delete</h2>
-        <p>Are you sure ?</p>
-        <a href="track.html" class="btn btn-danger">Delete</a>
-        <a href="track.html" class="btn btn-primary">Cancel</a>
-    </div>
+    
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html" style="margin-left: 24px;">
+            <a class="navbar-brand" asp-action="Index" asp-controller="Home" style="margin-left: 24px;">
                 <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
             </a>
             <div class="navbarvr"></div>
-            <span class="collapse navbar-collapse  navbar-brand">ITI-Hub</span>
+            <span class="collapse navbar-collapse  navbar-brand">Hub</span>
             <div class="justify-content-end" id="navbarSupportedContent">
                 <div class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-right: 20px;">
                     
-                    <a href="register/register.html" class="btn regbtn">Create new user</a>
-                    
+                    <a asp-area="Identity" asp-page="/Account/AddUser" class="btn regbtn">Add User</a>
+
                     <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                         <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Logout</button>
                     </form>
