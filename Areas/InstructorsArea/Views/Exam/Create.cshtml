@@ -1,0 +1,333 @@
+﻿@using Admin_Panel_ITI.Areas.InstructorsArea.ViewModels;
+
+@model Exam_QuestionsVM
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <script src="~/assets/js/bootstrap.bundle.js"></script>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            padding-top: 24px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-top: 0;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            /* display: block; */
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"]:not(.ans),
+        input[type="radio"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            margin: 8px 0;
+        }
+
+        input[type="radio"] {
+            width: auto;
+            display: inline-block;
+        }
+
+        .ans {
+            width: 65%;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            display: inline-block;
+            margin: 8px 0;
+        }
+
+        button[type="submit"],
+        button#submitExam {
+            padding: 10px 15px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button[type="submit"]:hover,
+        button#submitExam:hover {
+            background-color: #45a049;
+        }
+
+        #examQuestions {
+            margin-top: 20px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .question h3 {
+            margin-top: 0;
+        }
+
+        .question ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .question ul li {
+            margin-bottom: 5px;
+        }
+
+        .question p {
+            margin-top: 10px;
+            color: #888;
+        }
+
+        .add-answer {
+            width: 100%;
+            padding: 10px 0;
+        }
+    </style>
+
+</head>
+
+
+<body>
+    <div class="container">
+        <h1>Create Exam</h1>
+        <form id="examForm">
+            <div class="form-group">
+                <label for="examName">Exam Name:</label>
+                <input asp-for="ExamName" id="examName" required>
+                <label for="examDuration">Exam Duration:</label>
+                <input asp-for="Duration"  id="examDuration"  required>
+            </div>
+            <div id="questionsContainer">
+                <div class="form-group  question ">
+                    <label for="question">Question:</label>
+                    <input type="text" name="question" required>
+                    <div class="form-group  answers ">
+                        <label>Answers:</label>
+                        <div class="answer">
+                            <input type="text" name="option" class="ans" required>
+                            <input type="radio" name="correctOption" required style="display: inline-block;" id="correctOption">
+                            <label for="correctOption" style="font-weight: 200;">Correct Answwer</label>
+                        </div>
+                    </div>
+                    <button type="button" class="add-answer btn btn-primary">Add Answer</button>
+                </div>
+            </div>
+            <button type="submit" class="add-question">Add Question</button>
+        </form>
+        <div id="examQuestions"></div> <!--where the created question will appear-->
+        <button id="submitExam" disabled>Submit Exam</button> <!--submit exam btn is disabled untill u create at least one question with its options and correct answer-->
+    </div>
+
+    <script>
+        document.getElementById('examForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var examName = document.getElementById('examName').value;
+            var question = document.querySelector('.question input[name="question"]').value; //question body
+            var options = document.querySelectorAll('.question input[name="option"]'); //options: multiple values
+            var correctOption = document.querySelector('.question input[name="correctOption"]:checked');
+
+            if (question.trim() === '') {
+                alert('Please enter a question.');
+                return;
+            }
+
+
+            var isOptionsEmpty = true;
+            var optionsHtml = '';
+
+            options.forEach(function (option) {
+                if (option.value.trim() !== '') {
+                    isOptionsEmpty = false;
+                    optionsHtml += '' + option.value + ' , ';
+                }
+            });
+
+            if (isOptionsEmpty) {
+                alert('Please enter at least one answer option.');
+                return;
+            }
+
+            if (correctOption === null) {
+                alert('Please select the correct answer option.');
+                return;
+            }
+
+            /*appear after question is created*/
+            var questionHtml = `
+                                        <div class="question">
+                                        <h3>${question}</h3>
+                                        <ul>
+                                            ${optionsHtml}
+                                        </ul>
+                                        <p>Correct Option: ${correctOption.parentElement.querySelector('input[name="option"]').value}</p>
+                                        </div>
+                                    `;
+
+            //display the created qesution with the correct answer
+            document.getElementById('examQuestions').insertAdjacentHTML('beforeend', questionHtml);
+
+            //reset the question body input to empty
+            document.querySelector('.question input[name="question"]').value = '';
+
+            //reset the question Option input to empty
+            options.forEach(function (option) {
+                option.value = '';
+            });
+
+            //reset the radio btn input to unchecked
+            correctOption.checked = false;
+
+            //enable submit exam btn
+            document.getElementById('submitExam').disabled = false;
+
+
+            //store all anwers then iterate to delete them, so u can create new question with new answers(options)
+            var answersContainers = document.querySelectorAll('.answer');
+
+            for (var i = 1; i < answersContainers.length; i++) {
+                answersContainers[i].remove();
+            }
+        });
+
+
+        function addClonedAnswerTxtbox() {
+            var answersContainer = document.querySelector('.answers'); //the div that have ".answers" class
+
+            var answerClone = document.querySelector('.answer').cloneNode(true); //create clone of answer HTML
+
+            answersContainer.appendChild(answerClone); //add this cloned HTML to the container of the answers .answers
+
+            // Reset the number of textboxes(for anwers) to 1
+            var answerInputs = answerClone.querySelectorAll('.answer input[name="option"]');
+            answerInputs.forEach(function (input, index) {
+                if (index > 0) {
+                    input.remove();
+                }
+                input.value = '';
+            });
+        }
+
+        document.querySelector('.add-answer').addEventListener('click', addClonedAnswerTxtbox);
+
+
+
+
+
+        document.getElementById('submitExam').addEventListener('click', function () {
+            var examQuestions = document.getElementById('examQuestions').innerHTML;
+            downloadExam(examQuestions);
+        });
+
+        function downloadExam(examQuestions) {
+            var dataStr = "data:text/plain;charset=utf-8," + encodeURIComponent(examQuestions);
+            var downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "exam.txt");
+            downloadAnchor.style.display = "none";
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            document.body.removeChild(downloadAnchor);
+        }
+    </script>
+
+</body>
+</html>
+
+
+
+
+@*
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Duration" class="control-label"></label>
+                <input asp-for="Duration" class="form-control" />
+                <span asp-validation-for="Duration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreationDate" class="control-label"></label>
+                <input asp-for="CreationDate" class="form-control" />
+                <span asp-validation-for="CreationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InstructorID" class="control-label"></label>
+                <select asp-for="InstructorID" class ="form-control" asp-items="ViewBag.InstructorID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CourseID" class="control-label"></label>
+                <select asp-for="CourseID" class ="form-control" asp-items="ViewBag.CourseID"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

@@ -24,7 +24,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         {
             Context.CourseDays.Add(courseday);
             Context.SaveChanges();
-
         }
 
         void ICourseDayRepository.DeleteCourseDay(int courseDayID)

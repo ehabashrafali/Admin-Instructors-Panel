@@ -20,7 +20,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
         }
 
 
-        //get the tracks in this intake, and only the tracks this instructor manage :: id(intake ID) , name(Intake Name)
+        //get the tracks in this intake, and only the tracks this instructor manage :: id(intake ID) , name(Intake ExamName)
         public ActionResult DetailsForManager(int id, string name)
         {
             string? UserID = userManager.GetUserId(User);
@@ -38,7 +38,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
 
 
-        //get the tracks in this intake, and only the tracks this instructor Teach in :: id(intake ID) , name(Intake Name)
+        //get the tracks in this intake, and only the tracks this instructor Teach in :: id(intake ID) , name(Intake ExamName)
         public ActionResult DetailsForTeacher(int id, string name)
         {
             ViewBag.IntakeName = name;
