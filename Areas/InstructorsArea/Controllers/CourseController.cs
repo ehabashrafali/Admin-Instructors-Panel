@@ -53,19 +53,6 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
                 });
             }
 
-            foreach (var course in AllcoursesInTrack)
-            {
-                string? instructorName = instructorCourseRepo.GetInstructorTeachCourse(course.ID)?.Instructor?.AspNetUser?.FullName ?? "NA"; //get the instructor that teach a specific course
-
-                instructorCourseVM.Add(new InstructorCourseVM
-                {
-                    CourseName = course.Name,
-                    Duration = course.Duration,
-                    InstructorName = instructorName,
-                    AdminName = course.Admin.AspNetUser.FullName
-                });
-            }
-
             return View(instructorCourseVM);
 
 
