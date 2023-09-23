@@ -362,7 +362,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                                         <button asp-action="Delete" 
-                                                                asp-controller="CpurseDay" 
+                                                                asp-controller="CourseDay" 
                                                                 asp-route-MaterialID="@item.MaterialID"
                                                                 type="submit" class="btn btn-danger" id="confirm-delete">Delete</button> <!--confirm delete-->
                                                     </div>
@@ -402,7 +402,7 @@
             });
 
             //// Handle the "Delete" button click in the modal
-            //var _url = '@Url.Action("Delete", "CourseDay")';
+            //var _url = 'Url./*Action("Delete", "CourseDay")*/';
             //$("#confirm-delete").click(function () {
             //    $.ajax({
             //        url: _url,
@@ -417,7 +417,7 @@
 
             //    // After deletion is successful, close the modal
             //    $("#confirm-delete-modal").modal("hide");
-            });
+            //});
         });
     </script>
 
