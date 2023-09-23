@@ -95,8 +95,8 @@ namespace Admin_Panel_ITI.Controllers
         //{
         //    var Tracks = trackRepository.getTracks();
         //    var IntakesIDs = IntakeRepository.GetAllIntakes();
-        //    ViewBag.AllTracks = new SelectList(Tracks, "ID", "Name");
-        //    ViewBag.AllIntakes = new SelectList(IntakesIDs, "ID", "Name");
+        //    ViewBag.AllTracks = new SelectList(Tracks, "ID", "ExamName");
+        //    ViewBag.AllIntakes = new SelectList(IntakesIDs, "ID", "ExamName");
         //    return View();
         //}
 

@@ -95,17 +95,6 @@
 
                         </div>
 
-@*                    <div class="container" style="flex-wrap: wrap; justify-content: center; width: 999px; margin-top: 16px;">
-                        @foreach(var course in Model)
-                        {
-                            <div class="card border rounded">
-                                <a href="coursesDays.html">
-                                    <h2 class="card-title">@course.Name</h2>
-                                </a>
-                            </div>
-                        }
-                    </div>*@
-
                         <div class="container" style="flex-wrap: wrap; justify-content: center ; margin-top: 16px;">
                             <div class="row">
                                 @foreach (var course in Model)
@@ -113,7 +102,7 @@
                                     <div class="col-md-4 mb-3">
                                         <a class="box card" style="width:210px"
                                             asp-controller="CourseDay" 
-                                            asp-action="Details" 
+                                            asp-action="Index"
                                             asp-route-id="@course.ID" 
                                             asp-route-name="@course.Name" 
                                             asp-route-intakeID="@IntakeID" 

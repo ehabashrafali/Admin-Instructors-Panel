@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Admin_Panel_ITI.Controllers
 {
+    [Area("InstructorsArea")] //have to be added(mandatory)
     public class ExamController : Controller
     {
         private readonly IExamRepository examRepository;
@@ -125,18 +126,6 @@ namespace Admin_Panel_ITI.Controllers
 
         }
 
-
-
-        //------------------------------------------------------------------------------------//
-
-        public ActionResult CreateQuestionForExam(int Id)
-        {
-            var exam = examRepository.GetExambyID(Id);
-            var question = new Question();
-
-            ViewBag.Exam = exam;
-            return View(question);
-        }
 
         [HttpPost]
         public IActionResult CreateQuestionForExam(int Id, Question question)

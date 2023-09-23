@@ -19,6 +19,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             this.materialRepository = materialRepository;
         }
 
+       
         void ICourse_Day_MaterialRepository.CreateCourseDayMaterial(Course_Day_Material cdm)
         {
             Context.Course_Day_Materials.Add(cdm);
@@ -69,8 +70,12 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
         List<Course_Day_Material> ICourse_Day_MaterialRepository.GetCourseDaysbyCourseDayID(int courseDayID)
         {
-            var cdms = Context.Course_Day_Materials.Where(cdm=>cdm.CourseDayID==courseDayID).ToList();
-            return cdms;
+            return Context.Course_Day_Materials
+                .Where(cdm => cdm.CourseDayID == courseDayID)
+                .Include(cdm => cdm.CourseDay)
+                .Include(cdm => cdm.MaterialOfDay)
+                .Include(cdm => cdm.Course)
+                .ToList();
         }
 
         //replace cdm.CourseDayID --> CourseID
@@ -87,6 +92,19 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             cdm_updated.CourseID = courseDayMaterial.CourseID;
             cdm_updated.MaterialID = courseDayMaterial.MaterialID;
             Context.SaveChanges();
-        } 
+        }
+
+
+
+
+        //---------------------------------- Instructor Services ------------------//
+
+        public void CreateCourseDayMaterial(List<Course_Day_Material> cdm)
+        {
+            Context.Course_Day_Materials.AddRange(cdm); 
+            Context.SaveChanges();
+        }
+
+
     }
 }

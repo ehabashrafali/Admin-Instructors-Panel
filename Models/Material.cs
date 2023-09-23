@@ -8,7 +8,17 @@ namespace Admin_Panel_ITI.Models
     public class Material
     {
         public int ID { get; set; }
+
+        [Required, MaxLength(50)]
+        public string Name { get; set; }
+
+        [Required]
         public string Path { get; set; }
+
+
+        [Required, MaxLength(50)]
+        public string Type { get; set; }
+
 
 
         [ForeignKey(nameof(Instructor))]
@@ -19,4 +29,3 @@ namespace Admin_Panel_ITI.Models
         public virtual IEnumerable<Course_Day_Material>? CourseDayMaterials { set; get; }
     }
 }
-

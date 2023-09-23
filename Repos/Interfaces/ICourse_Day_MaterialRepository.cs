@@ -15,5 +15,13 @@ namespace Admin_Panel_ITI.Repos.Interfaces
         public void DeleteCourseDayMaterial(int courseID, int courseDayID, int materialID);
         public void DeleteCourseDayMaterialbyCourseDayID(int courseDayID);
         public void DeleteAllRelatedCourseDays_Materials(int courseID);
+
+
+
+        //---------------------------------- Instructor Repos ------------------//
+
+        public void CreateCourseDayMaterial(List<Course_Day_Material> cdm);
+        //public List<Course_Day_Material> GetCourseDaysbyCourseDayID(int courseDayID); exists above
+
     }
 }

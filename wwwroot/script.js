@@ -1,3 +1,5 @@
+
+
 // check all checkboxes when the user checks the main checkbox
 function checkUncheck(checkBox) {
   get = document.getElementsByName("data");
@@ -85,3 +87,7 @@ function clicked() {
   overlay.classList.add("show");
   floatingScreen.classList.add("show");
 }
+
+
+
+

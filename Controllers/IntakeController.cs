@@ -138,7 +138,13 @@ namespace Admin_Panel_ITI.Controllers
         {
             if(ModelState.IsValid)
             {
-            ; 
+                //Intake oldIntake = intakeRepository.getIntakebyID(id);
+                //oldIntake.Name = editedIntake.Name; 
+                //oldIntake.Duration = editedIntake.Duration;
+                //oldIntake.StartDate = editedIntake.StartDate;
+                //oldIntake.EndDate = editedIntake.EndDate;
+
+                //intakeRepository.CreateIntake(oldIntake); 
 
                 intakeRepository.UpdateIntake(id, editedIntake);
                 

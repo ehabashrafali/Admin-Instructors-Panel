@@ -1,5 +1,8 @@
-﻿
+﻿@using Admin_Panel_ITI.Areas.InstructorsArea.ViewModels;
+
 @model Exam_QuestionsVM
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,8 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="~/styles.css">
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/assets/js/bootstrap.bundle.js"></script>
     <script src="~/assets/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -95,10 +96,10 @@
             width: 100%;
         }
 
-            button[type="submit"]:hover,
-            button#submitExam:hover {
-                background-color: #45a049;
-            }
+        button[type="submit"]:hover,
+        button#submitExam:hover {
+            background-color: #45a049;
+        }
 
         #examQuestions {
             margin-top: 20px;
@@ -111,23 +112,23 @@
             border-radius: 4px;
         }
 
-            .question h3 {
-                margin-top: 0;
-            }
+        .question h3 {
+            margin-top: 0;
+        }
 
-            .question ul {
-                list-style-type: none;
-                padding: 0;
-            }
+        .question ul {
+            list-style-type: none;
+            padding: 0;
+        }
 
-                .question ul li {
-                    margin-bottom: 5px;
-                }
+        .question ul li {
+            margin-bottom: 5px;
+        }
 
-            .question p {
-                margin-top: 10px;
-                color: #888;
-            }
+        .question p {
+            margin-top: 10px;
+            color: #888;
+        }
 
         .add-answer {
             width: 100%;
@@ -137,6 +138,7 @@
 
 </head>
 
+
 <body>
     <div class="container">
         <h1>Create Exam</h1>
@@ -145,7 +147,7 @@
                 <label for="examName">Exam Name:</label>
                 <input asp-for="ExamName" id="examName" required>
                 <label for="examDuration">Exam Duration:</label>
-                <input asp-for="Duration" id="examDuration" required>
+                <input asp-for="Duration"  id="examDuration"  required>
             </div>
             <div id="questionsContainer">
                 <div class="form-group  question ">
@@ -165,7 +167,7 @@
             <button type="submit" class="add-question">Add Question</button>
         </form>
         <div id="examQuestions"></div> <!--where the created question will appear-->
-        <button id="submitExam" disabled>Submit Exam</button> <!--submit exxam btn is disabled untill u create at least one question with its options and correct answer-->
+        <button id="submitExam" disabled>Submit Exam</button> <!--submit exam btn is disabled untill u create at least one question with its options and correct answer-->
     </div>
 
     <script>
@@ -205,14 +207,14 @@
 
             /*appear after question is created*/
             var questionHtml = `
-                                <div class="question">
-                                <h3>${question}</h3>
-                                <ul>
-                                    ${optionsHtml}
-                                </ul>
-                                <p>Correct Option: ${correctOption.parentElement.querySelector('input[name="option"]').value}</p>
-                                </div>
-                            `;
+                                        <div class="question">
+                                        <h3>${question}</h3>
+                                        <ul>
+                                            ${optionsHtml}
+                                        </ul>
+                                        <p>Correct Option: ${correctOption.parentElement.querySelector('input[name="option"]').value}</p>
+                                        </div>
+                                    `;
 
             //display the created qesution with the correct answer
             document.getElementById('examQuestions').insertAdjacentHTML('beforeend', questionHtml);
@@ -287,18 +289,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
 @*
-
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -319,10 +310,13 @@
                 <span asp-validation-for="CreationDate" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="InstructorID" class="control-label"></label>
+                <select asp-for="InstructorID" class ="form-control" asp-items="ViewBag.InstructorID"></select>
             </div>
             <div class="form-group">
+                <label asp-for="CourseID" class="control-label"></label>
+                <select asp-for="CourseID" class ="form-control" asp-items="ViewBag.CourseID"></select>
             </div>
-           
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -332,5 +326,8 @@
 
 <div>
     <a asp-action="Index">Back to List</a>
+</div>*@
 
-    *@
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

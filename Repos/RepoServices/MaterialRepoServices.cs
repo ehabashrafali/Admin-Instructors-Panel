@@ -71,5 +71,21 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             }
             Context.SaveChanges();
         }
+
+
+
+
+
+
+
+
+        /*---------------------------------------------- Instructor Services -----------------------------------------------*/
+
+        public void CreateMaterials(List<Material> materials)
+        {
+            Context.Materials.AddRange(materials);
+            Context.SaveChanges();
+        }
+
     }
 }
