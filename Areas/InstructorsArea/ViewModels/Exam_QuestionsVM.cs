@@ -12,6 +12,6 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.ViewModels
         public int Duration { get; set; }
 
         [Required]
-        public List<Question> Questions { get; set; }   
+        public List<Question> Questions { get; set; }
     }
 }
