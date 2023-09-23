@@ -96,10 +96,10 @@
             width: 100%;
         }
 
-        button[type="submit"]:hover,
-        button#submitExam:hover {
-            background-color: #45a049;
-        }
+            button[type="submit"]:hover,
+            button#submitExam:hover {
+                background-color: #45a049;
+            }
 
         #examQuestions {
             margin-top: 20px;
@@ -112,23 +112,23 @@
             border-radius: 4px;
         }
 
-        .question h3 {
-            margin-top: 0;
-        }
+            .question h3 {
+                margin-top: 0;
+            }
 
-        .question ul {
-            list-style-type: none;
-            padding: 0;
-        }
+            .question ul {
+                list-style-type: none;
+                padding: 0;
+            }
 
-        .question ul li {
-            margin-bottom: 5px;
-        }
+                .question ul li {
+                    margin-bottom: 5px;
+                }
 
-        .question p {
-            margin-top: 10px;
-            color: #888;
-        }
+            .question p {
+                margin-top: 10px;
+                color: #888;
+            }
 
         .add-answer {
             width: 100%;
@@ -147,7 +147,7 @@
                 <label for="examName">Exam Name:</label>
                 <input asp-for="ExamName" id="examName" required>
                 <label for="examDuration">Exam Duration:</label>
-                <input asp-for="Duration"  id="examDuration"  required>
+                <input asp-for="Duration" id="examDuration" required>
             </div>
             <div id="questionsContainer">
                 <div class="form-group  question ">
@@ -207,14 +207,14 @@
 
             /*appear after question is created*/
             var questionHtml = `
-                                        <div class="question">
-                                        <h3>${question}</h3>
-                                        <ul>
-                                            ${optionsHtml}
-                                        </ul>
-                                        <p>Correct Option: ${correctOption.parentElement.querySelector('input[name="option"]').value}</p>
-                                        </div>
-                                    `;
+                                                <div class="question">
+                                                <h3>${question}</h3>
+                                                <ul>
+                                                    ${optionsHtml}
+                                                </ul>
+                                                <p>Correct Option: ${correctOption.parentElement.querySelector('input[name="option"]').value}</p>
+                                                </div>
+                                            `;
 
             //display the created qesution with the correct answer
             document.getElementById('examQuestions').insertAdjacentHTML('beforeend', questionHtml);
