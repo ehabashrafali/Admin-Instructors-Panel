@@ -45,7 +45,7 @@ namespace Admin_Panel_ITI.Controllers
                     ViewData["Intakes"] = intakeRepository.GetAllIntakes().Select(intake => new Intake
                     {
                         ID = intake.ID, // Replace with the actual property name for the ID
-                        Name = intake.Name // Replace with the actual property name for the display name
+                        Name = intake.NameAndDuration // Replace with the actual property name for the display name
                     }).ToList();
 
                     HomePageViewModel hmPageViewModel = new HomePageViewModel()

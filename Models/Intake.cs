@@ -35,11 +35,12 @@ namespace Admin_Panel_ITI.Models
         [Column(TypeName = "date")]
         public DateTime? CreationDate { get; set; }
 
+        public string? NameAndDuration => $"{Name} - Duration: ({Duration}) M";
 
 
 
-        //old//
-        [ForeignKey(nameof(Admin))]
+    //old//
+    [ForeignKey(nameof(Admin))]
         public string? AdminID { get; set; }
         public virtual Admin? Admin { get; set; }
 

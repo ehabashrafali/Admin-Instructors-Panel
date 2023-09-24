@@ -44,11 +44,11 @@ namespace Admin_Panel_ITI.Controllers
         public ActionResult UpdateTableData(int intakeID, int pageNumber)
         {
             var intakes = intakeRepository.GetAllIntakes();
-
             List<Student> studentsbyintake;
+
             if (intakeID == 0)
             {
-                // Get all tracks without filtering by intake ID
+                // Get all Student without filtering by intake ID
                 studentsbyintake = studentRepository.getStudents(pageNumber, 10);
                 if(studentsbyintake.Count == 0 && pageNumber > 1)
                 {
