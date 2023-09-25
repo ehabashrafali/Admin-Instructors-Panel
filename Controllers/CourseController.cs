@@ -103,7 +103,7 @@ namespace Admin_Panel_ITI.Controllers
             if (user != null)
             {
                 string userId = user.Id;
-                course.AdminID = "admin1";
+                course.AdminID = userId;
             }
             if (ModelState.IsValid)
             {
