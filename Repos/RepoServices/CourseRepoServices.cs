@@ -130,8 +130,10 @@ namespace Admin_Panel_ITI.Repos
             }
             var courses = Context.Courses
                 .Include(c => c.Admin)
-                .Include(c => c.InstructorCourses)
+                  .Include(c => c.InstructorCourses)
+                    .ThenInclude(cc => cc.Instructor)
                 .Include(c => c.IntakeTrackCourse)
+                    .ThenInclude(itc => itc.Track)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -185,6 +187,25 @@ namespace Admin_Panel_ITI.Repos
 
             return courses;
 
+        }
+        List<Course> ICourseRepository.GetCoursesbyIntakeID(int intakeid, int pageNumber, int pageSize)
+        {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
+            var query =
+                  (from c in Context.Courses
+                   join tc in Context.Intake_Track_Courses on c.ID equals tc.CourseID
+                   where tc.IntakeID == intakeid select c)
+                   .Include(c => c.IntakeTrackCourse)
+                   .ThenInclude(c => c.Track)
+                  .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return query;
         }
         public List<Course> GetTeacherCourses(int intakeID, int trackID, string instructorID)
         {

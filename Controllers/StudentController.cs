@@ -32,7 +32,6 @@ namespace Admin_Panel_ITI.Controllers
         {
             var intakes = intakeRepository.GetAllIntakes();
             ViewData["Intakes"] = new SelectList(intakes, "ID", "Name");
-
             var students = studentRepository.getStudents(pageNumber, 10);
             ViewBag.PageNumber = pageNumber;
             ViewBag.IntakeID = 0;
@@ -40,6 +39,15 @@ namespace Admin_Panel_ITI.Controllers
             return View(students);
         }
 
+        public ActionResult StdIndexByIntakeId(int Id, int pageNumber)
+        {
+            var intakes = intakeRepository.GetAllIntakes();
+            ViewData["Intakes"] = new SelectList(intakes, "ID", "Name");
+            var students = studentRepository.getStudentsbyIntakeID(Id, pageNumber, 10);
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.IntakeID = Id;
+            return View(students);
+        }
 
         public ActionResult UpdateTableData(int intakeID, int pageNumber)
         {
@@ -78,16 +86,12 @@ namespace Admin_Panel_ITI.Controllers
 
         //public ActionResult StdIndexByTrackId(int Trackid, int pageNumber)
         //{
-            
+
         //    var students = studentRepository.getStudentsbyTrackID(Trackid, pageNumber, 10);
         //    return View(students);
         //}
 
-        //public ActionResult StdIndexByIntakeId(int Id, int pageNumber)
-        //{
-        //    var students = studentRepository.getStudentsbyIntakeID(Id, pageNumber, 10);
-        //    return PartialView("_TableDataPartial", students);
-        //}
+       
 
 
         //// GET: StudentController/Create
@@ -170,7 +174,7 @@ namespace Admin_Panel_ITI.Controllers
             List<Student> studentsbyintake;
             if (intakeID == 0)
             {
-                // Get all tracks without filtering by intake ID
+                // Get all students without filtering by intake ID
                 studentsbyintake = studentRepository.getStudents(pageNumber, 10);
                 if (studentsbyintake.Count == 0 && pageNumber > 1)
                 {
@@ -181,7 +185,7 @@ namespace Admin_Panel_ITI.Controllers
             }
             else
             {
-                // Get tracks filtered by intake ID
+                // Get students filtered by intake ID
                 studentsbyintake = studentRepository.getStudentsbyIntakeID(intakeID, pageNumber, 10);
                 if (studentsbyintake.Count == 0 && pageNumber > 1)
                 {

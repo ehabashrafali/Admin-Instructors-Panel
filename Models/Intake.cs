@@ -35,7 +35,7 @@ namespace Admin_Panel_ITI.Models
         [Column(TypeName = "date")]
         public DateTime? CreationDate { get; set; }
 
-        public string? NameAndDuration => $"{Name} - Duration: ({Duration}) M";
+        public string? NameAndDuration => $"{Name} - ({Duration}) M";
 
 
 

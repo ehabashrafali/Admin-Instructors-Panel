@@ -81,7 +81,7 @@ namespace Admin_Panel_ITI.Repos
             return Context.Students.Count();
         }   
         
-        int IStudentRepository.getStudentNumberbyIntakeID(int intakeID)
+        int IStudentRepository.getStudentNumberbyIntakeID(int? intakeID)
         {
             return Context.Students.Where(s=> s.IntakeID == intakeID).Count();
         }
@@ -159,13 +159,13 @@ namespace Admin_Panel_ITI.Repos
                                   .Skip((pageNumber - 1) * pageSize)
                                   .Take(pageSize)
                                   .ToList();
-        }  
-        
+        }
+
         List<Student> IStudentRepository.getStudentsbyIntakeID(int intakeID)
-         {
+        {
             return Context.Students
                                   .Where(s => s.IntakeID == intakeID)
-                                 
+
                                   .ToList();
         }
 

@@ -28,13 +28,24 @@ namespace Admin_Panel_ITI.Controllers
         public ActionResult Index(int pageNumber)
         {
             var Tracks = trackRepository.getTracks(); // for filter by track
-            var Courses = courseRepository.GetCourses(pageNumber,10);
             ViewData["Tracks"] = new SelectList(Tracks, "ID", "Name"); // Add this line
+            var Courses = courseRepository.GetCourses(pageNumber,10);
             ViewBag.PageNumber = pageNumber;
             ViewBag.TrackID = 0;
             return View(Courses);
         }
 
+        public ActionResult CrsIndexByIntakeId(int Id, int pageNumber, int selectedTrackId)
+        {
+            var Tracks = trackRepository.getTracks();
+            ViewData["Tracks"] = new SelectList(Tracks, "ID", "Name");
+            ViewBag.SelectedTrackId = selectedTrackId;
+
+            var Courses = courseRepository.GetCoursesbyIntakeID(Id, pageNumber, 10);
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.IntakeID = Id;
+            return View(Courses);
+        }
         public ActionResult UpdateTableData(int trackID, int pageNumber)
         {
 

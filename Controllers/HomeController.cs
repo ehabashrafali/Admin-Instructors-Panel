@@ -82,9 +82,11 @@ namespace Admin_Panel_ITI.Controllers
             var trackNumber = intakeID != 0 ? trackRepository.getTrackNumberbyIntakeID(intakeID) : trackRepository.getTrackNumber();
             var instructorNumber = intakeID != 0 ? instructorRepository.GetInstructorNumberbyIntakeID(intakeID) : instructorRepository.GetInstructorNumber();
             var courseNumber = intakeID != 0 ? courseRepository.GetCourseNumberbyIntakeID(intakeID) : courseRepository.GetCourseNumber();
+            int  IntakeId = intakeID ;
 
             var viewModel = new HomePageViewModel
             {
+                IntakeId = intakeID,
                 IntakeNumber = intakeNumber,
                 StudentNumber = studentNumber,
                 TrackNumber = trackNumber,

@@ -7,6 +7,7 @@
         public int StudentNumber { get; set; }
         public int InstructorNumber { get; set; }
         public int CourseNumber { get; set; }
+        public int IntakeId { get; internal set; }
     }
 
 }

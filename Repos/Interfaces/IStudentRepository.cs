@@ -5,7 +5,7 @@ namespace Admin_Panel_ITI.Repos
     public interface IStudentRepository
     {
         public int getStudentNumber();
-        public int getStudentNumberbyIntakeID(int intakeID);
+        public int getStudentNumberbyIntakeID(int? intakeID);
         public int getStudentNumberbyTrackID(int trackID);
         
 
