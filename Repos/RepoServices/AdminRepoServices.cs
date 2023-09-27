@@ -31,7 +31,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             var admin = Context.Admins.FirstOrDefault(ad=>ad.AspNetUserID == adminID.ToString());
             Context.Admins.Remove(admin);
             Context.SaveChanges();
-
         }
 
         Admin IAdminRepository.GetAdminbyID(int adminID)
