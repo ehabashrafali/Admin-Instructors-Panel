@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Admin_Panel_ITI.Repos.Interfaces;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.CodeAnalysis.Options;
+using System.Diagnostics;
 
 namespace Admin_Panel_ITI.Controllers
 {
@@ -43,6 +44,23 @@ namespace Admin_Panel_ITI.Controllers
             ViewBag.PageNumber = pageNumber;
             ViewBag.IntakeID = 0;
             return View(Tracks);
+        }
+
+        public ActionResult TracksByInakeId(int id, int pageNumber)
+        {
+            var intakes = intakeRepository.GetAllIntakes();
+            var tracks = trackRepositry.GetTracksByIntakeId(id, pageNumber, 10);
+            List<int> studentNumsforTrack = new List<int>();
+            foreach (var track in tracks)
+            {
+                var studentNuminTrack = studentRepository.getStudentNumberbyTrackID(track.ID);
+                studentNumsforTrack.Add(studentNuminTrack);
+            }
+            ViewData["NumOfStudsInEachTrack"] = studentNumsforTrack;
+            ViewData["Intakes"] = new SelectList(intakes, "ID", "Name");
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.IntakeID = id;
+            return View(tracks);
         }
 
 
@@ -95,11 +113,6 @@ namespace Admin_Panel_ITI.Controllers
             return View(trackRepositry.getTrackbyID(id));
         }
 
-        public ActionResult GetTrackByInakeId(int id, int pageNumber)
-        {
-            var tracks = trackRepositry.getTrackbyIntakeID(id, pageNumber, 10);
-            return View(tracks);
-        }
 
         // GET: TrackController/Create
         public ActionResult Create()

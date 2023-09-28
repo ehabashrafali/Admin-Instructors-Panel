@@ -51,7 +51,15 @@ namespace Admin_Panel_ITI.Controllers
         }
 
 
-
+        public ActionResult InsIndexByIntakeId(int Id, int pageNumber)
+        {
+            var intakes = intakeRepository.GetAllIntakes();
+            ViewData["Intakes"] = new SelectList(intakes, "ID", "Name");
+            var Instructors = intake_InstructorRepository.getInstructorbyIntakeID(Id, pageNumber, 10);
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.IntakeID = Id;
+            return View(Instructors);
+        }
 
 
         //public ActionResult Details(string id)

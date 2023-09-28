@@ -1,60 +1,107 @@
 ﻿
-
-
-
 <div id="intakeDataContainer">
     <!-- 4 Cards ( Tracks, Courses, Instructor, Student ) -->
-    <div class="container text-center" style="margin: 40px auto 16px;">
-        <div class="row ">
-            <div style="display: flex; justify-content: space-evenly; margin-bottom: 24px">
-                <div class="">
-                    <a style="padding-top: 8px;" class="card stretched-link text-decoration-none track-card" style="width: 18rem;" asp-action="Index" asp-controller="Track">
-                        <img src="assets/images/tracks.png" class="card-img-top card-text" alt="tracks" style="width: 130px; height: 130px; margin: 10px auto 0px;">
-                        <div class="card-body">
-                            <h4 class="card-text">@Model.TrackNumber</h4>
-                            <h2 class="card-text">Tracks</h2>
-                        </div>
-                    </a>
-                </div>
-                <div class="">
-                    <a style="padding-top: 8px;" class="card stretched-link text-decoration-none" style="width: 18rem;" asp-action="Index" asp-controller="Course">
-                        <img src="assets/images/courses.png" class="card-img-top" alt="courses" style="width: 130px; height: 130px; margin: 10px auto 0px;">
-                        <div class="card-body">
-                            <h4 class="card-text">@Model.CourseNumber</h4>
-                            <h2 class="card-text">Courses</h2>
-                        </div>
-                    </a>
-                </div>
-                <div class="">
-                    <a style="padding-top: 8px;" class="card stretched-link text-decoration-none" style="width: 18rem;" asp-action="Index" Action" asp-controller="Instructor">
-                        <img src="assets/images/instructor.png" class="card-img-top" alt="instructors" style="width: 130px; height: 130px; margin: 10px auto 0px;">
-                        <div class="card-body">
-                            <h4 class="card-text">@Model.InstructorNumber</h4>
-                            <h2 class="card-text">Instructors</h2>
-                        </div>
-                    </a>
-                </div>
+    <div class="container text-center">
+
+        <div class="row align-items-center">
+
+            <div class="col">
+                <a style="padding-top: 8px;" class="card stretched-link text-decoration-none" style="width: 18rem;"
+                   asp-action="@(Model.IntakeId == 0 ? "Index" : "TracksByInakeId")" asp-controller="Track" asp-route-id="@Model.IntakeId">
+                    <img src="assets/images/tracks.png" class="card-img-top card-text" alt="tracks" style="width: 130px; height: 130px; margin: 10px auto 0px;">
+                    <div class="card-body">
+                        <h4 class="card-text">@Model.TrackNumber</h4>
+                        <h3 class="card-text">Track</h3>
+                    </div>
+                </a>
             </div>
-            <div style="display: flex; justify-content: space-evenly;">
-                <div class="">
-                    <a style="padding-top: 8px;" class="card stretched-link text-decoration-none" style="width: 18rem;" asp-action="Index" asp-controller="Student">
-                        <img src="assets/images/student.png" class="card-img-top" alt="intakes" style="width: 130px; height: 130px; margin: 10px auto 0px;">
-                        <div class="card-body">
-                            <h4 class="card-text">@Model.StudentNumber</h4>
-                            <h2 class="card-text">Students</h2>
-                        </div>
-                    </a>
-                </div>
-                <div class="">
-                    <a style="padding-top: 8px;" class="card stretched-link text-decoration-none" style="width: 18rem;" asp-action="Index" asp-controller="Intake">
-                        <img src="~/assets/images/intake.png" class="card-img-top" alt="students" style="width: 130px; height: 130px; margin: 10px auto 0px;">
-                        <div class="card-body">
-                            <h4 class="card-text">@Model.IntakeNumber</h4>
-                            <h2 class="card-text">Intakes</h2>
-                        </div>
-                    </a>
-                </div>
+
+@*             <div class="col">
+                <a style="padding-top: 8px;" class="card stretched-link text-decoration-none" style="width: 18rem;"
+                   asp-action="@(Model.IntakeId == 0 ? "Index" : "CrsIndexByIntakeId")" asp-controller="course" asp-route-id="@Model.IntakeId" >
+                    <img src="assets/images/courses.png" class="card-img-top" alt="courses" style="width: 130px; height: 130px; margin: 10px auto 0px;">
+                    <div class="card-body">
+                        <h4 class="card-text">@Model.CourseNumber</h4>
+                        <h3 class="card-text">Course</h3>
+                    </div>
+                </a>
+            </div> *@
+            <div class="col">
+                <a id="courseLink" style="padding-top: 8px; cursor:pointer; " class="card stretched-link text-decoration-none" style="width: 18rem;">
+                    <img src="assets/images/courses.png" class="card-img-top" alt="courses" style="width: 130px; height: 130px; margin: 10px auto 0px;">
+                    <div class="card-body">
+                        <h4 class="card-text">@Model.CourseNumber</h4>
+                        <h3 class="card-text">Course</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a style="padding-top: 8px;" class="card stretched-link text-decoration-none" style="width: 18rem;"
+                   asp-action="@(Model.IntakeId == 0 ? "Index" : "InsIndexByIntakeId")" asp-controller="Instructor" asp-route-id="@Model.IntakeId">
+
+                    <img src="assets/images/instructor.png" class="card-img-top" alt="instructors" style="width: 130px; height: 130px; margin: 10px auto 0px;">
+                    <div class="card-body">
+                        <h4 class="card-text">@Model.InstructorNumber</h4>
+                        <h3 class="card-text">Instructor</h3>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col">
+                <a style="padding-top: 8px;" class="card stretched-link text-decoration-none" style="width: 18rem;"
+                   asp-action="@(Model.IntakeId == 0 ? "Index" : "StdIndexByIntakeId")" asp-controller="Student" asp-route-id="@Model.IntakeId">
+
+                    <img src="assets/images/student.png" class="card-img-top" alt="students" style="width: 130px; height: 130px; margin: 10px auto 0px;">
+                    <div class="card-body">
+                        <h4 class="card-text">@Model.StudentNumber</h4>
+                        <h3 class="card-text">Student</h3>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    // JavaScript function to handle the click event on the course card
+    function handleCourseCardClick() {
+        var intakeId = @Model.IntakeId; // Replace with the appropriate value for the intakeId
+        var trackIds = @Html.Raw(Json.Serialize(Model.TrackIds));
+
+        if (intakeId === 0) {
+            // If no intake number is selected, navigate to the "Index" action
+            window.location.href = '/course/Index';
+        } else {
+            // Construct the URL with query parameters
+            var url = '/Course/CrsIndexByIntakeId?Id=' + intakeId + '&pageNumber=1';
+
+            // Add trackIds as a query parameter (comma-separated string)
+            if (trackIds.length > 0) {
+                url += '&trackIds=' + trackIds.join(',');
+            }
+
+            // Navigate to the URL
+            window.location.href = url;
+        }
+    }
+
+    // Add a click event handler to the course card
+    var courseLink = document.getElementById('courseLink');
+    courseLink.addEventListener('click', handleCourseCardClick);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

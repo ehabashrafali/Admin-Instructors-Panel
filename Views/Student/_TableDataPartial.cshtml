@@ -39,6 +39,12 @@
                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                         </svg>
                     </th>
+                    <th>
+                        Duration
+                        <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                        </svg>
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -52,10 +58,13 @@
                         <td>@StudentList[i].CreationDate</td>
                         <td>@StudentList[i].Track.Name</td>
                         <td>@StudentList[i].Intake.Name</td>
-                        <td style="padding: 5px 8px">
-                            <a asp-action="edit" asp-route-id="@StudentList[i].AspNetUserID">
-                                <img style='width: 20px; height: 20px;' src='assets/images/edit.png' alt='details'>
-                            </a>
+                        <td>@StudentList[i].Intake.Duration</td>
+                        <td>
+                            <div class="options-menu">
+                                <span type="button" class="threedots" data-container="body" data-toggle="popover" data-bs-placement="left" data-content="<div style='display:flex; justify-content: space-between;align-items:flex-start;'><a href='#'><a href='#'><img style='width: 20px; height: 20px; margin-top:' src='assets/images/eye.png' alt='details'></a><a style='margin: 0 4px 0 7px;' href='#'><img style='width: 20px; height: 20px;' src='assets/images/edit.png' alt='details'></a><a href='#'><a onclick='clicked()' href='#'><img style='width: 20px; height: 20px;' src='assets/images/delete.png' alt='details'></a></div>">
+                                    <i class="fas fa-ellipsis-v" style="color: gray;"></i>
+                                </span>
+                            </div>
                         </td>
                 </tr>
             }
@@ -113,7 +122,7 @@
 
         // Make an AJAX call to the UpdateTableData action
         $.ajax({
-            url: '@Url.Action("UpdateTableData", "Track")', // Use Url.Action to generate the correct URL
+            url: '@Url.Action("UpdateTableData", "Student")', // Use Url.Action to generate the correct URL
             type: 'GET',
             data: { intakeID: selectedIntakeId, pageNumber: 1 }, // Pass the selected intake ID and current page number as parameters
             success: function (result) {
@@ -212,8 +221,7 @@
     });
 
     function editStudent(StdId) {
-        console.log('Edit clicked for Student ID: ' + StdId);
-
+        console.log('Edit clicked for Student ID: ' + StdId); 
         window.location.href = '/Student/Edit/' + StdId;
     }
 </script>

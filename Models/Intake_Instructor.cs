@@ -8,13 +8,13 @@ namespace Admin_Panel_ITI.Models
     {
 
         [ForeignKey(nameof(Intake))]
-        public int IntakeID { get; set; }
+        public int? IntakeID { get; set; }
         public virtual Intake? Intake { get; set; }
 
 
         //old//
         [ForeignKey(nameof(Instructor))]
-        public string InstructorID { get; set; }
+        public string? InstructorID { get; set; }
         public virtual Instructor? Instructor { get; set; }
 
 

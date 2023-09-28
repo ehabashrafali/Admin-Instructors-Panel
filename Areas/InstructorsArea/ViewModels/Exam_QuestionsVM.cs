@@ -5,10 +5,11 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.ViewModels
 {
     public class Exam_QuestionsVM
     {
-        [Required, MaxLength(100)]
+        [MaxLength(100)]
+        [Required(ErrorMessage = "Please enter the Exam Name.")]
         public string ExamName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter the Exam Duration.")]
         public int Duration { get; set; }
 
         [Required]
