@@ -17,7 +17,7 @@
                             Filter by tracks
                         </button>
 
-                    @* <div class="dropdown-content" style="right: 10px; border-radius: 8px; overflow-y: auto; height: 150px;">
+                     <div class="dropdown-content" style="right: 10px; border-radius: 8px; overflow-y: auto; height: 150px;">
                         <a href="#" class="track-link" data-track-value="0">All Tracks</a>
 
                         @foreach (var track in (SelectList)ViewData["Tracks"])
@@ -25,7 +25,7 @@
                             <a href="#" class="track-link" data-track-value="@track.Value">@track.Text</a>
                             <hr style="padding: 0; margin: 0; color: gray;">
                         }
-                    </div> *@
+                    </div> 
                 </div>
 
 

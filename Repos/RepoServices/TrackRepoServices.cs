@@ -168,6 +168,7 @@ namespace Admin_Panel_ITI.Repos
                  join itc in Context.Intake_Track_Courses on t.ID equals itc.TrackID
                  where itc.IntakeID == intakeid
                  select t)
+                .Distinct()
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
