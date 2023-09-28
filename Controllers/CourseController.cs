@@ -93,6 +93,9 @@ namespace Admin_Panel_ITI.Controllers
             ViewBag.trackID = trackID;
             return PartialView("_TableDataPartial", coursesbytrack);
         }
+        //Test merge
+
+
 
         // GET: CourseController/DetailsForManager/5
         public ActionResult Details(int id)
