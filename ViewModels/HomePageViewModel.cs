@@ -8,6 +8,7 @@
         public int InstructorNumber { get; set; }
         public int CourseNumber { get; set; }
         public int IntakeId { get; internal set; }
+        public List<int> TrackIds { get; set; }
     }
 
 }

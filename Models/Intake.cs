@@ -8,6 +8,8 @@ namespace Admin_Panel_ITI.Models
     [Table("Intake")]
     public class Intake
     {
+        internal List<Track?> Tracks;
+
         [Key]
         public int ID { get; set; }
 

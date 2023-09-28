@@ -1,7 +1,11 @@
 ﻿using Admin_Panel_ITI.Data;
 using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Drawing.Printing;
+using System.Web.Mvc;
 
 namespace Admin_Panel_ITI.Repos
 {
@@ -196,17 +200,18 @@ namespace Admin_Panel_ITI.Repos
             }
 
             var query =
-                  (from c in Context.Courses
-                   join tc in Context.Intake_Track_Courses on c.ID equals tc.CourseID
-                   where tc.IntakeID == intakeid select c)
-                   .Include(c => c.IntakeTrackCourse)
-                   .ThenInclude(c => c.Track)
-                  .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
+                (from c in Context.Courses
+                 join tc in Context.Intake_Track_Courses on c.ID equals tc.CourseID into joined
+                 from j in joined.DefaultIfEmpty() //right outer join
+                 where j != null && j.IntakeID == intakeid
+                 select c)
+                .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
 
             return query;
         }
+
         public List<Course> GetTeacherCourses(int intakeID, int trackID, string instructorID)
         {
             var query =

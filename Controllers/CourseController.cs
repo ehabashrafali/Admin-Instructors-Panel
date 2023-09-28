@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Admin_Panel_ITI.Repos.Interfaces;
+using System.Collections.Generic;
 
 namespace Admin_Panel_ITI.Controllers
 {
@@ -35,16 +36,27 @@ namespace Admin_Panel_ITI.Controllers
             return View(Courses);
         }
 
-        public ActionResult CrsIndexByIntakeId(int Id, int pageNumber, int selectedTrackId)
+        public ActionResult CrsIndexByIntakeId(int Id, string trackIds, int pageNumber)
         {
-            var Tracks = trackRepository.getTracks();
+            var Tracks = trackRepository.GetTracksByIntakeID(Id);
             ViewData["Tracks"] = new SelectList(Tracks, "ID", "Name");
-            ViewBag.SelectedTrackId = selectedTrackId;
+
+            //var trackIdList = /*!string.IsNullOrWhiteSpace(trackIds) ? */trackIds.Split(',').ToList();
+            var trackIdList = trackIds.Split(',')
+                         .Select(idStr => int.Parse(idStr))
+                         .ToList();
+            //.Select(int.Parse).ToLIist() : new List().FirstOrDefault();
+
+
+            ViewBag.SelectedTrackId = trackIdList;
 
             var Courses = courseRepository.GetCoursesbyIntakeID(Id, pageNumber, 10);
             ViewBag.PageNumber = pageNumber;
             ViewBag.IntakeID = Id;
+            ViewBag.TrackID = 0;
+
             return View(Courses);
+
         }
         public ActionResult UpdateTableData(int trackID, int pageNumber)
         {
@@ -74,7 +86,8 @@ namespace Admin_Panel_ITI.Controllers
                 }
             }
 
-           
+
+
             ViewData["Tracks"] = new SelectList(tracks, "ID", "Name");
             ViewBag.PageNumber = pageNumber;
             ViewBag.trackID = trackID;

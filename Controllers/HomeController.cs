@@ -17,8 +17,9 @@ namespace Admin_Panel_ITI.Controllers
         private readonly IInstructorRepository instructorRepository;
         private readonly ICourseRepository courseRepository;
         private readonly UserManager<AppUser> userManager;
+        private readonly IIntake_Track_CourseRepository intake_Track_CourseRepository;
 
-        public HomeController(ILogger<HomeController> logger, IIntakeRepository intakeRepository, ITrackRepository trackRepository, IStudentRepository studentRepository, IInstructorRepository instructorRepository, ICourseRepository courseRepository, UserManager<AppUser> userManager)
+        public HomeController(ILogger<HomeController> logger, IIntakeRepository intakeRepository, ITrackRepository trackRepository, IStudentRepository studentRepository, IInstructorRepository instructorRepository, ICourseRepository courseRepository, UserManager<AppUser> userManager, IIntake_Track_CourseRepository intake_Track_CourseRepository)
         {
             _logger = logger;
             this.intakeRepository = intakeRepository;
@@ -27,6 +28,7 @@ namespace Admin_Panel_ITI.Controllers
             this.instructorRepository = instructorRepository;
             this.courseRepository = courseRepository;
             this.userManager = userManager;
+            this.intake_Track_CourseRepository = intake_Track_CourseRepository;
         }
 
         public IActionResult Index()
@@ -42,11 +44,14 @@ namespace Admin_Panel_ITI.Controllers
                 }
                 else
                 {
-                    ViewData["Intakes"] = intakeRepository.GetAllIntakes().Select(intake => new Intake
-                    {
-                        ID = intake.ID, // Replace with the actual property name for the ID
-                        Name = intake.NameAndDuration // Replace with the actual property name for the display name
-                    }).ToList();
+                    ViewData["Intakes"] = intakeRepository.GetAllIntakes()
+                     .Select(intake => new Intake
+                     {
+                         ID = intake.ID,
+                         Name = intake.NameAndDuration,
+                         Tracks = intake.IntakeTrackCourse?.Select(tc => tc.Track).ToList() ?? new List<Track>()
+                     })
+                     .ToList();
 
                     HomePageViewModel hmPageViewModel = new HomePageViewModel()
                     {
@@ -84,21 +89,24 @@ namespace Admin_Panel_ITI.Controllers
             var courseNumber = intakeID != 0 ? courseRepository.GetCourseNumberbyIntakeID(intakeID) : courseRepository.GetCourseNumber();
             int  IntakeId = intakeID ;
 
+            var selectedtracks = intake_Track_CourseRepository.GetTracksByIntakeID(intakeID);
+
+            // to get the fucken tracks ids
+            var trackIds = selectedtracks.Select(tc => tc.TrackID).ToList();
+
             var viewModel = new HomePageViewModel
             {
-                IntakeId = intakeID,
                 IntakeNumber = intakeNumber,
                 StudentNumber = studentNumber,
                 TrackNumber = trackNumber,
                 InstructorNumber = instructorNumber,
-                CourseNumber = courseNumber
+                CourseNumber = courseNumber,
+                IntakeId = intakeID,
+                TrackIds = trackIds //pass tracksids to VM
             };
 
             return PartialView("_NumbersPartial", viewModel);
         }
-
-
-
         public IActionResult Privacy()
         {
             return View();

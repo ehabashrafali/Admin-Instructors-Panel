@@ -189,7 +189,6 @@ namespace Admin_Panel_ITI.Repos
             return Context.Students.Where(s => s.IntakeID == intakeID && s.TrackID ==  trackID).Count();    
         }
 
-
         public List<Student> GetStudentsbyIntakeTrackID(int intakeID, int trackID)
         {
             return Context.Students.Where(s => s.IntakeID == intakeID && s.TrackID == trackID).Include(s =>s.AspNetUser).ToList();    
