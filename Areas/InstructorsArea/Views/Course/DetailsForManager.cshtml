@@ -90,12 +90,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="list-group" style="margin: 0 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; flex-direction: row;">
+                    <div class="list-group" style="margin: 16px 40px; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; flex-direction: row;">
                         @foreach (var item in Model)
                         {
                             <div class="list-group-item list-group-item-action" aria-current="true" style="margin-bottom: 48px; width: 30%; padding-top: 16px; padding-bottom: 16px;">
                                 <div class="d-flex justify-content-between" style="margin-bottom: 16px;">
-                                    <h5 class="mb-1">@item.CourseName</h5>
+                                    <h6 class="mb-1" style="text-align: left; font-weight: bold;">@item.CourseName</h6>
                                     <small>@item.Duration Days</small>
                                 </div>
                                 <p class="mb-1 d-flex">Instructor: @item.InstructorName</p>

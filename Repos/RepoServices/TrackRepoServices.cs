@@ -44,7 +44,6 @@ namespace Admin_Panel_ITI.Repos
         List<Track> ITrackRepository.getTracks()
         {
             return Context.Tracks.Include(t => t.Manager)
-                                .Include(t => t.IntakeTrackCourse)
                                 .Include(t => t.IntakeTrackCourse).ToList();
         }
 
@@ -76,8 +75,8 @@ namespace Admin_Panel_ITI.Repos
                                           .ThenInclude(t=>t.Manager)
                                           .Include(t => t.Track)
                                           .ThenInclude(t => t.Admin)
+                                          .Include(t => t.Course)
                                           .Where(t => t.IntakeID == intakeID)
-                                          
                                           .Skip((pageNumber - 1) * pageSize)
                                           .Take(pageSize)
                                           .ToList();
@@ -157,6 +156,28 @@ namespace Admin_Panel_ITI.Repos
         }
 
 
+        public List<Track> GetTracksByIntakeId(int intakeid, int pageNumber, int pageSize)
+        {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1; 
+            }
+
+            var query =
+                (from t in Context.Tracks
+                 join itc in Context.Intake_Track_Courses on t.ID equals itc.TrackID
+                 where itc.IntakeID == intakeid
+                 select t)
+                .Distinct()
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+
+            return query;
+
+        }
+
         //--//
         public List<Track> GetTracksByIntakeID(int intakeid)
         {
@@ -204,5 +225,7 @@ namespace Admin_Panel_ITI.Repos
 
             return query;
         }
+
+      
     }
 }

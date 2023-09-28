@@ -113,8 +113,8 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
 
             var AllIntakes = intakeRepository.GetCurrentAvIntakes();
-           
-            ViewData["AllIntakes"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(AllIntakes, "ID", "Name");
+
+            ViewData["AllIntakes"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(AllIntakes, "ID", "NameAndDuration");
         }
 
 

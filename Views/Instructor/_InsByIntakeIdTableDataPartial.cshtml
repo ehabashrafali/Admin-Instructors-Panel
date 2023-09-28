@@ -1,0 +1,192 @@
+﻿@{
+    var Intake_instructorList = ((IEnumerable<Admin_Panel_ITI.Models.Intake_Instructor>)Model).ToList();
+}
+
+
+    <div id ="partialTable">
+    <div class="row col-md-11">
+        <table class="table table-hover" id="myTable">
+            <thead class="table-secondary">
+                <tr>
+                    <th>@*<input type="checkbox" name="all" id="all" class="all" onclick="checkUncheck(this)">*@</th>
+                    <th>
+                        Name
+                        <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                        </svg>
+                    </th>
+                    <th>
+                        Currently Working
+                        <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                        </svg>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Intake_instructorList.Count; i++)
+                {
+                    <tr>
+                        <td><input type="checkbox" name="selectedInstructorIds[]" class="course-checkbox" value="@Intake_instructorList[i].Instructor.AspNetUserID"></td>
+                        <td style="cursor: pointer;" onclick="editInstructor('@Intake_instructorList[i].Instructor.AspNetUserID')">
+                            @if (Intake_instructorList[i].Instructor != null && Intake_instructorList[i].Instructor.AspNetUser != null)
+                            {
+                                @Intake_instructorList[i].Instructor.AspNetUser.FullName
+                            }
+                        </td>
+                        <td>
+                            @if (Intake_instructorList[i].Instructor != null)
+                            {
+                                @Intake_instructorList[i].Instructor.CurrentlyWorking
+                            }
+                        </td>
+                        <td>
+                            <div class="options-menu">
+                                <span type="button" class="threedots" data-container="body" data-toggle="popover" data-bs-placement="left" data-content="<div style='display:flex; justify-content: space-between;align-items:flex-start;'><a href='#'><a href='#'><img style='width: 20px; height: 20px; margin-top:' src='assets/images/eye.png' alt='details'></a><a style='margin: 0 4px 0 7px;' href='#'><img style='width: 20px; height: 20px;' src='assets/images/edit.png' alt='details'></a><a href='#'><a onclick='clicked()' href='#'><img style='width: 20px; height: 20px;' src='assets/images/delete.png' alt='details'></a></div>">
+                                    <i class="fas fa-ellipsis-v" style="color: gray;"></i>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                <li class="page-item @(ViewBag.PageNumber <= 1 ? "disabled" : "")">
+                    <a class="page-link" href="#" id="prevPageBtn">Previous</a>
+                </li>
+
+
+                <li class="page-item active">
+                    <a class="page-link" href="#">
+                        @{
+                            if(ViewBag.PageNumber == 0)
+                            {
+                                ViewBag.PageNumber++;
+
+                            }
+                        }
+                        @ViewBag.PageNumber
+                    </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="#" id="nextPageBtn">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<script>
+
+    
+
+
+    // Function to handle the "Next" button click event
+    $('#nextPageBtn').on('click', function (e) {
+        e.preventDefault();
+
+        var nextPage = @ViewBag.PageNumber +1; // Get the previous page number
+
+        // Make an AJAX call to the UpdateTableData action with the previous page number
+        $.ajax({
+            url: '@Url.Action("UpdateTableData", "Instructor")', // Use Url.Action to generate the correct URL
+            type: 'GET',
+            data: {  pageNumber: nextPage }, // Pass the selected intake ID and previous page number as parameters
+            success: function (result) {
+                // Replace the content of the partialTable div with the updated HTML
+                $('#partialTable').html(result);
+
+                
+                // Disable the "Prev" button if needed (you may need to add logic here)
+                // Example: if (prevPage <= 0) { $('#prevPageBtn').addClass('disabled'); }
+            },
+            error: function () {
+                alert('Error occurred while fetching data.');
+            }
+        });
+    });
+
+
+    // Function to handle the "Prev" button click event
+    $('#prevPageBtn').on('click', function (e) {
+        e.preventDefault();
+        
+        var prevPage = @ViewBag.PageNumber -1; // Get the previous page number
+
+        // Make an AJAX call to the UpdateTableData action with the previous page number
+        $.ajax({
+            url: '@Url.Action("UpdateTableData", "Instructor")', // Use Url.Action to generate the correct URL
+            type: 'GET',
+            data: {  pageNumber: prevPage }, // Pass the selected intake ID and previous page number as parameters
+            success: function (result) {
+                // Replace the content of the partialTable div with the updated HTML
+                $('#partialTable').html(result);
+
+
+                 //Disable the "Prev" button if needed (you may need to add logic here)
+                if (nextPage <= 0) {
+                    $('#prevPageBtn').addClass('disabled');
+                } else {
+                    $('#prevPageBtn').removeClass('disabled');
+                }
+            },
+            error: function () {
+                alert('Error occurred while fetching data.');
+            }
+        });
+    });
+
+
+    $('#customdeletebtn_kordy').off('click').on('click', function () {
+        // Get the selected checkboxes
+        var selectedInstructorIds = $('input[name="selectedInstructorIds[]"]:checked').map(function () {
+            return $(this).val();
+        }).get();
+
+
+
+        if (selectedInstructorIds.length === 0) {
+            alert("Please select at least one instructor to delete.");
+            return;
+        }
+
+        // Get the intake ID and page number from the hidden input fields
+        var pageNumber = parseInt(@ViewBag.PageNumber);
+
+        // Make an AJAX POST request to the Delete action with parameters
+        $.ajax({
+            url: '@Url.Action("Delete", "Instructor")',
+            type: 'GET',
+            traditional: true, // Use traditional serialization for arrays
+            data: {
+                selectedInstructorIds: selectedInstructorIds,
+                pageNumber: pageNumber
+            },
+            success: function (result) {
+                // Handle the success response as needed
+                // For example, you can update the table with the new data
+                $('#partialTable').html(result);
+            },
+            error: function () {
+                // Handle errors here
+                alert('Error occurred while deleting data.');
+            }
+        });
+    });
+
+    function editInstructor(insID) {
+        console.log(insID);
+        window.location.href = '/Instructor/Edit/' + insID; // Replace with the correct URL format
+    }
+
+</script>
+
+

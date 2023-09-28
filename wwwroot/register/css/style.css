@@ -203,24 +203,25 @@ body {
 }
 
 .container {
-  position: relative;
-  padding: 0;
-  width: 800px;
-  background: #fff;
-  margin: 0 auto;
-  box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.18);
-  -moz-box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.18);
-  -webkit-box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.18);
-  -o-box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.18);
-  -ms-box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.18);
-  border-radius: 20px;
-  -moz-border-radius: 20px;
-  -webkit-border-radius: 20px;
-  -o-border-radius: 20px;
-  -ms-border-radius: 20px; 
-  background: url(../images/iti.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
+    position: relative;
+    padding: 0;
+    width: 800px;
+    background: #fff;
+    margin: 0 auto;
+    box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.18);
+    -moz-box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.18);
+    -webkit-box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.18);
+    -o-box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.18);
+    -ms-box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.18);
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -o-border-radius: 20px;
+    -ms-border-radius: 20px;
+    background: url(../images/iti.jpg);
+    background-size: revert-layer;
+    /*background-size: 190% 110%;*/
+    background-repeat: no-repeat;
 }
 
 .display-flex {

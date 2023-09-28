@@ -84,15 +84,15 @@
                     <div class="row col-md-12">
                         <div class="r1">
 
-                            <div class="row">
-                                <div class="col" style="display:inline-flex">
+                            <div style="width: 40%; text-align: left;">
+                                <div style="display:inline-flex">
                                     <a asp-controller="Intake" asp-action="Index" class="text-primary" style="padding-left:50px ; width:fit-content">@IntakeName</a>
                                 </div>
-                                <div class="col" style="display:inline-flex">
+                                <div style="display:inline-flex">
                                     <span><i class="fas fa-arrow-right"></i></span>
                                     <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@IntakeID" asp-route-name="@IntakeName" class="text-primary" style="padding-left:15px ; width:fit-content">@TrackName Track</a>
                                 </div>
-                                <div class="col" style="display:inline-flex">
+                                <div style="display:inline-flex">
                                     <span><i class="fas fa-arrow-right"></i></span>
                                     <a asp-controller="Course"
                                     asp-action="DetailsForTeacher"
@@ -102,7 +102,7 @@
                                     asp-route-name2="@IntakeName"
                                        class="text-primary" style="padding-left:15px ; width:fit-content">@courseName Course</a>
                                 </div>       
-                                <div class="col" style="display:inline-flex">
+                                <div style="display:inline-flex">
                                     <span><i class="fas fa-arrow-right"></i></span>
                                     <p style="padding-left:20px ; font-weight:bold">Course Days</p>
                                 </div>
@@ -128,8 +128,8 @@
 
 
                     <!--cards-->
-                    <div class="container" style="flex-wrap: wrap; justify-content: center ; margin-top: 16px;">
-                        <div class="row">
+                    @*<div class="container" style="flex-wrap: wrap; justify-content: center ; margin-top: 16px;">*@
+                        <div class="row" style="justify-content: center; margin-left: 55px;">
                             @foreach(var courseDay in Model)
                             {
                                 <div class="col-md-4 mb-3" style="flex-wrap: wrap; justify-content: center;  margin-top: 16px;">
@@ -151,7 +151,6 @@
                                 </div>
                             }
                         </div>
-                    </div>
                </div>
            </div>
        </div>
