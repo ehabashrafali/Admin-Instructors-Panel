@@ -1,9 +1,9 @@
 ﻿@{
-    var courseList = ((IEnumerable<Admin_Panel_ITI.Models.Course>)Model).ToList();
+    var Intake_instructorList = ((IEnumerable<Admin_Panel_ITI.Models.Intake_Instructor>)Model).ToList();
 }
 
 
-<div id="partialTable">
+    <div id ="partialTable">
     <div class="row col-md-11">
         <table class="table table-hover" id="myTable">
             <thead class="table-secondary">
@@ -16,7 +16,7 @@
                         </svg>
                     </th>
                     <th>
-                        Duration
+                        Currently Working
                         <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                         </svg>
@@ -25,22 +25,31 @@
                 </tr>
             </thead>
             <tbody>
-                @for (int i = 0; i < courseList.Count; i++)
+                @for (int i = 0; i < Intake_instructorList.Count; i++)
                 {
                     <tr>
-                        <td><input type="checkbox" name="selectedCourseIds[]" class="course-checkbox" value="@courseList[i].ID"></td>
-                        <td style="cursor: pointer;" onclick="editCourse(@courseList[i].ID)">@courseList[i].Name</td>
-                        <td>@courseList[i].Duration</td>
-                @*         <td>
+                        <td><input type="checkbox" name="selectedInstructorIds[]" class="course-checkbox" value="@Intake_instructorList[i].Instructor.AspNetUserID"></td>
+                        <td style="cursor: pointer;" onclick="editInstructor('@Intake_instructorList[i].Instructor.AspNetUserID')">
+                            @if (Intake_instructorList[i].Instructor != null && Intake_instructorList[i].Instructor.AspNetUser != null)
+                            {
+                                @Intake_instructorList[i].Instructor.AspNetUser.FullName
+                            }
+                        </td>
+                        <td>
+                            @if (Intake_instructorList[i].Instructor != null)
+                            {
+                                @Intake_instructorList[i].Instructor.CurrentlyWorking
+                            }
+                        </td>
+                        <td>
                             <div class="options-menu">
                                 <span type="button" class="threedots" data-container="body" data-toggle="popover" data-bs-placement="left" data-content="<div style='display:flex; justify-content: space-between;align-items:flex-start;'><a href='#'><a href='#'><img style='width: 20px; height: 20px; margin-top:' src='assets/images/eye.png' alt='details'></a><a style='margin: 0 4px 0 7px;' href='#'><img style='width: 20px; height: 20px;' src='assets/images/edit.png' alt='details'></a><a href='#'><a onclick='clicked()' href='#'><img style='width: 20px; height: 20px;' src='assets/images/delete.png' alt='details'></a></div>">
                                     <i class="fas fa-ellipsis-v" style="color: gray;"></i>
                                 </span>
                             </div>
-                        </td> *@
+                        </td>
                     </tr>
                 }
-
             </tbody>
         </table>
     </div>
@@ -56,7 +65,7 @@
                 <li class="page-item active">
                     <a class="page-link" href="#">
                         @{
-                            if (ViewBag.PageNumber == 0)
+                            if(ViewBag.PageNumber == 0)
                             {
                                 ViewBag.PageNumber++;
 
@@ -77,55 +86,25 @@
 
 <script>
 
-    var selectedTrackId = 0; // Default value
-    // Function to handle dropdown <a> click event
-    // Function to handle dropdown <a> click event
-    $('.track-link').on('click', function (e) {
-        e.preventDefault(); // Prevent default link behavior
-        selectedTrackId = $(this).data('track-value');
-
-
-        var selectedTrackName = $(this).text();
-        $('#trackDropdownBtn').html(`
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
-                        <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"></path>
-                    </svg>
-                        Filter by tracks: ${selectedTrackName}
-                `);
-
-        // Make an AJAX call to the UpdateTableData action
-        $.ajax({
-            url: '@Url.Action("UpdateTableData", "Course")', // Use Url.Action to generate the correct URL
-            type: 'GET',
-            data: { trackID: selectedTrackId, pageNumber: 1 }, // Pass the selected intake ID and current page number as parameters
-            success: function (result) {
-                // Replace the content of the partialTable div with the updated HTML
-                $('#partialTable').html(result);
-            },
-            error: function () {
-                alert('Error occurred while fetching data.');
-            }
-        });
-    });
+    
 
 
     // Function to handle the "Next" button click event
     $('#nextPageBtn').on('click', function (e) {
         e.preventDefault();
-        selectedTrackId = $(this).data('track-value') || @ViewBag.trackID;
 
         var nextPage = @ViewBag.PageNumber +1; // Get the previous page number
 
         // Make an AJAX call to the UpdateTableData action with the previous page number
         $.ajax({
-            url: '@Url.Action("UpdateTableData", "Course")', // Use Url.Action to generate the correct URL
+            url: '@Url.Action("UpdateTableData", "Instructor")', // Use Url.Action to generate the correct URL
             type: 'GET',
-            data: { trackID: selectedTrackId, pageNumber: nextPage }, // Pass the selected intake ID and previous page number as parameters
+            data: {  pageNumber: nextPage }, // Pass the selected intake ID and previous page number as parameters
             success: function (result) {
                 // Replace the content of the partialTable div with the updated HTML
                 $('#partialTable').html(result);
 
-
+                
                 // Disable the "Prev" button if needed (you may need to add logic here)
                 // Example: if (prevPage <= 0) { $('#prevPageBtn').addClass('disabled'); }
             },
@@ -139,21 +118,20 @@
     // Function to handle the "Prev" button click event
     $('#prevPageBtn').on('click', function (e) {
         e.preventDefault();
-        selectedTrackId = $(this).data('track-value') || @ViewBag.trackID; // Get the selected intake ID
-
+        
         var prevPage = @ViewBag.PageNumber -1; // Get the previous page number
 
         // Make an AJAX call to the UpdateTableData action with the previous page number
         $.ajax({
-            url: '@Url.Action("UpdateTableData", "Course")', // Use Url.Action to generate the correct URL
+            url: '@Url.Action("UpdateTableData", "Instructor")', // Use Url.Action to generate the correct URL
             type: 'GET',
-            data: { trackID: selectedTrackId, pageNumber: prevPage }, // Pass the selected intake ID and previous page number as parameters
+            data: {  pageNumber: prevPage }, // Pass the selected intake ID and previous page number as parameters
             success: function (result) {
                 // Replace the content of the partialTable div with the updated HTML
                 $('#partialTable').html(result);
 
 
-                //Disable the "Prev" button if needed (you may need to add logic here)
+                 //Disable the "Prev" button if needed (you may need to add logic here)
                 if (nextPage <= 0) {
                     $('#prevPageBtn').addClass('disabled');
                 } else {
@@ -169,29 +147,27 @@
 
     $('#customdeletebtn_kordy').off('click').on('click', function () {
         // Get the selected checkboxes
-        var selectedCourseIds = $('input[name="selectedCourseIds[]"]:checked').map(function () {
+        var selectedInstructorIds = $('input[name="selectedInstructorIds[]"]:checked').map(function () {
             return $(this).val();
         }).get();
 
 
 
-        if (selectedCourseIds.length === 0) {
-            alert("Please select at least one track to delete.");
+        if (selectedInstructorIds.length === 0) {
+            alert("Please select at least one instructor to delete.");
             return;
         }
 
         // Get the intake ID and page number from the hidden input fields
-        var trackID = parseInt(@ViewBag.trackID);
         var pageNumber = parseInt(@ViewBag.PageNumber);
 
         // Make an AJAX POST request to the Delete action with parameters
         $.ajax({
-            url: '@Url.Action("Delete", "Course")',
+            url: '@Url.Action("Delete", "Instructor")',
             type: 'GET',
             traditional: true, // Use traditional serialization for arrays
             data: {
-                selectedCourseIds: selectedCourseIds,
-                trackID: trackID,
+                selectedInstructorIds: selectedInstructorIds,
                 pageNumber: pageNumber
             },
             success: function (result) {
@@ -206,8 +182,11 @@
         });
     });
 
-    function editCourse(courseID) {
-        window.location.href = '/Course/Edit/' + courseID; // Replace with the correct URL format
+    function editInstructor(insID) {
+        console.log(insID);
+        window.location.href = '/Instructor/Edit/' + insID; // Replace with the correct URL format
     }
 
 </script>
+
+

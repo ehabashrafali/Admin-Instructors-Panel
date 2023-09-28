@@ -1,10 +1,12 @@
-﻿@model IEnumerable<Admin_Panel_ITI.Models.Student>
+﻿@model IEnumerable<Admin_Panel_ITI.Models.Track>
+
+
 
 <div class="col-md-10 text-center content">
     <div class="container-fluid">
         <div class="row col-md-12">
             <div class="r1">
-                <h3 style="padding-left: 33px;">Students' Table</h3>
+                <h3 style="padding-left: 33px;">Tracks' Table</h3>
                 <div class="dropdown" id="intakeDropdown" style="margin: 0 0 0 16px;">
                     <button class="btn" id="intakeDropdownBtn">
                         <!-- Added an ID to the button -->
@@ -17,14 +19,12 @@
                     <div class="dropdown-content" style="right: 10px; border-radius: 8px; overflow-y: auto; height: 150px;">
                         <a href="#" class="intake-link" data-intake-value="0">All Intakes</a>
 
-                        @foreach (var intake in ViewData["Intakes"] as SelectList)
+                        @foreach (var intake in (SelectList)ViewData["Intakes"])
                         {
-                            var isSelected = intake.Value.ToString() == ViewBag.IntakeID.ToString() ? "selected" : "";
-                            <a href="#" class="intake-link" data-intake-value="@intake.Value" selected="@isSelected">@intake.Text</a>
+                            <a href="#" class="intake-link" data-intake-value="@intake.Value">@intake.Text</a>
                             <hr style="padding: 0; margin: 0; color: gray;">
                         }
                     </div>
-
                 </div>
                 <div>
                     <button type="button" id="customdeletebtn_kordy" class="btn logoutbtn deletebtn" style=" margin: 0 0 0 8px; ">
@@ -33,11 +33,12 @@
                         </svg>
                         Delete
                     </button>
-                   
+                    <a asp-controller="Track" asp-action="Create" class="btn btn-primary" style="margin-left: 8px;">+ Create new track</a>
                 </div>
             </div>
         </div>
-            <partial name="_TableDataPartial" />
+        <partial name="_TableDataPartial" />
+
+
     </div>
 </div>
-

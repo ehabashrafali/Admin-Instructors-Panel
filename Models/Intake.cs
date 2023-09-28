@@ -8,6 +8,8 @@ namespace Admin_Panel_ITI.Models
     [Table("Intake")]
     public class Intake
     {
+        internal List<Track?> Tracks;
+
         [Key]
         public int ID { get; set; }
 
@@ -35,11 +37,12 @@ namespace Admin_Panel_ITI.Models
         [Column(TypeName = "date")]
         public DateTime? CreationDate { get; set; }
 
+        public string? NameAndDuration => $"{Name} - ({Duration}) M";
 
 
 
-        //old//
-        [ForeignKey(nameof(Admin))]
+    //old//
+    [ForeignKey(nameof(Admin))]
         public string? AdminID { get; set; }
         public virtual Admin? Admin { get; set; }
 

@@ -7,8 +7,10 @@ namespace Admin_Panel_ITI.Repos.Interfaces
 
 
         public int GetInstructorNumber();
-        
-        
+
+
+
+
         public int GetInstructorNumberbyIntakeID(int intakeID);
 
 

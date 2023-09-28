@@ -22,5 +22,6 @@ namespace Admin_Panel_ITI.Repos
         /*---------------------------------------------- Instructor Repos -----------------------------------------------*/
         public List<Course> GetCoursesByIntakeTrackID(int intakeID, int trackID);
         public List<Course> GetTeacherCourses(int intakeID, int trackID, string instructorID);
+        public List<Course> GetCoursesbyIntakeID(int intakeid, int pageNumber, int pageSize);
     }
 }

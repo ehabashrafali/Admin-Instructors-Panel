@@ -17,5 +17,9 @@ namespace Admin_Panel_ITI.Repos.Interfaces
 
         /*---------------------------------------------- Instructor Repos -----------------------------------------------*/
         public List<Intake_Instructor> GetIntakesByInstructorID(string instructorID);
+
+        public List<Intake_Instructor> getInstructorbyIntakeID(int intakeID, int pageNumber, int pageSize);
+
+
     }
 }

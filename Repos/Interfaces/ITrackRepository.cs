@@ -34,6 +34,8 @@ namespace Admin_Panel_ITI.Repos
         //---//
         public List<Track> GetTracksByIntakeID(int intakeid);
 
+        public List<Track> GetTracksByIntakeId(int intakeid, int pageNumber, int pageSize);
+
 
 
 

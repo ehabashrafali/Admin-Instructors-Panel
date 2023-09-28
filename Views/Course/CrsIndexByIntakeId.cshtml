@@ -1,31 +1,32 @@
-﻿@model IEnumerable<Admin_Panel_ITI.Models.Student>
+﻿@model IEnumerable<Admin_Panel_ITI.Models.Course>
+
+
 
 <div class="col-md-10 text-center content">
     <div class="container-fluid">
         <div class="row col-md-12">
             <div class="r1">
-                <h3 style="padding-left: 33px;">Students' Table</h3>
-                <div class="dropdown" id="intakeDropdown" style="margin: 0 0 0 16px;">
-                    <button class="btn" id="intakeDropdownBtn">
+                <h3 style="padding-left: 33px;">Courses' Table</h3>
+                <div class="dropdown" id="trackDropdown" style="margin: 0 0 0 16px;">
+                    <button class="btn" id="trackDropdownBtn">
                         <!-- Added an ID to the button -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
                             <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"></path>
                         </svg>
-                        Filter by intakes
+                        Filter by tracks
                     </button>
 
                     <div class="dropdown-content" style="right: 10px; border-radius: 8px; overflow-y: auto; height: 150px;">
-                        <a href="#" class="intake-link" data-intake-value="0">All Intakes</a>
-
-                        @foreach (var intake in ViewData["Intakes"] as SelectList)
+                        <a href="#" class="track-link" data-track-value="0">All Tracks</a>
+                        @foreach (var track in ViewData["Tracks"] as SelectList)
                         {
-                            var isSelected = intake.Value.ToString() == ViewBag.IntakeID.ToString() ? "selected" : "";
-                            <a href="#" class="intake-link" data-intake-value="@intake.Value" selected="@isSelected">@intake.Text</a>
+                            <a href="#" class="track-link" data-track-value="@track.Value">@track.Text</a>
                             <hr style="padding: 0; margin: 0; color: gray;">
                         }
                     </div>
-
                 </div>
+
+
                 <div>
                     <button type="button" id="customdeletebtn_kordy" class="btn logoutbtn deletebtn" style=" margin: 0 0 0 8px; ">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
@@ -33,11 +34,14 @@
                         </svg>
                         Delete
                     </button>
-                   
+                    <a asp-controller="Course" asp-action="Create" class="btn btn-primary" style="margin-left: 8px;">+ Create new course</a>
                 </div>
             </div>
         </div>
-            <partial name="_TableDataPartial" />
-    </div>
-</div>
+        <partial name="_TableDataPartial" />
 
+
+    </div>
+
+
+</div>
