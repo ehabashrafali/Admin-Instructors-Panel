@@ -1,5 +1,5 @@
 ﻿@{
-    var courseList = ((IEnumerable<Admin_Panel_ITI.Models.Course>)Model).ToList();
+    var courseList = ((IEnumerable<Admin_Panel_ITI.Models.Intake_Track_Course>)Model).ToList();
 }
 
 
@@ -11,6 +11,12 @@
                     <th>@*<input type="checkbox" name="all" id="all" class="all" onclick="checkUncheck(this)">*@</th>
                     <th>
                         Name
+                        <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                        </svg>
+                    </th>
+                    <th>
+                        Track
                         <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                         </svg>
@@ -28,9 +34,15 @@
                 @for (int i = 0; i < courseList.Count; i++)
                 {
                     <tr>
-                        <td><input type="checkbox" name="selectedCourseIds[]" class="course-checkbox" value="@courseList[i].ID"></td>
-                        <td style="cursor: pointer;" onclick="editCourse(@courseList[i].ID)">@courseList[i].Name</td>
-                        <td>@courseList[i].Duration</td>
+                        <td><input type="checkbox" name="selectedCourseIds[]" class="course-checkbox" value="@courseList[i].Course.ID"></td>
+                        <td style="cursor: pointer;" onclick="editCourse(@courseList[i].Course.ID)">@courseList[i].Course.Name</td>
+                        <td style="cursor: pointer;" onclick="editCourse(@courseList[i].Course.ID)">@courseList[i].Track.Name</td>
+                        <td>@courseList[i].Course.Duration</td>
+                        <td style="padding: 5px 8px">
+                            <a asp-action="edit" asp-route-id="@courseList[i].Course.ID">
+                                <img style='width: 20px; height: 20px;' src='assets/images/edit.png' alt='details'>
+                            </a>
+                        </td>
                 @*         <td>
                             <div class="options-menu">
                                 <span type="button" class="threedots" data-container="body" data-toggle="popover" data-bs-placement="left" data-content="<div style='display:flex; justify-content: space-between;align-items:flex-start;'><a href='#'><a href='#'><img style='width: 20px; height: 20px; margin-top:' src='assets/images/eye.png' alt='details'></a><a style='margin: 0 4px 0 7px;' href='#'><img style='width: 20px; height: 20px;' src='assets/images/edit.png' alt='details'></a><a href='#'><a onclick='clicked()' href='#'><img style='width: 20px; height: 20px;' src='assets/images/delete.png' alt='details'></a></div>">
@@ -80,10 +92,11 @@
     var selectedTrackId = 0; // Default value
     // Function to handle dropdown <a> click event
     // Function to handle dropdown <a> click event
+    var intakeID = @Html.Raw(Json.Serialize(ViewBag.IntakeID));
+
     $('.track-link').on('click', function (e) {
         e.preventDefault(); // Prevent default link behavior
         selectedTrackId = $(this).data('track-value');
-
 
         var selectedTrackName = $(this).text();
         $('#trackDropdownBtn').html(`
@@ -97,7 +110,7 @@
         $.ajax({
             url: '@Url.Action("UpdateTableData", "Course")', // Use Url.Action to generate the correct URL
             type: 'GET',
-            data: { trackID: selectedTrackId, pageNumber: 1 }, // Pass the selected intake ID and current page number as parameters
+            data: { intakeID: intakeID, trackID: selectedTrackId, pageNumber: 1 }, // Pass the selected intake ID and current page number as parameters
             success: function (result) {
                 // Replace the content of the partialTable div with the updated HTML
                 $('#partialTable').html(result);
@@ -120,7 +133,7 @@
         $.ajax({
             url: '@Url.Action("UpdateTableData", "Course")', // Use Url.Action to generate the correct URL
             type: 'GET',
-            data: { trackID: selectedTrackId, pageNumber: nextPage }, // Pass the selected intake ID and previous page number as parameters
+            data: { intakeID: intakeID, trackID: selectedTrackId, pageNumber: nextPage }, // Pass the selected intake ID and previous page number as parameters
             success: function (result) {
                 // Replace the content of the partialTable div with the updated HTML
                 $('#partialTable').html(result);
@@ -147,7 +160,7 @@
         $.ajax({
             url: '@Url.Action("UpdateTableData", "Course")', // Use Url.Action to generate the correct URL
             type: 'GET',
-            data: { trackID: selectedTrackId, pageNumber: prevPage }, // Pass the selected intake ID and previous page number as parameters
+            data: { intakeID: intakeID, trackID: selectedTrackId, pageNumber: prevPage }, // Pass the selected intake ID and previous page number as parameters
             success: function (result) {
                 // Replace the content of the partialTable div with the updated HTML
                 $('#partialTable').html(result);
