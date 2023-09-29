@@ -2,13 +2,29 @@
     <div class="container-fluid">
         <div class="row col-md-12">
             <div class="r1">
-                <h3 style="padding-left: 38px;">You are adding tracks and courses for</h3>
-                @foreach (var intakeName in ViewBag.intakeNames)
-                {
-                    <p>@intakeName</p>
-                    <br>
-                }
-            </div>
+                @*<h3 style="padding-left: 38px;">
+                    You are adding tracks and courses for
+                    @foreach (var intakeName in ViewBag.intakeNames)
+                    {
+                        @intakeName @:
+                    }
+                </h3>*@
+                <h3 style="padding-left: 38px;">
+                    You are adding tracks and courses for
+                    @for (var i = 0; i < ViewBag.intakeNames.Count; i++)
+                    {
+                        @ViewBag.intakeNames[i]
+                        @*@if (i < ViewBag.intakeNames.Count - 1)
+                        {
+                            , 
+                        }*@
+                        if (i < ViewBag.intakeNames.Count - 1)
+                        {
+                            <span>, </span>
+                        }
+                    }
+                </h3>
+             </div>
         </div>
     </div>
     <div class="row col-md-11 p-lg-5">

@@ -7,8 +7,8 @@ namespace Admin_Panel_ITI.Repos
         public int GetCourseNumber();
         public int GetCourseNumberbyIntakeID(int intakeID);
         public Course GetCoursebyID(int courseID);
-        public List<Course> GetCourses(int pageNumber, int pageSize);
-        public List<Course> GetCoursesbyTrackID(int trackID, int pageNumber, int pageSize);
+        public List<Intake_Track_Course> GetCourses(int pageNumber, int pageSize);
+        public List<Intake_Track_Course> GetCoursesbyTrackID(int trackID, int pageNumber, int pageSize);
         //public List<Course> GetCoursesbyTrackID(int trackID,int pageNumber, int pageSize);
         public List<Course> GetCourses();
         public void UpdateCourse(int CourseID, Course course);
@@ -20,8 +20,9 @@ namespace Admin_Panel_ITI.Repos
 
 
         /*---------------------------------------------- Instructor Repos -----------------------------------------------*/
+        public List<Intake_Track_Course> GetCoursesByIntakeTrackID(int intakeID, int trackID, int pageNumber, int pageSize);
         public List<Course> GetCoursesByIntakeTrackID(int intakeID, int trackID);
         public List<Course> GetTeacherCourses(int intakeID, int trackID, string instructorID);
-        public List<Course> GetCoursesbyIntakeID(int intakeid, int pageNumber, int pageSize);
+        public List<Intake_Track_Course> GetCoursesbyIntakeID(int intakeid, int pageNumber, int pageSize);
     }
 }

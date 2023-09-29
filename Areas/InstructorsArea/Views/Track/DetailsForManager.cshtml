@@ -141,7 +141,7 @@
                                         <td style="padding-top: 16px; padding-left: 55px">
                                             @studentRepo.GetStudentsNumberbyIntakeTrackID(IntakeID, track.ID)
                                         </td>
-                                        <td>
+                                        <td style="padding-right: 16px; text-align: right;">
                                             <a asp-controller="Course" asp-action="DetailsForManager" asp-route-id="@track.ID" asp-route-iid="@IntakeID" asp-route-name="@track.Name" asp-route-name2="@IntakeName" class="btn regbtn" style="padding: 8px 16px;">Display Courses</a>
                                             <a asp-controller="Student" asp-action="Details" asp-route-id="@track.ID" asp-route-iid="@IntakeID" asp-route-name="@track.Name" asp-route-name2="@IntakeName" class="btn regbtn" style="padding: 8px 16px;">Display Students</a>
                                         </td>

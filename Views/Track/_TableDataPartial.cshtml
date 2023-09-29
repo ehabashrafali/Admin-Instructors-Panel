@@ -29,15 +29,13 @@
                 @for (int i = 0; i < trackList.Count; i++)
                 {
                     <tr >
-                            <td><input type="checkbox" name="selectedTrackIds[]" class="track-checkbox" value="@trackList[i].ID"></td>
+                        <td><input type="checkbox" name="selectedTrackIds[]" class="track-checkbox" value="@trackList[i].ID"></td>
                         <td style="cursor: pointer;" onclick="editTrack(@trackList[i].ID)">@trackList[i].Name</td>
                         <td>@numOfStudsInEachTrackList[i]</td>
-                        <td>
-                            <div class="options-menu">
-                                <span type="button" class="threedots" data-container="body" data-toggle="popover" data-bs-placement="left" data-content="<div style='display:flex; justify-content: space-between;align-items:flex-start;'><a href='#'><a href='#'><img style='width: 20px; height: 20px; margin-top:' src='assets/images/eye.png' alt='details'></a><a style='margin: 0 4px 0 7px;' href='#'><img style='width: 20px; height: 20px;' src='assets/images/edit.png' alt='details'></a><a href='#'><a onclick='clicked()' href='#'><img style='width: 20px; height: 20px;' src='assets/images/delete.png' alt='details'></a></div>">
-                                    <i class="fas fa-ellipsis-v" style="color: gray;"></i>
-                                </span>
-                            </div>
+                        <td style="padding: 5px 8px">
+                            <a asp-action="edit" asp-route-id="@trackList[i].ID">
+                                <img style='width: 20px; height: 20px;' src='assets/images/edit.png' alt='details'>
+                            </a>
                         </td>
                     </tr>
                 }
