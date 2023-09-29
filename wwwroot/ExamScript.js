@@ -15,7 +15,7 @@ document.getElementById('examForm').addEventListener('submit', function (event) 
     event.preventDefault();
 
     var examName = document.getElementById('examName').value; //Exam Name
-    var questionType = "MCQ"; // Hardcode the question type as "MCQ"
+    var questionType = document.getElementById('questionType').value; //question type
     var question = document.querySelector('.question textarea[name="questionBody"]').value; //question body
     if (question.length !== 0) {
         question = question.charAt(question.length - 1) == "?" ? question : question + " ?";
@@ -30,32 +30,32 @@ document.getElementById('examForm').addEventListener('submit', function (event) 
     }
 
 
-    //if (questionType === 'Paragraph') {
+    if (questionType === 'Paragraph') {
 
-    //    var questionHtml = `
-    //                                <div class="question" id="${id}" style="position: relative;">
-    //                                    <div>
-    //                                        <h5 style="display: inline-block;">Question Body: </h5>
-    //                                        <input type="textbox" value="${question}" style="border: none; font-size: 20px; color: blue;">
-    //                                    </div>
-    //                                    <div>
-    //                                        <h5 style="display: inline-block;">Answer: </h5>
-    //                                        <input type="textbox" value="${paragraphAnswer}" style="border: none; color: green;">
-    //                                    </div>
+        var questionHtml = `
+                                    <div class="question" id="${id}" style="position: relative;">
+                                        <div>
+                                            <h5 style="display: inline-block;">Question Body: </h5>
+                                            <input type="textbox" value="${question}" style="border: none; font-size: 20px; color: blue;">
+                                        </div>
+                                        <div>
+                                            <h5 style="display: inline-block;">Answer: </h5>
+                                            <input type="textbox" value="${paragraphAnswer}" style="border: none; color: green;">
+                                        </div>
 
-    //                                    <a class="btn btn-primary editBtn" onclick = "modalEditP(this)">Edit</a>
-    //                                    <a class="btn btn-danger"  onclick = "modalDeleteP(this)">Delete</a>
-    //                                </div>
-    //                `;
+                                        <a class="btn btn-primary editBtn" onclick = "modalEditP(this)">Edit</a>
+                                        <a class="btn btn-danger"  onclick = "modalDeleteP(this)">Delete</a>
+                                    </div>
+                    `;
 
-    //    //display the created qesution with the correct answer
-    //    document.getElementById('examQuestions').insertAdjacentHTML('beforeend', questionHtml);
+        //display the created qesution with the correct answer
+        document.getElementById('examQuestions').insertAdjacentHTML('beforeend', questionHtml);
 
-    //    //reset the question body & answer input to empty
-    //    document.querySelector('.question textarea[name="questionBody"]').value = '';
-    //    document.querySelector('.question textarea[name="questionAns"]').value = '';
-    //}
-   /* else {*/
+        //reset the question body & answer input to empty
+        document.querySelector('.question textarea[name="questionBody"]').value = '';
+        document.querySelector('.question textarea[name="questionAns"]').value = '';
+    }
+    else {
         var isOptionsEmpty = true;
         var optionsHtml = '';
 
@@ -116,7 +116,7 @@ document.getElementById('examForm').addEventListener('submit', function (event) 
 
         //enable submit exam btn
         document.getElementById('submitExam').disabled = false;
-    //}
+    }
 
     id++;
 

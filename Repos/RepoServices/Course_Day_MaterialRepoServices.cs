@@ -106,5 +106,13 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         }
 
 
+        public void DeleteCourseDayMaterial(int materialID)
+        {
+            var cdm = Context.Course_Day_Materials.FirstOrDefault(cdm => cdm.MaterialID == materialID);
+            Context.Course_Day_Materials.Remove(cdm);
+            Context.SaveChanges();
+        }
+
+
     }
 }

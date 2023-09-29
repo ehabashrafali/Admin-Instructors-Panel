@@ -98,23 +98,18 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
                     {
                         _logger.LogInformation("User logged in.");
 
-
                         // Check the login user Role
                         if (await _userManager.IsInRoleAsync(user, "Admin"))
                             returnUrl = Url.Action("Index", "Home");
                         else if (await _userManager.IsInRoleAsync(user, "Instructor"))
                             returnUrl = Url.Action("Index", "Intake", new { area = "InstructorsArea" });
-                        //else if (await _userManager.IsInRoleAsync(user, "Student"))
-                        //{
-                        //    //Do Some Logic
-                        //}
 
                         return LocalRedirect(returnUrl);
                     }
                     else
                     {
                         ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                        return Page();
+                        //return LocalRedirect("~/ERROR404/Error.html");
                     }
                 }
 

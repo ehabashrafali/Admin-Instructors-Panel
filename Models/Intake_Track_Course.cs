@@ -6,7 +6,6 @@ namespace Admin_Panel_ITI.Models
 {
     public class Intake_Track_Course
     {
-
         public int numOfStudentsInCourse { get; set; }
 
         [ForeignKey(nameof(Intake))]

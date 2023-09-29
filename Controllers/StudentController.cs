@@ -1,6 +1,4 @@
-﻿using Admin_Panel_ITI.Repos.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using X.PagedList;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Admin_Panel_ITI.Repos;
 using Admin_Panel_ITI.Models;

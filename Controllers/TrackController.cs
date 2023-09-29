@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using X.PagedList;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Admin_Panel_ITI.Repos;
 using Admin_Panel_ITI.Models;
-using NuGet.DependencyResolver;
 using Microsoft.AspNetCore.Identity;
 using Admin_Panel_ITI.Repos.Interfaces;
 using static System.Runtime.InteropServices.JavaScript.JSType;

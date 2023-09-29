@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ITI - Hub</title>
     <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
     <script src="~/assets/js/bootstrap.bundle.js"></script>
     <script src="~/assets/js/bootstrap.bundle.min.js"></script>
@@ -211,88 +211,58 @@
             margin-right: 5px;
         }
 
+            if (isOptionsEmpty) {
+                alert('Please enter at least one answer option.');
+                return;
+            }
 
-        .add-choice {
-            color: green;
-            font-size: 24px;
-            cursor: pointer;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-
-
-
-        .tooltiptext {
-            visibility: hidden;
-            width: 120px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 5px;
-            padding: 5px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
+            if (correctOption === null) {
+                alert('Please select the correct answer option.');
+                return;
+            }
 
 
-        #correctOption:hover + .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
+            //display the created qesution with the correct answer
+            document.getElementById('examQuestions').insertAdjacentHTML('beforeend', questionHtml);
 
-        .answer {
-            display: flex;
-            align-items: center;
-        }
+            //reset the question body input to empty
+            document.querySelector('.question input[name="question"]').value = '';
 
 
-        .answer input[type="text"] {
-            flex-grow: 5;
-            width: 380px;
-        }
+            //reset the radio btn input to unchecked
+            correctOption.checked = false;
 
-        .answer input[type="radio"] {
-            margin-left: 3px; 
-        }
+            //enable submit exam btn
+            document.getElementById('submitExam').disabled = false;
 
     </style>
 
-</head>
+            //store all anwers then iterate to delete them, so u can create new question with new answers(options)
+            var answersContainers = document.querySelectorAll('.answer');
+
+            for (var i = 1; i < answersContainers.length; i++) {
+                answersContainers[i].remove();
+            }
+        });
 
 
-<body>
-    <div class="container">
-        <h1>Create Exam</h1>
-        <form id="examForm" method="post" action="/Exam/create">
-            <div class="form-group">
-                <label for="examName">Exam Name:</label>
-                <input asp-for="ExamName" id="examName" required name="ExamName" class="form-control">
-                <span asp-validation-for="ExamName" class="text-danger"></span>
+        function addClonedAnswerTxtbox() {
+            var answersContainer = document.querySelector('.answers'); //the div that have ".answers" class
 
-            </div>
-            <div class="form-group">
-                <label for="examDuration">Exam Duration:</label>
-                <input asp-for="Duration" id="examDuration" required name="Duration" class="form-control">
-                <span asp-validation-for="Duration" class="text-danger"></span>
-
-            </div>
+            var answerClone = document.querySelector('.answer').cloneNode(true); //create clone of answer HTML
 
             <div id="questionsContainer" class="form-group">
                 <div class="form-group  question ">
 
-                    <div class="form-group">
-                        <label for="questionType">Question Type: MCQ </label>
-                        <input type="hidden" id="questionType" value="MCQ"> 
-                    </div>
-                    <div class="mb-3">
-                        <label for="editableInput2" class="form-label">Mark</label>
-                        <input id="editableInput2" type="text" class="form-control">
-                    </div>
+            // Reset the number of textboxes(for anwers) to 1
+            var answerInputs = answerClone.querySelectorAll('.answer input[name="option"]');
+            answerInputs.forEach(function (input, index) {
+                if (index > 0) {
+                    input.remove();
+                }
+                input.value = '';
+            });
+        }
 
                     <div class="form-group">
                         <label for="questionBody">Question Body:</label>
@@ -325,82 +295,63 @@
             <!--where the created question will appear-->
         </div> 
 
-        <!-- Modal for editing MCQ Q-->
-        <div class="modal" id="cardModal" tabindex="-1">
-            <div class="modal-dialog" style="width: 400px; height: 300px;">
-                <div class="modal-content">
-                    <!-- Card content -->
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit Question</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                
-                        <div class="mb-3">
-                            <label for="editableTextarea" class="form-label">Question Body</label>
-                            <textarea id="editableTextarea" class="form-control"></textarea>
-                        </div>
-                     
-                        <div class="mb-3">
-                            <label for="editableInput1" class="form-label">Choices</label>
-                            <input id="editableInput1" type="text" class="form-control">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="editableInput2" class="form-label">Correct answer</label>
-                            <input id="editableInput2" type="text" class="form-control">
-                        </div>
+        document.getElementById('submitExam').addEventListener('click', function () {
+            var examQuestions = document.getElementById('examQuestions').innerHTML;
+            downloadExam(examQuestions);
+        });
 
-                        <div class="mb-3">
-                            <label for="editableInput2" class="form-label">Mark</label>
-                            <input id="editableInput2" type="text" class="form-control">
-                        </div>
-                    </div>
+        function downloadExam(examQuestions) {
+            var dataStr = "data:text/plain;charset=utf-8," + encodeURIComponent(examQuestions);
+            var downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "exam.txt");
+            downloadAnchor.style.display = "none";
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            document.body.removeChild(downloadAnchor);
+        }
+    </script>
 
-                    <!-- Save/close buttons -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="saveButton">Save</button>
-                    </div>
-                </div>
+</body>
+</html>
+
+
+
+
+@*
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-        </div>
-
-        <!-- Modal for editing Paragraph Q -->
-        @* <div class="modal" id="cardModalP" tabindex="-1">
-            <div class="modal-dialog" style="width: 400px; height: 300px;">
-                <div class="modal-content">
-                    <!-- Card content -->
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit Question</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label for="editableTextarea" class="form-label">Question Body</label>
-                            <textarea id="editableTextareaP" class="form-control"></textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="editableInput2" class="form-label">Correct answer</label>
-                            <textarea id="editableInput2P" type="text" class="form-control"></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Save/close buttons -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="saveButtonP">Save</button>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label asp-for="Duration" class="control-label"></label>
+                <input asp-for="Duration" class="form-control" />
+                <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
-        </div> *@
-
-
-
-        <button id="submitExam" disabled>Submit Exam</button> <!--submit exam btn is disabled untill u create at least one question with its options and correct answer-->
+            <div class="form-group">
+                <label asp-for="CreationDate" class="control-label"></label>
+                <input asp-for="CreationDate" class="form-control" />
+                <span asp-validation-for="CreationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InstructorID" class="control-label"></label>
+                <select asp-for="InstructorID" class ="form-control" asp-items="ViewBag.InstructorID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CourseID" class="control-label"></label>
+                <select asp-for="CourseID" class ="form-control" asp-items="ViewBag.CourseID"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
+</div>
 
     <br />
 

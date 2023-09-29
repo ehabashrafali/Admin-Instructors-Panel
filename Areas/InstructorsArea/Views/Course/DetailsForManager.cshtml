@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ITI - Hub</title>
     <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/styles.css">
     <script src="~/assets/js/bootstrap.bundle.js"></script>
@@ -17,6 +17,87 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+
+            /* Style for the anchor tag (button) */
+            .nav-item p {
+                display: inline-block;
+                padding: 10px 30px;
+                background-color: darkgray; /* Blue background color */
+                color: black; /* Text color */
+                font-size: 17px;
+                text-decoration: none;
+                position: relative;
+                z-index: 1; /* Keep buttons above arrows */
+
+                opacity: 0.8;
+                cursor: not-allowed;
+            }
+
+    </style>
+
+
+    <style>
+        .button {
+            line-height: 1;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: .75rem;
+            background-color: #1977f3;
+            color: #fff;
+            border-radius: 10rem;
+            font-weight: 600;
+            padding: .75rem 1.5rem;
+            padding-left: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: background-color .5s;
+            margin-bottom: 16px; /* Spacing between list items */
+            position: relative; /* Position relative for arrow */
+        }
+
+
+        .button__icon-wrapper {
+            flex-shrink: 0;
+            width: 25px;
+            height: 25px;
+            position: relative;
+            color: black;
+            background-color: #fff;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+        }
+
+        .button:hover {
+            background-color: #1977f3;
+        }
+
+        .button:hover .button__icon-wrapper {
+            color: blue;
+        }
+
+        .button__icon-svg--copy {
+            position: absolute;
+            transform: translate(-150%, 150%);
+        }
+
+        .button:hover .button__icon-svg:first-child {
+            transition: transform .3s ease-in-out;
+            transform: translate(150%, -150%);
+        }
+
+        .button:hover .button__icon-svg--copy {
+            transition: transform .3s ease-in-out .1s;
+            transform: translate(0);
+        }
+
+    </style>
+
 </head>
 <body>
     <!-- navbar -->
@@ -46,25 +127,46 @@
 
                     <hr>
 
+
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item navs">
-                            <a href="index.html" class="nav-link link-body-emphasis act" aria-current="page">
-                                <img src="~/assets/images/White/intake.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;">
-                                <span style="color: white;">Intakes</span>
+                           @* <a asp-controller="Intake" asp-action="Index" class="nav-link" style="border-radius:50px">@ViewBag.IntakeName</a>*@
+
+                            <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                @ViewBag.IntakeName
                             </a>
                         </li>
+
+
                         <li class="nav-item navs">
-                            <a href="managedTracks.html" class="nav-link link-body-emphasis">
-                                <img src="~/assets/images/Gray/track.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;">
-                                Tracks
+                            <a style="--clr: #7808d0" class="button" asp-controller="Track" asp-action="DetailsForManager" asp-route-id="@ViewBag.IntakeID" asp-route-name="@ViewBag.IntakeName">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                @ViewBag.TrackName Track
                             </a>
                         </li>
+
+
                         <li class="nav-item navs">
-                            <a href="courses.html" class="nav-link link-body-emphasis">
-                                <img src="~/assets/images/Gray/courses.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;">
-                                Courses you teach
-                            </a>
+                            <p style="border-radius:50px;">Courses</p>
                         </li>
+
                     </ul>
 
                 </div>
@@ -76,17 +178,7 @@
                     <div class="row">
                         <div class="r1">
                             <div class="row">
-                                <div class="col" style="display:inline-flex">
-                                    <a asp-controller="Intake" asp-action="Index" class="text-primary" style="padding-left:50px ; width:140px">@ViewBag.IntakeName</a>
-                                </div>
-                                <div class="col" style="display:inline-flex">
-                                    <span><i class="fas fa-arrow-right"></i></span>
-                                    <a asp-controller="Track" asp-action="DetailsForManager" asp-route-id="@ViewBag.IntakeID" asp-route-name="@ViewBag.IntakeName" class="text-primary" style="padding-left:15px ; width:153px ">@ViewBag.TrackName Track</a>
-                                </div>
-                                <div class="col" style="display:inline-flex">
-                                    <span><i class="fas fa-arrow-right"></i></span>
-                                    <p style = "padding-left:20px ; font-weight:bold">Courses</p>
-                                </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -104,7 +196,7 @@
                         }
                     </div>
 
-                    <div class="footer">
+                    @*<div class="footer">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-end">
                                 <li class="page-item disabled">
@@ -118,7 +210,7 @@
                                 </li>
                             </ul>
                         </nav>
-                    </div>
+                    </div>*@
                 </div>
             </div>
         </div>

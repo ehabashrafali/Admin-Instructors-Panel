@@ -1,6 +1,5 @@
 ﻿using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +20,8 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
 
         //get the tracks in this intake, and only the tracks this instructor manage :: id(intake ID) , name(Intake ExamName)
+        [HttpGet]
+
         public ActionResult DetailsForManager(int id, string name)
         {
             string? UserID = userManager.GetUserId(User);
@@ -35,6 +36,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             //HttpContext.Session.SetInt32("IntakeID", id); //store the intakeID in session state to use it in the whole app during session lifetime. 
             #endregion
         }
+
 
 
 
