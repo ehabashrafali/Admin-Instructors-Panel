@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    string current = ViewContext.RouteData.Values["controller"] as string;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -50,33 +54,33 @@
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item navs">
-                            <a asp-action="Index" asp-controller="Track" class="nav-link link-body-emphasis act" aria-current="page">
-                                <img src="~/assets/images/White/track.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
-                                <span style="color: white;">Tracks</span>
+                            <a asp-action="Index" asp-controller="Track" class="nav-link link-body-emphasis @(current == "Track" ? "act" : "")" aria-current="page">
+                                <img src="~/assets/images/@(current == "Track" ? "White" : "Gray")/track.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                <span style="color: @(current == "Track" ? "white" : "black")" ;">Tracks</span>
                             </a>
                         </li>
                         <li class="nav-item navs">
-                            <a asp-action="Index" asp-controller="Course" class="nav-link link-body-emphasis">
-                                <img src="~/assets/images/Gray/courses.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
-                                Courses
+                            <a asp-action="Index" asp-controller="Course" class="nav-link link-body-emphasis @(current == "Course" ? "act" : "")">
+                                <img src="~/assets/images/@(current == "Course" ? "White" : "Gray")/course.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                <span style="color: @(current == "Course" ? "white" : "black")" ;">Courses</span>
                             </a>
                         </li>
                         <li class="nav-item navs">
-                            <a asp-action="Index" asp-controller="Instructor" class="nav-link link-body-emphasis">
-                                <img src="~/assets/images/Gray/instructor.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
-                                Instructors
+                            <a asp-action="Index" asp-controller="Instructor" class="nav-link link-body-emphasis @(current == "Instructor" ? "act" : "")">
+                                <img src="~/assets/images/@(current == "Instructor" ? "White" : "Gray")/instructor.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                <span style="color: @(current == "Instructor" ? "white" : "black")" ;">Instructors</span>
                             </a>
                         </li>
                         <li class="nav-item navs">
-                            <a asp-action="Index" asp-controller="Student" class="nav-link link-body-emphasis">
-                                <img src="~/assets/images/Gray/student.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
-                                Students
+                            <a asp-action="Index" asp-controller="Student" class="nav-link link-body-emphasis @(current == "Student" ? "act" : "")">
+                                <img src="~/assets/images/@(current == "Student" ? "White" : "Gray")/student.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                <span style="color: @(current == "Student" ? "white" : "black")" ;">Students</span>
                             </a>
                         </li>
                         <li class="nav-item navs">
-                            <a asp-action="Index" asp-controller="Intake" class="nav-link link-body-emphasis">
-                                <img src="~/assets/images/Gray/intake.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
-                                Intakes
+                            <a asp-action="Index" asp-controller="Intake" class="nav-link link-body-emphasis @(current == "Intake" ? "act" : "")">
+                                <img src="~/assets/images/@(current == "Intake" ? "White" : "Gray")/intake.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                <span style="color: @(current == "Intake" ? "white" : "black")" ;">Intakes</span>
                             </a>
                         </li>
                     </ul>

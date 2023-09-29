@@ -75,49 +75,50 @@
             </div>
 
         <div class="col-md-10 text-center content">
-                <div class="container-fluid">
-                    <div class="row col-md-12">
-                        <div class="r1">
+            <div class="container-fluid">
+                <div class="row col-md-12">
+                    <div class="r1">
                             
-                            <div class="row">
-                                <div class="col" style="display:inline-flex">
-                                    <a asp-controller="Intake" asp-action="Index" class="text-primary" style="padding-left:50px ; width:140px">@IntakeName</a>
-                                </div>
-                                <div class="col" style="display:inline-flex">
-                                    <span><i class="fas fa-arrow-right"></i></span>
-                                    <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@IntakeID" asp-route-name="@IntakeName" class="text-primary" style="padding-left:15px ; width:153px ">@TrackName Track</a>
-                                </div>
-                                <div class="col" style="display:inline-flex">
-                                    <span><i class="fas fa-arrow-right"></i></span>
-                                    <p style="padding-left:20px ; font-weight:bold">Courses</p>
-                                </div>
+                        <div class="row">
+                            <div class="col" style="display:inline-flex">
+                                <a asp-controller="Intake" asp-action="Index" class="text-primary" style="padding-left:50px ; width:140px">@IntakeName</a>
                             </div>
-
+                            <div class="col" style="display:inline-flex">
+                                <span><i class="fas fa-arrow-right"></i></span>
+                                <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@IntakeID" asp-route-name="@IntakeName" class="text-primary" style="padding-left:15px ; width:153px ">@TrackName Track</a>
+                            </div>
+                            <div class="col" style="display:inline-flex">
+                                <span><i class="fas fa-arrow-right"></i></span>
+                                <p style="padding-left:20px ; font-weight:bold">Courses</p>
+                            </div>
                         </div>
 
-                        <div class="container" style="flex-wrap: wrap; justify-content: center ; margin-top: 16px;">
-                            <div class="row">
-                                @foreach (var course in Model)
-                                {
-                                    <div class="col-md-4 mb-3">
-                                        <a class="box card" style="width:210px"
-                                            asp-controller="CourseDay" 
-                                            asp-action="Index"
-                                            asp-route-id="@course.ID" 
-                                            asp-route-name="@course.Name" 
-                                            asp-route-intakeID="@IntakeID" 
-                                            asp-route-trackID="@TrackID" 
-                                            asp-route-intakeName="@IntakeName" 
-                                            asp-route-trackName="@TrackName">
+                    </div>
 
-                                                <div class="card-body text-center">
-                                                    <h3 class="my-5">@course.Name</h3>
-                                                </div>
-                                        </a>
+                    @*<div class="container" style=" flex-wrap: wrap; justify-content: center ; margin-top: 16px;">*@
+                    <div class="row" style="justify-content: center; margin-left: 55px;">
+                        @foreach (var course in Model)
+                        {
+                            <div class="col-md-4 mb-3">
+                                <a class="box card" style="width:210px"
+                                    asp-controller="CourseDay" 
+                                    asp-action="Index"
+                                    asp-route-id="@course.ID" 
+                                    asp-route-name="@course.Name" 
+                                    asp-route-intakeID="@IntakeID" 
+                                    asp-route-trackID="@TrackID" 
+                                    asp-route-intakeName="@IntakeName" 
+                                    asp-route-trackName="@TrackName">
+
+                                    <div class="card-body text-center">
+                                        <h4 class="my-5">@course.Name</h4>
                                     </div>
-                                }
+                                </a>
                             </div>
-                        </div>
+                        }
+
+                    </div>
+                    @*</div>*@
                 </div>
             </div>
         </div>
