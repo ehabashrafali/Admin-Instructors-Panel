@@ -5,7 +5,7 @@ using Admin_Panel_ITI.Repos.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
+namespace Studebt_Panel_ITI.Areas.InstructorsArea.Controllers
 {
     [Area("InstructorsArea")] //have to be added(mandatory)
     public class CourseController : Controller
