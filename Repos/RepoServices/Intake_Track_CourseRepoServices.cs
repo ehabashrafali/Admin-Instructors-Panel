@@ -1,6 +1,7 @@
 ﻿using Admin_Panel_ITI.Data;
 using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
 
 namespace Admin_Panel_ITI.Repos.RepoServices
@@ -26,22 +27,18 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         void IIntake_Track_CourseRepository.DeleteIntake_Track_CoursebyTrackID(int trackID)
         {
             var records = Context.Intake_Track_Courses.Where(itc => itc.TrackID == trackID).ToList();
-            foreach (var record in records)
-            {
-                Context.Intake_Track_Courses.Remove(record);
-            }
-            Context.SaveChanges();
+            Context.Intake_Track_Courses.RemoveRange(records);
         }
 
 
         void IIntake_Track_CourseRepository.DeleteIntake_Track_CoursebyIntakeID(int intakeID)
         {
             var records = Context.Intake_Track_Courses.Where(itc => itc.IntakeID == intakeID).ToList();
-            foreach (var record in records)
-            {
-                Context.Intake_Track_Courses.Remove(record);
-            }
+            Context.Intake_Track_Courses.RemoveRange(records);
+
         }
+
+       
 
 
         //---//
@@ -53,6 +50,22 @@ namespace Admin_Panel_ITI.Repos.RepoServices
                 .Include(i=> i.Track)
                 .ToList();
         }
+
+
+        void IIntake_Track_CourseRepository.CreateIntake_Track_Course(int intakeID, int trackID, int courseID)
+        {
+            Intake_Track_Course itc = new Intake_Track_Course()
+            {
+                IntakeID = intakeID,
+                TrackID = trackID,
+                CourseID = courseID,
+
+            };
+            Context.Intake_Track_Courses.Add(itc);
+            Context.SaveChanges();
+        }
+
+        
 
     }
 }

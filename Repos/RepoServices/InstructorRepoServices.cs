@@ -58,6 +58,36 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
+        void IInstructorRepository.DeleteInstructor(List<String> instructorIDs)
+        {
+
+
+            foreach (var id in instructorIDs)
+            {
+                // make manager of track na or null
+                trackRepository.RemoveManager(id);
+
+                // make instructor id of exam na or null
+                examRepository.RemoveInstructor(id);
+
+                // make instructor id of material na or null
+                materialRepository.RemoveInstructor(id);
+
+                //delete record of instructor_course
+                instructor_CourseRepository.DeleteInstructor_Course(id);
+
+
+                // delete record of intake_instructor
+                intake_InstructorRepository.deleteIntake_InstructorbyInstructorID(id);
+
+                var ins = Context.Instructors.FirstOrDefault(i => i.AspNetUserID == id);
+                Context.Instructors.Remove(ins);
+            }
+            
+            Context.SaveChanges();
+        }
+
+
         Instructor IInstructorRepository.GetInstructorbyID(string instructorID)
         {
             var ins = Context.Instructors
@@ -92,9 +122,8 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
             var instructors = Context.Instructors
                 .Include(i=>i.Admin)
+                .Include(i=>i.AspNetUser)
                 .Include(i => i.Tracks)
-                .Include(i => i.InstructorCourses)
-                .ThenInclude(ic => ic.Course)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -107,18 +136,22 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         void IInstructorRepository.UpdateInstructor(string instructorID, Instructor instructor)
         {
             var instructor_updated = Context.Instructors.FirstOrDefault(i=>i.AspNetUserID == instructorID.ToString());
-            instructor_updated.AspNetUser.FullName = instructor.AspNetUser.FullName;
-            instructor_updated.AspNetUser.UserName = instructor.AspNetUser.UserName;
-            instructor_updated.AdminID = instructor.AdminID;
-            instructor_updated.AspNetUser.Email = instructor.AspNetUser.Email;
-            instructor_updated.AspNetUser.PhoneNumber = instructor.AspNetUser.PhoneNumber;
-            instructor_updated.CreationDate = instructor.CreationDate;
+            //instructor_updated.AspNetUser.FullName = instructor.AspNetUser.FullName;
+            //instructor_updated.AspNetUser.UserName = instructor.AspNetUser.UserName;
+            //instructor_updated.AdminID = instructor.AdminID;
+            //instructor_updated.AspNetUser.Email = instructor.AspNetUser.Email;
+            //instructor_updated.AspNetUser.PhoneNumber = instructor.AspNetUser.PhoneNumber;
+            instructor_updated.CurrentlyWorking = instructor.CurrentlyWorking;
             Context.SaveChanges();
         }
 
         List<Instructor> IInstructorRepository.GetInstructors()
         {
-            var instructors = Context.Instructors.ToList();
+            var instructors = Context.Instructors
+                .Include(i => i.Admin)
+                .Include(i => i.AspNetUser)
+                .Include(i => i.Tracks)
+                .ToList();
 
             return instructors;
         }

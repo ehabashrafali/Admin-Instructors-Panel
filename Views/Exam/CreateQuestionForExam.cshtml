@@ -1,0 +1,63 @@
+﻿@model Admin_Panel_ITI.Models.Question
+
+@{
+    ViewBag.Title = "Create Question for Exam";
+    var exam = ViewBag.Exam as Admin_Panel_ITI.Models.Exam;
+}
+
+<h2>Create Question for Exam</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Type)
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Type, Enum.GetValues(typeof(Admin_Panel_ITI.Models.QuestionType))
+            .Cast<Admin_Panel_ITI.Models.QuestionType>()
+            .Select(enumValue => new SelectListItem
+            {
+            Text = enumValue.ToString(),
+            Value = enumValue.ToString(),
+            Selected = enumValue == Model.Type
+            }), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Type, "")
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Body)
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Body)
+                @Html.ValidationMessageFor(model => model.Body, "")
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Answer)
+            @Html.TextBoxFor(model => model.Answer)
+            @Html.ValidationMessageFor(model => model.Answer, "")
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Mark)
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Mark)
+                @Html.ValidationMessageFor(model => model.Mark, "")
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Details" asp-route-id="@exam.ID" class="btn btn-default">Back to Exam Details</a>
+            </div>
+        </div>
+    </div>
+}

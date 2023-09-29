@@ -1,4 +1,4 @@
-﻿@*@model IEnumerable<Admin_Panel_ITI.Models.Student>
+﻿@model IEnumerable<Admin_Panel_ITI.Models.Student>
 
 @{
     ViewData["Title"] = "Students by Track";
@@ -11,7 +11,6 @@
         <tr>
             <th>Student ID</th>
             <th>Full Name</th>
-            <th>Username</th>
             <th>Is Graduated</th>
             <th>Creation Date</th>
             <th>Intake</th>
@@ -21,9 +20,8 @@
         @foreach (var student in Model)
         {
             <tr>
-                <td>@student.Id</td>
-                <td>@student.FullName</td>
-                <td>@student.UserName</td>
+                <td>@student.AspNetUserID</td>
+                <td>@student.AspNetUser.FullName</td>
                 <td>@(student.IsGraduated ? "Yes" : "No")</td>
                 <td>@student.CreationDate.ToString("yyyy-MM-dd")</td>
                 <td>@student.Intake.Name</td>
@@ -31,4 +29,3 @@
         }
     </tbody>
 </table>
-*@

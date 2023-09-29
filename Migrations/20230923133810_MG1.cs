@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Admin_Panel_ITI.Migrations
 {
     /// <inheritdoc />
-    public partial class Test_1 : Migration
+    public partial class MG1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -73,7 +73,7 @@ namespace Admin_Panel_ITI.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: true),
                     Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Answer = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Mark = table.Column<double>(type: "float", nullable: false)
@@ -101,7 +101,7 @@ namespace Admin_Panel_ITI.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -118,7 +118,7 @@ namespace Admin_Panel_ITI.Migrations
                         column: x => x.AspNetUserID,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -139,7 +139,7 @@ namespace Admin_Panel_ITI.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -159,7 +159,7 @@ namespace Admin_Panel_ITI.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -177,13 +177,13 @@ namespace Admin_Panel_ITI.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -203,7 +203,7 @@ namespace Admin_Panel_ITI.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -228,7 +228,7 @@ namespace Admin_Panel_ITI.Migrations
                         column: x => x.AspNetUserID,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -240,7 +240,7 @@ namespace Admin_Panel_ITI.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "date", nullable: false),
-                    AdminID = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    AdminID = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -249,8 +249,7 @@ namespace Admin_Panel_ITI.Migrations
                         name: "FK_Course_Admin_AdminID",
                         column: x => x.AdminID,
                         principalTable: "Admin",
-                        principalColumn: "AspNetUserID",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "AspNetUserID");
                 });
 
             migrationBuilder.CreateTable(
@@ -282,7 +281,9 @@ namespace Admin_Panel_ITI.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     InstructorID = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -331,7 +332,7 @@ namespace Admin_Panel_ITI.Migrations
                     Duration = table.Column<int>(type: "int", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "date", nullable: false),
                     InstructorID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CourseID = table.Column<int>(type: "int", nullable: false)
+                    CourseID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -340,8 +341,7 @@ namespace Admin_Panel_ITI.Migrations
                         name: "FK_Exam_Course_CourseID",
                         column: x => x.CourseID,
                         principalTable: "Course",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "ID");
                     table.ForeignKey(
                         name: "FK_Exam_Instructor_InstructorID",
                         column: x => x.InstructorID,
@@ -364,13 +364,13 @@ namespace Admin_Panel_ITI.Migrations
                         column: x => x.CourseID,
                         principalTable: "Course",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Instructor_Course_Instructor_InstructorID",
                         column: x => x.InstructorID,
                         principalTable: "Instructor",
                         principalColumn: "AspNetUserID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -388,13 +388,13 @@ namespace Admin_Panel_ITI.Migrations
                         column: x => x.InstructorID,
                         principalTable: "Instructor",
                         principalColumn: "AspNetUserID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Intake_Instructors_Intake_IntakeID",
                         column: x => x.IntakeID,
                         principalTable: "Intake",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -413,19 +413,19 @@ namespace Admin_Panel_ITI.Migrations
                         column: x => x.CourseDayID,
                         principalTable: "CourseDay",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Course_Day_Material_Course_CourseID",
                         column: x => x.CourseID,
                         principalTable: "Course",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Course_Day_Material_Material_MaterialID",
                         column: x => x.MaterialID,
                         principalTable: "Material",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -434,7 +434,8 @@ namespace Admin_Panel_ITI.Migrations
                 {
                     IntakeID = table.Column<int>(type: "int", nullable: false),
                     TrackID = table.Column<int>(type: "int", nullable: false),
-                    CourseID = table.Column<int>(type: "int", nullable: false)
+                    CourseID = table.Column<int>(type: "int", nullable: false),
+                    numOfStudentsInCourse = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -444,19 +445,19 @@ namespace Admin_Panel_ITI.Migrations
                         column: x => x.CourseID,
                         principalTable: "Course",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Intake_Track_Courses_Intake_IntakeID",
                         column: x => x.IntakeID,
                         principalTable: "Intake",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Intake_Track_Courses_Track_TrackID",
                         column: x => x.TrackID,
                         principalTable: "Track",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -483,19 +484,19 @@ namespace Admin_Panel_ITI.Migrations
                         column: x => x.AspNetUserID,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Student_Intake_IntakeID",
                         column: x => x.IntakeID,
                         principalTable: "Intake",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Student_Track_TrackID",
                         column: x => x.TrackID,
                         principalTable: "Track",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -513,13 +514,13 @@ namespace Admin_Panel_ITI.Migrations
                         column: x => x.ExamID,
                         principalTable: "Exam",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Exam_Question_Question_QuestionID",
                         column: x => x.QuestionID,
                         principalTable: "Question",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -540,19 +541,19 @@ namespace Admin_Panel_ITI.Migrations
                         column: x => x.ExamID,
                         principalTable: "Exam",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Std_Quest_Exam_Question_QuestionID",
                         column: x => x.QuestionID,
                         principalTable: "Question",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Std_Quest_Exam_Student_StudentID",
                         column: x => x.StudentID,
                         principalTable: "Student",
                         principalColumn: "AspNetUserID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -570,13 +571,13 @@ namespace Admin_Panel_ITI.Migrations
                         column: x => x.CourseID,
                         principalTable: "Course",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Student_Course_Student_StudentID",
                         column: x => x.StudentID,
                         principalTable: "Student",
                         principalColumn: "AspNetUserID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -597,13 +598,13 @@ namespace Admin_Panel_ITI.Migrations
                         column: x => x.CourseDayID,
                         principalTable: "CourseDay",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Student_Submission_Student_StudentID",
                         column: x => x.StudentID,
                         principalTable: "Student",
                         principalColumn: "AspNetUserID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

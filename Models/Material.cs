@@ -9,7 +9,7 @@ namespace Admin_Panel_ITI.Models
     {
         public int ID { get; set; }
 
-        [Required , MaxLength(50)]
+        [Required, MaxLength(50)]
         public string Name { get; set; }
 
         [Required]
@@ -29,4 +29,3 @@ namespace Admin_Panel_ITI.Models
         public virtual IEnumerable<Course_Day_Material>? CourseDayMaterials { set; get; }
     }
 }
-

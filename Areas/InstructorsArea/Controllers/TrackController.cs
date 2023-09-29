@@ -1,6 +1,5 @@
 ﻿using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,6 +34,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             //HttpContext.Session.SetInt32("IntakeID", id); //store the intakeID in session state to use it in the whole app during session lifetime. 
             #endregion
         }
+
 
 
 

@@ -26,6 +26,7 @@ const tooltipList = [...tooltipTriggerList].map(
   (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
 );
 
+
 // sort the table by each row
 function sortTable(columnIndex) {
   var table, rows, switching, i, x, y, shouldSwitch;
@@ -38,7 +39,7 @@ function sortTable(columnIndex) {
       shouldSwitch = false;
       x = rows[i].getElementsByTagName("td")[columnIndex];
       y = rows[i + 1].getElementsByTagName("td")[columnIndex];
-      // Check if the values are numbers
+       Check if the values are numbers
       var isNum = !isNaN(parseFloat(x.innerHTML)) && isFinite(x.innerHTML);
       if (isNum) {
         if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
@@ -58,6 +59,8 @@ function sortTable(columnIndex) {
     }
   }
 }
+
+
 
 function bubbleSort(arr) {
   var len = arr.length;
@@ -87,7 +90,6 @@ function clicked() {
   overlay.classList.add("show");
   floatingScreen.classList.add("show");
 }
-
 
 
 

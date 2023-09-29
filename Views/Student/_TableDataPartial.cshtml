@@ -1,0 +1,225 @@
+﻿@{
+    var StudentList = ((IEnumerable<Admin_Panel_ITI.Models.Student>)Model).ToList();
+
+}
+
+    <div id ="partialTable">
+    <div class="row col-md-11">
+        <table class="table table-hover" id="myTable">
+            <thead class="table-secondary">
+                <tr>
+                    <th>@*<input type="checkbox" name="all" id="all" class="all" onclick="checkUncheck(this)">*@</th>
+                    <th>
+                        Student Full Name
+                        <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                        </svg>
+                    </th>
+                    <th>
+                        Graduation status
+                        <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                        </svg>
+                    </th>
+                    <th>
+                        CreationDate
+                        <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                        </svg>
+                    </th>
+                    <th>
+                        Track Name
+                        <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                        </svg>
+                    </th>
+                       <th>
+                        Intake No.
+                        <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                        </svg>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < StudentList.Count; i++)
+                {
+                <tr>
+                        <td><input type="checkbox" name="selectedStudentIds[]" class="course-checkbox" value="@StudentList[i].AspNetUserID"></td>
+                        <td style="cursor: pointer;" onclick="editStudent('@StudentList[i].AspNetUserID')"> @StudentList[i].AspNetUser?.FullName</td>
+                        <td>@StudentList[i].IsGraduated</td>
+                        <td>@StudentList[i].CreationDate</td>
+                        <td>@StudentList[i].Track.Name</td>
+                        <td>@StudentList[i].Intake.Name</td>
+                        <td>
+                            <div class="options-menu">
+                                <span type="button" class="threedots" data-container="body" data-toggle="popover" data-bs-placement="left" data-content="<div style='display:flex; justify-content: space-between;align-items:flex-start;'><a href='#'><a href='#'><img style='width: 20px; height: 20px; margin-top:' src='assets/images/eye.png' alt='details'></a><a style='margin: 0 4px 0 7px;' href='#'><img style='width: 20px; height: 20px;' src='assets/images/edit.png' alt='details'></a><a href='#'><a onclick='clicked()' href='#'><img style='width: 20px; height: 20px;' src='assets/images/delete.png' alt='details'></a></div>">
+                                    <i class="fas fa-ellipsis-v" style="color: gray;"></i>
+                                </span>
+                            </div>
+                        </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                <li class="page-item @(ViewBag.PageNumber <= 1 ? "disabled" : "")">
+                    <a class="page-link" href="#" id="prevPageBtn">Previous</a>
+                </li>
+
+
+                <li class="page-item active">
+                    <a class="page-link" href="#">
+                        @{
+                            if(ViewBag.PageNumber == 0)
+                            {
+                                ViewBag.PageNumber++;
+                            }
+                        }
+                        @ViewBag.PageNumber
+                    </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="#" id="nextPageBtn">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+
+<script>
+
+    var selectedIntakeId = 0; // Default value
+    // Function to handle dropdown <a> click event
+    // Function to handle dropdown <a> click event
+    $('.intake-link').on('click', function (e) {
+        e.preventDefault(); // Prevent default link behavior
+        selectedIntakeId = $(this).data('intake-value'); // Get the selected intake ID
+
+        // Update the button text with the selected intake name
+        var selectedIntakeName = $(this).text();
+        $('#intakeDropdownBtn').html(`
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
+                        <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"></path>
+                    </svg>
+                    Filter by intakes: ${selectedIntakeName}
+                `);
+
+        // Make an AJAX call to the UpdateTableData action
+        $.ajax({
+            url: '@Url.Action("UpdateTableData", "Track")', // Use Url.Action to generate the correct URL
+            type: 'GET',
+            data: { intakeID: selectedIntakeId, pageNumber: 1 }, // Pass the selected intake ID and current page number as parameters
+            success: function (result) {
+                // Replace the content of the partialTable div with the updated HTML
+                $('#partialTable').html(result);
+            },
+            error: function () {
+                alert('Error occurred while fetching data.');
+            }
+        });
+    });
+
+
+    // Function to handle the "Next" button click event
+    $('#nextPageBtn').on('click', function (e) {
+        e.preventDefault();
+        selectedIntakeId = $(this).data('intake-value') || @ViewBag.IntakeID; 
+
+        var nextPage = @ViewBag.PageNumber + 1; // Get the next page number
+
+        // Make an AJAX call to the UpdateTableData action with both intakeID and pageNumber
+        $.ajax({
+            url: '@Url.Action("UpdateTableData", "Student")',
+            type: 'GET',
+            data: { intakeID: selectedIntakeId, pageNumber: nextPage }, // Pass both intakeID and pageNumber
+            success: function (result) {
+                // Replace the content of the partialTable div with the updated HTML
+                $('#partialTable').html(result);
+            },
+            error: function () {
+                alert('Error occurred while fetching data.');
+            }
+        });
+    });
+
+    // Function to handle the "Prev" button click event
+    $('#prevPageBtn').on('click', function (e) {
+        e.preventDefault();
+        selectedIntakeId = $(this).data('intake-value') || @ViewBag.IntakeID; 
+
+        var prevPage = @ViewBag.PageNumber - 1; // Get the previous page number
+
+        // Make an AJAX call to the UpdateTableData action with both intakeID and pageNumber
+        $.ajax({
+            url: '@Url.Action("UpdateTableData", "Student")',
+            type: 'GET',
+            data: { intakeID: selectedIntakeId, pageNumber: prevPage }, // Pass both intakeID and pageNumber
+            success: function (result) {
+                // Replace the content of the partialTable div with the updated HTML
+                $('#partialTable').html(result);
+                // Disable the "Prev" button if needed (you may need to add logic here)
+                if (prevPage <= 0) {
+                    $('#prevPageBtn').addClass('disabled');
+                } else {
+                    $('#prevPageBtn').removeClass('disabled');
+                }
+            },
+            error: function () {
+                alert('Error occurred while fetching data.');
+            }
+        });
+    });
+
+    $('#customdeletebtn_kordy').off('click').on('click', function () {
+        // Get the selected checkboxes
+        var selectedStudentIds = $('input[name="selectedStudentIds[]"]:checked').map(function () {
+            return $(this).val();
+        }).get();
+
+        if (selectedStudentIds.length === 0) {
+            alert("Please select at least one student to delete.");
+            return;
+        }
+
+        // Get the intake ID and page number from the hidden input fields
+        var intakeID = parseInt(@ViewBag.IntakeID);
+        var pageNumber = parseInt(@ViewBag.PageNumber);
+        // Make an AJAX POST request to the Delete action with parameters
+        $.ajax({
+            url: '@Url.Action("Delete", "Student")',
+            type: 'POST',
+            traditional: true,
+            data: {
+                Stdids: selectedStudentIds,
+                intakeID: intakeID,
+                pageNumber: pageNumber
+            },
+            success: function (result) {
+                $('#partialTable').html(result);
+            },
+            error: function () {
+                // Handle errors here
+                alert('Error occurred while deleting data.');
+            }
+        });
+    });
+
+    function editStudent(StdId) {
+        console.log('Edit clicked for Student ID: ' + StdId);
+
+        window.location.href = '/Student/Edit/' + StdId;
+    }
+</script>
+
+
+
+

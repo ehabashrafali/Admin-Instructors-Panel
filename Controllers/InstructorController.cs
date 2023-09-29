@@ -2,6 +2,7 @@
 using Admin_Panel_ITI.Repos;
 using Admin_Panel_ITI.Repos.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -14,99 +15,181 @@ namespace Admin_Panel_ITI.Controllers
         private readonly IInstructor_CourseRepository instructor_CourseRepository;
         private readonly IIntakeRepository intakeRepository;
         private readonly IIntake_InstructorRepository intake_InstructorRepository;
+        private readonly UserManager<AppUser> _userManager;
 
-        public InstructorController(IInstructorRepository instructorRepository, ICourseRepository courseRepository, IInstructor_CourseRepository instructor_CourseRepository, IIntakeRepository intakeRepository, IIntake_InstructorRepository intake_InstructorRepository) {
+
+        public InstructorController(IInstructorRepository instructorRepository, UserManager<AppUser> userManager, ICourseRepository courseRepository, IInstructor_CourseRepository instructor_CourseRepository, IIntakeRepository intakeRepository, IIntake_InstructorRepository intake_InstructorRepository) {
             this.instructorRepository = instructorRepository;
             this.courseRepository = courseRepository;
             this.instructor_CourseRepository = instructor_CourseRepository;
             this.intakeRepository = intakeRepository;
             this.intake_InstructorRepository = intake_InstructorRepository;
+            _userManager = userManager;
         }
         // GET: InstructorController
         public ActionResult Index(int pageNumber)
         {
             var instructors = instructorRepository.GetInstructors(pageNumber, 10);
+            ViewBag.PageNumber = pageNumber;
             return View(instructors);
         }
 
-        // GET: InstructorController/DetailsForManager/5
-        public ActionResult Details(string id)
+        public ActionResult UpdateTableData(int pageNumber)
         {
-            var instructor = instructorRepository.GetInstructorbyID(id);
-            ViewData["tracks"] = instructor.Tracks.Select(t=>t.Name).Distinct().ToList();
-            ViewData["intakes"] = instructor.IntakeInstructors
-                    .Select(itc => itc.Intake.Name)
-                    .Distinct()
-                    .ToList();
-            ViewData["courses"] = instructor.InstructorCourses
-                    .Select(itc => itc.Course.Name)
-                    .Distinct()
-                    .ToList();
 
-            return View(instructor);
+
+            var instructors = instructorRepository.GetInstructors(pageNumber, 10);
+            if (instructors.Count == 0 && pageNumber > 1)
+            {
+                instructors = instructorRepository.GetInstructors(pageNumber - 1, 10);
+                pageNumber--;
+            }
+
+
+            ViewBag.PageNumber = pageNumber;
+            return PartialView("_TableDataPartial", instructors);
         }
 
-        
+
+
+
+
+        //public ActionResult Details(string id)
+        //{
+        //    var instructor = instructorRepository.GetInstructorbyID(id);
+        //    ViewData["tracks"] = instructor.Tracks.Select(t => t.Name).Distinct().ToList();
+        //    ViewData["intakes"] = instructor.IntakeInstructors
+        //            .Select(itc => itc.Intake.Name)
+        //            .Distinct()
+        //            .ToList();
+        //    ViewData["courses"] = instructor.InstructorCourses
+        //            .Select(itc => itc.Course.Name)
+        //            .Distinct()
+        //            .ToList();
+
+        //    return View(instructor);
+        //}
+
+        // GET: InstructorController/Details/5
+        //public ActionResult Details(string id)
+        //{
+        //    var instructor = instructorRepository.GetInstructorbyID(id);
+        //    ViewData["tracks"] = instructor.Tracks.Select(t=>t.Name).Distinct().ToList();
+        //    ViewData["intakes"] = instructor.IntakeInstructors
+        //            .Select(itc => itc.Intake.Name)
+        //            .Distinct()
+        //            .ToList();
+        //    ViewData["courses"] = instructor.InstructorCourses
+        //            .Select(itc => itc.Course.Name)
+        //            .Distinct()
+        //            .ToList();
+
+        //    return View(instructor);
+        //}
+
+        // GET: TrackController/Create
+        //public ActionResult Create()
+        //{
+
+        //    var intakes = intakeRepository.GetAllIntakes();
+        //    ViewBag.AllIntakes = new SelectList(intakes, "ID", "Name");
+        //    return View();
+        //}
+
+
+
+
+        ////POST: TrackController/Create
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //async public Task<ActionResult> Create(Instructor instructor)
+        //{
+        //    var intakes = intakeRepository.GetAllIntakes();
+        //    ViewBag.AllIntakes = new SelectList(intakes, "ID", "Name");
+        //    var user = await _userManager.GetUserAsync(User);
+        //    if (user != null)
+        //    {
+        //        string userId = user.Id;
+        //        instructor.AdminID = "admin1";
+        //    }
+        //    if (ModelState.IsValid)
+        //    {
+        //        instructorRepository.CreateInstructor(instructor);
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(instructor);
+        //}
+
+
+
         // GET: InstructorController/Edit/5
         public ActionResult Edit(string id)
         {
             var instructor = instructorRepository.GetInstructorbyID(id);
-            var courses = courseRepository.GetCourses();
-            var intakes = intakeRepository.GetIntakes();
-            ViewData["CourseList"] = new SelectList(courses, "ID", "Name");
-            ViewData["IntakeList"] = new SelectList(intakes, "ID", "Name");
+            var intakes = intakeRepository.GetAllIntakes();
+            List<Intake> intakessSelected = new List<Intake>();
+            foreach (var item in instructor.IntakeInstructors)
+            {
+                intakessSelected.Add(item.Intake);
+            }
+            ViewBag.SelectedIntakes = intakessSelected;
+            ViewBag.AllIntakes = new SelectList(intakes.Except(intakessSelected), "ID", "Name");
             return View(instructor);
         }
 
         // POST: InstructorController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string id, Instructor instructor)
+        public ActionResult Edit(string id, Instructor instructor, List<string> SelectedIntakeIds)
         {
-            var selectedCourses = Request.Form["SelectedCourses"];
-            var selectedIntakes = Request.Form["selectedIntakes"];
             if (ModelState.IsValid)
             {
-                instructorRepository.UpdateInstructor(id, instructor);
-                foreach (var item in selectedCourses)
+
+                foreach (var item in SelectedIntakeIds)
                 {
-                    Instructor_Course ic_record = new Instructor_Course() {
-                        CourseID = int.Parse(item),
-                        InstructorID = id
-                  
-                    };
-                    instructor_CourseRepository.CreateInstructor_Course(ic_record);
-                }
-                foreach (var item in selectedIntakes)
-                {
-                    Intake_Instructor ic_record = new Intake_Instructor()
+                    Intake_Instructor ins = new Intake_Instructor()
                     {
                         IntakeID = int.Parse(item),
                         InstructorID = id
-
                     };
-                    intake_InstructorRepository.AddIntake_Instructor(ic_record);
+                    intake_InstructorRepository.AddIntake_Instructor(ins);
+
                 }
 
-                return RedirectToAction("Index");
+                instructorRepository.UpdateInstructor(id, instructor);
+
+                ViewBag.PageNumber = 0;
+
+                return RedirectToAction(nameof(Index));
             }
             return View(instructor);
         }
 
-        // GET: InstructorController/Delete/5
-        public ActionResult Delete(string id)
+
+        [HttpPost]
+        public ActionResult RemoveIntake_Instructor(string intakeID, string insID)
         {
-            var instructor = instructorRepository.GetInstructorbyID(id);
-            return View(instructor);
+            intake_InstructorRepository.deleteIntake_Instructor(intakeID, insID);
+            return RedirectToAction("Edit", new { id = insID });
         }
 
-        // POST: InstructorController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(string id, Instructor instructor)
+
+        public ActionResult Delete(List<string> selectedInstructorIds,int pageNumber)
         {
-            instructorRepository.DeleteInstructor(id);
-            return RedirectToAction("index");
+            instructorRepository.DeleteInstructor(selectedInstructorIds);
+
+
+            var instructors = instructorRepository.GetInstructors(pageNumber, 10);
+            if (instructors.Count == 0 && pageNumber > 1)
+            {
+                instructors = instructorRepository.GetInstructors(pageNumber - 1, 10);
+                pageNumber--;
+            }
+
+
+
+            ViewBag.PageNumber = pageNumber;
+            return PartialView("_TableDataPartial", instructors);
         }
     }
 }

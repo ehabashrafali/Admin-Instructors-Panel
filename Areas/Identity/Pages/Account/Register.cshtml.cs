@@ -83,7 +83,7 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
             [Required , MaxLength(50)]
             public string Username { get; set; }
 
-
+            
             [Required]
             [EmailAddress]
             [RegularExpression("^[a-zA-Z0-9._%+-]+@(gmail\\.com|yahoo\\.com|outlook\\.com)$")]

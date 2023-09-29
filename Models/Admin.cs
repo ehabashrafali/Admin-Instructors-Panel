@@ -17,5 +17,7 @@ namespace Admin_Panel_ITI.Models
 
         public virtual IEnumerable<Intake>? Intakes { get; set; }
         public virtual IEnumerable<Track>? Tracks { get; set; }
+     
+
     }
 }

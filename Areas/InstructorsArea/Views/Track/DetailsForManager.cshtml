@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ITI - Hub</title>
     <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/styles.css">
     <script src="~/assets/js/bootstrap.bundle.js"></script>
@@ -32,9 +32,9 @@
             <div class="navbarvr"></div>
             <span class="collapse navbar-collapse  navbar-brand">ITI-Hub</span>
             <div class="justify-content-end" id="navbarSupportedContent">
-                <div class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-right: 20px;">
-                    <a href="~/register/login.html" class="btn logoutbtn" style="margin-right: 48px;">Logout</a>
-                </div>
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
+                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                </form>
             </div>
         </div>
     </nav>
@@ -50,24 +50,16 @@
 
                     <hr>
 
+
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item navs">
-                            <a href="index.html" class="nav-link link-body-emphasis act" aria-current="page">
-                                <img src="~/assets/images/White/intake.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
-                                <span style="color: white;">Intakes</span>
-                            </a>
+                            <a asp-controller="Intake" asp-action="Index" style="color: white; display: inline-block; padding: 10px 81px; background-color: blue; border-radius: 5px;  font-size: 20px; width:230px; ">Intakes</a>
                         </li>
+
+                        <br />
+
                         <li class="nav-item navs">
-                            <a href="managedTracks.html" class="nav-link link-body-emphasis">
-                                <img src="~/assets/images/Gray/track.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
-                                Tracks
-                            </a>
-                        </li>
-                        <li class="nav-item navs">
-                            <a href="courses.html" class="nav-link link-body-emphasis">
-                                <img src="~/assets/images/Gray/courses.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
-                                Courses you teach
-                            </a>
+                            <p style="color: black; display: inline-block; padding: 10px 50px; background-color: darkgray; border-radius: 5px;  font-size: 17px; width:230px;">Managed Tracks</p>
                         </li>
                     </ul>
 
@@ -179,42 +171,3 @@
 </html>
 
 
-
-
-@*
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                Number Of students
-            </th>
-            <th>
-                Track Courses
-            </th>    
-            <th>
-                Track Students
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var track in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => track.Name)
-                </td>
-                <td>
-                    @studentRepo.GetStudentsNumberbyIntakeTrackID(IntakeID, track.ID)
-                </td>
-                <td>
-                    <a asp-controller="Course" asp-action="CoursesInTrackDetails" asp-route-id="@track.ID" asp-route-iid="@IntakeID" asp-route-name="@track.Name" class="btn btn-primary">Display Courses</a>
-                    <a asp-controller="Course" asp-action="CoursesInTrackDetails" asp-route-id="@track.ID" asp-route-iid="@IntakeID" asp-route-name="@track.Name" class="btn btn-primary">Display Students</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-*@

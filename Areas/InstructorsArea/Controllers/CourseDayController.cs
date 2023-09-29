@@ -27,6 +27,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             userManager = _userManager;
             materialRepo = _materialRepo;
             courseDayMaterialRepo = _courseDayMaterialRepo;
+
         }
 
 
@@ -48,12 +49,13 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
 
 
-
+        
 
 
         //id(course id) , name(course name)  ---> Materials & Tsak Table 
         public ActionResult Details(int id, string name, int intakeID, int trackID, string intakeName, string trackName , int coursedayID, int coursedayNum)
         {
+     
             ViewBag.Id = id;
             ViewBag.Name = name;
 
@@ -83,6 +85,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
                 if (Materials != null)
                 {
                     string MaterialsFilePath = Path.Combine(webHostingEnvironment.WebRootPath, "Materials"); //where the materials gonna be store(~/wwwroot/Materials/)
+
                     foreach (var material in Materials)
                     {
                         uniqueFileName = Guid.NewGuid().ToString() + "_" + material.FileName; //give each material a uniqu name to prevent override Files
@@ -233,16 +236,17 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete()
+        public ActionResult Delete(int MaterialID, int id, string name, int intakeID, int trackID, string intakeName, string trackName, int coursedayID, int coursedayNum)
         {
-            try
+            if(ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                courseDayMaterialRepo.DeleteCourseDayMaterial(MaterialID);
+                materialRepo.DeleteMaterial(MaterialID);
+
+                return RedirectToAction(nameof(Details), new {id , name, intakeID, trackID, intakeName, trackName, coursedayID, coursedayNum});
             }
-            catch
-            {
-                return View();
-            }
+
+            return View();
         }
     }
 }

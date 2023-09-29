@@ -10,13 +10,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ITI - Hub</title>
     <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/styles.css">
     <script src="~/assets/js/bootstrap.bundle.js"></script>
     <script src="~/assets/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
@@ -30,15 +30,16 @@
             <div class="navbarvr"></div>
             <span class="collapse navbar-collapse  navbar-brand">ITI-Hub</span>
             <div class="justify-content-end" id="navbarSupportedContent">
-                <div class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-right: 20px;">
-                    <a href="~/register/login.html" class="btn logoutbtn" style="margin-right: 48px;">Logout</a>
-                </div>
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
+                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                </form>
             </div>
         </div>
     </nav>
 
     <div class="">
         <div class="row">
+
             <!-- Sidebar -->
             <div class="col-md-2 sidebar">
                 <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary" style="width: 280px; height: 93vh;">
@@ -50,22 +51,7 @@
 
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item navs">
-                            <a href="index.html" class="nav-link link-body-emphasis act" aria-current="page">
-                                <img src="~/assets/images/White/intake.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
-                                <span style="color: white;">Intakes</span>
-                            </a>
-                        </li>
-                        <li class="nav-item navs">
-                            <a href="managedTracks.html" class="nav-link link-body-emphasis">
-                                <img src="~/assets/images/Gray/track.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
-                                Tracks
-                            </a>
-                        </li>
-                        <li class="nav-item navs">
-                            <a href="courses.html" class="nav-link link-body-emphasis">
-                                <img src="~/assets/images/Gray/courses.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
-                                Courses you teach
-                            </a>
+                            <a asp-controller="Intake" asp-action="Index" style="color: white; display: inline-block; padding: 10px 81px; background-color: blue; border-radius: 5px;  font-size: 20px; width:230px; ">Intakes</a>
                         </li>
                     </ul>
 
@@ -78,7 +64,7 @@
                 <div class="container-fluid">
                     <div class="row col-md-12">
                         <div class="r1">
-                            <a asp-controller="Intake" asp-action="Index" style="padding-left:50px" class="text-primary">Intakes</a>
+                            @*<a asp-controller="Intake" asp-action="Index" style="padding-left:50px" class="text-primary">Intakes</a>*@
                         </div>
                     </div>
                     <div class="row col-md-11">
@@ -91,6 +77,12 @@
                                         Name
                                         <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                        </svg>
+                                    </th>
+                                    <th style="padding-left: 24px;">
+                                        Duration
+                                        <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                                         </svg>
                                     </th>
                                     <th style="padding-left: 24px;">
@@ -124,6 +116,9 @@
                                             @Html.DisplayFor(modelItem => intake.Intake.Name)
                                         </td>
                                         <td style="padding-left: 24px; padding-top: 16px;">
+                                            @Html.DisplayFor(modelItem => intake.Intake.Duration)
+                                        </td>
+                                        <td style="padding-left: 24px; padding-top: 16px;">
                                             @Html.DisplayFor(modelItem => intake.Intake.StartDate)
                                         </td>
                                         <td style="padding-left: 24px; padding-top: 16px;">
@@ -134,8 +129,8 @@
                                         </td>
 
                                         <td style="text-align: right; padding-right: 16px;">
-                                            <a asp-controller="Track" asp-action="DetailsForManager" asp-route-id="@intake.IntakeID" asp-route-name="@intake.Intake.Name" class="btn regbtn" style="padding: 8px 16px;">Tracks You Manage</a>
-                                            <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@intake.IntakeID" asp-route-name="@intake.Intake.Name" class="btn regbtn" style="padding: 8px 16px;">Tracks You Teach In</a>
+                                           <a href="#" data-intake-id="@intake.IntakeID" data-intake-name="@intake.Intake.Name" class="managedTracksLink btn regbtn" style="padding: 8px 16px;">Tracks You Manage</a>
+                                           <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@intake.IntakeID" asp-route-name="@intake.Intake.Name" class="btn regbtn" style="padding: 8px 16px;">Tracks You Teach In</a>
                                         </td>
                                     </tr>
                                 }
@@ -146,12 +141,12 @@
 
 
                     <!--pagination-->
-                    <div class="footer">
+                   @* <div class="footer">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-end">
                                 <li class="page-item disabled">
                                     <a class="page-link">Previous</a>
-                                </li>
+                                </li>   
                                 <li class="page-item active"><a class="page-link" href="#">1</a></li>
                                 <li class="page-item"><a class="page-link" href="#">2</a></li>
                                 <li class="page-item"><a class="page-link" href="#">3</a></li>
@@ -160,80 +155,44 @@
                                 </li>
                             </ul>
                         </nav>
-                    </div>
+                    </div>*@
 
                 </div>
             </div>
         </div>
     </div>
 
+
+
+    <script>
+
+        var selectedIntakeID = 0;
+        var selectedIntakeName = '';
+
+        $('.managedTracksLink').on('click', function (e)
+        {
+            e.preventDefault(); 
+
+            selectedIntakeID = $(this).data('intake-id');
+            selectedIntakeName = $(this).data('intake-name');
+
+
+            $.ajax({
+                url: '@Url.Action("DetailsForManager", "Track", new { area = "InstructorsArea" })',
+                type: 'GET',
+                data: { id: selectedIntakeID, name: selectedIntakeName }, // Pass the selected intake ID and name to the action
+                success: function (result) {
+                    alert('HEhehhe');
+                },
+                error: function () {
+                    alert('Error occurred while fetching data.');
+                }
+            });
+        });
+
+     </script>
+
     <script src="~/script.js"></script>
 
 </body>
 </html>
-
-
-
-
-
-@*<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Duration)
-            </th>
-            <th>
-                Intake Creation Date
-            </th>
-            <th>
-                Admin Name
-            </th>
-            <th>
-                Tracks You Manage
-            </th>
-            <th>
-                Courses You Teach
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var intake in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => intake.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => intake.StartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => intake.EndDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => intake.Duration)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => intake.CreationDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => intake.Admin.FullName)
-                </td>
-                <td>
-                    <a asp-controller="Track" asp-action="TracksDetails" asp-route-id="@intake.ID" asp-route-name="@intake.Name" class="btn btn-primary">Tracks You Manage</a>
-                </td>
-                <td>
-                    <a asp-action="CoursesInstructorTeachDetails" asp-controller="Course" asp-route-id="@intake.ID" asp-route-name="@intake.Name" class="btn btn-primary">Tracks You Teach</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>*@

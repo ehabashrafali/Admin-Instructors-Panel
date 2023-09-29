@@ -110,7 +110,6 @@ namespace Admin_Panel_ITI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("AdminID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreationDate")
@@ -185,7 +184,7 @@ namespace Admin_Panel_ITI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("CourseID")
+                    b.Property<int?>("CourseID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
@@ -351,6 +350,9 @@ namespace Admin_Panel_ITI.Migrations
                     b.Property<int>("CourseID")
                         .HasColumnType("int");
 
+                    b.Property<int>("numOfStudentsInCourse")
+                        .HasColumnType("int");
+
                     b.HasKey("IntakeID", "TrackID", "CourseID");
 
                     b.HasIndex("CourseID");
@@ -370,6 +372,11 @@ namespace Admin_Panel_ITI.Migrations
 
                     b.Property<string>("InstructorID")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Path")
                         .IsRequired()
@@ -406,7 +413,7 @@ namespace Admin_Panel_ITI.Migrations
                     b.Property<double>("Mark")
                         .HasColumnType("float");
 
-                    b.Property<int>("Type")
+                    b.Property<int?>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -664,9 +671,7 @@ namespace Admin_Panel_ITI.Migrations
                 {
                     b.HasOne("Admin_Panel_ITI.Models.Admin", "Admin")
                         .WithMany()
-                        .HasForeignKey("AdminID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AdminID");
 
                     b.Navigation("Admin");
                 });
@@ -702,9 +707,7 @@ namespace Admin_Panel_ITI.Migrations
                 {
                     b.HasOne("Admin_Panel_ITI.Models.Course", "Course")
                         .WithMany("Exams")
-                        .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CourseID");
 
                     b.HasOne("Admin_Panel_ITI.Models.Instructor", "Instructor")
                         .WithMany("Exams")

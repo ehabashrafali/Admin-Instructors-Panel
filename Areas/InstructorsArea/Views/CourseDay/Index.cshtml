@@ -16,7 +16,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ITI - Hub</title>
     <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/styles.css">
     <script src="~/assets/js/bootstrap.bundle.js"></script>
@@ -24,9 +24,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+
+   @* <link rel="stylesheet" href="~/magic.min.css">*@
 </head>
 <body>
-    <!-- navbar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="light">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html" style="margin-left: 24px;">
@@ -35,9 +36,9 @@
             <div class="navbarvr"></div>
             <span class="collapse navbar-collapse  navbar-brand">ITI-Hub</span>
             <div class="justify-content-end" id="navbarSupportedContent">
-                <div class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-right: 20px;">
-                    <a href="~/register/login.html" class="btn logoutbtn" style="margin-right: 48px;">Logout</a>
-                </div>
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
+                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                </form>
             </div>
         </div>
     </nav>
@@ -132,7 +133,7 @@
                         <div class="row">
                             @foreach(var courseDay in Model)
                             {
-                                <div class="col-md-4 mb-3" style="flex-wrap: wrap; justify-content: center;  margin-top: 16px;">
+                                <div class="col-md-4 mb-3 " style="flex-wrap: wrap; justify-content: center;  margin-top: 16px;">
                                     <a asp-action="Details" 
                                        asp-controller="CourseDay"
                                        asp-route-Id="@courseID"
@@ -143,7 +144,8 @@
                                        asp-route-trackName="@TrackName"
                                        asp-route-coursedayID="@courseDay.ID"
                                        asp-route-coursedayNum="@courseDay.DayNumber"
-                                       class="box card" style="width:210px"  >
+                                       class="box card" style="width:210px">
+
                                         <div class="card-body text-center">
                                             <h2 class="my-5">Day @courseDay.DayNumber</h2>
                                         </div>
@@ -157,6 +159,15 @@
        </div>
    </div>
 
+
+   <script>
+
+       //function animation(){
+       //     const selector = document.querySelector('.vanishOuttt');
+       //     selector.classList.add('magictime', 'puffIn');
+       //}
+
+   </script>
 
 </body>
 </html>

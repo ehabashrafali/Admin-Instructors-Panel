@@ -1,0 +1,96 @@
+﻿<div class="col-md-10 text-center content">
+    <div class="container-fluid">
+        <div class="row col-md-12">
+            <div class="r1">
+                <h3 style="padding-left: 38px;">You are adding tracks and courses for</h3>
+                @foreach (var intakeName in ViewBag.intakeNames)
+                {
+                    <p>@intakeName</p>
+                    <br>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-11 p-lg-5">
+        <form method="post" id="courseForm" asp-action="SaveSelectedTrackAndCourses" asp-controller="Intake">
+            @Html.DropDownList("selectedTrack", ViewBag.tracks as SelectList, "Select track", new { @class = "form-select", aria_label = "Default select example", })
+
+            <select class="form-select" id="selectedCourse" name="selectedCourse" multiple aria-label="Default select example" style="margin-top: 24px; display: none;">
+                <option selected>Select courses for this track</option>
+                <!-- Populate courses here -->
+                @foreach (var course in ViewBag.courses)
+                {
+                    <option value="@course.Value">@course.Text</option>
+                }
+            </select>
+            <input type="hidden" id="selectedCourseIds" name="selectedCourseIds" value="">
+            <input type="hidden" id="selectedIntakeIds" name="selectedIntakeIds" value="">
+            <input type="button" class="btn btn-primary" style="margin-top: 24px;" value="Save" id="saveButton">
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Cache references to the track and course dropdowns
+        var $selectedTrack = $("#selectedTrack");
+        var $selectedCourse = $("#selectedCourse");
+        var $selectedCourseIds = $("#selectedCourseIds");
+        var $selectedIntakeIds = $("#selectedIntakeIds");
+
+        // Initially hide the course dropdown
+        $selectedCourse.hide();
+
+        // Attach an event handler to the track dropdown's change event
+        $selectedTrack.on("change", function () {
+            // Check if a track is selected
+            if ($selectedTrack.val() !== "") {
+                // Show the course dropdown
+                $selectedCourse.show();
+            } else {
+                // Hide the course dropdown
+                $selectedCourse.hide();
+            }
+        });
+
+        // Attach an event handler to the form submission
+        $("#saveButton").on("click", function () {
+            // Get the selected course IDs
+            var selectedCourseIds = $selectedCourse.val();
+
+            // Set the selected course IDs as a comma-separated string in the hidden input field
+            $selectedCourseIds.val(selectedCourseIds);
+
+            // Get the selected intake IDs
+            var selectedIntakeIds = @Html.Raw(Json.Serialize(ViewBag.intakeIDs));
+
+            
+            // Join the intake IDs into a comma-separated string
+            var intakeIdsString = selectedIntakeIds.join(',');
+
+            // Set the selected intake IDs as a comma-separated string in the hidden input field
+            $selectedIntakeIds.val(intakeIdsString);
+
+            // Make an AJAX POST request to the controller action
+            $.ajax({
+                url: "@Url.Action("SaveSelectedTrackAndCourses", "Intake")",
+                method: "POST",
+                data: {
+                    selectedTrackId: $selectedTrack.val(),
+                    selectedCourseIds: selectedCourseIds,
+                    selectedIntakeIds: selectedIntakeIds
+                },
+                success: function (response) {
+                    // Handle the success response
+                    // You can update the UI or perform any other actions here
+
+                    window.location.reload();
+                },
+                error: function () {
+                    // Handle the error if the request fails
+                }
+            });
+        });
+    });
+</script>

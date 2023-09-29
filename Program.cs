@@ -27,18 +27,18 @@ namespace Admin_Panel_ITI
             {
                 // Configure logging for EF Core
                 var serviceProvider = builder.Services.BuildServiceProvider();
-               
+
                 var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
 
                 loggerFactory.AddProvider(new DebugLoggerProvider());
 
                 options.UseSqlServer(connectionString);
             });
-                
 
 
 
-            builder.Services.AddIdentity<AppUser,IdentityRole>()
+
+            builder.Services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<MainDBContext>().AddDefaultTokenProviders();
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -90,14 +90,16 @@ namespace Admin_Panel_ITI
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+
 
 
 
             app.MapAreaControllerRoute(
             name: "Inst",
             areaName: "InstructorsArea",
-            pattern: "InstructorsArea/{controller}/{action}/{id?}");
+            pattern: "{controller}/{action}/{id?}");
 
             app.MapControllerRoute(
                 name: "default",
@@ -123,8 +125,8 @@ namespace Admin_Panel_ITI
            name: "studentByTrack",
            pattern: "Student/StdIndexByTrackId/{Trackid}/{pageNumber}",
            defaults: new { controller = "Student", action = "StdIndexByTrackId" });
-            
-            
+
+
             app.MapControllerRoute(
            name: "studentByTrack",
            pattern: "Student/StdIndexByIntakeId/{IntakeId}/{pageNumber}",

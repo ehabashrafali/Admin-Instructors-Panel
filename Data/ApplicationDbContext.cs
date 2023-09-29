@@ -51,7 +51,6 @@ namespace Admin_Panel_ITI.Data
             modelBuilder.Entity<Student_Course>()
                 .HasKey(sc => new { sc.StudentID, sc.CourseID });
 
-           
 
             modelBuilder.Entity<Course_Day_Material>()
                 .HasKey(cdm => new { cdm.CourseID, cdm.CourseDayID, cdm.MaterialID });

@@ -27,7 +27,9 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
         {
             ViewBag.InstructorName = userManager.GetUserAsync(User).Result.FullName;
 
-            return View(intakeInstructorRepo.GetIntakesByInstructorID(userManager.GetUserId(User)));
+            var x = intakeInstructorRepo.GetIntakesByInstructorID(userManager.GetUserId(User));
+
+            return View(x);
         }
     }
 }

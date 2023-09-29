@@ -21,7 +21,12 @@ namespace Admin_Panel_ITI.Repos.Interfaces
         //---------------------------------- Instructor Repos ------------------//
 
         public void CreateCourseDayMaterial(List<Course_Day_Material> cdm);
+
+        public void DeleteCourseDayMaterial(int materialID);
+
         //public List<Course_Day_Material> GetCourseDaysbyCourseDayID(int courseDayID); exists above
+
+
 
     }
 }

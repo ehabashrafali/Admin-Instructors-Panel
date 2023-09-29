@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Admin_Panel_ITI.Models
 {
-    public enum QuestionType { TF, Choose, Essay, NA }
+    public enum QuestionType { MCQ, Paragraph, NA }
 
     [Table("Question")]
     public class Question
