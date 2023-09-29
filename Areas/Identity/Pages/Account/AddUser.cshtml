@@ -23,7 +23,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign Up </title>
 
-   <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
     <script src="~/assets/js/bootstrap.bundle.js"></script>
     <script src="~/assets/js/bootstrap.bundle.min.js"></script>
 
@@ -56,28 +56,28 @@
                     </div>
                     <div class="signup-form">
                         <h2 class="form-title">Add New User</h2>
-                       
-                        <form method="post" id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" >
-                           
+
+                        <form method="post" id="registerForm" asp-route-returnUrl="@Model.ReturnUrl">
+
                             <div class="col-lg-5 form-group">
                                 <label for="roles"><i class="zmdi zmdi-accounts material-icons-name"></i> Choose user role:</label>
                                 <div style="margin-left: 190px;">
                                     <select asp-for="Input.userType" id="userTypeSelect" class="form-select-sm" aria-label="Small select example">
-@*                                        @if(selectedType == "Admin")
+                                        @*                                        @if(selectedType == "Admin")
                                         {
-                                            <option selected value="Admin">Admin</option>
-                                            <option value="Instructor">Instructor</option>
-                                            <option value="Student">Student</option>
+                                        <option selected value="Admin">Admin</option>
+                                        <option value="Instructor">Instructor</option>
+                                        <option value="Student">Student</option>
                                         }else if(selectedType == "Instructor")
                                         {
-                                            <option value="Admin">Admin</option>
-                                            <option selected value="Instructor">Instructor</option>
-                                            <option value="Student">Student</option>
+                                        <option value="Admin">Admin</option>
+                                        <option selected value="Instructor">Instructor</option>
+                                        <option value="Student">Student</option>
                                         } else
                                         {
-                                            <option value="Admin">Admin</option>
-                                            <option value="Instructor">Instructor</option>
-                                            <option selected value="Student">Student</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Instructor">Instructor</option>
+                                        <option selected value="Student">Student</option>
                                         }*@
                                         <option selected value="Admin">Admin</option>
                                         <option value="Instructor">Instructor</option>
@@ -92,7 +92,7 @@
 
                             </div>
 
-                           
+
                             <div class="form-group">
                                 <label asp-for="Input.Password"><i class="zmdi zmdi-lock"></i></label>
                                 <input asp-for="Input.Password" type="password" placeholder="Password" />
@@ -101,45 +101,45 @@
 
                             <div class="form-group">
                                 <label asp-for="Input.ConfirmPassword"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input asp-for="Input.ConfirmPassword"  placeholder="Confirm password" />
+                                <input asp-for="Input.ConfirmPassword" placeholder="Confirm password" />
                                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Input.FullName"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input asp-for="Input.FullName"  placeholder="Fullname" />
+                                <input asp-for="Input.FullName" placeholder="Fullname" />
                                 <span asp-validation-for="Input.FullName" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Input.Email"><i class="zmdi zmdi-email"></i></label>
-                                <input asp-for="Input.Email"  placeholder="Email" />
+                                <input asp-for="Input.Email" placeholder="Email" />
                                 <span asp-validation-for="Input.Email" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Input.PhoneNumber"><i class="zmdi zmdi-phone"></i></label>
-                                <input asp-for="Input.PhoneNumber"  placeholder="Phone Number" />
+                                <input asp-for="Input.PhoneNumber" placeholder="Phone Number" />
                                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
                             </div>
 
 
                             <!--Instructor Fields-->
-                           @* <div class="col-lg-5 form-group" id="instructorFields">
-                                <label>Choose Intakes: </label>
-                                <br >
-                                <div >
-                                    <select asp-for="Input.IntakesIDs" asp-items="@allIntakes" multiple="multiple"  class="form-select-sm" >
-                                    </select>
-                                </div>
+                            @* <div class="col-lg-5 form-group" id="instructorFields">
+                            <label>Choose Intakes: </label>
+                            <br >
+                            <div >
+                            <select asp-for="Input.IntakesIDs" asp-items="@allIntakes" multiple="multiple"  class="form-select-sm" >
+                            </select>
+                            </div>
                             </div>*@
                             <div class="form-group" id="instructorFields">
-                                <select asp-for="Input.IntakesIDs"  asp-items="@allIntakes" class="form-select" multiple>
+                                <select asp-for="Input.IntakesIDs" asp-items="@allIntakes" class="form-select" multiple>
                                     <option disabled>Select an Intake</option>
                                 </select>
                             </div>
 
                             <!-- Student Fields - Intake Selection -->
                             <div class="form-group">
-                                <select asp-for ="Input.IntakeID" id="studentFields1" asp-items="@allIntakes" class="form-select">
-                                    <option >Select an Intake</option>
+                                <select asp-for="Input.IntakeID" id="studentFields1" asp-items="@allIntakes" class="form-select">
+                                    <option>Select an Intake</option>
                                 </select>
                             </div>
 
@@ -166,39 +166,37 @@
     <script src="~/js/main.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    const userTypeSelect = document.getElementById("userTypeSelect");
-    const instructorFields = document.getElementById("instructorFields");
-    const studentFields1 = document.getElementById("studentFields1");
-    const studentFields2 = document.getElementById("studentFields2HTML");
+    <script>
+        const userTypeSelect = document.getElementById("userTypeSelect");
+        const instructorFields = document.getElementById("instructorFields");
+        const studentFields1 = document.getElementById("studentFields1");
+        const studentFields2 = document.getElementById("studentFields2HTML");
 
 
-    function toggleFormElements(userType) 
-    {
-        instructorFields.style.display = "none";
-        studentFields1.style.display = "none";
-        studentFields2.style.display = "none";
-
-        if (userType === "Instructor") {
-            instructorFields.style.display = "block";
+        function toggleFormElements(userType) {
+            instructorFields.style.display = "none";
             studentFields1.style.display = "none";
             studentFields2.style.display = "none";
-        } 
-        else if(userType === "Student") {
-            instructorFields.style.display = "none";
-            studentFields1.style.display = "block";
-            studentFields2.style.display = "block";
+
+            if (userType === "Instructor") {
+                instructorFields.style.display = "block";
+                studentFields1.style.display = "none";
+                studentFields2.style.display = "none";
+            }
+            else if (userType === "Student") {
+                instructorFields.style.display = "none";
+                studentFields1.style.display = "block";
+                studentFields2.style.display = "block";
+            }
         }
-    }
 
-    toggleFormElements(userTypeSelect.value);
+        toggleFormElements(userTypeSelect.value);
 
-    userTypeSelect.addEventListener("change", function ()
-    {
-        toggleFormElements(this.value); 
-    });
+        userTypeSelect.addEventListener("change", function () {
+            toggleFormElements(this.value);
+        });
 
-   
+
         $(document).ready(function () {
             $('#studentFields1').on('change', function () {
                 var selectedIntakeID = $(this).val();
@@ -216,13 +214,13 @@
                     });
                 });
             });
-            
+
         });
 
-        
-        
 
-</script>
+
+
+    </script>
 
 
 </body>

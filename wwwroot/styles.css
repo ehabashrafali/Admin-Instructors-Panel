@@ -25,9 +25,9 @@ body {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.card:hover {
-    transform: scale(1.1);
-}
+    .card:hover {
+        transform: scale(1.1);
+    }
 
 #newUserBtn {
     position: absolute;
@@ -64,38 +64,38 @@ body {
     display: block;
 }
 
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
 
 .btn {
     padding: 8px 24px;
 }
 
-.logoutbtn{
-    background-color: #E03030; 
+.logoutbtn {
+    background-color: #E03030;
     color: white;
-    margin-right: 24px; 
+    margin-right: 24px;
 }
 
-.logoutbtn:hover{
-    background-color: #B32626;
-    color: white;
-}
+    .logoutbtn:hover {
+        background-color: #B32626;
+        color: white;
+    }
 
 .regbtn {
-    margin-right: 16px; 
+    margin-right: 16px;
     background-color: #6c757d17;
 }
 
-.regbtn:hover {
-    border: 1px solid black; 
-}
+    .regbtn:hover {
+        border: 1px solid black;
+    }
 
 .navbarvr {
     background-color: #cd2929;
-    height: 50px; 
-    margin: 8px 10px 0 -8px; 
+    height: 50px;
+    margin: 8px 10px 0 -8px;
     padding: 1px;
 }
 
@@ -114,7 +114,7 @@ body {
 }
 
 .container {
-    margin: 40px auto 16px ;
+    margin: 40px auto 16px;
 }
 
 /* ********************************************************* */
@@ -142,9 +142,9 @@ body {
     margin-left: 16px;
 }
 
-.filter-btn:hover {
-    border: 1px solid black;
-}
+    .filter-btn:hover {
+        border: 1px solid black;
+    }
 
 .table {
     margin-left: 48px;
@@ -255,11 +255,11 @@ input[type="checkbox"] {
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.floating-screen.show {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translate(-50%, -50%) scale(1);
-}
+    .floating-screen.show {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translate(-50%, -50%) scale(1);
+    }
 
 .overlay.show {
     opacity: 1;
@@ -314,6 +314,6 @@ input[type="file"] {
     margin-left: 8px;
 }
 
-.courseBtns:hover {
-    background-color: #cececc;
-}
+    .courseBtns:hover {
+        background-color: #cececc;
+    }
