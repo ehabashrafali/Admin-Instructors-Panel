@@ -129,8 +129,9 @@
                                         </td>
 
                                         <td style="text-align: right; padding-right: 16px;">
-                                           <a href="#" data-intake-id="@intake.IntakeID" data-intake-name="@intake.Intake.Name" class="managedTracksLink btn regbtn" style="padding: 8px 16px;">Tracks You Manage</a>
-                                           <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@intake.IntakeID" asp-route-name="@intake.Intake.Name" class="btn regbtn" style="padding: 8px 16px;">Tracks You Teach In</a>
+                                            <a asp-controller="Track" asp-action="DetailsForManager" asp-route-id="@intake.IntakeID" asp-route-name="@intake.Intake.Name" class="btn regbtn" style="padding: 8px 16px;">Tracks You Manage</a>
+                                            @*  <a href="#" data-intake-id="@intake.IntakeID" data-intake-name="@intake.Intake.Name" class="managedTracksLink btn regbtn" style="padding: 8px 16px;">Tracks You Manage</a>
+*@                                           <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@intake.IntakeID" asp-route-name="@intake.Intake.Name" class="btn regbtn" style="padding: 8px 16px;">Tracks You Teach In</a>
                                         </td>
                                     </tr>
                                 }
@@ -164,7 +165,7 @@
 
 
 
-    <script>
+ @*   <script>
 
         var selectedIntakeID = 0;
         var selectedIntakeName = '';
@@ -176,9 +177,10 @@
             selectedIntakeID = $(this).data('intake-id');
             selectedIntakeName = $(this).data('intake-name');
 
+            var URL = '@Url.Action("DetailsForManager", "Track", new { area = "InstructorsArea" })'
 
             $.ajax({
-                url: '@Url.Action("DetailsForManager", "Track", new { area = "InstructorsArea" })',
+                url: URL,
                 type: 'GET',
                 data: { id: selectedIntakeID, name: selectedIntakeName }, // Pass the selected intake ID and name to the action
                 success: function (result) {
@@ -190,7 +192,7 @@
             });
         });
 
-     </script>
+     </script>*@
 
     <script src="~/script.js"></script>
 

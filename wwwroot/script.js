@@ -39,7 +39,7 @@ function sortTable(columnIndex) {
       shouldSwitch = false;
       x = rows[i].getElementsByTagName("td")[columnIndex];
       y = rows[i + 1].getElementsByTagName("td")[columnIndex];
-       Check if the values are numbers
+     /*  Check if the values are numbers*/
       var isNum = !isNaN(parseFloat(x.innerHTML)) && isFinite(x.innerHTML);
       if (isNum) {
         if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
