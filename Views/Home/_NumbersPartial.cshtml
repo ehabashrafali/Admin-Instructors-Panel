@@ -1,4 +1,4 @@
-﻿
+﻿﻿
 <div id="intakeDataContainer">
     <!-- 4 Cards ( Tracks, Courses, Instructor, Student ) -->
     <div class="container text-center">
@@ -16,15 +16,15 @@
                 </a>
             </div>
 
-@*             <div class="col">
-                <a style="padding-top: 8px;" class="card stretched-link text-decoration-none" style="width: 18rem;"
-                   asp-action="@(Model.IntakeId == 0 ? "Index" : "CrsIndexByIntakeId")" asp-controller="course" asp-route-id="@Model.IntakeId" >
-                    <img src="assets/images/courses.png" class="card-img-top" alt="courses" style="width: 130px; height: 130px; margin: 10px auto 0px;">
-                    <div class="card-body">
-                        <h4 class="card-text">@Model.CourseNumber</h4>
-                        <h3 class="card-text">Course</h3>
-                    </div>
-                </a>
+            @*             <div class="col">
+            <a style="padding-top: 8px;" class="card stretched-link text-decoration-none" style="width: 18rem;"
+            asp-action="@(Model.IntakeId == 0 ? "Index" : "CrsIndexByIntakeId")" asp-controller="course" asp-route-id="@Model.IntakeId" >
+            <img src="assets/images/courses.png" class="card-img-top" alt="courses" style="width: 130px; height: 130px; margin: 10px auto 0px;">
+            <div class="card-body">
+            <h4 class="card-text">@Model.CourseNumber</h4>
+            <h3 class="card-text">Course</h3>
+            </div>
+            </a>
             </div> *@
             <div class="col">
                 <a id="courseLink" style="padding-top: 8px; cursor:pointer; " class="card stretched-link text-decoration-none" style="width: 18rem;">
@@ -89,19 +89,3 @@
     var courseLink = document.getElementById('courseLink');
     courseLink.addEventListener('click', handleCourseCardClick);
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
