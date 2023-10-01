@@ -119,10 +119,6 @@ namespace Admin_Panel_ITI.Repos
                                   .ToList();
         }
 
-
-
-
-
         void IIntakeRepository.DeleteIntake(int intakeID)
         {
             var intake_students = studentRepository.getStudentsbyIntakeID(intakeID);

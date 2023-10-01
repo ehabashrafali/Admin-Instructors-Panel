@@ -7,55 +7,49 @@
 //});
 
 
-
-/*  Add_Question Logic */
 var id = 1;
-var openPopupButton = [];
+
 document.getElementById('examForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
-    var examName = document.getElementById('examName').value; //Exam Name
-    var questionType = "MCQ"; // Hardcode the question type as "MCQ"
-    var question = document.querySelector('.question textarea[name="questionBody"]').value; //question body
-    if (question.length !== 0) {
-        question = question.charAt(question.length - 1) == "?" ? question : question + " ?";
+    var examName = document.getElementById('examName').value; // Exam Name
+    var questionType = document.getElementById('questionType').value; // Question type
+    var questionTextarea = document.getElementById('questionBody');// body
+    console.log(questionTextarea.value)
+    if (questionTextarea) {
+        var question = questionTextarea.value;
+    } else {
+        console.error("Textarea element not found.");
     }
-    var paragraphAnswer = document.querySelector('.question textarea[name="questionAns"]').value; //paragraph answer
-    var options = document.querySelectorAll('.question input[name="option"]'); //options: multiple values
-    var correctOption = document.querySelector('.question input[name="correctOption"]:checked'); //correct answer
+    var Mark = document.getElementById('Mark').value; //Mark value 
+    var options = document.querySelectorAll('.question input[name="option"]'); // Options: multiple values
+    var correctOption = document.querySelector('.question input[name="correctOption"]:checked'); // Correct answer
 
-    if (question.length === 0) {
-        alert('Please enter a question body');
-        return;
-    }
+    if (questionType === 'Paragraph') { //commented till further work
+        //var paragraphAnswer = document.querySelector('.question textarea[name="questionAns"]').value; // Paragraph answer
 
+        //var questionHtml = `
+        //    <div class="question" id="${id}" style="position: relative;">
+        //        <div>
+        //            <h5 style="display: inline-block;">Question Body: </h5>
+        //            <input type="textbox" value="${question}" style="border: none; font-size: 20px; color: blue;">
+        //        </div>
+        //        <div>
+        //            <h5 style="display: inline-block;">Answer: </h5>
+        //            <input type="textbox" value="${paragraphAnswer}" style="border: none; color: green;">
+        //        </div>
+        //        <a class="btn btn-primary editBtn" onclick="modalEditP(this)">Edit</a>
+        //        <a class="btn btn-danger" onclick="modalDeleteP(this)">Delete</a>
+        //    </div>
+        //`;
 
-    //if (questionType === 'Paragraph') {
+        //// Display the created question with the correct answer
+        //document.getElementById('examQuestions').insertAdjacentHTML('beforeend', questionHtml);
 
-    //    var questionHtml = `
-    //                                <div class="question" id="${id}" style="position: relative;">
-    //                                    <div>
-    //                                        <h5 style="display: inline-block;">Question Body: </h5>
-    //                                        <input type="textbox" value="${question}" style="border: none; font-size: 20px; color: blue;">
-    //                                    </div>
-    //                                    <div>
-    //                                        <h5 style="display: inline-block;">Answer: </h5>
-    //                                        <input type="textbox" value="${paragraphAnswer}" style="border: none; color: green;">
-    //                                    </div>
-
-    //                                    <a class="btn btn-primary editBtn" onclick = "modalEditP(this)">Edit</a>
-    //                                    <a class="btn btn-danger"  onclick = "modalDeleteP(this)">Delete</a>
-    //                                </div>
-    //                `;
-
-    //    //display the created qesution with the correct answer
-    //    document.getElementById('examQuestions').insertAdjacentHTML('beforeend', questionHtml);
-
-    //    //reset the question body & answer input to empty
-    //    document.querySelector('.question textarea[name="questionBody"]').value = '';
-    //    document.querySelector('.question textarea[name="questionAns"]').value = '';
-    //}
-   /* else {*/
+        // Reset the question body & answer input to empty
+        //document.querySelector('.question textarea[name="questionBody"]').innerHTML = '';
+        //document.querySelector('.question textarea[name="questionAns"]').innerHTML = '';
+    } else {
         var isOptionsEmpty = true;
         var optionsHtml = '';
 
@@ -76,52 +70,70 @@ document.getElementById('examForm').addEventListener('submit', function (event) 
             return;
         }
 
-        var correctAns = correctOption.parentElement.querySelector('input[name="option"]').value;
+        var correctAns = correctOption.parentElement.querySelector('input[name="option"]').value;  //get correct ans
 
+        //var questionObj = {
+        //    id: id,
+        //    question: question,
+        //    mark: Mark,
+        //    options: [],
+        //    correctOption: correctAns
+        //};
 
-        /*appear after question is created*/
+        //options.forEach(function (option) {
+        //    if (option.value.trim() !== '') {
+        //        questionObj.options.push(option.value);
+        //    }
+        //});
+
+        //questionsList.push(questionObj); // Add the question to the list
+
+        //console.log(model);
+        /* Appear after the question is created */
         var questionHtml2 = `
-                            <div class="question" id="${id}" style="position: relative;">
-                                <div>
-                                    <h5 style="display: inline-block;">Question Body: </h5>
-                                    <span class="editable-paragraph" style="border: none; font-size: 20px; color: blue; word-break: break-all;">${question}</span>
-                                </div>
-                                <div>
-                                    <h5 style="display: inline-block;">Choices: </h5>
-                                    <span class="editable-paragraph" style="border: none; color: blue; word-break: break-all;">${optionsHtml}</span>
-                                </div>
-                                <div>
-                                    <h5 style="display: inline-block;">Correct Answer: </h5>
-                                    <span class="editable-paragraph"  style="border: none; color: green; word-break: break-all;">${correctAns}</span>
-                                </div>
-
-                                <a class="btn btn-primary" onclick = "modalEditM(this)">Edit</a>
-                                <a class="btn btn-danger"  onclick = "modalDeleteM(this)">Delete</a>
-                            </div>
-           `;
-
+            <div class="question" id="${id}" style="position: relative;">
+                <div>
+                    <h5 style="display: inline-block;">Question Body: </h5>
+                    <span class="editable-paragraph" style="border: none; font-size: 20px; color: blue; word-break: break-all;">${question}</span>
+                </div>
+                <div>
+                    <h5 style="display: inline-block;">Choices: </h5>
+                    <span class="editable-paragraph" style="border: none; color: blue; word-break: break-all;">${optionsHtml}</span>
+                </div>
+                <div>
+                    <h5 style="display: inline-block;">Correct Answer: </h5>
+                    <span class="editable-paragraph" style="border: none; color: green; word-break: break-all;">${correctAns}</span>
+                </div>
+                <div>
+                    <h5 style="display: inline-block;">Mark: </h5>
+                    <span class="editable-paragraph" style="border: none; color: green; word-break: break-all;">${Mark}</span>
+                </div>
+                <a class="btn btn-primary" onclick="modalEditM(this)">Edit</a>
+                <a class="btn btn-danger" onclick="modalDeleteM(this)">Delete</a>
+            </div>
+        `;
 
         document.getElementById('examQuestions').insertAdjacentHTML('beforeend', questionHtml2);
 
-        //reset the question body input to empty
-        document.querySelector('.question textarea[name="questionBody"]').value = '';
+        // Reset the question body input to empty
+        document.getElementById('questionBody').value = '';
 
-        //reset the question Option input to empty
+        // Reset the question Option input to empty
         options.forEach(function (option) {
             option.value = '';
         });
 
-        //reset the radio btn input to unchecked
+        // Reset the radio btn input to unchecked
         correctOption.checked = false;
 
-        //enable submit exam btn
+
+        // Enable submit exam btn
         document.getElementById('submitExam').disabled = false;
-    //}
+    }
 
     id++;
 
 });
-
 //--------------------------------------------------------------------------------------------------------------//
 
 
@@ -130,6 +142,7 @@ document.getElementById('examForm').addEventListener('submit', function (event) 
 const cardModal = new bootstrap.Modal(document.getElementById('cardModal'));
 const editQestionBody = document.getElementById('editableTextarea');
 const editCorrectAns = document.getElementById('editableInput2');
+const editMark = document.getElementById('EditMark2');
 const saveButton = document.getElementById('saveButton');
 
 
@@ -155,13 +168,14 @@ function modalEditM(btn) //Edit MCQ Question
     question = parentDiv.children[0].querySelector('span').innerHTML;
     optionsHtml = parentDiv.children[1].querySelector('span').innerHTML;
     correctAns = parentDiv.children[2].querySelector('span').innerHTML;
+    Mark = parentDiv.children[3].querySelector('span').innerHTML;
 
 
     // Show the data of the question in the card
     editQestionBody.value = question;
     editQuestionChoices.value = optionsHtml;
     editCorrectAns.value = correctAns;
-
+    editMark.value = Mark
     cardModal.show();
 }
 
@@ -184,41 +198,35 @@ function modalDeleteM(btn) {
 
 
 
-function modalEditP(btn) //Edit Paragraph Question
-{
-    const cardModal = new bootstrap.Modal(document.getElementById('cardModalP'));
-    const editQestionBody = document.getElementById('editableTextareaP');
-    const editCorrectAns = document.getElementById('editableInput2P');
-    const saveButton = document.getElementById('saveButtonP');
+//function modalEditP(btn) //Edit Paragraph Question
+//{
+//    const cardModal = new bootstrap.Modal(document.getElementById('cardModalP'));
+//    const editQestionBody = document.getElementById('editableTextareaP');
+//    const editCorrectAns = document.getElementById('editableInput2P');
+//    const saveButton = document.getElementById('saveButtonP');
 
-    const clickedButton = this.event.target;
+//    const clickedButton = this.event.target;
 
-    // Find the parent element of the clicked button
-    var parentDiv = clickedButton.parentElement;
+//    // Find the parent element of the clicked button
+//    var parentDiv = clickedButton.parentElement;
 
-    if (parentDiv && parentDiv.classList.contains('question')) {
-        // Get the "id" attribute of the parent element (div with class "question")
-        var parentId = parentDiv.getAttribute('id');
-    }
+//    if (parentDiv && parentDiv.classList.contains('question')) {
+//        // Get the "id" attribute of the parent element (div with class "question")
+//        var parentId = parentDiv.getAttribute('id');
+//    }
 
-    const question = parentDiv.children[0].querySelector('input').value;
-    const correctAns = parentDiv.children[1].querySelector('input').value;
-
-
-    console.log(question, correctAns);
-
-    // Show the data of the question in the card
-    editQestionBody.value = question;
-    editCorrectAns.value = correctAns;
-
-    cardModal.show();
-}
+//    const question = parentDiv.children[0].querySelector('input').value;
+//    const correctAns = parentDiv.children[1].querySelector('input').value;
 
 
+//    console.log(question, correctAns);
 
+//    // Show the data of the question in the card
+//    editQestionBody.value = question;
+//    editCorrectAns.value = correctAns;
 
-
-
+//    cardModal.show();
+//}
 
 
 // Event listener for the "Save" btn
@@ -228,7 +236,7 @@ saveButton.addEventListener('click', function () {
     var newquestion = editQestionBody.value;
     var newoptionsHtml = editableInput1.value;
     var newcorrectAns = editableInput2.value;
-
+    var NewMark = EditMark2.value;
     var newquestionHtml = `
                                     <div>
                                         <h5 style="display: inline-block;">Question Body: </h5>
@@ -241,6 +249,10 @@ saveButton.addEventListener('click', function () {
                                     <div>
                                         <h5 style="display: inline-block;">Correct Answer: </h5>
                                         <span class="editable-paragraph"  style="border: none; color: green; word-break: break-all;">${newcorrectAns}</span>
+                                    </div>
+                                      <div>
+                                        <h5 style="display: inline-block;">Mark: </h5>
+                                        <span class="editable-paragraph"  style="border: none; color: green; word-break: break-all;">${NewMark}</span>
                                     </div>
 
                                     <a class="btn btn-primary" onclick = "modalEditM(this)">Edit</a>
@@ -257,12 +269,10 @@ saveButton.addEventListener('click', function () {
 
 
 
-
-
 //MCQ Choices//
 document.addEventListener("DOMContentLoaded", function () {
     const questionTypeSelect = document.getElementById("questionType");
-    const paragraphQuestionAns = document.getElementById("questionAns");
+    //const paragraphQuestionAns = document.getElementById("questionAns");
     const PAnsLable = document.getElementById("PAnsLable");
     const choicesContainer = document.getElementById("choices");
     const deleteQuestionButton = document.getElementById("deleteQuestion");
@@ -271,13 +281,13 @@ document.addEventListener("DOMContentLoaded", function () {
     questionTypeSelect.addEventListener("change", function () {
         if (questionTypeSelect.value === "MCQ") {
             choicesContainer.style.display = "block";
-            paragraphQuestionAns.style.display = "none";
-            PAnsLable.style.display = "none";
+            //paragraphQuestionAns.style.display = "none";
+        //    PAnsLable.style.display = "none";
         } else {
-            choicesContainer.style.display = "none";
+            //choicesContainer.style.display = "none";
 
-            paragraphQuestionAns.style.display = "block";
-            PAnsLable.style.display = "block";
+            //paragraphQuestionAns.style.display = "block";
+        //    PAnsLable.style.display = "block";
         }
     });
 
@@ -312,22 +322,56 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+document.getElementById('examForm').addEventListener('submitExam', function (event) {
+    event.preventDefault();
 
+    // Declaration for the from elements
+    var examNameElement = document.getElementById('examName');
+    var examDurationElement = document.getElementById('examDuration');
+    var markElement = document.getElementById('Mark');
+    var questionBodyElement = document.getElementById('questionBody');
+    var options = document.querySelectorAll('.question input[name="option"]'); // Options: multiple values
 
+    if (!examNameElement || !examDurationElement || !markElement || !questionBodyElement) {
+        console.error("One or more form elements not found.");
+        return;
+    }
 
+    // Collect option values correctly
+    var optionValues = [];
+    options.forEach(function (option) {
+        var optionValue = option.value.trim(); // Trim whitespace
+        if (optionValue !== '') {
+            optionValues.push(optionValue);
+        }
+    });
 
-document.getElementById('submitExam').addEventListener('click', function () {
-    var examQuestions = document.getElementById('examQuestions').innerHTML;
-    downloadExam(examQuestions);
+    // Concatenate the option values with the question body
+    var concatenatedBody = questionBodyElement.value + ' Options: ' + optionValues.join(', ');
+
+    var examData = {
+        ExamName: examNameElement.value,
+        Duration: examDurationElement.value,
+        Mark: markElement.value,
+        Body: concatenatedBody
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: '/InstructorArea/Exam/Create', 
+        data: JSON.stringify(examData),
+        contentType: 'application/json',
+        success: function (response) {
+            // Handle the success response
+            alert('Exam created successfully!');
+            window.location.href = '/Exam/Success';
+        },
+    });
 });
 
-function downloadExam(examQuestions) {
-    var dataStr = "data:text/plain;charset=utf-8," + encodeURIComponent(examQuestions);
-    var downloadAnchor = document.createElement('a');
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", "exam.txt");
-    downloadAnchor.style.display = "none";
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    document.body.removeChild(downloadAnchor);
-}
+
+
+
+
+
+

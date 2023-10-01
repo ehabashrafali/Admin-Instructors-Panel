@@ -22,8 +22,6 @@ namespace Admin_Panel_ITI.Models
         [Required, Column(TypeName = "date")]
         public DateTime CreationDate { get; set; }
 
-
-
         [ForeignKey(nameof(Instructor))]
         public string? InstructorID { get; set; }
         public virtual Instructor? Instructor { get; set; }

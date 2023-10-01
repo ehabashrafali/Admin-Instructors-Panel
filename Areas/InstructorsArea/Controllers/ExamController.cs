@@ -54,6 +54,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
         public ActionResult Create()
         {
+            Console.WriteLine("ehabashrafaliahmed");
             var EQ = new Exam_QuestionsVM();
             return View(EQ);
         }
@@ -69,12 +70,22 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
                 {
                     Name = model.ExamName,
                     Duration = model.Duration,
-                    // Set other properties as needed
                 };
+
+                var Question = new Question
+                {
+                    Body = model.Body,
+                    Answer = model.Answer,
+                    Mark = (double)model.Mark,
+                    
+                };
+                  
+                questionRepository.CreateQuestion(Question);
+
 
                 // Call the repository method to create the exam.
                 examRepository.CreateExam(newExam);
-                return RedirectToAction("Details", new { id = newExam.ID });
+                //return RedirectToAction("Details", new { id = newExam.ID });
             }
             return View(model);
 
