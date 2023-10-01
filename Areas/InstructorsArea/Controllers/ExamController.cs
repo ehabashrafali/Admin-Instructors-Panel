@@ -42,11 +42,9 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
         }
 
         // GET: ExamController
-        public ActionResult Index(int pageNumber)
+        public ActionResult Index()
         {
-            var exams = examRepository.GetExams(pageNumber, 10);
-
-            return View(exams);
+            return View();
         }
 
         // GET: ExamController/Details/5
@@ -66,6 +64,8 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             ViewBag.CourseId = Id;
             return View();
         }
+
+
 
         public async Task<ActionResult> AddExam(string Name, string Duration, string Questions, int CourseId)
         {
@@ -101,8 +101,10 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             }
 
 
-            return RedirectToAction(nameof(Index));
+            return View();
         }
+
+
 
         // GET: ExamController/Edit/5
         public ActionResult Edit(int id)
@@ -132,5 +134,18 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //// POST: ExamController/Delete/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
     }
 }
