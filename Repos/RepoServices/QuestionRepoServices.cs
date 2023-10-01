@@ -24,11 +24,31 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
+
+        List<int> IQuestionRepository.CreateQuestion(List<Question> qs)
+        {
+            List<int> questionIds = new List<int>();
+            foreach (var item in qs)
+            {
+                Context.Questions.Add(item);
+
+            }
+            Context.SaveChanges();
+
+            // After saving, retrieve the IDs of the added questions
+            foreach (var question in qs)
+            {
+                questionIds.Add(question.ID);
+            }
+
+            return questionIds;
+        }
+
         void IQuestionRepository.DeleteQuestion(int questionID)
         {
             var exams_related = exam_Std_QuestionRepository.GetExamsbyqid(questionID);
 
-            if(exams_related.Count() == 0)
+            if (exams_related.Count() == 0)
             {
 
                 exam_QuestionRepository.DeleteExam_Question(questionID);
@@ -44,7 +64,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         {
             var question = Context.Questions.FirstOrDefault(x => x.ID == questionID);
             return question;
-            
+
         }
 
         List<Question> IQuestionRepository.getQuestions()
@@ -52,7 +72,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             return Context.Questions.ToList();
         }
 
-  
+
 
         int IQuestionRepository.getQuestionsNumber()
         {

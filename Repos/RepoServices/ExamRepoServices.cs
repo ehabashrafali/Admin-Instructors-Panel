@@ -15,17 +15,20 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         public MainDBContext Context { get; set; }
 
 
-        public ExamRepoServices(MainDBContext context, IExam_QuestionRepository exam_QuestionRepository ,IExam_Std_QuestionRepository exam_Std_QuestionRepository)
+        public ExamRepoServices(MainDBContext context, IExam_QuestionRepository exam_QuestionRepository, IExam_Std_QuestionRepository exam_Std_QuestionRepository)
         {
             Context = context;
             this.exam_QuestionRepository = exam_QuestionRepository;
             this.exam_Std_QuestionRepository = exam_Std_QuestionRepository;
         }
 
-        void IExamRepository.CreateExam(Exam exam)
+        int IExamRepository.CreateExam(Exam exam)
         {
             Context.Exams.Add(exam);
             Context.SaveChanges();
+
+
+            return exam.ID;
         }
 
 
@@ -34,7 +37,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
             var exam_records = exam_QuestionRepository.GetExamsRecordsbyExamID(examID);
 
-            if(exam_records.Count == 0)
+            if (exam_records.Count == 0)
             {
                 var exam = Context.Exams.FirstOrDefault(ex => ex.ID == examID);
                 Context.Exams.Remove(exam);
@@ -97,14 +100,14 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         int IExamRepository.GetExamNumbers()
         {
             return Context.Exams.Count();
-        }        
-        
-        int IExamRepository.GetExamNumbersForCourse(int courseID)
-        {
-            return Context.Exams.Where(e=>e.CourseID==courseID).Count();
         }
 
-       
+        int IExamRepository.GetExamNumbersForCourse(int courseID)
+        {
+            return Context.Exams.Where(e => e.CourseID == courseID).Count();
+        }
+
+
 
         List<Exam> IExamRepository.GetExamsbyinstructorID(int instructorID)
         {

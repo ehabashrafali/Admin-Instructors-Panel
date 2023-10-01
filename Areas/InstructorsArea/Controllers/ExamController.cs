@@ -5,9 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol.Core.Types;
 using Admin_Panel_ITI.Areas.InstructorsArea.ViewModels;
 using Admin_Panel_ITI.Models;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Identity;
 
 namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 {
+    [Area("InstructorsArea")] //have to be added(mandatory)
+
     public class ExamController : Controller
     {
         private readonly IExamRepository examRepository;
@@ -18,10 +22,11 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
         private readonly IInstructorRepository instructorRepository;
         private readonly ICourseRepository courseRepositoy;
         private readonly IQuestionRepository questionRepository;
-        public ExamController(IExamRepository examRepository, ITrackRepository trackRepository, 
+        private readonly UserManager<AppUser> _userManager;
+        public ExamController(IExamRepository examRepository, ITrackRepository trackRepository,
             IIntakeRepository intakeRepository, IExam_QuestionRepository exam_QuestionRepository,
           IExam_Std_QuestionRepository exam_Std_QuestionRepository,
-          IInstructorRepository instructorRepository,
+          IInstructorRepository instructorRepository, UserManager<AppUser> userManager,
           ICourseRepository courseRepositoy, IQuestionRepository questionRepository)
         {
             this.examRepository = examRepository;
@@ -32,12 +37,16 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             this.instructorRepository = instructorRepository;
             this.courseRepositoy = courseRepositoy;
             this.questionRepository = questionRepository;
+            _userManager = userManager;
+
         }
 
         // GET: ExamController
-        public ActionResult Index()
+        public ActionResult Index(int pageNumber)
         {
-            return View();
+            var exams = examRepository.GetExams(pageNumber, 10);
+
+            return View(exams);
         }
 
         // GET: ExamController/Details/5
@@ -52,45 +61,50 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             return View(examRepository.GetExamsbycourseID(Id));
         }
 
-        public ActionResult Create()
+        public ActionResult Create(int Id)
         {
-            Console.WriteLine("ehabashrafaliahmed");
-            var EQ = new Exam_QuestionsVM();
-            return View(EQ);
+            ViewBag.CourseId = Id;
+            return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Exam_QuestionsVM model)
+
+
+        public async Task<ActionResult> AddExam(string Name, string Duration, string Questions, int CourseId)
         {
-            if (ModelState.IsValid)
+
+            var user = await _userManager.GetUserAsync(User);
+            string instructorId = user.Id;
+
+            // Deserialize the Questions parameter back to a list of questions
+            List<Question> questions = JsonConvert.DeserializeObject<List<Question>>(Questions);
+
+            var IDs = questionRepository.CreateQuestion(questions);
+
+            Exam ex = new Exam()
             {
-                // Create a new Exam object and populate it with data from the model.
-                var newExam = new Exam
+                Name = Name,
+                Duration = int.Parse(Duration),
+                CreationDate = DateTime.Now,
+                CourseID = CourseId,
+                InstructorID = instructorId
+            };
+
+            var exId = examRepository.CreateExam(ex);
+
+
+            foreach (var qId in IDs)
+            {
+                var ex_q = new Exam_Question()
                 {
-                    Name = model.ExamName,
-                    Duration = model.Duration,
+                    ExamID = exId,
+                    QuestionID = qId
                 };
-
-                var Question = new Question
-                {
-                    Body = model.Body,
-                    Answer = model.Answer,
-                    Mark = (double)model.Mark,
-                    
-                };
-                  
-                questionRepository.CreateQuestion(Question);
-
-
-                // Call the repository method to create the exam.
-                examRepository.CreateExam(newExam);
-                //return RedirectToAction("Details", new { id = newExam.ID });
+                exam_QuestionRepository.CreateExam_Question(ex_q);
             }
-            return View(model);
 
+
+            return RedirectToAction(nameof(Index));
         }
-
 
         // GET: ExamController/Edit/5
         public ActionResult Edit(int id)
@@ -120,19 +134,5 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //// POST: ExamController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        }
     }
-
+}

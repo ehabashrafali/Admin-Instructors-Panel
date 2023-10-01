@@ -1,6 +1,6 @@
-﻿@using Admin_Panel_ITI.Areas.InstructorsArea.ViewModels;
+﻿@*@using Admin_Panel_ITI.Areas.InstructorsArea.ViewModels;
 
-@model Exam_QuestionsVM
+@model Exam_QuestionsVM*@
 
 <!DOCTYPE html>
 <html lang="en">
@@ -261,19 +261,23 @@
 
 
 <body>
+
+    <div id="courseIdContainer" data-course-id="@ViewBag.CourseId"></div>
+
+
     <div class="container">
         <h1>Create Exam</h1>
         <form id="examForm" method="post" action="InstructorArea/Exam/create">
             <div class="form-group">
                 <div>
-                <label for="examName">Exam Name:</label>
-                <input asp-for="ExamName" id="examName" required class="form-control">
-                <span asp-validation-for="ExamName" class="text-danger"></span>
+                    <label for="examName">Exam Name:</label>
+                    <input id="examName" required class="form-control">
+                    <span class="text-danger"></span>
                 </div>
                 <div>
-                <label for="examDuration">Exam Duration:</label>
-                <input asp-for="Duration" id="examDuration" required class="form-control">
-                <span asp-validation-for="Duration" class="text-danger"></span>
+                    <label for="examDuration">Exam Duration:</label>
+                    <input id="examDuration" required class="form-control">
+                    <span class="text-danger"></span>
                 </div>
             </div>
             <div id="questionsContainer" class="form-group">
@@ -281,26 +285,25 @@
                     <div class="form-group">
                         <label for="questionType">Question Type:</label>
                         <select class="form-control" id="questionType">
-@*                             <option value="Paragraph">Paragraph</option>
- *@                            <option value="MCQ">MCQ</option>
+                            @*                             <option value="Paragraph">Paragraph</option>
+                            *@
+                            <option value="MCQ">MCQ</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="Mark">Mark:</label>
-                        <input asp-for="Mark" type="text" id="Mark" required class="form-control">
+                        <input type="text" id="Mark" required class="form-control">
                     </div>
-
                     <div class="form-group">
                         <label for="questionBody">Question Body:</label>
-                        <textarea asp-for="Body" id="questionBody" required class="form-control" wrap="soft" rows="2"></textarea>
+                        <textarea id="questionBody" required class="form-control" wrap="soft" rows="2"></textarea>
                     </div>
-
                     <div id="choices">
                         <div class="form-group choice">
                             <span class="delete-choice">x</span> &nbsp;
                             <span class="add-choice">+</span>
                             <div class="answer">
-                                <input type="text" class="form-control" placeholder="Choice" name="option" asp-for="Questions.FirstOrDefault().Answer">
+                                <input type="text" class="form-control" placeholder="Choice" name="option">
                                 <input type="radio" name="correctOption" required id="correctOption">
                                 <span class="tooltiptext">Correct Answer</span>
                             </div>
@@ -366,13 +369,16 @@
             <i class="fa-solid fa-file-lines fa-lg" style="color: #7330c5;"></i>
         </a>
     </p>
-    <script>
-        var myModel = @Html.Raw(Json.Serialize(Model));
-    </script>
+
+    @*   <script>
+    var myModel = @Html.Raw(Json.Serialize(Model));
+    </script> *@
+
+
     <script src="~/ExamScript.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    
+
 </body>
 
 </html>

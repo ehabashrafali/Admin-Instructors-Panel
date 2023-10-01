@@ -24,7 +24,7 @@ namespace Admin_Panel_ITI.Repos.Interfaces
 
 
         public void RemoveInstructor(string instructorID);
-        public void CreateExam(Exam exam);
+        public int CreateExam(Exam exam);
         public int GetExamNumbersForCourse(int courseID);
     }
 }
