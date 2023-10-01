@@ -67,8 +67,6 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             return View();
         }
 
-
-
         public async Task<ActionResult> AddExam(string Name, string Duration, string Questions, int CourseId)
         {
 
