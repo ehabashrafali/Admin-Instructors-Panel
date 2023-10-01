@@ -1,35 +1,36 @@
 @model Admin_Panel_ITI.Models.Student
 
-<div class="container-fluid col-md-6">
-    <h3 style="margin-top: 32px;">Edit Student</h3>
+<div class="col-9">
+<div class="container-fluid edit-student">
+    <h3 style="margin: 30px 0; text-align: center;">Edit Student</h3>
 
     <form id="myformstudent" asp-controller="Student" asp-action="Edit" method="post">
         <!-- Include the student ID as a hidden field -->
         <input asp-for="AspNetUserID" type="hidden" />
 
         <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text" style="width: 170px; font-size: 20px;">Full Name</span>
+            <span class="input-group-text">Full Name</span>
             <input asp-for="AspNetUser.FullName" class="form-control" aria-label="Sizing example input" placeholder="Enter full name">
         </div>
 
 
         <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text" style="width: 170px; font-size: 20px;">Is Graduated</span>
+            <span class="input-group-text">Is Graduated</span>
             <input asp-for="IsGraduated" class="form-check-input" />
             <span asp-validation-for="IsGraduated" class="text-danger"></span>
         </div>
 
         <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text" style="width: 170px; font-size: 20px;">Creation Date</span>
+            <span class="input-group-text">Creation Date</span>
             <input asp-for="CreationDate" class="form-control" aria-label="Sizing example input" placeholder="Enter creation date">
         </div>
         <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text" style="width: 170px; font-size: 20px;">Intake</span>
+            <span class="input-group-text">Intake</span>
             <select asp-for="IntakeID" asp-items="ViewBag.AllIntakes" class="form-control"></select>
         </div>
 
         <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text" style="width: 170px; font-size: 20px;">Track</span>
+            <span class="input-group-text">Track</span>
             <select asp-for="TrackID" asp-items="ViewBag.AllTracks" class="form-control"></select>
         </div>
 
@@ -37,4 +38,5 @@
             <input type="submit" value="Edit Student" class="btn btn-primary" />
         </div>
     </form>
+</div>
 </div>

@@ -1,28 +1,35 @@
 ﻿@model Admin_Panel_ITI.Models.Course
 
-<div class="container-fluid col-md-6">
-    <h3 style="margin-top: 32px;">Create New Course</h3>
+<div class="col-9">
+    <div class="container-fluid create-course">
+        <h3 style="margin: 30px 0; text-align: center">Create New Course</h3>
 
     <form id="myformcourse" asp-controller="Course" asp-action="Create" >
         <input type="hidden" id="selectedInstructorIds" name="selectedInstructorIds" />
 
         <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text" style="width: 170px; font-size: 20px;">Course Name</span>
+            <span class="input-group-text">Course Name</span>
             <input asp-for="Name" class="form-control" aria-label="Sizing example input" placeholder="Enter course name">
         </div>
         <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text" style="width: 170px; font-size: 20px;">Duration</span>
+            <span class="input-group-text">Duration</span>
             <input asp-for="Duration" class="form-control" aria-label="Sizing example input" placeholder="Enter course duration in days">
         </div>
         <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text" style="width: 170px; font-size: 20px;">Creation Date</span>
+            <span class="input-group-text">Creation Date</span>
             <input asp-for="CreationDate" class="form-control" aria-label="Sizing example input" placeholder="Enter course creation date">
         </div>
-        <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text" style="width: 170px; font-size: 20px;">Instructors</span>
-            <select id="instructorSelect" asp-items="@ViewBag.AllInstructors" class="form-control" multiple>
+        <div class="input-group mb-3 input-group-lg multiselectDiv" style="margin-top: 16px;">
+            <span class="input-group-text">Instructors</span>
+        
+            @*
+            <select name="instructorSelect" id="instructorSelect" asp-items="@ViewBag.AllInstructors" class="form-control" multiple>
                 <!-- Options here -->
-            </select>
+            </select>  *@
+
+                <select name="SelectedInstructorIds" id="SelectedInstructorIds" asp-items="@ViewBag.AllInstructors" class="form-control" multiple>
+                <option value="" selected>search instructors</option> 
+                </select>
         </div>
 
 
@@ -31,7 +38,7 @@
         </div>
     </form>
 </div>
-
+</div>
 
 
 <script>
@@ -49,3 +56,5 @@
        
     });
 </script>
+
+<script src="~/multiSelect.js"></script>

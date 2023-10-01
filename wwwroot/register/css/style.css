@@ -666,3 +666,74 @@ label.valid {
   text-decoration: none;
   color: white;
 }
+
+/*mahmoudtaher updates*/
+/*======================================================*/
+/*======================================================*/
+
+/*Adduser page*/
+.signup-form #registerForm label {
+    left: 10px;
+}
+
+.signup-form #registerForm select {
+    padding: 5px;
+    text-align: center;
+}
+
+.signup-form #registerForm select option {
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+    background: #f1f1f1;
+}
+
+/*login page*/
+.signin-form label
+{
+    left: 10px;
+}
+
+
+@media (max-width: 767px) {
+    /*sign in */
+    .signin-form, .signup-form {
+        margin: 80px 30px !important;
+    }
+    /*sign up */
+    #registerSubmit
+    {
+        margin-bottom: 25px;
+    }
+}
+
+
+
+    /*animation*/
+.slide-down {
+    -webkit-animation: slide-down 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: slide-down 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@-webkit-keyframes slide-down {
+    0% {
+        -webkit-transform: translateY(0px);
+        transform: translateY(-100px);
+    }
+
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-down {
+    0% {
+        -webkit-transform: translateY(-100px);
+        transform: translateY(-100px);
+    }
+
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+}
