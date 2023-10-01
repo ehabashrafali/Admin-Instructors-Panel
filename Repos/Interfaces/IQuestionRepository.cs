@@ -23,6 +23,7 @@ namespace Admin_Panel_ITI.Repos.Interfaces
 
 
         public void CreateQuestion(Question question);
+        public List<int> CreateQuestion(List<Question> question);
 
 
         

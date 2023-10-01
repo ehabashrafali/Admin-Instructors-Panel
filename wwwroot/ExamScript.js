@@ -6,6 +6,22 @@
 //    theme: "dracula"    // Choose a code editor theme
 //});
 
+function Question(Type, Body, Answer, Mark) {
+    this.Type = Type;
+    this.Body = Body;
+    this.Answer = Answer;
+    this.Mark = Mark;
+}
+
+var global_questions = [];
+
+
+function Exam(Name, Duration, CreationDate, Questions) {
+    this.Name = Name;
+    this.Duration = Duration;
+    this.CreationDate = CreationDate;
+    this.Questions = Questions;
+}
 
 var id = 1;
 
@@ -13,103 +29,54 @@ document.getElementById('examForm').addEventListener('submit', function (event) 
     event.preventDefault();
 
     var examName = document.getElementById('examName').value; // Exam Name
-    var questionType = document.getElementById('questionType').value; // Question type
+
+    var questionType = document.getElementById('questionType').value; // Question type "Will be taken"
+
     var questionTextarea = document.getElementById('questionBody');// body
+
     console.log(questionTextarea.value)
+
     if (questionTextarea) {
         var question = questionTextarea.value;
     } else {
         console.error("Textarea element not found.");
     }
-    var Mark = document.getElementById('Mark').value; //Mark value 
+    var Mark = document.getElementById('Mark').value; //Mark value  "Will be taken"
+
     var options = document.querySelectorAll('.question input[name="option"]'); // Options: multiple values
+
     var correctOption = document.querySelector('.question input[name="correctOption"]:checked'); // Correct answer
 
-    if (questionType === 'Paragraph') { //commented till further work
-        //var paragraphAnswer = document.querySelector('.question textarea[name="questionAns"]').value; // Paragraph answer
+    var isOptionsEmpty = true;
 
-        //var questionHtml = `
-        //    <div class="question" id="${id}" style="position: relative;">
-        //        <div>
-        //            <h5 style="display: inline-block;">Question Body: </h5>
-        //            <input type="textbox" value="${question}" style="border: none; font-size: 20px; color: blue;">
-        //        </div>
-        //        <div>
-        //            <h5 style="display: inline-block;">Answer: </h5>
-        //            <input type="textbox" value="${paragraphAnswer}" style="border: none; color: green;">
-        //        </div>
-        //        <a class="btn btn-primary editBtn" onclick="modalEditP(this)">Edit</a>
-        //        <a class="btn btn-danger" onclick="modalDeleteP(this)">Delete</a>
-        //    </div>
-        //`;
+    var optionsHtml = '';
 
-    //if (questionType === 'Paragraph') {
-
-    //    var questionHtml = `
-    //                                <div class="question" id="${id}" style="position: relative;">
-    //                                    <div>
-    //                                        <h5 style="display: inline-block;">Question Body: </h5>
-    //                                        <input type="textbox" value="${question}" style="border: none; font-size: 20px; color: blue;">
-    //                                    </div>
-    //                                    <div>
-    //                                        <h5 style="display: inline-block;">Answer: </h5>
-    //                                        <input type="textbox" value="${paragraphAnswer}" style="border: none; color: green;">
-    //                                    </div>
-
-    //                                    <a class="btn btn-primary editBtn" onclick = "modalEditP(this)">Edit</a>
-    //                                    <a class="btn btn-danger"  onclick = "modalDeleteP(this)">Delete</a>
-    //                                </div>
-    //                `;
-
-    //    //display the created qesution with the correct answer
-    //    document.getElementById('examQuestions').insertAdjacentHTML('beforeend', questionHtml);
-
-    //    //reset the question body & answer input to empty
-    //    document.querySelector('.question textarea[name="questionBody"]').value = '';
-    //    document.querySelector('.question textarea[name="questionAns"]').value = '';
-    //}
-   /* else {*/
-        var isOptionsEmpty = true;
-        var optionsHtml = '';
-
-        options.forEach(function (option) {
-            if (option.value.trim() !== '') {
-                isOptionsEmpty = false;
-                optionsHtml += '' + option.value + ', ';
-            }
-        });
-
-        if (isOptionsEmpty) {
-            alert('Please enter at least one answer choice.');
-            return;
+    options.forEach(function (option) {
+        if (option.value.trim() !== '') {
+            isOptionsEmpty = false;
+            optionsHtml += ' ' + option.value;
         }
+    });
 
-        if (correctOption === null) {
-            alert('Please select the correct answer choice.');
-            return;
-        }
+    if (isOptionsEmpty) {
+        alert('Please enter at least one answer choice.');
+        return;
+    }
 
-        var correctAns = correctOption.parentElement.querySelector('input[name="option"]').value;  //get correct ans
+    if (correctOption === null) {
+        alert('Please select the correct answer choice.');
+        return;
+    }
 
-        //var questionObj = {
-        //    id: id,
-        //    question: question,
-        //    mark: Mark,
-        //    options: [],
-        //    correctOption: correctAns
-        //};
+    var correctAns = correctOption.parentElement.querySelector('input[name="option"]').value;  //get correct ans "Will be taken"
 
-        //options.forEach(function (option) {
-        //    if (option.value.trim() !== '') {
-        //        questionObj.options.push(option.value);
-        //    }
-        //});
+    var Q_db_body = questionTextarea.value + " " + optionsHtml; //"Will be taken"
 
-        //questionsList.push(questionObj); // Add the question to the list
 
-        //console.log(model);
-        /* Appear after the question is created */
-        var questionHtml2 = `
+    var q_add = new Question(questionType, Q_db_body, correctAns, Mark);
+    global_questions.push(q_add);
+
+    var questionHtml2 = `
             <div class="question" id="${id}" style="position: relative;">
                 <div>
                     <h5 style="display: inline-block;">Question Body: </h5>
@@ -132,23 +99,22 @@ document.getElementById('examForm').addEventListener('submit', function (event) 
             </div>
         `;
 
-        document.getElementById('examQuestions').insertAdjacentHTML('beforeend', questionHtml2);
+    document.getElementById('examQuestions').insertAdjacentHTML('beforeend', questionHtml2);
 
-        // Reset the question body input to empty
-        document.getElementById('questionBody').value = '';
+    // Reset the question body input to empty
+    document.getElementById('questionBody').value = '';
 
-        // Reset the question Option input to empty
-        options.forEach(function (option) {
-            option.value = '';
-        });
+    // Reset the question Option input to empty
+    options.forEach(function (option) {
+        option.value = '';
+    });
 
-        // Reset the radio btn input to unchecked
-        correctOption.checked = false;
+    // Reset the radio btn input to unchecked
+    correctOption.checked = false;
 
 
-        // Enable submit exam btn
-        document.getElementById('submitExam').disabled = false;
-    }
+    // Enable submit exam btn
+    document.getElementById('submitExam').disabled = false;
 
     id++;
 
@@ -217,38 +183,6 @@ function modalDeleteM(btn) {
 
 
 
-//function modalEditP(btn) //Edit Paragraph Question
-//{
-//    const cardModal = new bootstrap.Modal(document.getElementById('cardModalP'));
-//    const editQestionBody = document.getElementById('editableTextareaP');
-//    const editCorrectAns = document.getElementById('editableInput2P');
-//    const saveButton = document.getElementById('saveButtonP');
-
-//    const clickedButton = this.event.target;
-
-//    // Find the parent element of the clicked button
-//    var parentDiv = clickedButton.parentElement;
-
-//    if (parentDiv && parentDiv.classList.contains('question')) {
-//        // Get the "id" attribute of the parent element (div with class "question")
-//        var parentId = parentDiv.getAttribute('id');
-//    }
-
-//    const question = parentDiv.children[0].querySelector('input').value;
-//    const correctAns = parentDiv.children[1].querySelector('input').value;
-
-
-//    console.log(question, correctAns);
-
-//    // Show the data of the question in the card
-//    editQestionBody.value = question;
-//    editCorrectAns.value = correctAns;
-
-//    cardModal.show();
-//}
-
-
-// Event listener for the "Save" btn
 
 saveButton.addEventListener('click', function () {
     //save the new values to the initial values
@@ -301,12 +235,12 @@ document.addEventListener("DOMContentLoaded", function () {
         if (questionTypeSelect.value === "MCQ") {
             choicesContainer.style.display = "block";
             //paragraphQuestionAns.style.display = "none";
-        //    PAnsLable.style.display = "none";
+            //    PAnsLable.style.display = "none";
         } else {
             //choicesContainer.style.display = "none";
 
             //paragraphQuestionAns.style.display = "block";
-        //    PAnsLable.style.display = "block";
+            //    PAnsLable.style.display = "block";
         }
     });
 
@@ -341,7 +275,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-document.getElementById('examForm').addEventListener('submitExam', function (event) {
+
+document.getElementById('submitExam').addEventListener('click', function (event) {
     event.preventDefault();
 
     // Declaration for the from elements
@@ -349,44 +284,51 @@ document.getElementById('examForm').addEventListener('submitExam', function (eve
     var examDurationElement = document.getElementById('examDuration');
     var markElement = document.getElementById('Mark');
     var questionBodyElement = document.getElementById('questionBody');
-    var options = document.querySelectorAll('.question input[name="option"]'); // Options: multiple values
+    var options = document.querySelectorAll('.question input[name="option"]');// Options: multiple values
+
+    console.log("hererereerere");
+    global_questions.forEach(function (question) {
+
+        console.log("Body: " + question.Body);
+
+    });
 
     if (!examNameElement || !examDurationElement || !markElement || !questionBodyElement) {
         console.error("One or more form elements not found.");
         return;
     }
 
-    // Collect option values correctly
-    var optionValues = [];
-    options.forEach(function (option) {
-        var optionValue = option.value.trim(); // Trim whitespace
-        if (optionValue !== '') {
-            optionValues.push(optionValue);
-        }
-    });
+ 
 
-    // Concatenate the option values with the question body
-    var concatenatedBody = questionBodyElement.value + ' Options: ' + optionValues.join(', ');
+    var courseID = document.getElementById('courseIdContainer').getAttribute('data-course-id');
 
-    var examData = {
-        ExamName: examNameElement.value,
-        Duration: examDurationElement.value,
-        Mark: markElement.value,
-        Body: concatenatedBody
-    };
+
+
 
     $.ajax({
-        type: 'POST',
-        url: '/InstructorArea/Exam/Create', 
-        data: JSON.stringify(examData),
+        type: 'GET',
+        url: '/Exam/AddExam',
+        data: {
+            Name: examNameElement.value,
+            Duration: examDurationElement.value,
+            Questions: JSON.stringify(global_questions),
+            CourseId: courseID
+        },
         contentType: 'application/json',
         success: function (response) {
             // Handle the success response
             alert('Exam created successfully!');
             window.location.href = '/Exam/Success';
         },
+        error: function () {
+            alert('Error occurred while creating the exam.');
+        }
     });
+
+
 });
+
+
 
 
 

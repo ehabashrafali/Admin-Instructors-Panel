@@ -22,10 +22,13 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             this.exam_Std_QuestionRepository = exam_Std_QuestionRepository;
         }
 
-        void IExamRepository.CreateExam(Exam exam)
+        int IExamRepository.CreateExam(Exam exam)
         {
             Context.Exams.Add(exam);
             Context.SaveChanges();
+
+
+            return exam.ID;
         }
 
 

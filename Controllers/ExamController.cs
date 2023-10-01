@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Admin_Panel_ITI.Controllers
 {
-    [Area("InstructorsArea")] //have to be added(mandatory)
     public class ExamController : Controller
     {
         private readonly IExamRepository examRepository;

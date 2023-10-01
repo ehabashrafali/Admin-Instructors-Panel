@@ -24,6 +24,26 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
+
+        List<int> IQuestionRepository.CreateQuestion(List<Question> qs)
+        {
+            List<int> questionIds = new List<int>();
+            foreach (var item in qs)
+            {
+                Context.Questions.Add(item);
+
+            }
+            Context.SaveChanges();
+
+            // After saving, retrieve the IDs of the added questions
+            foreach (var question in qs)
+            {
+                questionIds.Add(question.ID);
+            }
+
+            return questionIds;
+        }
+
         void IQuestionRepository.DeleteQuestion(int questionID)
         {
             var exams_related = exam_Std_QuestionRepository.GetExamsbyqid(questionID);
