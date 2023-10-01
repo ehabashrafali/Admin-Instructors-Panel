@@ -2,8 +2,6 @@
 
 @model Exam_QuestionsVM
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,9 +21,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
 
-
-
-
     @*    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/theme/dracula.min.css"> <!-- Use the "dracula" theme for a dark theme -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.js"></script>
@@ -33,7 +28,6 @@
     <!-- Include additional modes for other programming languages -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/clike/clike.min.js"></script> <!-- Example: C, C++, Java -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/python/python.min.js"></script> <!-- Example: Python -->*@
-
 
 
     <style>
@@ -269,53 +263,49 @@
 <body>
     <div class="container">
         <h1>Create Exam</h1>
-        <form id="examForm" method="post" action="/Exam/create">
+        <form id="examForm" method="post" action="InstructorArea/Exam/create">
             <div class="form-group">
+                <div>
                 <label for="examName">Exam Name:</label>
-                <input asp-for="ExamName" id="examName" required name="ExamName" class="form-control">
+                <input asp-for="ExamName" id="examName" required class="form-control">
                 <span asp-validation-for="ExamName" class="text-danger"></span>
-
-            </div>
-            <div class="form-group">
+                </div>
+                <div>
                 <label for="examDuration">Exam Duration:</label>
-                <input asp-for="Duration" id="examDuration" required name="Duration" class="form-control">
+                <input asp-for="Duration" id="examDuration" required class="form-control">
                 <span asp-validation-for="Duration" class="text-danger"></span>
-
+                </div>
             </div>
-
             <div id="questionsContainer" class="form-group">
                 <div class="form-group  question ">
-
                     <div class="form-group">
-                        <label for="questionType">Question Type: MCQ </label>
-                        <input type="hidden" id="questionType" value="MCQ">
+                        <label for="questionType">Question Type:</label>
+                        <select class="form-control" id="questionType">
+@*                             <option value="Paragraph">Paragraph</option>
+ *@                            <option value="MCQ">MCQ</option>
+                        </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="editableInput2" class="form-label">Mark</label>
-                        <input id="editableInput2" type="text" class="form-control">
+                    <div class="form-group">
+                        <label for="Mark">Mark:</label>
+                        <input asp-for="Mark" type="text" id="Mark" required class="form-control">
                     </div>
 
                     <div class="form-group">
                         <label for="questionBody">Question Body:</label>
-                        <textarea class="form-control" id="questionBody" rows="3" required name="questionBody"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label id="PAnsLable" for="questionAns">Answer</label>
-                        <textarea class="form-control" id="questionAns" rows="3" required name="questionAns"></textarea>
+                        <textarea asp-for="Body" id="questionBody" required class="form-control" wrap="soft" rows="2"></textarea>
                     </div>
 
-                    <div id="choices" style="display: none;">
+                    <div id="choices">
                         <div class="form-group choice">
                             <span class="delete-choice">x</span> &nbsp;
                             <span class="add-choice">+</span>
                             <div class="answer">
-                                <input type="text" class="form-control" placeholder="Choice" name="option">
+                                <input type="text" class="form-control" placeholder="Choice" name="option" asp-for="Questions.FirstOrDefault().Answer">
                                 <input type="radio" name="correctOption" required id="correctOption">
                                 <span class="tooltiptext">Correct Answer</span>
                             </div>
                         </div>
                     </div>
-
 
                     <button type="submit" class="add-question">Add Question</button>
                 </div>
@@ -336,7 +326,6 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-
                         <div class="mb-3">
                             <label for="editableTextarea" class="form-label">Question Body</label>
                             <textarea id="editableTextarea" class="form-control"></textarea>
@@ -351,11 +340,11 @@
                             <label for="editableInput2" class="form-label">Correct answer</label>
                             <input id="editableInput2" type="text" class="form-control">
                         </div>
-
                         <div class="mb-3">
-                            <label for="editableInput2" class="form-label">Mark</label>
-                            <input id="editableInput2" type="text" class="form-control">
+                            <label for="EditMark2" class="form-label">Mark</label>
+                            <input id="EditMark2" type="text" class="form-control">
                         </div>
+
                     </div>
 
                     <!-- Save/close buttons -->
@@ -366,40 +355,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Modal for editing Paragraph Q -->
-        @* <div class="modal" id="cardModalP" tabindex="-1">
-        <div class="modal-dialog" style="width: 400px; height: 300px;">
-        <div class="modal-content">
-        <!-- Card content -->
-        <div class="modal-header">
-        <h5 class="modal-title">Edit Question</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-
-        <div class="mb-3">
-        <label for="editableTextarea" class="form-label">Question Body</label>
-        <textarea id="editableTextareaP" class="form-control"></textarea>
-        </div>
-
-        <div class="mb-3">
-        <label for="editableInput2" class="form-label">Correct answer</label>
-        <textarea id="editableInput2P" type="text" class="form-control"></textarea>
-        </div>
-        </div>
-
-        <!-- Save/close buttons -->
-        <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="saveButtonP">Save</button>
-        </div>
-        </div>
-        </div>
-        </div> *@
-
-
-
         <button id="submitExam" disabled>Submit Exam</button> <!--submit exam btn is disabled untill u create at least one question with its options and correct answer-->
     </div>
 
@@ -411,14 +366,13 @@
             <i class="fa-solid fa-file-lines fa-lg" style="color: #7330c5;"></i>
         </a>
     </p>
-
-
+    <script>
+        var myModel = @Html.Raw(Json.Serialize(Model));
+    </script>
     <script src="~/ExamScript.js"></script>
-
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-
-
+    
 </body>
-</html>
 
+</html>
