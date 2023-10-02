@@ -25,25 +25,14 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         }
 
 
-        List<int> IQuestionRepository.CreateQuestion(List<Question> qs)
+        async Task<int[]> IQuestionRepository.CreateQuestion(Question[] qs)
         {
-            List<int> questionIds = new List<int>();
-            foreach (var item in qs)
-            {
-                Context.Questions.Add(item);
-
-            }
-            Context.SaveChanges();
-
+            Context.AddRange(qs); // Add the questions to the context
+            Context.SaveChanges(); // Save changes to the database
             // After saving, retrieve the IDs of the added questions
-            foreach (var question in qs)
-            {
-                questionIds.Add(question.ID);
-            }
-
-            return questionIds;
+            int[] addQuestionIds = qs.Select(q => q.ID).ToArray();
+            return addQuestionIds;
         }
-
         void IQuestionRepository.DeleteQuestion(int questionID)
         {
             var exams_related = exam_Std_QuestionRepository.GetExamsbyqid(questionID);
@@ -88,5 +77,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             question_updated.Answer = question.Answer;
             Context.SaveChanges();
         }
+
     }
 }

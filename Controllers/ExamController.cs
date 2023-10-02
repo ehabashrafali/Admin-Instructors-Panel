@@ -56,11 +56,11 @@
 //        }
 
 //        // GET: ExamController/Delete/5
-//        public ActionResult Delete(int id)
-//        {
-//            examRepository.DeleteExam(id);
-//            return RedirectToAction(nameof(Index));
-//        }
+//public ActionResult Delete(int id)
+//{
+//    examRepository.DeleteExam(id);
+//    return RedirectToAction(nameof(Index));
+//}
 
 //        // GET: ExamController/Create
 //        public ActionResult Create()
