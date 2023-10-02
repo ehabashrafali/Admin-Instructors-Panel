@@ -24,7 +24,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
-
         async Task<int[]> IQuestionRepository.CreateQuestion(Question[] qs)
         {
             Context.AddRange(qs); // Add the questions to the context

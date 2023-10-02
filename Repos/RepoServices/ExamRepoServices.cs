@@ -86,7 +86,18 @@ namespace Admin_Panel_ITI.Repos.RepoServices
                 .ToList();
         }
 
+        public List<Exam> GetExamsByInstructorIDAndCourseID(string instructorID, int courseID)
+        {
+            var exams = Context.Exams
+                .Include(e => e.Instructor)
+                .ThenInclude(i => i.AspNetUser)
+                .Include(e => e.Course)
+                .Include(e => e.Student_Quest_Exam)
+                .Where(e => e.InstructorID == instructorID && e.CourseID == courseID)
+                .ToList();
 
+            return exams;
+        }
         List<Exam> IExamRepository.GetExamsbycourseID(int courseID)
         {
             var exams = Context.Exams.Include(e => e.Instructor).ThenInclude(i => i.AspNetUser)
@@ -107,13 +118,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             return Context.Exams.Where(e => e.CourseID == courseID).Count();
         }
 
-
-
-        List<Exam> IExamRepository.GetExamsbyinstructorID(int instructorID)
-        {
-            var exams = Context.Exams.Where(e => e.InstructorID == instructorID.ToString()).ToList();
-            return exams;
-        }
 
         void IExamRepository.UpdateExam(int examID, Exam exam)
         {

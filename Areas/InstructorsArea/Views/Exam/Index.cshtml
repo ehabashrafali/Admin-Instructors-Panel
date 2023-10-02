@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<Admin_Panel_ITI.Models.Exam>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,7 +69,7 @@
                 <div class="container-fluid">
                     <div class="row col-md-12">
                         <div class="r1">
-                            <h3 style="padding-left: 33px;">All Exams in .Net course</h3>
+                            <h3 style="padding-left: 33px;">All Exams in: @(ViewBag.Course?.Name)</h3>
                         </div>
                     </div>
                     <div class="row col-md-11">
@@ -75,36 +77,35 @@
                             <thead class="table-secondary">
                                 <tr>
                                     <th style="padding-left: 24px;">
-                                        Exam Name
+                                       Exam Name
                                         <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                                         </svg>
                                     </th>
                                     <th style="padding-left: 24px;">
-                                        Duration
+                                       Duration
                                         <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                                         </svg>
                                     </th>
                                     <th style="padding-left: 24px;">
-                                        Creation Date
+                                       Creation Date
                                         <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                                         </svg>
                                     </th>
                                     <th>
-                                        Students submitted
+                                       Students submitted
                                         <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                                         </svg>
                                     </th>
                                     <th>
-                                        Course Name
+                                       Course Name
                                         <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                                         </svg>
                                     </th>
-                                    <th></th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -122,36 +123,23 @@
                                             @Html.DisplayFor(modelItem => item.CreationDate)
                                         </td>
                                         <td style="padding-left: 24px;">
-                                            @item.Student_Quest_Exam.Count()
+                                            @{
+                                                // Get the number of unique students by counting distinct StudentIDs
+                                                var uniqueStudentCount = item.Student_Quest_Exam.Select(sq => sq.StudentID).Distinct().Count();
+                                            }
+                                            @uniqueStudentCount
                                         </td>
+
                                         <td style="padding-left: 24px;">
                                             @Html.DisplayFor(modelItem => item.Course.Name)
                                         </td>
                                         <td style="padding-left: 24px;">
-                                            <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary">Edit</a>
-                                        </td>
-                                        <td style="padding-left: 24px;">
-                                            <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
+                                            <a asp-action="Delete" asp-route-CourseId="@item.Course.ID" asp-route-ExamID="@item.ID" class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
-                   @*  <div class="footer">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-end">
-                                <li class="page-item disabled">
-                                    <a class="page-link">Previous</a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div> *@
                 </div>
             </div>
         </div>

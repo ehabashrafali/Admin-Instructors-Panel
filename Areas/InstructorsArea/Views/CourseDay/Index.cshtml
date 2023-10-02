@@ -119,10 +119,12 @@
                                    asp-route-intakeName="@IntakeName"
                                    asp-route-trackName="@TrackName">Add Day</a>
 
-                                <a asp-action="Index" asp-controller="Exam" class="btn courseBtns">Show Exam</a>
+                                <a asp-action="Index" asp-controller="Exam" asp-route-CourseId="@courseID" class="btn courseBtns">Show Exam</a>
 
                                 <a asp-action="Create" asp-controller="Exam" asp-route-Id="@courseID" class="btn courseBtns">Create Exam</a>
                             </div>
+
+
 
                         </div>
                     </div>
