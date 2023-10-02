@@ -1,18 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Admin_Panel_ITI.Models
 {
-    public enum QuestionType { MCQ, Paragraph, NA }
 
     [Table("Question")]
     public class Question
     {
-        [Key]
+        [Key, JsonIgnore]
         public int ID { get; set; }
 
-        [/*Required,*/ EnumDataType(typeof(QuestionType))]
-        public QuestionType? Type { get; set; }
+        [MaxLength(10)]
+        public string Type { get; set; }
 
         [Required]
         public string Body { get; set; }
@@ -22,7 +22,6 @@ namespace Admin_Panel_ITI.Models
 
         [Required]
         public double Mark { get; set; }
-
 
 
 

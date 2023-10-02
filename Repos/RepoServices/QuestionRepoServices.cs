@@ -25,23 +25,14 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         }
 
 
-        List<int> IQuestionRepository.CreateQuestion(List<Question> qs)
+        async Task<int[]> IQuestionRepository.CreateQuestions(Question[] questions)
         {
-            List<int> questionIds = new List<int>();
-            foreach (var item in qs)
-            {
-                Context.Questions.Add(item);
+            Context.AddRange(questions);
+            await Context.SaveChangesAsync();
 
-            }
-            Context.SaveChanges();
+            int[] addedQuestionIds = questions.Select(q => q.ID).ToArray();
 
-            // After saving, retrieve the IDs of the added questions
-            foreach (var question in qs)
-            {
-                questionIds.Add(question.ID);
-            }
-
-            return questionIds;
+            return addedQuestionIds;
         }
 
         void IQuestionRepository.DeleteQuestion(int questionID)
