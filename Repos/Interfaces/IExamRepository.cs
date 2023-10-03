@@ -10,7 +10,7 @@ namespace Admin_Panel_ITI.Repos.Interfaces
         public Exam GetExambyID(int examID);
 
 
-        public List<Exam> GetExamsbyinstructorID(int instructorID);
+        public List<Exam> GetExamsByInstructorIDAndCourseID(string instructorID, int crsid );
         public List<Exam> GetExamsbycourseID(int courseID);
 
 

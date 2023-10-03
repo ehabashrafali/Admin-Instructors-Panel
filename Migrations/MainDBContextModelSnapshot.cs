@@ -413,8 +413,9 @@ namespace Admin_Panel_ITI.Migrations
                     b.Property<double>("Mark")
                         .HasColumnType("float");
 
-                    b.Property<int?>("Type")
-                        .HasColumnType("int");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 

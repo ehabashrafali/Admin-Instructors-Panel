@@ -6,19 +6,12 @@ namespace Admin_Panel_ITI.Repos.Interfaces
     {
 
         public int GetQuestionNumbersInExam(int examiD);
-
         public List<Exam_Question> GetExambyqid(int qid);
 
+        public void DeleteExam_Question(int ExamId, int questionID);
+        public void DeleteExamQuestion(int ExamId);
 
-
-
-
-
-
-
-        public void DeleteExam_Question(int trackID, int courseID);
         public void DeleteExam_Question(int questionID);
-
 
         public void CreateExam_Question(Exam_Question exam_question);
         public void CreateExam_Question(List<Exam_Question> exam_question);

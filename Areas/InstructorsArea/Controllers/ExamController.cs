@@ -1,5 +1,7 @@
 ﻿using Admin_Panel_ITI.Models;
+using Admin_Panel_ITI.Repos;
 using Admin_Panel_ITI.Repos.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -14,23 +16,32 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
         private readonly IQuestionRepository questionRepo;
         private readonly IExam_QuestionRepository examQuestionRepo;
         private readonly UserManager<AppUser> userManager;
+        private readonly ICourseRepository courseRepository;
+        private readonly IExam_Std_QuestionRepository exam_Std_QuestionRepository;
+
+
         public ExamController(IExamRepository _examRepo,
             IQuestionRepository _questionRepo,
             IExam_QuestionRepository _examQuestionRepo,
-            UserManager<AppUser> _userManager)
+            UserManager<AppUser> _userManager, ICourseRepository _courseRepository, IExam_Std_QuestionRepository _exam_Std_QuestionRepository)
         {
             examRepo = _examRepo;
             questionRepo = _questionRepo;
             examQuestionRepo = _examQuestionRepo;
             userManager = _userManager;
+            courseRepository = _courseRepository;
+            exam_Std_QuestionRepository = _exam_Std_QuestionRepository;
         }
 
 
-
         // GET: ExamController
-        public ActionResult Index()
+        public ActionResult Index(int CourseId)
         {
-            return View();
+            string UserID = userManager.GetUserId(User);
+            var exams = examRepo.GetExamsByInstructorIDAndCourseID(UserID, CourseId);
+            var course = courseRepository.GetCoursebyID(CourseId);
+            ViewBag.Course = course;
+            return View(exams);
         }
 
         // GET: ExamController/Details/5
@@ -38,7 +49,6 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
         {
             return View();
         }
-
 
         [HttpGet]
         public ActionResult Create(int id)
@@ -71,8 +81,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
             Question[] questionsArray = JsonConvert.DeserializeObject<Question[]>(Json_Questions);
 
-            int[] questionsIDs = await questionRepo.CreateQuestions(questionsArray);
-
+            int[] questionsIDs = await questionRepo.CreateQuestion(questionsArray);
 
             List<Exam_Question> exam_Questions = new List<Exam_Question>();
             foreach (int Q in questionsIDs)
@@ -88,52 +97,31 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
             examQuestionRepo.CreateExam_Question(exam_Questions);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", new { CourseId = CourseId });
         }
-
-
-
-
-        // GET: ExamController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ExamController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         // GET: ExamController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int ExamID, int CourseId)
         {
-            return View();
+            exam_Std_QuestionRepository.DeleteExam_Std_Question(ExamID);
+
+            examQuestionRepo.DeleteExamQuestion(ExamID);
+            examRepo.DeleteExam(ExamID);
+            return RedirectToAction("Index", new { CourseId = CourseId });
         }
 
         // POST: ExamController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }

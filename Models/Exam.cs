@@ -16,7 +16,6 @@ namespace Admin_Panel_ITI.Models
         [Required]
         public int Duration { get; set; }
 
-
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required, Column(TypeName = "date")]
@@ -25,14 +24,9 @@ namespace Admin_Panel_ITI.Models
         [ForeignKey(nameof(Instructor))]
         public string? InstructorID { get; set; }
         public virtual Instructor? Instructor { get; set; }
-
-
-
         [ForeignKey(nameof(Course))]
         public int? CourseID { get; set; }
         public virtual Course? Course { get; set; }
-
-
         public virtual IEnumerable<Exam_Std_Question>? Student_Quest_Exam { get; set; }
         public virtual IEnumerable<Exam_Question>? Exam_Question { get; set; }
 

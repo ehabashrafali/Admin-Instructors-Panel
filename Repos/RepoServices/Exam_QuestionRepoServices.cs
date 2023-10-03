@@ -79,6 +79,13 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
+        void IExam_QuestionRepository.DeleteExamQuestion(int examID)
+        {
+            var exam_question = Context.Exam_Questions.Where(eq => eq.ExamID == examID);
+            Context.Exam_Questions.RemoveRange(exam_question);
+            Context.SaveChanges();
+        }
+
         void IExam_QuestionRepository.DeleteExam_Question(int questionID)
         {
             var exam_question = Context.Exam_Questions.Where(eq=>eq.QuestionID == questionID);

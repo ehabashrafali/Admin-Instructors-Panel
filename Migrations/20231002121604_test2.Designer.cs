@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Admin_Panel_ITI.Migrations
 {
     [DbContext(typeof(MainDBContext))]
-    [Migration("20231001145629_test")]
-    partial class test
+    [Migration("20231002121604_test2")]
+    partial class test2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -416,8 +416,9 @@ namespace Admin_Panel_ITI.Migrations
                     b.Property<double>("Mark")
                         .HasColumnType("float");
 
-                    b.Property<int?>("Type")
-                        .HasColumnType("int");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 

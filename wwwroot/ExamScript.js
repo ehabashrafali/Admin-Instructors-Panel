@@ -138,7 +138,7 @@ document.getElementById('examForm').addEventListener('submit', function (event) 
 //--------------------------------------------------------------------------------------------------------------//
 
 
-/* Edit Question Logic */
+                    /* Edit Question Logic */
 
 
 //Card elements
@@ -195,8 +195,9 @@ function modalDeleteM(btn) {
 
     document.getElementById(parentId).remove();
 
-    //delete the question in the list that will be sent to the database too
-    QuestionsListObjects.splice(parentId - 1, 1);
+
+    QuestionsListObjects.splice(parentId,1);
+
 
     id--;
 }
