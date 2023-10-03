@@ -3,46 +3,42 @@
 
 }
 
-    <div id ="partialTable">
-    <div class="row col-md-11">
+    <div id ="partialTable" class="student-table">
+    <div>
         <table class="table table-hover" id="myTable">
             <thead class="table-secondary">
                 <tr>
                     <th>@*<input type="checkbox" name="all" id="all" class="all" onclick="checkUncheck(this)">*@</th>
                     <th>
-                        Student Full Name
+                        Full Name
                         <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"></path>
                         </svg>
                     </th>
                     <th>
-                        Graduation status
-                        <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                        </svg>
+                        Graduated
+                  
                     </th>
-                    <th>
+                 @*    <th>
                         CreationDate
-                        <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                        </svg>
-                    </th>
+                 
+                    </th> *@
                     <th>
                         Track Name
-                        <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                        <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"></path>
                         </svg>
                     </th>
                        <th>
                         Intake No.
-                        <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                        <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"></path>
                         </svg>
                     </th>
                     <th>
                         Duration
-                        <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                        <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"></path>
                         </svg>
                     </th>
                     <th></th>
@@ -55,7 +51,7 @@
                         <td><input type="checkbox" name="selectedStudentIds[]" class="course-checkbox" value="@StudentList[i].AspNetUserID"></td>
                         <td style="cursor: pointer;" onclick="editStudent('@StudentList[i].AspNetUserID')"> @StudentList[i].AspNetUser?.FullName</td>
                         <td>@StudentList[i].IsGraduated</td>
-                        <td>@StudentList[i].CreationDate</td>
+                        @* <td>@StudentList[i].CreationDate</td> *@
                         <td>@StudentList[i].Track.Name</td>
                         <td>@StudentList[i].Intake.Name</td>
                         <td>@StudentList[i].Intake.Duration</td>

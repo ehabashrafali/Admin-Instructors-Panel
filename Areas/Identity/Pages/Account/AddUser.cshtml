@@ -40,11 +40,11 @@
     <div class="main">
 
         <!-- Sign up form -->
-        <section class="signup">
+        <section class="signup add-user-form">
             <div class="container" style="background-size:revert-layer">
                 <div class="signup-content">
                     <div class="screen"></div>
-                    <div class="signin-image">
+                    <div class="signin-image" style="width: auto; margin: 0">
                         <div class="logo">
                             <span class="navbar-brand" style="margin-left: 24px;">
                                 <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
@@ -54,7 +54,7 @@
 
                         </div>
                     </div>
-                    <div class="signup-form">
+                    <div class="signup-form slide-down" style="display:table;width:300px;margin:20px auto !important;">
                         <h2 class="form-title">Add New User</h2>
 
                         <form method="post" id="registerForm" asp-route-returnUrl="@Model.ReturnUrl">

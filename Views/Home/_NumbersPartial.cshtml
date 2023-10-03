@@ -1,11 +1,11 @@
 ﻿
+
 <div id="intakeDataContainer">
     <!-- 4 Cards ( Tracks, Courses, Instructor, Student ) -->
-    <div class="container text-center">
+    <div class="container text-center slide-down">
+<div class="row">
 
-        <div class="row align-items-center">
-            <div style="display: flex; justify-content: space-evenly; margin-bottom: 24px">
-                <div class="">
+                <div class="col-12 col-lg-4 p-3 main-page-cards">
                     <a style="padding-top: 8px;" class="card stretched-link text-decoration-none" style="width: 18rem;"
                        asp-action="@(Model.IntakeId == 0 ? "Index" : "TracksByInakeId")" asp-controller="Track" asp-route-id="@Model.IntakeId">
                         <img src="assets/images/tracks.png" class="card-img-top card-text" alt="tracks" style="width: 130px; height: 130px; margin: 10px auto 0px;">
@@ -14,30 +14,21 @@
                             <h3 class="card-text">Track</h3>
                         </div>
                     </a>
+                    </div>
+
+            <div class="col-12 col-lg-4 p-3 main-page-cards">
+                    <a id="courseLink" style="padding-top: 8px; cursor:pointer;" class="card stretched-link text-decoration-none" style="width: 18rem;">
+                        <img src="assets/images/courses.png" class="card-img-top" alt="courses" style="width: 130px; height: 130px; margin: 10px auto 0px;">
+                        <div class="card-body">
+                            <h4 class="card-text">@Model.CourseNumber</h4>
+                            <h3 class="card-text">Course</h3>
+                        </div>
+                    </a>
                 </div>
 
-@*             <div class="col">
-                <a style="padding-top: 8px;" class="card stretched-link text-decoration-none" style="width: 18rem;"
-                   asp-action="@(Model.IntakeId == 0 ? "Index" : "CrsIndexByIntakeId")" asp-controller="course" asp-route-id="@Model.IntakeId" >
-                    <img src="assets/images/courses.png" class="card-img-top" alt="courses" style="width: 130px; height: 130px; margin: 10px auto 0px;">
-                    <div class="card-body">
-                        <h4 class="card-text">@Model.CourseNumber</h4>
-                        <h3 class="card-text">Course</h3>
-                    </div>
-                </a>
-            </div> *@
-            <div class="col">
-                <a id="courseLink" style="padding-top: 8px; cursor:pointer; " class="card stretched-link text-decoration-none" style="width: 18rem;">
-                    <img src="assets/images/courses.png" class="card-img-top" alt="courses" style="width: 130px; height: 130px; margin: 10px auto 0px;">
-                    <div class="card-body">
-                        <h4 class="card-text">@Model.CourseNumber</h4>
-                        <h3 class="card-text">Course</h3>
-                    </div>
-                </a>
-            </div>
-            <div class="col">
-                <a style="padding-top: 8px;" class="card stretched-link text-decoration-none" style="width: 18rem;"
-                   asp-action="@(Model.IntakeId == 0 ? "Index" : "InsIndexByIntakeId")" asp-controller="Instructor" asp-route-id="@Model.IntakeId">
+            <div class="col-12 col-lg-4 p-3 main-page-cards">
+                    <a style="padding-top: 8px;" class="card stretched-link text-decoration-none" style="width: 18rem;"
+                       asp-action="@(Model.IntakeId == 0 ? "Index" : "InsIndexByIntakeId")" asp-controller="Instructor" asp-route-id="@Model.IntakeId">
 
                         <img src="assets/images/instructor.png" class="card-img-top" alt="instructors" style="width: 130px; height: 130px; margin: 10px auto 0px;">
                         <div class="card-body">
@@ -46,10 +37,9 @@
                         </div>
                     </a>
                 </div>
-            </div>
 
-            <div style="display: flex; justify-content: space-evenly;">
-                <div class="">
+
+            <div class="col-12 col-lg-4 p-3 main-page-cards">
                     <a style="padding-top: 8px;" class="card stretched-link text-decoration-none" style="width: 18rem;"
                        asp-action="@(Model.IntakeId == 0 ? "Index" : "StdIndexByIntakeId")" asp-controller="Student" asp-route-id="@Model.IntakeId">
 
@@ -60,7 +50,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="">
+            <div class="col-12 col-lg-4 p-3 main-page-cards">
                     <a style="padding-top: 8px;" class="card stretched-link text-decoration-none" style="width: 18rem;" asp-action="Index" asp-controller="Intake">
                         <img src="~/assets/images/intake.png" class="card-img-top" alt="students" style="width: 130px; height: 130px; margin: 10px auto 0px;">
                         <div class="card-body">
@@ -69,9 +59,9 @@
                         </div>
                     </a>
                 </div>
+
             </div>
         </div>
-    </div>
 </div>
 
 <script>
@@ -101,3 +91,19 @@
     var courseLink = document.getElementById('courseLink');
     courseLink.addEventListener('click', handleCourseCardClick);
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -38,19 +38,20 @@ body {
 .dropdown {
     position: relative;
     display: inline-block;
-    margin-right: 35px;
     background-color: white;
     border-radius: 0.375rem;
+    /*margin: 0px auto;
+    width: 50%;*/
 }
 
 .dropdown-content {
-    margin-left: 8px;
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
+    min-width: 185px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    text-align: center;
 }
 
 .dropdown:hover .dropdown-content {
@@ -69,7 +70,7 @@ body {
     }
 
 .btn {
-    padding: 8px 24px;
+    padding: 8px 30px;
 }
 
 .logoutbtn {
@@ -107,32 +108,43 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 30px;
+    position: relative;
+    z-index: 1000;
 }
 
 .allintakes {
-    margin: auto 36px;
+    padding-left: 10px;
 }
 
-.container {
+/*.container {
     margin: 40px auto 16px;
-}
+}*/
 
 /* ********************************************************* */
 /* Track */
 
 .nav-title {
-    font-size: 24px;
-    padding-left: 10px;
+    font-size: 18px;
+    padding-top: 10px;
+    margin-bottom: 0;
 }
 
 .navs {
-    font-size: 16px;
+    font-size: 15px;
 }
 
-.r1 {
-    padding-top: 40px;
-    padding-bottom: 16px;
-    padding-right: 52px;
+.large-screen 
+{
+    display: block;
+}
+.small-screen 
+{
+    display: none;
+}
+
+.small-screen .r1 {
+    padding-bottom: 30px;
     display: flex;
     justify-content: space-between;
 }
@@ -147,7 +159,7 @@ body {
     }
 
 .table {
-    margin-left: 48px;
+    /*margin-left: 48px*/;
     text-align: left;
 }
 
@@ -179,23 +191,23 @@ body {
     display: grid;
     place-items: end end;
     height: 100%;
-    margin-right: 65px;
+    /*margin-right: 65px;*/
 }
 
-.container {
+/*.container {
     display: flex;
     justify-content: space-evenly;
-}
+}*/
 
 .sidebar {
-    flex: 0 0 19%;
+    /*flex: 0 0 19%;*/
     background-color: #f8f9fa;
 }
 
-.content {
-    flex: 1;
+/*.content {
+    flex: 1;*/
     /* background-color: #6c757d17; */
-}
+/*}*/
 
 #myTable {
     border: 1px solid rgb(163, 163, 163);
@@ -317,3 +329,650 @@ input[type="file"] {
     .courseBtns:hover {
         background-color: #cececc;
     }
+
+
+
+
+
+
+/*      (mahmoudtaher update)       */
+/*=========================================*/
+/*=========================================*/
+
+/**/
+.large-screen h3 {
+    float: left;
+    padding-top: 30px;
+    margin: 0;
+}
+.large-screen .tracks_div_01, .large-screen .course_div_01, .large-screen .instructor_div_01,
+.large-screen .student_div_01, .large-screen .intake_div_01 {
+    float: right;
+    padding: 30px 30px 0 30px;
+}
+.course-index .large-screen h3
+{
+    padding: 30px 30px 30px 0;
+}
+/*add new user signup*/
+.add-user-form .form-group {
+    margin-bottom: 15px;
+}
+
+/*Home -> NumberPartial  main-page-cards*/
+#intakeDataContainer {
+    padding: 30px 0;
+}
+#intakeDataContainer .row {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+.main-page-cards {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+/*general style in partial views*/
+.col-9.col-md-10.text-center.content .dropdown-content {
+    min-width: 195px;
+    left: 0px;
+}
+
+/* navbar*/
+.navbar-brand
+{
+    padding-left: 1.5rem;
+}
+.iti-hub-devider {
+    border-left: 2px solid #901b20;
+    height: 50px;
+    position: absolute;
+    left: 75px;
+    top: 20px;
+}
+
+.iti-hub-devider span {
+        position: relative;
+        top: 10px;
+        left: 5px;
+}
+
+.navbar-user-buttons a {
+    margin-right: 10px;
+}
+
+/*welcome message*/
+.welcome {
+    overflow: hidden;
+    border-right: .15em solid #f1f2f3;
+    white-space: nowrap;   
+    /*letter-spacing: .15em;*/
+    animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+/*View -> Track -> create.cshtml*/
+
+.create-track span, .edit-track span, .create-course span, .edit-course span,
+.edit-instructor span, .edit-intake span, .edit-student span, .intake-create #myformcourse span {
+    width: 170px;
+    font-size: 20px;
+}
+.edit-course .multiSelectSpan, .edit-instructor .multiSelectSpan {
+    border-radius: 8px !important;
+    display: inline-block;
+    margin-bottom: 16px;
+}
+.track-index, .instructor-index
+{
+    padding: 0;
+}
+.track-index .row {
+    margin-bottom: 30px;
+}
+/*edit-course and create course select list*/
+/* width */
+.create-course #myformcourse ::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.create-course #myformcourse ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.create-course #myformcourse ::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+    /* Handle on hover */
+.create-course #myformcourse ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.create-course #myformcourse .mult-select-tag {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --tw-shadow-color: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
+    --border-color: rgb(218, 221, 224);
+    font-family: Verdana, sans-serif;
+}
+
+.create-course #myformcourse .mult-select-tag .wrapper {
+    width: 100%
+}
+
+.create-course #myformcourse .mult-select-tag .body {
+    display: flex;
+    border: 1px solid var(--border-color);
+    background: #fff;
+    min-height: 2.15rem;
+    width: 100%;
+    min-width: 14rem
+}
+
+.create-course #myformcourse .mult-select-tag .input-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 auto;
+    padding: .5rem
+}
+
+.create-course #myformcourse .mult-select-tag .input-body {
+    display: flex;
+    width: 100%
+}
+
+.create-course #myformcourse .mult-select-tag .input {
+    flex: 1;
+    background: 0 0;
+    border-radius: .25rem;
+    padding: .45rem;
+    margin: 10px;
+    color: #2d3748;
+    outline: 0;
+    border: 1px solid var(--border-color)
+}
+
+.create-course #myformcourse .mult-select-tag .btn-container {
+    color: #e2ebf0;
+    padding: .5rem;
+    display: flex;
+    border-left: 1px solid var(--border-color);
+}
+
+.create-course #myformcourse .mult-select-tag button {
+    cursor: pointer;
+    width: 100%;
+    color: #718096;
+    outline: 0;
+    height: 100%;
+    border: none;
+    padding: 0;
+    background: 0 0;
+    background-image: none;
+    -webkit-appearance: none;
+    text-transform: none;
+    margin: 0
+}
+
+.create-course #myformcourse .mult-select-tag button:first-child {
+    width: 1rem;
+    height: 90%
+}
+
+.create-course #myformcourse .mult-select-tag .drawer {
+    position: absolute;
+    background: #fff;
+    max-height: 15rem;
+    z-index: 40;
+    top: 98%;
+    width: 100%;
+    overflow-y: scroll;
+    border: 1px solid var(--border-color);
+    border-radius: .25rem
+}
+
+.create-course #myformcourse .mult-select-tag ul {
+    list-style-type: none;
+    padding: .5rem;
+    margin: 0
+}
+
+    .create-course #myformcourse .mult-select-tag ul li {
+        padding: .5rem;
+        border-radius: .25rem;
+        cursor: pointer;
+    }
+
+        .create-course #myformcourse .mult-select-tag ul li:hover {
+            background: rgb(243 244 246)
+        }
+
+.create-course #myformcourse .mult-select-tag .item-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .2rem .4rem;
+    margin: .2rem;
+    font-weight: 500;
+    border: 1px solid #ccc;
+    background: #f1f2f3;
+    border-radius: 9999px
+}
+
+.create-course #myformcourse .mult-select-tag .item-label {
+    max-width: 100%;
+    line-height: 1;
+    font-size: .75rem;
+    font-weight: 400;
+    flex: 0 1 auto;
+}
+
+.create-course #myformcourse .mult-select-tag .item-close-container {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row-reverse
+}
+
+.create-course #myformcourse .mult-select-tag .item-close-svg {
+    width: 1rem;
+    margin-left: .5rem;
+    height: 1rem;
+    cursor: pointer;
+    border-radius: 9999px;
+    display: block
+}
+
+.create-course #myformcourse .hidden {
+    display: none
+}
+
+.create-course #myformcourse .mult-select-tag .shadow {
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
+}
+
+.create-course #myformcourse .mult-select-tag .rounded {
+    border-radius: .375rem
+}
+
+.multiselectDiv span {
+    border-radius: 8px !important;
+    display: inline-block;
+    margin-bottom: 16px;
+}
+
+.course-index .large-screen 
+{
+    padding: 0;
+}
+/*student edit*/
+.edit-student input#IsGraduated {
+    margin: 10px 0px 0px 10px;
+    width: 30px;
+    height: 30px;
+}
+/*intake index*/
+.intake-index .dropdown {
+    float: left;
+    margin-left: 8px;
+}
+.intake-index .large-screen
+{
+    padding: 30px 0;
+}
+.intake-index .large-screen .intake_div_01 {
+    padding: 30px 0 0 0;
+}
+/*.intake-index .large-screen h3 {
+    font-size: 22px;
+}*/
+.col-9.col-md-10.text-center.content .intake-index .dropdown-content {
+    min-width: 148px;
+}
+/*.intake-index .large-screen .btn
+{
+    padding: 8px 8px;
+    font-size: 14px;
+}*/
+
+/*add-track-courses*/
+.add-track-courses span {
+    all: unset;
+}
+.add-track-courses h3 
+{
+    padding: 0 30px 0 60px;
+}
+
+.large-screen .tracks_div_01, .large-screen .course_div_01, .large-screen .instructor_div_01,
+.large-screen .student_div_01 {
+    padding: 30px 0 0px 0;
+}
+
+/*instrucotr*/
+.instructor-index .large-screen, .student-index .large-screen {
+    padding-bottom: 30px;
+}
+
+/*animation*/
+.slide-down {
+    -webkit-animation: slide-down 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: slide-down 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.slide-right {
+    -webkit-animation: slide-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: slide-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@-webkit-keyframes slide-down {
+    0% {
+        -webkit-transform: translateY(0px);
+        transform: translateY(-100px);
+    }
+
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-down {
+    0% {
+        -webkit-transform: translateY(-100px);
+        transform: translateY(-100px);
+    }
+
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+}
+
+
+@-webkit-keyframes slide-right {
+    0% {
+        -webkit-transform: translateX(-100px);
+        transform: translateX(-100px);
+    }
+
+    100% {
+        -webkit-transform: translateX(0px);
+        transform: translateX(0px);
+    }
+}
+
+@keyframes slide-right {
+    0% {
+        -webkit-transform: translateX(-100px);
+        transform: translateX(-100px);
+    }
+
+    100% {
+        -webkit-transform: translateX(0px);
+        transform: translateX(0px);
+    }
+}
+
+/*welcome message animation*/
+
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 100%
+    }
+}
+
+@keyframes blink-caret {
+
+    from, to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: #f1f2f3;
+    }
+}
+
+
+
+/*Media query*/
+
+@media (max-width: 991px)
+{
+    /*Home -> NumberPartial  main-page-cards*/
+    .main-page-cards {
+        display: flex;
+        justify-content: space-evenly;
+    }
+    /*general style in partial views*/
+    .col-9.col-md-10.text-center.content .dropdown-content {
+        min-width: 100px;
+        left: 0px;
+    }
+    /*shared view*/
+    .small-screen 
+    {
+        display: block;
+    }
+    .small-screen .r1 .btn {
+        padding: 6px;
+        font-size: 10px;
+    }
+    .small-screen .r1 svg {
+        width: 10px;
+        height: 10px;
+    }
+    .sidebar {
+        padding-top: 1rem !important;
+    }
+    .sidebar a {
+        font-size: 10px;
+        padding: 3px;
+    }
+    .navbar-brand {
+        padding-left: 0;
+    }
+
+    .iti-hub-devider {
+        left: 49px;
+    }
+    #partialTable td
+    {
+        font-size: 10px;
+    }
+    #partialTable tr {
+        font-size: 9px;
+    }
+    #partialTable th {
+        font-size: 9px;
+        padding: 6px 0;
+        width: 10%;
+    }
+    #partialTable svg 
+    {
+        width: 10px;
+        height: 10px;
+    }
+    #partialTable td input[type="checkbox"], #partialTable td img {
+        width: 10px !important;
+        height: 10px !important;
+    }
+    .intake-link, .track-link {
+        font-size: 10px;
+    }
+    .navbar-user-buttons, .navbar-user-buttons a.btn.regbtn {
+        font-size: 12px;
+    }
+
+    /*View -> Track -> create.cshtml*/
+    #partialTable .track-table th {
+        width: 30%;
+    }
+    .create-track span, .edit-track span, .create-course span, .edit-course span, .edit-student span,
+    .intake-create span, .edit-intake span, .intake-create #myformcourse span {
+        width: 100px;
+        font-size: 10px !important;
+    }
+
+    .create-track input, .create-track select, .edit-track input, .edit-track select,
+    .create-course input, .create-course select, .edit-course input, .edit-course select,
+    .edit-course .form-group, .edit-course .form-check
+    {
+        font-size: 10px !important;
+    }
+    .track-index .small-screen .r1 {
+        padding-bottom: 0;
+    }
+
+    .large-screen 
+    {
+        display: none;
+    }
+    /*course create-edit.cshtml*/
+    .create-course #myformcourse .mult-select-tag ul li {
+        font-size: 10px;
+    }
+
+    
+    /*View-> Instructor -> edit-instructor*/
+    #partialTable .instructor-table th
+    {
+        width: 30%;
+    }
+    .edit-instructor #myformcourse span, .edit-instructor #myformcourse select {
+        font-size: 10px;
+    }
+
+    .edit-instructor form#myformcourse, .edit-instructor form#myformcourse input,
+    .edit-instructor form#myformcourse span, .edit-student input, .edit-student select,
+    .intake-create input, .edit-intake input {
+        font-size: 10px !important;
+    }
+    .edit-student input#IsGraduated {
+        margin: 9px 0px 0px 9px;
+        width: 15px;
+        height: 15px;
+    }
+    /*View -> Student -> student index*/
+    .student-table table
+    {
+        width: 140%;
+    }
+    #partialTable .student-table th {
+        width: 20%;
+    }
+
+
+    .student-index td {
+        font-size: 9px !important;
+    }
+
+    .student-index th {
+        font-size: 9px !important;
+        padding: 2px;
+    }
+    .student-index input[type="checkbox"]
+    {
+        width: 10px;
+        height: 10px;
+    }
+
+    /*intake index*/
+    #partialTable .intake-table th {
+        width: 22%;
+        font-size: 8px;
+    }
+    .intake-index .duration-link {
+        font-size: 10px;
+    }
+    .col-9.col-md-10.text-center.content .intake-index .dropdown-content {
+        min-width: 106px;
+    }
+    .intake-index .small-screen .dropdown {
+        float: unset;
+        margin-left: unset;
+    }
+    .intake-index .small-screen .r1, .instructor-index .small-screen .r1
+    {
+        display: block;
+    }
+    .instructor-index .small-screen .r1 button
+    {
+        width: 35%;
+        margin: 0 auto;
+    }
+        /*add-track-courses*/
+        .add-track-courses h3 {
+            font-size: 20px;
+        }
+    /*footer*/
+    .footer li a {
+        font-size: 12px;
+    }
+
+     
+}
+@media (min-width:543px) and (max-width:638px)
+{
+    .sidebar a {
+        font-size: 10px;
+        padding: 8px;
+    }
+}
+@media (min-width: 1147px) and (max-width:1325px) {
+    .sidebar a {
+        font-size: 10px;
+        padding: 8px;
+    }
+
+    .col-9.col-md-10.text-center.content {
+        font-size: 10px;
+    }
+
+        
+        .col-9.col-md-10.text-center.content button,
+        .col-9.col-md-10.text-center.content button#customdeletebtn_kordy,
+        .col-9.col-md-10.text-center.content a.btn.btn-primary {
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .col-9.col-md-10.text-center.content h3 {
+            font-size: 20px;
+        }
+
+        .col-9.col-md-10.text-center.content .dropdown-content {
+            min-width: 160px;
+            left: 0px;
+        }
+}
+
+@media (min-width: 992px) and (max-width: 1052px)
+{
+    .course-index .large-screen h3 {
+        padding: 30px 0px 30px 0;
+        font-size: 24px;
+    }
+}
+@media (min-width: 992px) and (max-width: 1146px)
+{
+/*    .intake-index .large-screen .btn
+    {
+        font-size: auto;
+        padding: auto;
+    }*/
+    .intake-index .large-screen .intake_div_01
+    {
+        float: left;
+    }
+}

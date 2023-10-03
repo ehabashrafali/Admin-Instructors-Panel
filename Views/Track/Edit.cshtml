@@ -1,18 +1,18 @@
 ﻿@model Admin_Panel_ITI.Models.Track
 
-<div class="container-fluid col-md-6">
-    <h3 style="margin-top: 32px;">Edit Track</h3>
+<div class="col-9 col-md-10 edit-track">
+    <h3 style="margin: 30px 0; text-align:center">Edit Track</h3>
     <form asp-action="Edit">
         <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text" style="width: 170px; font-size: 20px;">Track name</span>
+            <span class="input-group-text">Track name</span>
             <input asp-for="Name" class="form-control" aria-label="Sizing example input" placeholder="Enter track name" value="@Model.Name">
         </div>
         <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text" style="width: 170px; font-size: 20px;">Creation Date</span>
+            <span class="input-group-text">Creation Date</span>
             <input asp-for="CreationDate" class="form-control" aria-label="Sizing example input" placeholder="Enter track creation date" value="@Model.CreationDate.ToString("yyyy-MM-dd")">
         </div>
         <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text" style="width: 170px; font-size: 20px;">Manager Name</span>
+            <span class="input-group-text">Manager Name</span>
             <select asp-for="ManagerID" asp-items="ViewBag.AllInstructors" class="form-control">
                 <option value="">Select manager</option>
             </select>
