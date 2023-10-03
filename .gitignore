@@ -95,3 +95,4 @@ DatabaseGeneratedOption.None
 *.suo
 *.user
 *.sln.docstates
+/appsettings.json
