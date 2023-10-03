@@ -40,7 +40,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
 
 
-        //get the tracks in this intake, and only the tracks this instructor Teach in :: id(intake ID) , name(Intake ExamName)
+        //get the tracks in this intake, and only the tracks this instructor Teach in :: id(intake ID) , name(Intake Name)
         public ActionResult DetailsForTeacher(int id, string name)
         {
             ViewBag.IntakeName = name;

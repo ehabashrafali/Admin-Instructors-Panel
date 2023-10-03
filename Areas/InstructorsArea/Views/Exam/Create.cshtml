@@ -1,7 +1,5 @@
 ﻿@using Admin_Panel_ITI.Areas.InstructorsArea.ViewModels;
 
-@*@model Exam_QuestionsVM*@
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -270,16 +268,17 @@
             <input  type="hidden" name="CourseId" value="@ViewBag.Courseid" />
 
 
-
             <div id="questionsContainer" class="form-group">
                 <div class="form-group  question ">
-                    <div class="form-group">
-                        <label for="questionType">Question Type:</label>
+@*                        <label for="questionType">Question Type:</label>
                         <select class="form-control" id="questionType">
-@*                             <option value="Paragraph">Paragraph</option>
- *@                            <option value="MCQ">MCQ</option>
-                        </select>
-                    </div>
+                            <option value="Paragraph">Paragraph</option>
+                           <option value="MCQ">MCQ</option>
+                        </select>*@
+
+
+                     <input  name="Mark" id="questionType" required class="form-control" type="hidden" />
+
                     <div class="form-group">
                         <label for="Mark">Grade:</label>
                         <input name="Mark" id="Mark" required class="form-control" type="number" />

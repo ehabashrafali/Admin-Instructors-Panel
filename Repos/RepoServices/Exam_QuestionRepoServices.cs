@@ -1,4 +1,5 @@
-﻿using Admin_Panel_ITI.Data;
+﻿using Admin_Panel_ITI.Areas.InstructorsArea.ViewModels;
+using Admin_Panel_ITI.Data;
 using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -79,12 +80,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
-        void IExam_QuestionRepository.DeleteExamQuestion(int examID)
-        {
-            var exam_question = Context.Exam_Questions.Where(eq => eq.ExamID == examID);
-            Context.Exam_Questions.RemoveRange(exam_question);
-            Context.SaveChanges();
-        }
 
         void IExam_QuestionRepository.DeleteExam_Question(int questionID)
         {
@@ -106,5 +101,27 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             return Context.Exam_Questions.Where(eq => eq.ExamID == examiD).Count();
 
         }
+
+
+
+
+        List<int> IExam_QuestionRepository.DeleteExamQuestions(int examID)
+        {
+            List<Exam_Question> exam_questions = Context.Exam_Questions.Where(eq => eq.ExamID == examID).ToList();
+
+            List<int> QuestionsIDs = new List<int>();
+
+            foreach (var item in exam_questions)
+            {
+                QuestionsIDs.Add(item.QuestionID);
+            }
+
+            Context.Exam_Questions.RemoveRange(exam_questions);
+
+            Context.SaveChanges();
+
+            return QuestionsIDs;
+        }
+
     }
 }

@@ -18,20 +18,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="~/Instructor/SideBar_BreadCrumb.css">
 </head>
 <body>
 
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html" style="margin-left: 24px;">
+            <a class="navbar-brand" asp-action="Index" asp-controller="Intake" style="margin-left: 24px;">
                 <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
             </a>
             <div class="navbarvr"></div>
             <span class="collapse navbar-collapse  navbar-brand">Hub</span>
             <div class="justify-content-end" id="navbarSupportedContent">
-                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
-                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
+                    <button type="submit" class="nav-link btn btn-link border-0 logoutbtn">Logout</button>
                 </form>
             </div>
         </div>
@@ -50,11 +51,10 @@
                     <hr>
 
                     <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item navs">
-                            <a asp-controller="Intake" asp-action="Index" style="color: white; display: inline-block; padding: 10px 81px; background-color: blue; border-radius: 5px;  font-size: 20px; width:230px; ">Intakes</a>
+                        <li class="nav-item navs1">
+                            <p style="border-radius:50px;">ITI Intakes</p>
                         </li>
                     </ul>
-
                 </div>
             </div>
 
@@ -64,7 +64,7 @@
                 <div class="container-fluid">
                     <div class="row col-md-12">
                         <div class="r1">
-                            @*<a asp-controller="Intake" asp-action="Index" style="padding-left:50px" class="text-primary">Intakes</a>*@
+                            <h3 style="padding-left: 33px;">Intakes Table</h3>
                         </div>
                     </div>
                     <div class="row col-md-11">

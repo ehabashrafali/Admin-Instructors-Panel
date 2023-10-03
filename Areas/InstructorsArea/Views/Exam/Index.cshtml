@@ -45,19 +45,19 @@
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item navs">
                             <a href="index.html" class="nav-link link-body-emphasis" aria-current="page">
-                                <img src="../assets/images/Gray/intake.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                <img src="../assets/images/Gray/intake.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;">
                                 Intakes
                             </a>
                         </li>
                         <li class="nav-item navs">
                             <a href="managedTracks.html" class="nav-link link-body-emphasis">
-                                <img src="../assets/images/Gray/track.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                <img src="../assets/images/Gray/track.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;">
                                 Tracks
                             </a>
                         </li>
                         <li class="nav-item navs">
                             <a href="courses.html" class="nav-link link-body-emphasis act">
-                                <img src="../assets/images/White/course.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
+                                <img src="../assets/images/White/course.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;">
                                 <span style="color: white;">Courses you teach</span>
                             </a>
                         </li>
@@ -100,12 +100,6 @@
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                                         </svg>
                                     </th>
-                                    <th>
-                                       Course Name
-                                        <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                                        </svg>
-                                    </th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -129,10 +123,6 @@
                                             }
                                             @uniqueStudentCount
                                         </td>
-
-                                        <td style="padding-left: 24px;">
-                                            @Html.DisplayFor(modelItem => item.Course.Name)
-                                        </td>
                                         <td style="padding-left: 24px;">
                                             <a asp-action="Delete" asp-route-CourseId="@item.Course.ID" asp-route-ExamID="@item.ID" class="btn btn-danger">Delete</a>
                                         </td>
@@ -144,6 +134,6 @@
             </div>
         </div>
     </div>
-    <script src="../script.js"></script>
+    <script src="~/script.js"></script>
 </body>
 </html>

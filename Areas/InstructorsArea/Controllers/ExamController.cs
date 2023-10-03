@@ -99,13 +99,19 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
             return RedirectToAction("Index", new { CourseId = CourseId });
         }
-        // GET: ExamController/Delete/5
+
+
+
         public ActionResult Delete(int ExamID, int CourseId)
         {
             exam_Std_QuestionRepository.DeleteExam_Std_Question(ExamID);
 
-            examQuestionRepo.DeleteExamQuestion(ExamID);
+            List<int> QuestionIDs = examQuestionRepo.DeleteExamQuestions(ExamID);
+
+            questionRepo.DeleteQuestions(QuestionIDs);
+
             examRepo.DeleteExam(ExamID);
+
             return RedirectToAction("Index", new { CourseId = CourseId });
         }
 
