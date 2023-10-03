@@ -1,6 +1,6 @@
 ﻿@model Admin_Panel_ITI.Models.Instructor
 
-<div class="col-9">
+<div class="col-9 col-md-10 col-sm-9">
     <div class="container-fluid edit-instructor create-course">
     <h3 style="margin: 30px 0; text-align: center;">Edit Instructor</h3>
 
@@ -31,8 +31,9 @@
             </div>
         </div>
         <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text">Add Intakes</span>
+                <span class="input-group-text multiSelectSpan">Add Intakes</span>
                 <select name="SelectedIntakeIds" id="SelectedInstructorIds" asp-items="ViewBag.AllIntakes" class="form-control" multiple>
+                    <option selected>Select ...</option>
             </select>
         </div>
 

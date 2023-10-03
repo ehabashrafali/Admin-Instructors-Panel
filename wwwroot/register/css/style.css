@@ -693,7 +693,6 @@ label.valid {
     left: 10px;
 }
 
-
 @media (max-width: 767px) {
     /*sign in */
     .signin-form, .signup-form {
@@ -736,4 +735,21 @@ label.valid {
         -webkit-transform: translateY(0);
         transform: translateY(0);
     }
+}
+/*sign up form*/
+.add-user-form .signup-form {
+    padding: 20px 55px !important;
+}
+
+.add-user-form .form-group {
+    margin-bottom: 15px;
+}
+
+.add-user-form .form-title
+{
+    margin-bottom: 20px !important;
+}
+.add-user-form .signup-content
+{
+    padding: 94px 0;
 }

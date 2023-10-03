@@ -1,6 +1,6 @@
 ﻿@model Admin_Panel_ITI.Models.Course
 
-<div class="col-9">
+<div class="col-9 col-md-10">
     <div class="container-fluid create-course">
         <h3 style="margin: 30px 0; text-align: center">Create New Course</h3>
 
@@ -28,7 +28,7 @@
             </select>  *@
 
                 <select name="SelectedInstructorIds" id="SelectedInstructorIds" asp-items="@ViewBag.AllInstructors" class="form-control" multiple>
-                <option value="" selected>search instructors</option> 
+                <option selected>search instructors</option> 
                 </select>
         </div>
 

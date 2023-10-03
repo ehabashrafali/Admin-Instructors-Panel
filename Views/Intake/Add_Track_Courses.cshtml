@@ -1,7 +1,7 @@
-﻿<div class="col-9 text-center content">
-    <div class="container-fluid">
+﻿<div class="col-9 col-md-10 text-center content">
+    <div class="container-fluid create-course add-track-courses">
         <div class="row">
-            <h3 style="margin: 30px 0; text-align: center;">
+            <h3 style="margin: 30px 0; text-align: center; padding:0;">
             <div class="r1">
                 @*<h3 style="padding-left: 38px;">
                     You are adding tracks and courses for
@@ -25,27 +25,40 @@
                     }
                 </h3>
              </div>
+        <div class="p-lg-5">
+            @* <form method="post" id="courseForm" asp-action="SaveSelectedTrackAndCourses" asp-controller="Intake"> *@
+            <form method="post" id="myformcourse" asp-action="SaveSelectedTrackAndCourses" asp-controller="Intake">
+                @Html.DropDownList("selectedTrack", ViewBag.tracks as SelectList, "Select track", new { @class = "form-select", aria_label = "Default select example", })
+
+             @*    <select class="form-select" id="selectedCourse" name="selectedCourse" multiple aria-label="Default select example" style="margin-top: 24px; display: none;">
+                    <option selected>Select courses for this track</option>
+                    <!-- Populate courses here -->
+                    @foreach (var course in ViewBag.courses)
+                    {
+                        <option value="@course.Value">@course.Text</option>
+                    }
+                </select> *@
+
+                <br />
+                <select class="form-select" id="SelectedInstructorIds" name="SelectedInstructorIds" multiple aria-label="Default select example" style="margin-top: 24px; display: none;">
+                    <option selected>Select courses for this track</option>
+                    <!-- Populate courses here -->
+                    @foreach (var course in ViewBag.courses)
+                    {
+                        <option value="@course.Value">@course.Text</option>
+                    }
+                </select>
+
+                <input type="hidden" id="selectedCourseIds" name="selectedCourseIds" value="">
+                <input type="hidden" id="selectedIntakeIds" name="selectedIntakeIds" value="">
+                <input type="button" class="btn btn-primary" style="margin-top: 24px;" value="Save" id="saveButton">
+            </form>
         </div>
-    </div>
-    <div class="row col-md-11 p-lg-5">
-        <form method="post" id="courseForm" asp-action="SaveSelectedTrackAndCourses" asp-controller="Intake">
-            @Html.DropDownList("selectedTrack", ViewBag.tracks as SelectList, "Select track", new { @class = "form-select", aria_label = "Default select example", })
 
-            <select class="form-select" id="selectedCourse" name="selectedCourse" multiple aria-label="Default select example" style="margin-top: 24px; display: none;">
-                <option selected>Select courses for this track</option>
-                <!-- Populate courses here -->
-                @foreach (var course in ViewBag.courses)
-                {
-                    <option value="@course.Value">@course.Text</option>
-                }
-            </select>
-            <input type="hidden" id="selectedCourseIds" name="selectedCourseIds" value="">
-            <input type="hidden" id="selectedIntakeIds" name="selectedIntakeIds" value="">
-            <input type="button" class="btn btn-primary" style="margin-top: 24px;" value="Save" id="saveButton">
-        </form>
-    </div>
-</div>
+        </div>
 
+    </div>
+ 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -110,3 +123,4 @@
         });
     });
 </script>
+<script src="~/multiSelect.js"></script>

@@ -38,19 +38,20 @@ body {
 .dropdown {
     position: relative;
     display: inline-block;
-    margin-right: 8px;
     background-color: white;
     border-radius: 0.375rem;
+    /*margin: 0px auto;
+    width: 50%;*/
 }
 
 .dropdown-content {
-    margin-left: 8px;
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
+    min-width: 185px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    text-align: center;
 }
 
 .dropdown:hover .dropdown-content {
@@ -69,7 +70,7 @@ body {
     }
 
 .btn {
-    padding: 8px 24px;
+    padding: 8px 30px;
 }
 
 .logoutbtn {
@@ -107,10 +108,13 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 30px;
+    position: relative;
+    z-index: 1000;
 }
 
 .allintakes {
-    margin: auto 36px;
+    padding-left: 10px;
 }
 
 /*.container {
@@ -130,10 +134,17 @@ body {
     font-size: 15px;
 }
 
-.r1 {
-    /*padding-top: 20px;*/
+.large-screen 
+{
+    display: block;
+}
+.small-screen 
+{
+    display: none;
+}
+
+.small-screen .r1 {
     padding-bottom: 30px;
-    /*padding-right: 52px;*/
     display: flex;
     justify-content: space-between;
 }
@@ -327,9 +338,32 @@ input[type="file"] {
 /*      (mahmoudtaher update)       */
 /*=========================================*/
 /*=========================================*/
-/*Home -> NumberPartial  main-page-cards*/
-#intakeDataContainer .row
+
+/**/
+.large-screen h3 {
+    float: left;
+    padding-top: 30px;
+    margin: 0;
+}
+.large-screen .tracks_div_01, .large-screen .course_div_01, .large-screen .instructor_div_01,
+.large-screen .student_div_01, .large-screen .intake_div_01 {
+    float: right;
+    padding: 30px 30px 0 30px;
+}
+.course-index .large-screen h3
 {
+    padding: 30px 30px 30px 0;
+}
+/*add new user signup*/
+.add-user-form .form-group {
+    margin-bottom: 15px;
+}
+
+/*Home -> NumberPartial  main-page-cards*/
+#intakeDataContainer {
+    padding: 30px 0;
+}
+#intakeDataContainer .row {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
@@ -339,13 +373,22 @@ input[type="file"] {
     justify-content: space-evenly;
 }
 
+/*general style in partial views*/
+.col-9.col-md-10.text-center.content .dropdown-content {
+    min-width: 195px;
+    left: 0px;
+}
 
 /* navbar*/
+.navbar-brand
+{
+    padding-left: 1.5rem;
+}
 .iti-hub-devider {
     border-left: 2px solid #901b20;
     height: 50px;
     position: absolute;
-    left: 49px;
+    left: 75px;
     top: 20px;
 }
 
@@ -359,17 +402,35 @@ input[type="file"] {
     margin-right: 10px;
 }
 
+/*welcome message*/
+.welcome {
+    overflow: hidden;
+    border-right: .15em solid #f1f2f3;
+    white-space: nowrap;   
+    /*letter-spacing: .15em;*/
+    animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
 
 /*View -> Track -> create.cshtml*/
 
 .create-track span, .edit-track span, .create-course span, .edit-course span,
-.edit-instructor span, .edit-intake span, .edit-student span {
+.edit-instructor span, .edit-intake span, .edit-student span, .intake-create #myformcourse span {
     width: 170px;
     font-size: 20px;
 }
-
+.edit-course .multiSelectSpan, .edit-instructor .multiSelectSpan {
+    border-radius: 8px !important;
+    display: inline-block;
+    margin-bottom: 16px;
+}
+.track-index, .instructor-index
+{
+    padding: 0;
+}
+.track-index .row {
+    margin-bottom: 30px;
+}
 /*edit-course and create course select list*/
-
 /* width */
 .create-course #myformcourse ::-webkit-scrollbar {
     width: 10px;
@@ -546,6 +607,10 @@ input[type="file"] {
     margin-bottom: 16px;
 }
 
+.course-index .large-screen 
+{
+    padding: 0;
+}
 /*student edit*/
 .edit-student input#IsGraduated {
     margin: 10px 0px 0px 10px;
@@ -557,7 +622,43 @@ input[type="file"] {
     float: left;
     margin-left: 8px;
 }
+.intake-index .large-screen
+{
+    padding: 30px 0;
+}
+.intake-index .large-screen .intake_div_01 {
+    padding: 30px 0 0 0;
+}
+/*.intake-index .large-screen h3 {
+    font-size: 22px;
+}*/
+.col-9.col-md-10.text-center.content .intake-index .dropdown-content {
+    min-width: 148px;
+}
+/*.intake-index .large-screen .btn
+{
+    padding: 8px 8px;
+    font-size: 14px;
+}*/
 
+/*add-track-courses*/
+.add-track-courses span {
+    all: unset;
+}
+.add-track-courses h3 
+{
+    padding: 0 30px 0 60px;
+}
+
+.large-screen .tracks_div_01, .large-screen .course_div_01, .large-screen .instructor_div_01,
+.large-screen .student_div_01 {
+    padding: 30px 0 0px 0;
+}
+
+/*instrucotr*/
+.instructor-index .large-screen, .student-index .large-screen {
+    padding-bottom: 30px;
+}
 
 /*animation*/
 .slide-down {
@@ -619,6 +720,28 @@ input[type="file"] {
     }
 }
 
+/*welcome message animation*/
+
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 100%
+    }
+}
+
+@keyframes blink-caret {
+
+    from, to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: #f1f2f3;
+    }
+}
 
 
 
@@ -631,20 +754,37 @@ input[type="file"] {
         display: flex;
         justify-content: space-evenly;
     }
-    /*shared view*/
-    .r1 .btn
-    {
-        padding: 6px;
-        font-size:10px;
+    /*general style in partial views*/
+    .col-9.col-md-10.text-center.content .dropdown-content {
+        min-width: 100px;
+        left: 0px;
     }
-    .r1 svg
+    /*shared view*/
+    .small-screen 
     {
+        display: block;
+    }
+    .small-screen .r1 .btn {
+        padding: 6px;
+        font-size: 10px;
+    }
+    .small-screen .r1 svg {
         width: 10px;
         height: 10px;
     }
-    .sidebar a
-    {
-        font-size: 12px;
+    .sidebar {
+        padding-top: 1rem !important;
+    }
+    .sidebar a {
+        font-size: 10px;
+        padding: 3px;
+    }
+    .navbar-brand {
+        padding-left: 0;
+    }
+
+    .iti-hub-devider {
+        left: 49px;
     }
     #partialTable td
     {
@@ -655,11 +795,17 @@ input[type="file"] {
     }
     #partialTable th {
         font-size: 9px;
+        padding: 6px 0;
+        width: 10%;
     }
     #partialTable svg 
     {
         width: 10px;
         height: 10px;
+    }
+    #partialTable td input[type="checkbox"], #partialTable td img {
+        width: 10px !important;
+        height: 10px !important;
     }
     .intake-link, .track-link {
         font-size: 10px;
@@ -669,24 +815,40 @@ input[type="file"] {
     }
 
     /*View -> Track -> create.cshtml*/
+    #partialTable .track-table th {
+        width: 30%;
+    }
     .create-track span, .edit-track span, .create-course span, .edit-course span, .edit-student span,
-    .intake-create span, .edit-intake span {
+    .intake-create span, .edit-intake span, .intake-create #myformcourse span {
         width: 100px;
         font-size: 10px !important;
     }
+
     .create-track input, .create-track select, .edit-track input, .edit-track select,
     .create-course input, .create-course select, .edit-course input, .edit-course select,
     .edit-course .form-group, .edit-course .form-check
     {
         font-size: 10px !important;
     }
+    .track-index .small-screen .r1 {
+        padding-bottom: 0;
+    }
+
+    .large-screen 
+    {
+        display: none;
+    }
     /*course create-edit.cshtml*/
     .create-course #myformcourse .mult-select-tag ul li {
         font-size: 10px;
     }
 
-
+    
     /*View-> Instructor -> edit-instructor*/
+    #partialTable .instructor-table th
+    {
+        width: 30%;
+    }
     .edit-instructor #myformcourse span, .edit-instructor #myformcourse select {
         font-size: 10px;
     }
@@ -702,12 +864,21 @@ input[type="file"] {
         height: 15px;
     }
     /*View -> Student -> student index*/
+    .student-table table
+    {
+        width: 140%;
+    }
+    #partialTable .student-table th {
+        width: 20%;
+    }
+
+
     .student-index td {
-        font-size: 7px !important;
+        font-size: 9px !important;
     }
 
     .student-index th {
-        font-size: 7px !important;
+        font-size: 9px !important;
         padding: 2px;
     }
     .student-index input[type="checkbox"]
@@ -717,14 +888,91 @@ input[type="file"] {
     }
 
     /*intake index*/
+    #partialTable .intake-table th {
+        width: 22%;
+        font-size: 8px;
+    }
     .intake-index .duration-link {
         font-size: 10px;
     }
-
+    .col-9.col-md-10.text-center.content .intake-index .dropdown-content {
+        min-width: 106px;
+    }
+    .intake-index .small-screen .dropdown {
+        float: unset;
+        margin-left: unset;
+    }
+    .intake-index .small-screen .r1, .instructor-index .small-screen .r1
+    {
+        display: block;
+    }
+    .instructor-index .small-screen .r1 button
+    {
+        width: 35%;
+        margin: 0 auto;
+    }
+        /*add-track-courses*/
+        .add-track-courses h3 {
+            font-size: 20px;
+        }
     /*footer*/
     .footer li a {
         font-size: 12px;
     }
 
      
+}
+@media (min-width:543px) and (max-width:638px)
+{
+    .sidebar a {
+        font-size: 10px;
+        padding: 8px;
+    }
+}
+@media (min-width: 1147px) and (max-width:1325px) {
+    .sidebar a {
+        font-size: 10px;
+        padding: 8px;
+    }
+
+    .col-9.col-md-10.text-center.content {
+        font-size: 10px;
+    }
+
+        
+        .col-9.col-md-10.text-center.content button,
+        .col-9.col-md-10.text-center.content button#customdeletebtn_kordy,
+        .col-9.col-md-10.text-center.content a.btn.btn-primary {
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .col-9.col-md-10.text-center.content h3 {
+            font-size: 20px;
+        }
+
+        .col-9.col-md-10.text-center.content .dropdown-content {
+            min-width: 160px;
+            left: 0px;
+        }
+}
+
+@media (min-width: 992px) and (max-width: 1052px)
+{
+    .course-index .large-screen h3 {
+        padding: 30px 0px 30px 0;
+        font-size: 24px;
+    }
+}
+@media (min-width: 992px) and (max-width: 1146px)
+{
+/*    .intake-index .large-screen .btn
+    {
+        font-size: auto;
+        padding: auto;
+    }*/
+    .intake-index .large-screen .intake_div_01
+    {
+        float: left;
+    }
 }
