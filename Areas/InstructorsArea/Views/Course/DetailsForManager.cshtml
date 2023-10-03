@@ -18,99 +18,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
 
-    <style>
-
-            /* Style for the anchor tag (button) */
-            .nav-item p {
-                display: inline-block;
-                padding: 10px 30px;
-                background-color: darkgray; /* Blue background color */
-                color: black; /* Text color */
-                font-size: 17px;
-                text-decoration: none;
-                position: relative;
-                z-index: 1; /* Keep buttons above arrows */
-
-                opacity: 0.8;
-                cursor: not-allowed;
-            }
-
-    </style>
-
-
-    <style>
-        .button {
-            line-height: 1;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: .75rem;
-            background-color: #1977f3;
-            color: #fff;
-            border-radius: 10rem;
-            font-weight: 600;
-            padding: .75rem 1.5rem;
-            padding-left: 20px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            transition: background-color .5s;
-            margin-bottom: 16px; /* Spacing between list items */
-            position: relative; /* Position relative for arrow */
-        }
-
-
-        .button__icon-wrapper {
-            flex-shrink: 0;
-            width: 25px;
-            height: 25px;
-            position: relative;
-            color: black;
-            background-color: #fff;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            overflow: hidden;
-        }
-
-        .button:hover {
-            background-color: #1977f3;
-        }
-
-        .button:hover .button__icon-wrapper {
-            color: blue;
-        }
-
-        .button__icon-svg--copy {
-            position: absolute;
-            transform: translate(-150%, 150%);
-        }
-
-        .button:hover .button__icon-svg:first-child {
-            transition: transform .3s ease-in-out;
-            transform: translate(150%, -150%);
-        }
-
-        .button:hover .button__icon-svg--copy {
-            transition: transform .3s ease-in-out .1s;
-            transform: translate(0);
-        }
-
-    </style>
+    <link rel="stylesheet" href="~/Instructor/SideBar_BreadCrumb.css">
 
 </head>
 <body>
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html" style="margin-left: 24px;">
+            <a class="navbar-brand" asp-action="Index" asp-controller="Intake" style="margin-left: 24px;">
                 <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
             </a>
             <div class="navbarvr"></div>
             <span class="collapse navbar-collapse  navbar-brand">ITI-Hub</span>
             <div class="justify-content-end" id="navbarSupportedContent">
-                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
-                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
+                    <button type="submit" class="nav-link btn btn-link border-0 logoutbtn">Logout</button>
                 </form>
             </div>
         </div>
@@ -129,9 +51,7 @@
 
 
                     <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item navs">
-                           @* <a asp-controller="Intake" asp-action="Index" class="nav-link" style="border-radius:50px">@ViewBag.IntakeName</a>*@
-
+                        <li class="nav-item navs1">
                             <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index">
                                 <span class="button__icon-wrapper">
                                     <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
@@ -147,7 +67,7 @@
                         </li>
 
 
-                        <li class="nav-item navs">
+                        <li class="nav-item navs2">
                             <a style="--clr: #7808d0" class="button" asp-controller="Track" asp-action="DetailsForManager" asp-route-id="@ViewBag.IntakeID" asp-route-name="@ViewBag.IntakeName">
                                 <span class="button__icon-wrapper">
                                     <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
@@ -163,7 +83,7 @@
                         </li>
 
 
-                        <li class="nav-item navs">
+                        <li class="nav-item navs3">
                             <p style="border-radius:50px;">Courses</p>
                         </li>
 
@@ -172,14 +92,11 @@
                 </div>
             </div>
 
-            <!--Forward/Back-->
             <div class="col-md-10 text-center content">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="r1">
-                            <div class="row">
-                               
-                            </div>
+                            <h3 style="padding-left: 33px;">Courses Cards</h3>
                         </div>
                     </div>
                     <div class="list-group" style="margin: 16px 40px; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; flex-direction: row;">

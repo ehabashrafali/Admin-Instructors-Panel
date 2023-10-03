@@ -74,14 +74,14 @@ body {
 
 .logoutbtn {
     background-color: #E03030;
-    color: white;
+    color: whitesmoke;
     margin-right: 24px;
 }
 
-    .logoutbtn:hover {
-        background-color: #B32626;
-        color: white;
-    }
+.logoutbtn:hover {
+    background-color: #B32626;
+    color: white;
+}
 
 .regbtn {
     margin-right: 16px;

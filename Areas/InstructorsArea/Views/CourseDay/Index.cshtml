@@ -25,19 +25,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
 
-   @* <link rel="stylesheet" href="~/magic.min.css">*@
+    <link rel="stylesheet" href="~/Instructor/SideBar_BreadCrumb.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html" style="margin-left: 24px;">
+            <a class="navbar-brand" asp-action="Index" asp-controller="Intake" style="margin-left: 24px;">
                 <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
             </a>
             <div class="navbarvr"></div>
             <span class="collapse navbar-collapse  navbar-brand">ITI-Hub</span>
             <div class="justify-content-end" id="navbarSupportedContent">
-                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
-                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
+                    <button type="submit" class="nav-link btn btn-link border-0 logoutbtn">Logout</button>
                 </form>
             </div>
         </div>
@@ -54,25 +54,64 @@
 
                     <hr>
 
+
                     <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item navs">
-                            <a href="index.html" class="nav-link link-body-emphasis act" aria-current="page">
-                                <img src="~/assets/images/White/intake.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;">
-                                <span style="color: white;">Intakes</span>
+                        <li class="nav-item navs1">
+                            <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                 @IntakeName
                             </a>
                         </li>
-                        <li class="nav-item navs">
-                            <a href="managedTracks.html" class="nav-link link-body-emphasis">
-                                <img src="~/assets/images/Gray/track.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;">
-                                Tracks
+
+
+                        <li class="nav-item navs2">
+                            <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@IntakeID" asp-route-name="@IntakeName" style="--clr: #7808d0" class="button">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                    @TrackName
+                            </a>
+                        </li>           
+                        
+                        <li class="nav-item navs2">
+                            <a asp-controller="Course"
+                               asp-action="DetailsForTeacher"
+                               asp-route-id="@IntakeID"
+                               asp-route-iid="@TrackID"
+                               asp-route-name="@TrackName"
+                               asp-route-name2="@IntakeName"
+                               style="--clr: #7808d0" class="button">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                @courseName Course
                             </a>
                         </li>
-                        <li class="nav-item navs">
-                            <a href="courses.html" class="nav-link link-body-emphasis">
-                                <img src="~/assets/images/Gray/courses.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;">
-                                Courses you teach
-                            </a>
+
+                        <li class="nav-item navs3">
+                            <p style="border-radius:50px;">Course Days</p>
                         </li>
+
                     </ul>
 
                 </div>
@@ -84,38 +123,15 @@
                <div class="container-fluid">
                     <div class="row col-md-12">
                         <div class="r1">
-
-                            <div style="width: 40%; text-align: left;">
-                                <div style="display:inline-flex">
-                                    <a asp-controller="Intake" asp-action="Index" class="text-primary" style="padding-left:50px ; width:fit-content">@IntakeName</a>
-                                </div>
-                                <div style="display:inline-flex">
-                                    <span><i class="fas fa-arrow-right"></i></span>
-                                    <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@IntakeID" asp-route-name="@IntakeName" class="text-primary" style="padding-left:15px ; width:fit-content">@TrackName Track</a>
-                                </div>
-                                <div style="display:inline-flex">
-                                    <span><i class="fas fa-arrow-right"></i></span>
-                                    <a asp-controller="Course"
-                                    asp-action="DetailsForTeacher"
-                                    asp-route-id="@IntakeID" 
-                                    asp-route-iid="@TrackID" 
-                                    asp-route-name="@TrackName"
-                                    asp-route-name2="@IntakeName"
-                                       class="text-primary" style="padding-left:15px ; width:fit-content">@courseName Course</a>
-                                </div>       
-                                <div style="display:inline-flex">
-                                    <span><i class="fas fa-arrow-right"></i></span>
-                                    <p style="padding-left:20px ; font-weight:bold">Course Days</p>
-                                </div>
-                            </div>
+                            <h3 style="padding-left: 33px;">Course Days Cards</h3>
 
 
                             <div>
                                 <a asp-controller="CourseDay" asp-action="Create" class="btn courseBtns"
-                                   asp-route-Id="@courseID" 
-                                   asp-route-name ="@courseName"
-                                   asp-route-intakeID="@IntakeID" 
-                                   asp-route-trackID ="@TrackID"
+                                   asp-route-Id="@courseID"
+                                   asp-route-name="@courseName"
+                                   asp-route-intakeID="@IntakeID"
+                                   asp-route-trackID="@TrackID"
                                    asp-route-intakeName="@IntakeName"
                                    asp-route-trackName="@TrackName">Add Day</a>
 
@@ -123,10 +139,9 @@
 
                                 <a asp-action="Create" asp-controller="Exam" asp-route-Id="@courseID" class="btn courseBtns">Create Exam</a>
                             </div>
-
-
-
                         </div>
+
+
                     </div>
 
 
@@ -160,15 +175,6 @@
        </div>
    </div>
 
-
-   <script>
-
-       //function animation(){
-       //     const selector = document.querySelector('.vanishOuttt');
-       //     selector.classList.add('magictime', 'puffIn');
-       //}
-
-   </script>
 
 </body>
 </html>
