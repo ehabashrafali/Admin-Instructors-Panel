@@ -20,7 +20,6 @@
 
 </head>
 <body>
-
     
     @*=====================================================================*@
     @*=====================================================================*@
@@ -37,15 +36,36 @@
             <div>
                 <form class="d-flex navbar-user-buttons">
                     <a asp-area="Identity" asp-page="/Account/AddUser" class="btn regbtn">Add User</a>
-
                     <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <button type="submit" class="nav-link btn btn-link border-0 logoutbtn">Logout</button>
+                        <button id="logout" type="submit" class="nav-link btn btn-link border-0 logoutbtn">Logout</button>
                     </form>
                 </form>
-                </div>
             </div>
-    @*    </div>*@
+        </div>
+        @* </div>*@
     </nav>
+
+
+
+@*
+    <nav class="navbar navbar-expand-sm bg-body-tertiary slide-down">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-action="Index" asp-controller="Home">
+                <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
+                <div class="iti-hub-devider">
+                    <span> Hub </span>
+                </div>
+            </a>
+            <div>
+
+                <a asp-area="Identity" asp-page="/Account/AddUser" class="btn regbtn">Add User</a>
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button id="logout" type="submit" class="nav-link btn btn-link border-0 logoutbtn">Logout</button>
+                </form>
+            </div>
+        </div>
+        @* </div>*@
+    @*</nav>*@
 
 
     <div class="container-fluid slide-right">

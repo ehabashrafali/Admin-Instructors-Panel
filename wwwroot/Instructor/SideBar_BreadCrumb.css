@@ -17,8 +17,7 @@
     transition: background-color .5s;
     margin-bottom: 16px;
     position: relative; /* Position relative for arrow */
-    overflow:hidden;
-    width:270px;
+ /*   width:270px;*/
 
 /*    text-decoration: underline;
     text-underline-offset: 4px;*/
