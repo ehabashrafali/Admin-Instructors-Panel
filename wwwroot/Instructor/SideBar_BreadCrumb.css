@@ -17,8 +17,7 @@
     transition: background-color .5s;
     margin-bottom: 16px;
     position: relative; /* Position relative for arrow */
-    overflow:hidden;
-    width:270px;
+    width:240px;
 
 /*    text-decoration: underline;
     text-underline-offset: 4px;*/
@@ -87,14 +86,16 @@
 .nav-item.navs2 {
     opacity: 0;
     transform: translateY(-20px);
-    animation: fadeInUp 1s forwards;
+    animation: fadeInUp 1.7s forwards;
 }
 
 .nav-item.navs3 {
     opacity: 0;
     transform: translateY(-20px);
-    animation: fadeInUp 2.5s forwards;
+    animation: fadeInUp 2.4s forwards;
 }
+
+
 
 @keyframes fadeInUp {
     0% {
@@ -107,3 +108,5 @@
         transform: translateY(0);
     }
 }
+
+

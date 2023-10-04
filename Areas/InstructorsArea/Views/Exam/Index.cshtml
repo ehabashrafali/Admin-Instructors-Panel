@@ -1,5 +1,14 @@
-﻿@model IEnumerable<Admin_Panel_ITI.Models.Exam>
+﻿@model IEnumerable<Exam>
 
+@{
+    int Id = ViewBag.Id;
+    string name = ViewBag.Name;
+
+    string trackName = ViewBag.TrackName;
+    string intakeName = ViewBag.IntakeName;
+    int intakeID = ViewBag.IntakeID;
+    int trackID = ViewBag.TrackID;
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +23,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="~/Instructor/SideBar_BreadCrumb.css">
+
 </head>
 <body>
 
@@ -41,61 +52,105 @@
                     <span class="d-flex align-items-center mb-3 mb-md-0 me-md-auto ">
                         <span class="nav-title">Navigation</span>
                     </span>
-                    <hr>
+                    <hr />
                     <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item navs">
-                            <a href="index.html" class="nav-link link-body-emphasis" aria-current="page">
-                                <img src="../assets/images/Gray/intake.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;">
-                                Intakes
+                        <li class="nav-item navs1">
+                            <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                @intakeName
                             </a>
                         </li>
-                        <li class="nav-item navs">
-                            <a href="managedTracks.html" class="nav-link link-body-emphasis">
-                                <img src="../assets/images/Gray/track.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;">
-                                Tracks
+
+
+                        <li class="nav-item navs2">
+                            <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@intakeID" asp-route-name="@intakeName" style="--clr: #7808d0" class="button">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                @trackName
                             </a>
                         </li>
-                        <li class="nav-item navs">
-                            <a href="courses.html" class="nav-link link-body-emphasis act">
-                                <img src="../assets/images/White/course.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;">
-                                <span style="color: white;">Courses you teach</span>
+
+                        <li class="nav-item navs2">
+                            <a asp-controller="Course"
+                               asp-action="DetailsForTeacher"
+                               asp-route-id="@intakeID"
+                               asp-route-iid="@trackID"
+                               asp-route-name="@trackName"
+                               asp-route-name2="@intakeName"
+                               style="--clr: #7808d0" class="button">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                @ViewBag.Course.Name 
                             </a>
                         </li>
+
+                        <li class="nav-item navs3">
+                            <p style="border-radius:50px;">Exams</p>
+                        </li>
+
                     </ul>
                 </div>
             </div>
+
+
+
             <!-- Main (tales + btns) -->
             <div class="col-md-10 text-center content">
                 <div class="container-fluid">
+
                     <div class="row col-md-12">
                         <div class="r1">
-                            <h3 style="padding-left: 33px;">All Exams in: @(ViewBag.Course?.Name)</h3>
+                            <h3 style="padding-left: 33px;">Exams Card</h3>
                         </div>
                     </div>
+
+
                     <div class="row col-md-11">
                         <table class="table table-hover" id="myTable">
                             <thead class="table-secondary">
                                 <tr>
                                     <th style="padding-left: 24px;">
-                                       Exam Name
+                                        Exam Name
                                         <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                                         </svg>
                                     </th>
                                     <th style="padding-left: 24px;">
-                                       Duration
+                                        Duration
                                         <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                                         </svg>
                                     </th>
                                     <th style="padding-left: 24px;">
-                                       Creation Date
+                                        Creation Date
                                         <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                                         </svg>
                                     </th>
                                     <th>
-                                       Students submitted
+                                        Students submitted
                                         <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                                         </svg>
@@ -130,10 +185,13 @@
                                 }
                             </tbody>
                         </table>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
+
     <script src="~/script.js"></script>
 </body>
 </html>

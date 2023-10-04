@@ -10,6 +10,7 @@
     string intakeName = ViewBag.IntakeName;
     int intakeID = ViewBag.IntakeID;
     int trackID = ViewBag.TrackID;
+    int CourseDaysCount = ViewBag.CourseDaysCount;
     
 }
 
@@ -25,6 +26,9 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/assets/js/bootstrap.bundle.js"></script>
     <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
 
     <style>
 
@@ -145,7 +149,7 @@
 
 
 
-                   /* Materials*/
+        /* Materials*/
 
         .file-upload2 {
             display: block;
@@ -260,9 +264,6 @@
                     }
     </style>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 
@@ -285,7 +286,7 @@
     <div class="">
         <div class="row">
             <!-- Sidebar -->
-            <div class="col-md-2 sidebar">
+@*            <div class="col-md-2 sidebar">
                 <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary" style="width: 280px; height: 93vh;">
                     <span class="d-flex align-items-center mb-3 mb-md-0 me-md-auto ">
                         <span class="nav-title">Navigation</span>
@@ -315,7 +316,7 @@
                     </ul>
 
                 </div>
-            </div>
+            </div>*@
 
 
             <!-- Main (tales + btns) -->
@@ -323,10 +324,10 @@
                 <div class="container-fluid">
                     <div class="row col-md-12">
                         <div class="r1">
-                            <h3 style="padding-left: 33px;">Fill Day Details:</h3>
+                            <h3 style="padding-left: 450px;">Fill Day Details:</h3>
                         </div>
                     </div>
-                    <div class="row col-md-10" style="margin-left: 64px; margin-top:-10px">
+                    <div class="row col-md-10" style="margin-left: 450px; margin-top:-10px">
                        
                         <form enctype="multipart/form-data" asp-action="Create" asp-controller="CourseDay" asp-area="InstructorsArea" style="margin-top: 32px; text-align: left; width: 75%;">
                            
@@ -340,7 +341,7 @@
                             <input type="hidden" asp-for="@trackID" />
 
                             <label style="font-size: 19px;" class="form-label">Day Number</label>
-                            <input asp-for="DayNumber" class="form-control" aria-label="Sizing example input" >
+                            <input asp-for="DayNumber" placeholder="@(CourseDaysCount+1)" class="form-control" aria-label="Sizing example input" disabled>
                             <span asp-validation-for="DayNumber" class="text-danger"></span>
                             <br />
                             <div class="file-upload2">

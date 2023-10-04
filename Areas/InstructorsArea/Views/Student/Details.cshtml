@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+     <link rel="stylesheet" href="~/Instructor/SideBar_BreadCrumb.css">
 </head>
 <body>
 
@@ -44,27 +45,45 @@
                         <span class="nav-title">Navigation</span>
                     </span>
 
-                    <hr>
+                     <hr>
+
 
                     <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item navs">
-                            <a href="index.html" class="nav-link link-body-emphasis act" aria-current="page">
-                                <img src="~/assets/images/White/intake.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
-                                <span style="color: white;">Intakes</span>
+                        <li class="nav-item navs1">
+                            <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                @ViewBag.IntakeName
                             </a>
                         </li>
-                        <li class="nav-item navs">
-                            <a href="managedTracks.html" class="nav-link link-body-emphasis">
-                                <img src="~/assets/images/Gray/track.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
-                                Tracks
+
+
+                        <li class="nav-item navs2">
+                            <a style="--clr: #7808d0" class="button" asp-controller="Track" asp-action="DetailsForManager" asp-route-id="@ViewBag.IntakeID" asp-route-name="@ViewBag.IntakeName">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                @ViewBag.TrackName Track
                             </a>
                         </li>
-                        <li class="nav-item navs">
-                            <a href="courses.html" class="nav-link link-body-emphasis">
-                                <img src="~/assets/images/Gray/courses.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
-                                Courses you teach
-                            </a>
+
+                        <li class="nav-item navs3">
+                            <p style="border-radius:50px;">Students</p>
                         </li>
+
                     </ul>
 
                 </div>
@@ -74,27 +93,9 @@
             <div class="col-md-10 text-center content">
                 <div class="container-fluid" >
                     <div class="row col-md-12">
-
-                        <!--Forward/Back-->
-                        <div class="r1">
-                            <div class="row">
-                                <div class="r1">
-                                    <div class="row">
-                                        <div class="col" style="display:inline-flex">
-                                            <a asp-controller="Intake" asp-action="Index" class="text-primary" style="padding-left:50px; width:140px ">@ViewBag.IntakeName</a>
-                                        </div>
-                                        <div class="col" style="display:inline-flex">
-                                            <span><i class="fas fa-arrow-right"></i></span>
-                                            <a asp-controller="Track" asp-action="DetailsForManager" asp-route-id="@ViewBag.IntakeID" asp-route-name="@ViewBag.IntakeName" class="text-primary" style="padding-left:15px; width:155px">@ViewBag.TrackName Track</a>
-                                        </div>
-                                        <div class="col" style="display:inline-flex">
-                                            <span><i class="fas fa-arrow-right"></i></span>
-                                            <p style="padding-left:20px ; font-weight:bold">Students</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                         <div class="r1">
+                            <h3 style="padding-left: 33px;">Students Table</h3>
+                        </div>
                             @* <div>
                             <div class="dropdown" style="margin: 0 0 0 16px;">
                             <button class="btn" style="width:200px; padding: 8px 0;">
@@ -193,7 +194,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
     <script src="~/script.js"></script>
 

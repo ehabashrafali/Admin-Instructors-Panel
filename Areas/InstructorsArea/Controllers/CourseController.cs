@@ -63,16 +63,17 @@ namespace Studebt_Panel_ITI.Areas.InstructorsArea.Controllers
         }
 
 
-        public ActionResult DetailsForTeacher(int id, int iid, string name, string name2)
+        //id (intakeid)  ,  iid(trackid)
+        public ActionResult DetailsForTeacher(int trackId, int intakeId, string name, string name2)
         {
             ViewBag.TrackName = name;
             ViewBag.IntakeName = name2;
-            ViewBag.IntakeID = id;
-            ViewBag.TrackID = iid;
+            ViewBag.IntakeID = intakeId;
+            ViewBag.TrackID = trackId;
 
             string InstructorID = userManager.GetUserId(User);
 
-            return View(icourseRepo.GetTeacherCourses(id, iid, InstructorID));
+            return View(icourseRepo.GetTeacherCourses(intakeId, trackId , InstructorID));
         }
     }
 }
