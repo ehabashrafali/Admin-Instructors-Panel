@@ -180,7 +180,7 @@
     });
 
 
-    $('#customdeletebtn_kordy').off('click').on('click', function () {
+    $('.customdeletebtn_kordy').off('click').on('click', function () {
         // Get the selected checkboxes
         var selectedCourseIds = $('input[name="selectedCourseIds[]"]:checked').map(function () {
             return $(this).val();

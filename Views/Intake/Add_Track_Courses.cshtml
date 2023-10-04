@@ -41,7 +41,7 @@
 
                 <br />
                 <select class="form-select" id="SelectedInstructorIds" name="SelectedInstructorIds" multiple aria-label="Default select example" style="margin-top: 24px; display: none;">
-                    <option selected>Select courses for this track</option>
+                    @*<option selected>Select courses for this track</option>*@
                     <!-- Populate courses here -->
                     @foreach (var course in ViewBag.courses)
                     {
@@ -64,7 +64,7 @@
     $(document).ready(function () {
         // Cache references to the track and course dropdowns
         var $selectedTrack = $("#selectedTrack");
-        var $selectedCourse = $("#selectedCourse");
+        var $selectedCourse = $("#SelectedInstructorIds");
         var $selectedCourseIds = $("#selectedCourseIds");
         var $selectedIntakeIds = $("#selectedIntakeIds");
 
@@ -123,4 +123,4 @@
         });
     });
 </script>
-<script src="~/multiSelect.js"></script>
+@*<script src="~/multiSelect.js"></script>*@

@@ -33,8 +33,8 @@
         <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
                 <span class="input-group-text multiSelectSpan">Add Intakes</span>
                 <select name="SelectedIntakeIds" id="SelectedInstructorIds" asp-items="ViewBag.AllIntakes" class="form-control" multiple>
-                    <option selected>Select ...</option>
-            </select>
+@*                    <option selected>Select ...</option>
+*@            </select>
         </div>
 
         <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
@@ -63,7 +63,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-@* <script>
+<script>
 
     function handleRedDashClick(intakeId, insID) {
         $.ajax({
@@ -96,6 +96,6 @@
             });
         });
     });
-</script> *@
+</script> 
 
         <script src="/multiSelect.js"></script>

@@ -97,7 +97,6 @@
 
 
 <script>
-    e.preventDefault();
 
     var selectedIntakeId = 0; // Default value
     // Function to handle dropdown <a> click event
@@ -181,7 +180,7 @@
         });
     });
 
-    $('#customdeletebtn_kordy').off('click').on('click', function () {
+    $('.customdeletebtn_kordy').off('click').on('click', function () {
         // Get the selected checkboxes
         var selectedStudentIds = $('input[name="selectedStudentIds[]"]:checked').map(function () {
             return $(this).val();

@@ -192,13 +192,13 @@
     });
 
 
-    $('#customdeletebtn_kordy').off('click').on('click', function () {
+    $('.customdeletebtn_kordy').off('click').on('click', function () {
         // Get the selected checkboxes
         var selectedTrackIds = $('input[name="selectedTrackIds[]"]:checked').map(function () {
             return $(this).val();
         }).get();
 
-
+        console.log("hehehrhrrereere");
 
         if (selectedTrackIds.length === 0) {
             alert("Please select at least one track to delete.");
