@@ -2,7 +2,7 @@
 
 @{
     int Id = ViewBag.Id;
-    string name = ViewBag.Name;
+    string courseName = ViewBag.Name;
 
     string trackName = ViewBag.TrackName;
     string intakeName = ViewBag.IntakeName;
@@ -88,8 +88,8 @@
                         <li class="nav-item navs2">
                             <a asp-controller="Course"
                                asp-action="DetailsForTeacher"
-                               asp-route-id="@intakeID"
-                               asp-route-iid="@trackID"
+                               asp-route-intakeId="@intakeID"
+                               asp-route-trackId="@trackID"
                                asp-route-name="@trackName"
                                asp-route-name2="@intakeName"
                                style="--clr: #7808d0" class="button">
@@ -102,7 +102,7 @@
                                         <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
                                     </svg>
                                 </span>
-                                @ViewBag.Course.Name 
+                                @courseName
                             </a>
                         </li>
 
