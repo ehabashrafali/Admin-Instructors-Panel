@@ -1,6 +1,6 @@
 ﻿<div class="d1 slide-down">
-    <h2 class="allintakes">All Intakes Data</h2>
-    <div class="dropdown">
+    <h2 class="allintakes" id="title">All Intakes</h2>
+    <div class="dropdown" id="homeDropdown">
         <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="selectedIntakeBtn">
             Intake Number
         </button>
@@ -29,10 +29,14 @@
 
                     // Update the button text to reflect the selected intake
                     $('#selectedIntakeBtn').text(intakeName);
+
+                    document.getElementById("title").innerHTML = intakeName;
+
                 },
                 error: function () {
                     alert('Error loading data.');
                 }
             });
+
     }
 </script>

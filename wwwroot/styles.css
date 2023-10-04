@@ -40,8 +40,10 @@ body {
     display: inline-block;
     background-color: white;
     border-radius: 0.375rem;
-    /*margin: 0px auto;
-    width: 50%;*/
+    /*width: 187px;*/
+}
+
+#homeDropdown {
     width: 187px;
 }
 
@@ -924,13 +926,21 @@ input[type="file"] {
 
      
 }
-@media (min-width:543px) and (max-width:638px)
-{
+@media (min-width:425px) and (max-width:638px) {
     .sidebar a {
-        font-size: 10px;
-        padding: 8px;
+        font-size: 11px;
+        padding: 7px;
+    }
+
+    .dropdown {
+        width: 105px;
+    }
+
+    .allintakes {
+        font-size: 20px;
     }
 }
+
 @media (min-width: 1147px) and (max-width:1325px) {
     .sidebar a {
         font-size: 10px;
@@ -942,21 +952,21 @@ input[type="file"] {
     }
 
         
-        .col-9.col-md-10.text-center.content button,
-        .col-9.col-md-10.text-center.content button#customdeletebtn_kordy,
-        .col-9.col-md-10.text-center.content a.btn.btn-primary {
-            font-size: 10px;
-            font-weight: bold;
-        }
+    .col-9.col-md-10.text-center.content button,
+    .col-9.col-md-10.text-center.content button#customdeletebtn_kordy,
+    .col-9.col-md-10.text-center.content a.btn.btn-primary {
+        font-size: 10px;
+        font-weight: bold;
+    }
 
-        .col-9.col-md-10.text-center.content h3 {
-            font-size: 20px;
-        }
+    .col-9.col-md-10.text-center.content h3 {
+        font-size: 20px;
+    }
 
-        .col-9.col-md-10.text-center.content .dropdown-content {
-            min-width: 160px;
-            left: 0px;
-        }
+    .col-9.col-md-10.text-center.content .dropdown-content {
+        min-width: 160px;
+        left: 0px;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1052px)
