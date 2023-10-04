@@ -15,6 +15,8 @@ namespace Admin_Panel_ITI.Repos.Interfaces
 
         /*---------------------------------------------- Instructor Repos -----------------------------------------------*/
         public List<CourseDay> GetCourseDaysByCourseID(int courseID);
+        public int GetCourseDaysCount(int courseID);
+
         //public void CreateCourseDay(CourseDay courseday);  used in Instructor Area, and exist above: Line 12
 
 

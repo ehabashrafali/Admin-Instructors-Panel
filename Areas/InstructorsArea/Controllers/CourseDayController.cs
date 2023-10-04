@@ -42,8 +42,11 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             ViewBag.IntakeName = intakeName;    
             ViewBag.TrackName = trackName;    
             ViewBag.IntakeID = intakeID;    
-            ViewBag.TrackID = trackID;    
-            
+            ViewBag.TrackID = trackID;
+
+            ViewBag.CourseDaysCount = courseDayRepo.GetCourseDaysCount(id);
+
+
             return View(courseDayRepo.GetCourseDaysByCourseID(id));
         }
 
@@ -123,7 +126,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
 
         [HttpGet]
-        public ActionResult Create(int Id, string name, int intakeID, int trackID, string intakeName, string trackName)
+        public ActionResult Create(int Id, string name, int intakeID, int trackID, string intakeName, string trackName , int CourseDaysCount)
         {
             ViewBag.Id = Id;
             ViewBag.Name = name;
@@ -132,6 +135,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             ViewBag.TrackName = trackName;
             ViewBag.IntakeID = intakeID;
             ViewBag.TrackID = trackID;
+            ViewBag.CourseDaysCount = CourseDaysCount;
 
             return View();
         }

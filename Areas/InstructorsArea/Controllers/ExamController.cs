@@ -35,12 +35,26 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
 
         // GET: ExamController
-        public ActionResult Index(int CourseId)
+        public ActionResult Index(int CourseId, string name, int intakeID, int trackID, string intakeName, string trackName)
         {
+
+            ViewBag.Id = CourseId;
+            ViewBag.Name = name;
+
+            ViewBag.IntakeName = intakeName;
+            ViewBag.TrackName = trackName;
+            ViewBag.IntakeID = intakeID;
+            ViewBag.TrackID = trackID;
+
+
             string UserID = userManager.GetUserId(User);
+
             var exams = examRepo.GetExamsByInstructorIDAndCourseID(UserID, CourseId);
+
             var course = courseRepository.GetCoursebyID(CourseId);
+
             ViewBag.Course = course;
+
             return View(exams);
         }
 
