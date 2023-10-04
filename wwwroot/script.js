@@ -73,6 +73,3 @@ function clicked() {
   overlay.classList.add("show");
   floatingScreen.classList.add("show");
 }
-
-
-
