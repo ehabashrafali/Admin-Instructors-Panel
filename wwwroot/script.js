@@ -8,23 +8,6 @@ function checkUncheck(checkBox) {
   }
 }
 
-// handles the three dots (details)
-$(function () {
-  $('[data-toggle="popover"]').popover({
-    html: true,
-    sanitize: false,
-    content: function () {
-      var content = $(this).attr("data-content");
-      return '<div class="popover-content">' + content + "</div>";
-    },
-  });
-});
-const tooltipTriggerList = document.querySelectorAll(
-  '[data-bs-toggle="tooltip"]'
-);
-const tooltipList = [...tooltipTriggerList].map(
-  (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
-);
 
 
 // sort the table by each row
