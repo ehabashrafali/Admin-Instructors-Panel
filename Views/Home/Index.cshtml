@@ -33,6 +33,13 @@
 </head>
 
 <body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="itiHub-load"></div>
+        <img src="~/images/0.png" alt="logo">
+    </div>
+
     <nav class="navbar navbar-expand-sm bg-body-tertiary slide-down">
         <div class="container-fluid">
             <a class="navbar-brand" href="javascript:void(0)">
@@ -43,8 +50,8 @@
             </a>
             <div>
                 <form class="d-flex navbar-user-buttons">
-                    <a asp-area="Identity" asp-page="/Account/AddUser" class="btn regbtn">Add User</a>
-                    <button class="nav-link btn btn-link text-dark border-0" type="submit">Logout</button>
+                    <a asp-area="Identity" asp-page="/Account/AddUser" class="btn regbtn hvr-bounce-to-right">Add User</a>
+                    <button class="nav-link btn btn-link text-dark border-0 hvr-bounce-to-right" type="submit">Logout</button>
                 </form>
             </div>
         </div>
@@ -57,5 +64,6 @@
 
     <partial name="_NumbersPartial" />
 
+    <script src="~/preloader.js"></script>
 </body>
 </html>
