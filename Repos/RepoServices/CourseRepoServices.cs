@@ -128,9 +128,9 @@ namespace Admin_Panel_ITI.Repos
 
         List<Intake_Track_Course> ICourseRepository.GetCourses(int pageNumber, int pageSize)
         {
-            if(pageNumber < 1)
+            if (pageNumber < 1)
             {
-                pageNumber =1;
+                pageNumber = 1;
             }
             var query2 = Context.Intake_Track_Courses
                  .Include(t => t.Course)
@@ -141,6 +141,24 @@ namespace Admin_Panel_ITI.Repos
 
             return query2;
         }
+
+        //List<Course> ICourseRepository.GetCourses2(int pageNumber, int pageSize)
+        //{
+        //    if(pageNumber < 1)
+        //    {
+        //        pageNumber =1;
+        //    }
+        //    var query2 = Context.Intake_Track_Courses
+        //         .Include(t => t.Course)
+        //         .Include(tc => tc.Track)
+        //         .Select(c => c.Course)
+        //         .Distinct()
+        //         .Skip((pageNumber - 1) * pageSize)
+        //         .Take(pageSize)
+        //         .ToList();
+
+        //    return query2;
+        //}
         List<Course> ICourseRepository.GetCourses()
         {
             

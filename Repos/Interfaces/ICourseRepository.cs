@@ -11,6 +11,7 @@ namespace Admin_Panel_ITI.Repos
         public List<Intake_Track_Course> GetCoursesbyTrackID(int trackID, int pageNumber, int pageSize);
         //public List<Course> GetCoursesbyTrackID(int trackID,int pageNumber, int pageSize);
         public List<Course> GetCourses();
+        //public List<Course> GetCourses2(int pageNumber, int pageSize);
         public void UpdateCourse(int CourseID, Course course);
         public void DeleteCourse(int courseID);
         public void CreateCourse(Course course);
