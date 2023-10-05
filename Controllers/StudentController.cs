@@ -69,7 +69,7 @@ namespace Admin_Panel_ITI.Controllers
                 studentsbyintake = studentRepository.getStudentsbyIntakeID(intakeID, pageNumber, 10);
                 if (studentsbyintake.Count == 0 && pageNumber > 1)
                 {
-                    studentsbyintake = studentRepository.getStudentsbyIntakeID(intakeID, pageNumber, 10);
+                    studentsbyintake = studentRepository.getStudentsbyIntakeID(intakeID, pageNumber -1, 10);
                     pageNumber--;
                 }
             }

@@ -10,7 +10,7 @@
     string intakeName = ViewBag.IntakeName;
     int intakeID = ViewBag.IntakeID;
     int trackID = ViewBag.TrackID;
-    int CourseDaysCount = ViewBag.CourseDaysCount;
+    int DayNumber = ViewBag.CourseDaysCount + 1;
     
 }
 
@@ -339,9 +339,11 @@
                             <input type="hidden" asp-for="@intakeName" />
                             <input type="hidden" asp-for="@intakeID" />
                             <input type="hidden" asp-for="@trackID" />
+                            <input type="hidden" asp-for="@DayNumber" />
 
                             <label style="font-size: 19px;" class="form-label">Day Number</label>
-                            <input asp-for="DayNumber" placeholder="@(CourseDaysCount+1)" class="form-control" aria-label="Sizing example input" disabled>
+                   
+                            <input asp-for="DayNumber" placeholder="@DayNumber" value="@DayNumber" class="form-control" aria-label="Sizing example input" disabled>
                             <span asp-validation-for="DayNumber" class="text-danger"></span>
                             <br />
                             <div class="file-upload2">
@@ -375,7 +377,7 @@
                                    asp-route-intakeID="@intakeID"
                                    asp-route-trackID="@trackID"
                                    asp-route-intakeName="@intakeName"
-
+                                   asp-route-DayNumber="@DayNumber"
                                    asp-route-trackName="@trackName" class="btn btn-dark">Back to List</a>
                             </div>
                         </form>
