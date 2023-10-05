@@ -26,32 +26,34 @@
                 </h3>
              </div>
         <div class="p-lg-5">
+            <span class="input-group-text" style="margin-bottom: 0; font-size: 16px; font-weight: bold;">Tracks</span>
             @* <form method="post" id="courseForm" asp-action="SaveSelectedTrackAndCourses" asp-controller="Intake"> *@
             <form method="post" id="myformcourse" asp-action="SaveSelectedTrackAndCourses" asp-controller="Intake">
-                @Html.DropDownList("selectedTrack", ViewBag.tracks as SelectList, "Select track", new { @class = "form-select", aria_label = "Default select example", })
+               <div>
+                    @Html.DropDownList("selectedTrack", ViewBag.tracks as SelectList, "Select track", new { @class = "form-select", aria_label = "Default select example", })
+                </div>
+               <br />
+               <br />
 
-             @*    <select class="form-select" id="selectedCourse" name="selectedCourse" multiple aria-label="Default select example" style="margin-top: 24px; display: none;">
-                    <option selected>Select courses for this track</option>
-                    <!-- Populate courses here -->
-                    @foreach (var course in ViewBag.courses)
-                    {
-                        <option value="@course.Value">@course.Text</option>
-                    }
-                </select> *@
+                <div>
+                    <span class="input-group-text" style="margin-bottom: 0; font-size: 16px; font-weight: bold;">Courses</span>
+                    <select class="form-control" id="SelectedInstructorIds" name="SelectedInstructorIds" multiple aria-label="Default select example" style="margin-top: 24px; display: none;">
 
-                <br />
-                <select class="form-select" id="SelectedInstructorIds" name="SelectedInstructorIds" multiple aria-label="Default select example" style="margin-top: 24px; display: none;">
-                    @*<option selected>Select courses for this track</option>*@
-                    <!-- Populate courses here -->
-                    @foreach (var course in ViewBag.courses)
-                    {
-                        <option value="@course.Value">@course.Text</option>
-                    }
-                </select>
+                        @*<option value="" disabled selected>Select courses</option> <!-- This line adds the placeholder -->*@
+                        <!-- Populate courses here -->
+                        @foreach (var course in ViewBag.courses)
+                        {
+                            <option value="@course.Value">@course.Text</option>
+                        }
+                    </select>
+                </div>
+             
 
                 <input type="hidden" id="selectedCourseIds" name="selectedCourseIds" value="">
                 <input type="hidden" id="selectedIntakeIds" name="selectedIntakeIds" value="">
                 <input type="button" class="btn btn-primary" style="margin-top: 24px;" value="Save" id="saveButton">
+                <a href="@Url.Action("Index", "Intake")" class="btn btn-secondary" style="margin-top: 24px;">Go to Index</a>
+
             </form>
         </div>
 
@@ -65,23 +67,23 @@
         // Cache references to the track and course dropdowns
         var $selectedTrack = $("#selectedTrack");
         var $selectedCourse = $("#SelectedInstructorIds");
-        var $selectedCourseIds = $("#selectedCourseIds");
+        var $selectedCourseIds = $("#SelectedInstructorIds");
         var $selectedIntakeIds = $("#selectedIntakeIds");
 
-        // Initially hide the course dropdown
-        $selectedCourse.hide();
+        // // Initially hide the course dropdown
+        // $selectedCourse.hide();
 
-        // Attach an event handler to the track dropdown's change event
-        $selectedTrack.on("change", function () {
-            // Check if a track is selected
-            if ($selectedTrack.val() !== "") {
-                // Show the course dropdown
-                $selectedCourse.show();
-            } else {
-                // Hide the course dropdown
-                $selectedCourse.hide();
-            }
-        });
+        // // Attach an event handler to the track dropdown's change event
+        // $selectedTrack.on("change", function () {
+        //     // Check if a track is selected
+        //     if ($selectedTrack.val() !== "") {
+        //         // Show the course dropdown
+        //         $selectedCourse.show();
+        //     } else {
+        //         // Hide the course dropdown
+        //         $selectedCourse.hide();
+        //     }
+        // });
 
         // Attach an event handler to the form submission
         $("#saveButton").on("click", function () {
@@ -123,4 +125,4 @@
         });
     });
 </script>
-@*<script src="~/multiSelect.js"></script>*@
+<script src="~/multiSelect.js"></script>
