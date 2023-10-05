@@ -110,23 +110,22 @@
 </div>
 
 <script>
-        // Function to remove the element when the screen width is greater than 991px
-        function removeElementOnLargeScreens() {
-            if (window.innerWidth > 991) {
-            var elementToRemove = document.querySelector('.small-screen #addTrackAndCoursesBtn');
-                if (elementToRemove) {
-                    elementToRemove.parentNode.removeChild(elementToRemove);
-                }
+    
+    // Function to remove the element when the screen width is greater than 991px
+    function removeElementOnLargeScreens() {
+        if (window.innerWidth > 991) {
+        var elementToRemove = document.querySelector('.small-screen #addTrackAndCoursesBtn');
+            if (elementToRemove) {
+                elementToRemove.parentNode.removeChild(elementToRemove);
             }
         }
+    }
 
-        // Call the function initially and listen for window resize events
-        removeElementOnLargeScreens();
+    // Call the function initially and listen for window resize events
+    removeElementOnLargeScreens();
 
-        window.addEventListener('resize', removeElementOnLargeScreens);
-</script>
+    window.addEventListener('resize', removeElementOnLargeScreens);
 
-<script>
 
     var selectedDuration = 0; // Default value
     // Function to handle dropdown <a> click event

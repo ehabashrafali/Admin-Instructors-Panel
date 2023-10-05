@@ -34,9 +34,9 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
 
         //id(courseID) , name(courseName)
-        public ActionResult Index(int id , string name, int intakeID, int trackID, string intakeName, string trackName)
+        public ActionResult Index(int Id , string name, int intakeID, int trackID, string intakeName, string trackName)
         {
-            ViewBag.Id = id;    
+            ViewBag.Id = Id;    
             ViewBag.Name = name;  
             
             ViewBag.IntakeName = intakeName;    
@@ -44,10 +44,10 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             ViewBag.IntakeID = intakeID;    
             ViewBag.TrackID = trackID;
 
-            ViewBag.CourseDaysCount = courseDayRepo.GetCourseDaysCount(id);
+            ViewBag.CourseDaysCount = courseDayRepo.GetCourseDaysCount(Id);
 
 
-            return View(courseDayRepo.GetCourseDaysByCourseID(id));
+            return View(courseDayRepo.GetCourseDaysByCourseID(Id));
         }
 
 
@@ -197,7 +197,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
                     courseDayMaterialRepo.CreateCourseDayMaterial(cdms);
                 }
 
-                return RedirectToAction("Index", new { Id, name, intakeID, trackID, intakeName, trackName  });
+                return RedirectToAction(nameof(Index), new { Id, name, intakeID, trackID, intakeName, trackName  });
             }
 
             return RedirectToAction("Create" , new {Id, name, intakeID, trackID, intakeName, trackName});
