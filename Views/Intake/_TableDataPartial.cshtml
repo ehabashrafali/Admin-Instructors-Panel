@@ -6,15 +6,20 @@
 
 @*style for the modal*@
 <style>
+    .modal {
+        z-index: 10000;
+    }
     .modal.fade .modal-dialog {
         transform: translate(0, -50px);
         opacity: 0;
         transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            z-index: 5;
     }
 
     .modal.fade.show .modal-dialog {
         transform: translate(0, 0);
         opacity: 1;
+            z-index: 10000;
     }
 
     .modal-backdrop {
@@ -22,7 +27,7 @@
     }
 
     .modal-content {
-        z-index: 1006;
+        z-index: 10006;
     }
 
 </style>
