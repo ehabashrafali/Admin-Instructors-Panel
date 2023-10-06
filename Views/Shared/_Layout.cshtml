@@ -34,7 +34,7 @@
 
     <nav class="navbar navbar-expand-sm bg-body-tertiary slide-down">
         <div class="container-fluid">
-            <a class="navbar-brand" asp-action="Index" asp-controller="Home">
+            <a class="navbar-brand" id="logo" asp-action="Index" asp-controller="Home">
                 <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
                 <div class="iti-hub-devider">
                     <span> Hub </span>
@@ -109,7 +109,11 @@
         var instructorLink = document.getElementById("instructorLink");
         var studentLink = document.getElementById("studentLink");
         var courseLink = document.getElementById("courseLink");
+        var logo = document.getElementById("logo");
 
+        logo.addEventListener('click', () => {
+            localStorage.setItem('selectedIntakeID', 0);//to take intake id
+        });
 
         // Use the selected intake ID to view filtered Instructors
 
@@ -138,6 +142,8 @@
         } else {
             courseLink.setAttribute('href', '/Course/Index');
         }
+
+
     </script>
 
 
