@@ -1,0 +1,65 @@
+﻿@import url('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css');
+
+.info-msg,
+.success-msg,
+.warning-msg,
+.error-msg {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 3px 3px 3px 3px;
+    width: 50%;
+    height: 3rem;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -100px;
+    opacity: 0;
+    transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.error-msg.active, .success-msg.active {
+    top: 100px;
+    opacity: 1;
+}
+
+.error-msg i, .success-msg i {
+    padding-right: 6px;
+}
+
+.error-msg h6, .success-msg h6 {
+    margin: 0 0 2px 0;
+
+}
+
+.info-msg {
+    color: #059;
+    background-color: #BEF;
+}
+
+.success-msg {
+    color: #270;
+    background-color: #DFF2BF;
+}
+
+.warning-msg {
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+
+.error-msg {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+
+@media (min-width:425px) and (max-width:638px) {
+    .info-msg,
+    .success-msg,
+    .warning-msg,
+    .error-msg {
+        width: 90%;
+    }
+}

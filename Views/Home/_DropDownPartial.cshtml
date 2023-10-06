@@ -32,6 +32,7 @@
 
                     document.getElementById("title").innerHTML = intakeName;
 
+                    localStorage.setItem('selectedIntakeID', intakeID);//to take intake id
                 },
                 error: function () {
                     alert('Error loading data.');

@@ -115,12 +115,44 @@ namespace Admin_Panel_ITI.Repos
 
             return course;
         }
+        
 
+        // get all courses even assigned to track&intake or not
         int ICourseRepository.GetCourseNumber()
         {
-            return Context.Courses.Count();
-        }    
-        
+
+            int count =
+              (from course in Context.Courses
+               join intakeTrackCourse in Context.Intake_Track_Courses
+               on course.ID equals intakeTrackCourse.CourseID into joined
+               from rightJoin in joined.DefaultIfEmpty()
+               select course)
+              .Distinct()
+              .Count();
+
+            return count;
+        }
+
+
+        List<Course> ICourseRepository.GetCourses2(int pageNumber, int pageSize)
+        {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
+            var query2 = (from course in Context.Courses
+                          join intakeTrackCourse in Context.Intake_Track_Courses
+                          on course.ID equals intakeTrackCourse.CourseID into joined
+                          from rightJoin in joined.DefaultIfEmpty()
+                          select course)
+                         .Include(c => c.IntakeTrackCourse).Distinct()
+                         .Skip((pageNumber - 1) * pageSize)
+                         .Take(pageSize)
+                         .ToList();
+
+            return query2;
+        }
         int ICourseRepository.GetCourseNumberbyIntakeID(int intakeID)
         {
             return Context.Intake_Track_Courses.Where(itc=>itc.IntakeID == intakeID).Count();
@@ -142,23 +174,7 @@ namespace Admin_Panel_ITI.Repos
             return query2;
         }
 
-        //List<Course> ICourseRepository.GetCourses2(int pageNumber, int pageSize)
-        //{
-        //    if(pageNumber < 1)
-        //    {
-        //        pageNumber =1;
-        //    }
-        //    var query2 = Context.Intake_Track_Courses
-        //         .Include(t => t.Course)
-        //         .Include(tc => tc.Track)
-        //         .Select(c => c.Course)
-        //         .Distinct()
-        //         .Skip((pageNumber - 1) * pageSize)
-        //         .Take(pageSize)
-        //         .ToList();
-
-        //    return query2;
-        //}
+       
         List<Course> ICourseRepository.GetCourses()
         {
             
@@ -193,6 +209,7 @@ namespace Admin_Panel_ITI.Repos
                  join c in Context.Courses on tc.CourseID equals c.ID
                  where tc.TrackID == trackID && tc.IntakeID == intakeID
                  select tc)
+                 .Include(tt => tt.Intake)
                  .Include(tt=>tt.Track)
                  .Include(tt2=>tt2.Course)
                  .Skip((pageNumber - 1) * pageSize)
@@ -218,11 +235,31 @@ namespace Admin_Panel_ITI.Repos
 
             return query;
         }
-        List<Intake_Track_Course> ICourseRepository.GetCoursesbyTrackID(int trackID, int pageNumber, int pageSize)
+        List<Course> ICourseRepository.GetCoursesbyTrackID(int trackID, int pageNumber, int pageSize)
+        {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+            var query2 = (from c in Context.Courses
+                          join tc in Context.Intake_Track_Courses on c.ID equals tc.CourseID
+                          where tc.TrackID == trackID
+                          select c)
+                         .Include(c => c.IntakeTrackCourse).Distinct()
+                 .Skip((pageNumber - 1) * pageSize)
+                 .Take(pageSize)
+                 .ToList();
+
+            return query2;
+
+        }
+
+        List<Intake_Track_Course> ICourseRepository.GetCoursesbyTrackIDitc(int trackID, int pageNumber, int pageSize)
         {
             var query2 = Context.Intake_Track_Courses
                  .Where(itc => itc.TrackID == trackID)
                  .Include(t => t.Course)
+                 .Include(i => i.Intake)
                  .Include(tc => tc.Track)
                  .Skip((pageNumber - 1) * pageSize)
                  .Take(pageSize)
@@ -238,16 +275,13 @@ namespace Admin_Panel_ITI.Repos
                 pageNumber = 1;
             }
 
-            //var query =
-            //    (from c in Context.Courses
-            //     join tc in Context.Intake_Track_Courses on c.ID equals tc.CourseID
-            //     where tc.IntakeID == intakeid
-            //     select c);
+
 
             var query2 = Context.Intake_Track_Courses
                 .Where(itc => itc.IntakeID == intakeid)
                 .Include(t=> t.Course)
                 .Include (tc=> tc.Track)
+                .Include(i => i.Intake)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
