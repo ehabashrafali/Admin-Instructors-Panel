@@ -20,6 +20,7 @@ namespace Admin_Panel_ITI.Repos.Interfaces
 
 
         public List<Instructor> GetInstructors(int pageNumber, int pageSize);
+        public List<Instructor> getInstructorbyIntakeID(int intakeID, int pageNumber, int pageSize);
         public List<Instructor> GetInstructors();
 
 

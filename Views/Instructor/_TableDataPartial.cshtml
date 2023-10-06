@@ -84,26 +84,32 @@
 <script>
 
 
-
+    var intakeID = @Html.Raw(Json.Serialize(ViewBag.IntakeID));
 
     // Function to handle the "Next" button click event
     $('#nextPageBtn').on('click', function (e) {
         e.preventDefault();
 
-        var nextPage = @ViewBag.PageNumber +1; // Get the previous page number
+        var nextPage = @ViewBag.PageNumber + 1; // Get the next page number
 
-        // Make an AJAX call to the UpdateTableData action with the previous page number
+        // Make an AJAX call to the UpdateTableData action
         $.ajax({
             url: '@Url.Action("UpdateTableData", "Instructor")', // Use Url.Action to generate the correct URL
             type: 'GET',
-            data: { pageNumber: nextPage }, // Pass the selected intake ID and previous page number as parameters
+            data: {
+                pageNumber: nextPage,
+                intakeId: intakeID // Send the intakeID as a parameter
+            },
             success: function (result) {
                 // Replace the content of the partialTable div with the updated HTML
                 $('#partialTable').html(result);
 
-
-                // Disable the "Prev" button if needed (you may need to add logic here)
-                // Example: if (prevPage <= 0) { $('#prevPageBtn').addClass('disabled'); }
+                // Disable the "Prev" button if needed
+                if (nextPage <= 0) {
+                    $('#prevPageBtn').addClass('disabled');
+                } else {
+                    $('#prevPageBtn').removeClass('disabled');
+                }
             },
             error: function () {
                 alert('Error occurred while fetching data.');
@@ -111,25 +117,26 @@
         });
     });
 
-
     // Function to handle the "Prev" button click event
     $('#prevPageBtn').on('click', function (e) {
         e.preventDefault();
 
-        var prevPage = @ViewBag.PageNumber -1; // Get the previous page number
+        var prevPage = @ViewBag.PageNumber - 1; // Get the previous page number
 
-        // Make an AJAX call to the UpdateTableData action with the previous page number
+        // Make an AJAX call to the UpdateTableData action
         $.ajax({
             url: '@Url.Action("UpdateTableData", "Instructor")', // Use Url.Action to generate the correct URL
             type: 'GET',
-            data: { pageNumber: prevPage }, // Pass the selected intake ID and previous page number as parameters
+            data: {
+                pageNumber: prevPage,
+                intakeId: intakeID // Send the intakeID as a parameter
+            },
             success: function (result) {
                 // Replace the content of the partialTable div with the updated HTML
                 $('#partialTable').html(result);
 
-
-                //Disable the "Prev" button if needed (you may need to add logic here)
-                if (nextPage <= 0) {
+                // Disable the "Prev" button if needed
+                if (prevPage <= 0) {
                     $('#prevPageBtn').addClass('disabled');
                 } else {
                     $('#prevPageBtn').removeClass('disabled');
@@ -165,10 +172,10 @@
             traditional: true, // Use traditional serialization for arrays
             data: {
                 selectedInstructorIds: selectedInstructorIds,
-                pageNumber: pageNumber
+                pageNumber: pageNumber,
+                intakeId: intakeID
             },
             success: function (result) {
-                // Handle the success response as needed
                 // For example, you can update the table with the new data
                 $('#partialTable').html(result);
             },
