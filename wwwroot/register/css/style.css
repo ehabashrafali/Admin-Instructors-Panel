@@ -652,6 +652,7 @@ label.valid {
   position: absolute;
   left: 24px;
   top: 24px;
+  z-index: 1000;
 }
 
 .navbarvr {
