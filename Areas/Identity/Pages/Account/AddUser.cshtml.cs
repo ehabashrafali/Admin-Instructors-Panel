@@ -131,11 +131,6 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/Identity/Account/AddUser");
 
-            //if (ModelState.IsValid)
-            //{
-
-            //}
-
             var user = CreateUser();
 
             user.FullName = Input.FullName;
@@ -148,8 +143,6 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
 
             if (result.Succeeded)
             {
-
-
                 user.LockoutEnabled = false;
 
                 if (Input.userType == UserType.Admin)

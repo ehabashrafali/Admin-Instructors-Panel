@@ -159,30 +159,33 @@
         const studentFields1 = document.getElementById("studentFields1");
         const divStudentFields = document.getElementById("divStudentFields");
         const studentFields2 = document.getElementById("studentFields2HTML");
+
         const form = document.getElementById('registerForm');
         const errorMsg = document.querySelector(".error-msg");
         const successMsg = document.querySelector(".success-msg");
 
         form.addEventListener('submit', event => {
+            //field-validation-error
             const visibleInputsAndSelects = document.querySelectorAll('.form-group:not([style*="display: none"])');
-            console.log(visibleInputsAndSelects);
+            const unvalidElements = document.querySelectorAll('span.field-validation-error');
             // Check the validity of each form element
             let allValid = true;
             for (const element of visibleInputsAndSelects) {
                 const children = element.children;
-                // Iterate over the form group's children
+                //Iterate over the form group's children
                 for (const child of children) {
-                    console.log(child.tagName);
-                    if (child.tagName === 'SELECT') {
+                    if (unvalidElements.length > 0) {
+                        event.preventDefault();
+                        allValid = false;
+                        break;
+                    } else if (child.tagName === 'SELECT') {
                         if (child.selectedOptions.length === 0) {
-                            console.log(child.selectedOptions);
                             event.preventDefault();
                             allValid = false;
                             break;
                         }
                     } else if (child.tagName === 'INPUT') {
                         if (!child.value) {
-                            console.log(child.value);
                             event.preventDefault();
                             allValid = false;
                             break;
@@ -191,9 +194,11 @@
                 }
             }
             if (allValid) {
+                event.preventDefault();
                 successMsg.classList.add('active');
                 setTimeout(() => {
                     successMsg.classList.remove('active');
+                    form.submit();
                 }, 3000);
             } else {
                 event.preventDefault();
