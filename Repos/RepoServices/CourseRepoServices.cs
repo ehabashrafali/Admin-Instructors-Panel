@@ -141,15 +141,24 @@ namespace Admin_Panel_ITI.Repos
                 pageNumber = 1;
             }
 
-            var query2 = (from course in Context.Courses
-                          join intakeTrackCourse in Context.Intake_Track_Courses
-                          on course.ID equals intakeTrackCourse.CourseID into joined
-                          from rightJoin in joined.DefaultIfEmpty()
-                          select course)
-                         .Include(c => c.IntakeTrackCourse).Distinct()
-                         .Skip((pageNumber - 1) * pageSize)
-                         .Take(pageSize)
-                         .ToList();
+            //var query2 = (from course in Context.Courses
+            //              join intakeTrackCourse in Context.Intake_Track_Courses
+            //              on course.ID equals intakeTrackCourse.CourseID into joined
+            //              from rightJoin in joined.DefaultIfEmpty()
+            //              select course)
+            //             .Include(c => c.IntakeTrackCourse)
+            //             .Skip((pageNumber - 1) * pageSize)
+            //             .Take(pageSize)
+            //             .ToList();
+
+            var query2 = Context.Courses
+                               .Include(c => c.IntakeTrackCourse)
+                               .ThenInclude(c2 => c2.Track)
+                               .Include(c3 => c3.IntakeTrackCourse)
+                               .ThenInclude(c4 => c4.Intake)
+                          
+                               .ToList();
+
 
             return query2;
         }
