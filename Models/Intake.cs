@@ -18,17 +18,17 @@ namespace Admin_Panel_ITI.Models
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Required, Column(TypeName = "date")]
+        [Required(ErrorMessage ="Start date is required"), Column(TypeName = "date")]
         [DisplayName("Start Date")]
         public DateTime StartDate { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Required, Column(TypeName = "date")]
+        [Required(ErrorMessage = "End date is required"), Column(TypeName = "date")]
         [DisplayName("End Date")]
         public DateTime EndDate { get; set; }
 
-        [Required, Range(3, 12)]
+        [Required, Range(3, 9, ErrorMessage ="Intakes duration range is between 3 to 9 only")]
         public int Duration { get; set; }
 
 
@@ -40,19 +40,9 @@ namespace Admin_Panel_ITI.Models
         public string? NameAndDuration => $"{Name} - ({Duration}) M";
 
 
-
-    //old//
     [ForeignKey(nameof(Admin))]
         public string? AdminID { get; set; }
         public virtual Admin? Admin { get; set; }
-
-
-        //new//
-        //[ForeignKey(nameof(Admin))]
-        //public string? AdminID { get; set; }
-        //public virtual AppUser? Admin { get; set; }
-
-
 
 
         public virtual IEnumerable<Student>? Students { get; set; }

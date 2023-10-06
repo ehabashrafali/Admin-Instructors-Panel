@@ -34,8 +34,6 @@ namespace Admin_Panel_ITI.Controllers
         {
             var intakes = intakeRepository.GetAllIntakes(pageNumber,10);
 
-
-
             List<int> studentNumsforIntake = studentRepository.getStudentNumberforIntakes(intakes);
 
             ViewData["NumOfStudsInEachIntake"] = studentNumsforIntake;
@@ -95,7 +93,6 @@ namespace Admin_Panel_ITI.Controllers
 
         public ActionResult Create()
         {
-
             return View();
         }
 

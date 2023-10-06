@@ -106,15 +106,10 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
 
                         return LocalRedirect(returnUrl);
                     }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                        //return LocalRedirect("~/ERROR404/Error.html");
-                    }
                 }
 
-                ModelState.AddModelError(string.Empty , "There is no such user in the system!");
-               
+                //ModelState.AddModelError(string.Empty , "There is no such user in the system!");
+                ModelState.AddModelError(string.Empty, "Invalid Credentials!");
             }
 
             // If we got this far, something failed, redisplay form

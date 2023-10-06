@@ -3,13 +3,7 @@
         <div class="row">
             <h3 style="margin: 30px 0; text-align: center; padding:0;">
             <div class="r1">
-                @*<h3 style="padding-left: 38px;">
-                    You are adding tracks and courses for
-                    @foreach (var intakeName in ViewBag.intakeNames)
-                    {
-                        @intakeName @:
-                    }
-                </h3>*@
+
                     You are adding tracks and courses for
                     @for (var i = 0; i < ViewBag.intakeNames.Count; i++)
                     {
@@ -24,6 +18,7 @@
                         }
                     }
                 </h3>
+
              </div>
         <div class="p-lg-5">
             <span class="input-group-text" style="margin-bottom: 0; font-size: 16px; font-weight: bold;">Tracks</span>
@@ -125,4 +120,5 @@
         });
     });
 </script>
+
 <script src="~/multiSelect.js"></script>

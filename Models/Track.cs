@@ -10,7 +10,7 @@ namespace Admin_Panel_ITI.Models
         [Key]
         public int ID { get; set; }
 
-        [Required, MaxLength(100)]
+        [Required(ErrorMessage = "Track name is required"), MaxLength(100)]
         public string Name { get; set; }
 
 
@@ -20,16 +20,12 @@ namespace Admin_Panel_ITI.Models
         public DateTime CreationDate { get; set; }
 
 
-        //old//
+
         [ForeignKey(nameof(Manager))]
+        [Required(ErrorMessage ="Manager is required")]
         public string? ManagerID { get; set; }  //InstructorID, string because it will be GUID (hashed password)
         public virtual Instructor? Manager { get; set; }
 
-
-        //new//
-        //[ForeignKey(nameof(Manager))]
-        //public string? ManagerID { get; set; }  //InstructorID, string because it will be GUID (hashed password)
-        //public virtual AppUser? Manager { get; set; }
 
 
 
