@@ -38,7 +38,9 @@ namespace Admin_Panel_ITI.Controllers
             var Courses = courseRepository.GetCourses2(pageNumber,10);
             ViewBag.PageNumber = pageNumber;
             ViewBag.TrackID = 0;
-
+            ViewBag.IntakeID = 0;
+            ViewBag.intakes_involved = false;
+            ViewBag.tracks_involved = false;
             return View(Courses);
         }
 
@@ -57,6 +59,8 @@ namespace Admin_Panel_ITI.Controllers
             ViewBag.PageNumber = pageNumber;
             ViewBag.IntakeID = Id;
             ViewBag.TrackID = 0;
+            ViewBag.intakes_involved = false;
+            ViewBag.tracks_involved = false;
 
             return View(Courses);
 
@@ -95,9 +99,31 @@ namespace Admin_Panel_ITI.Controllers
                 }
             }
 
+            if(trackID == 0)
+            {
+                ViewBag.tracks_involved = false;
+
+            }
+            else
+            {
+                ViewBag.tracks_involved = true;
+
+            }
+
+            if (IntakeID==0 )
+            {
+                ViewBag.intakes_involved = false;
+
+            }
+            else
+            {
+                ViewBag.intakes_involved = false;
+
+            }
+
             ViewData["Tracks"] = new SelectList(tracks, "ID", "Name");
             ViewBag.PageNumber = pageNumber;
-            ViewBag.trackID = trackID;
+            ViewBag.TrackID = trackID;
             ViewBag.IntakeID = IntakeID;
 
             return PartialView("_TableDataPartial", coursesbytrack);
@@ -168,8 +194,30 @@ namespace Admin_Panel_ITI.Controllers
 
             ViewData["Tracks"] = new SelectList(tracks, "ID", "Name");
             ViewBag.PageNumber = pageNumber;
-            ViewBag.trackID = trackID;
+            ViewBag.TrackID = trackID;
             ViewBag.IntakeID = IntakeID;
+
+            if (trackID == 0)
+            {
+                ViewBag.tracks_involved = false;
+
+            }
+            else
+            {
+                ViewBag.tracks_involved = true;
+
+            }
+
+            if (IntakeID == 0)
+            {
+                ViewBag.intakes_involved = false;
+
+            }
+            else
+            {
+                ViewBag.intakes_involved = false;
+
+            }
 
             return PartialView("_TableDataPartialFilteredbyIntakes", coursesbytrack);
         }
@@ -285,42 +333,98 @@ namespace Admin_Panel_ITI.Controllers
         }
 
         // GET: CourseController/Delete/5
-        public ActionResult Delete(List<int> selectedCourseIds, int trackID, int pageNumber)
+        public ActionResult Delete(List<int> selectedCourseIds, int trackID,  int intakeID,int pageNumber)
         {
             courseRepository.DeleteCourse(selectedCourseIds);
 
             var tracks = trackRepository.getTracks();
-            List<Course> courses;
-            List<Intake_Track_Course> coursesbytrackitc;
+            List<Intake_Track_Course> coursesbytrack;
 
-            if (trackID != 0)
+            if (intakeID == 0)
             {
-                // Get tracks filtered by intake ID
-                coursesbytrackitc = courseRepository.GetCoursesbyTrackIDitc(trackID, pageNumber, 10);
-                if (coursesbytrackitc.Count == 0 && pageNumber >= 1)
+                if (trackID == 0)
                 {
-                    coursesbytrackitc = courseRepository.GetCoursesbyTrackIDitc(trackID, pageNumber - 1, 10);
-                    pageNumber--;
-                }
+                    // Get all tracks without filtering by intake ID
+                    coursesbytrack = courseRepository.GetCourses(pageNumber, 10);
+                    if (coursesbytrack.Count == 0 && pageNumber > 1)
+                    {
+                        coursesbytrack = courseRepository.GetCourses(pageNumber - 1, 10);
+                        pageNumber--;
+                    }
 
-                return PartialView("_TableDataPartialFilteredbyIntakes", coursesbytrackitc);
+                }
+                else
+                {
+                    // Get tracks filtered by intake ID
+                    coursesbytrack = courseRepository.GetCoursesbyTrackIDitc(trackID, pageNumber, 10);
+                    if (coursesbytrack.Count == 0 && pageNumber > 1)
+                    {
+                        coursesbytrack = courseRepository.GetCoursesbyTrackIDitc(trackID, pageNumber - 1, 10);
+                        pageNumber--;
+                    }
+                }
             }
             else
             {
-                // Get all courses without filtering by track ID
-                courses = courseRepository.GetCourses2(pageNumber, 10);
-                if (courses.Count == 0 && pageNumber >= 1)
+                if (trackID == 0)
                 {
-                    courses = courseRepository.GetCourses2(pageNumber - 1, 10);
-                    pageNumber--;
-                }
 
-                return PartialView("_TableDataPartial", courses);
+                    //  get course by intakeonly
+
+
+
+                    coursesbytrack = courseRepository.GetCoursesbyIntakeID(intakeID, pageNumber, 10);
+                    if (coursesbytrack.Count == 0 && pageNumber > 1)
+                    {
+                        coursesbytrack = courseRepository.GetCoursesbyIntakeID(intakeID, pageNumber - 1, 10);
+                        pageNumber--;
+                    }
+
+                }
+                else
+                {
+                    // edit to get courses by both intake and track id
+
+                    // Get tracks filtered by intake ID
+                    coursesbytrack = courseRepository.GetCoursesByIntakeTrackID(intakeID, trackID, pageNumber, 10);
+                    if (coursesbytrack.Count == 0 && pageNumber > 1)
+                    {
+                        coursesbytrack = courseRepository.GetCoursesByIntakeTrackID(intakeID, trackID, pageNumber - 1, 10);
+                        pageNumber--;
+                    }
+                }
             }
 
             ViewData["Tracks"] = new SelectList(tracks, "ID", "Name");
             ViewBag.PageNumber = pageNumber;
             ViewBag.TrackID = trackID;
+            ViewBag.IntakeID = intakeID;
+
+            if (trackID == 0)
+            {
+                ViewBag.tracks_involved = false;
+
+            }
+            else
+            {
+                ViewBag.tracks_involved = true;
+
+            }
+
+            if (intakeID == 0)
+            {
+                ViewBag.intakes_involved = false;
+
+            }
+            else
+            {
+                ViewBag.intakes_involved = false;
+
+            }
+
+            return PartialView("_TableDataPartialFilteredbyIntakes", coursesbytrack);
+
+
         }
 
 
