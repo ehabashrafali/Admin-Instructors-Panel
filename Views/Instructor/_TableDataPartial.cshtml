@@ -30,7 +30,15 @@
                     <tr>
                         <td><input type="checkbox" name="selectedInstructorIds[]" class="course-checkbox" value="@instructorList[i].AspNetUserID"></td>
                         <td style="cursor: pointer;" onclick="editInstructor('@instructorList[i].AspNetUserID')">@instructorList[i].AspNetUser.FullName</td>
-                        <td>@instructorList[i].CurrentlyWorking</td>
+                        <td>@{
+                                if (instructorList[i].CurrentlyWorking)
+                                {
+                                    <img src="~/images/true.svg" width="24" height="24"/>
+                                } else
+                                {
+                                    <img src="~/images/false.svg" width="24" height="24"/>
+                                }
+                            }</td>
                         <td style="padding: 5px 8px">
                             <a asp-action="edit" asp-route-id="@instructorList[i].AspNetUserID">
                                 <img style='width: 20px; height: 20px;' src='~/assets/images/edit.png' alt='details'>

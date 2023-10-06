@@ -125,9 +125,12 @@ body {
     margin: 40px auto 16px;
 }*/
 
+/* when hovering on sorting svg*/
+.bi-caret-down-fill:hover {
+    cursor: pointer;
+}
 /* ********************************************************* */
 /* Track */
-
 .nav-title {
     font-size: 18px;
     padding-top: 10px;
@@ -1025,7 +1028,7 @@ input[type="file"] {
     /*View-> Instructor -> edit-instructor*/
     #partialTable .instructor-table th
     {
-        width: 30%;
+        width: 5%;
     }
     .edit-instructor #myformcourse span, .edit-instructor #myformcourse select {
         font-size: 10px;
@@ -1067,7 +1070,7 @@ input[type="file"] {
 
     /*intake index*/
     #partialTable .intake-table th {
-        width: 22%;
+        width: 5%;
         font-size: 8px;
     }
     .intake-index .duration-link {
