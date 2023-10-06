@@ -107,14 +107,16 @@ namespace Admin_Panel_ITI.Repos
             {
                 pageNumber = 1;
             }
-            return Context.Students.Include(s=>s.Admin)
-                                   .Include(s=>s.Intake)
-                                   .Include(s=>s.Track)
-                                   .Include(s=>s.AspNetUser)
-                                   .Include(s=>s.StudentCourses)
-                                   .Skip((pageNumber - 1) * pageSize)
-                                   .Take(pageSize)
-                                   .ToList();
+
+            return Context.Students.Include(s => s.Admin)
+                        .Include(s => s.Intake)
+                        .Include(s => s.Track)
+                        .Include(s => s.AspNetUser)
+                        .Include(s => s.StudentCourses)
+                        .Skip((pageNumber - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+
         }
 
 

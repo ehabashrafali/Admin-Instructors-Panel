@@ -71,7 +71,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             }
             return Context.Intake_Instructors.Include(i => i.Instructor).ThenInclude(i=>i.AspNetUser)
                                   .Include(i => i.Intake)
-                                 
                                   .Where(intake => intake.IntakeID == intakeID)
                                   .Skip((pageNumber - 1) * pageSize)
                                   .Take(pageSize)

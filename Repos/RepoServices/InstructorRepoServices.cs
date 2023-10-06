@@ -2,6 +2,7 @@
 using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using NuGet.DependencyResolver;
 using System.Drawing.Printing;
 
 namespace Admin_Panel_ITI.Repos.RepoServices
@@ -130,7 +131,31 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
             return instructors;
         }
-         
+
+        List<Instructor> IInstructorRepository.getInstructorbyIntakeID(int intakeID, int pageNumber, int pageSize)
+        {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
+            var instructors = (from instructor in Context.Instructors join Intake_Instructor in Context.Intake_Instructors
+                              on instructor.AspNetUserID equals Intake_Instructor.InstructorID
+
+                              where Intake_Instructor.IntakeID == intakeID 
+                              select instructor)    
+
+
+
+                .Include(i => i.Admin)
+                .Include(i => i.AspNetUser)
+                .Include(i => i.Tracks)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return instructors;
+        }
 
 
         void IInstructorRepository.UpdateInstructor(string instructorID, Instructor instructor)
