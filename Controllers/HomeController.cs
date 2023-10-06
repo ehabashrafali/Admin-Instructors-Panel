@@ -70,6 +70,9 @@ namespace Admin_Panel_ITI.Controllers
                         // You can pass user-related data to the view here
                         ViewData["FullName"] = user.FullName;
                     }
+
+                    //ViewData["Id"] = intakeID;
+
                     return View(hmPageViewModel);
                 }
                 

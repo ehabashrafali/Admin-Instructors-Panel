@@ -16,39 +16,42 @@ namespace Admin_Panel_ITI.Controllers
         private readonly ITrackRepository trackRepository;
         private readonly IInstructorRepository instructorRepository;
         private readonly IInstructor_CourseRepository instructor_CourseRepository;
+        private readonly IIntakeRepository intakeRepository;
 
-        public CourseController(ICourseRepository courseRepository, UserManager<AppUser> userManager, ITrackRepository trackRepository, IInstructorRepository instructorRepository, IInstructor_CourseRepository instructor_CourseRepository)
+        public CourseController(ICourseRepository courseRepository, UserManager<AppUser> userManager, ITrackRepository trackRepository, IInstructorRepository instructorRepository, IInstructor_CourseRepository instructor_CourseRepository, IIntakeRepository intakeRepository)
         {
             this.courseRepository = courseRepository;
             _userManager = userManager;
             this.trackRepository = trackRepository;
             this.instructorRepository = instructorRepository;
             this.instructor_CourseRepository = instructor_CourseRepository;
+            this.intakeRepository = intakeRepository;
         }
+
         // GET: CourseController
         public ActionResult Index(int pageNumber)
         {
             var Tracks = trackRepository.getTracks(); // for filter by track
             ViewData["Tracks"] = new SelectList(Tracks, "ID", "Name"); // Add this line
-            var Courses = courseRepository.GetCourses(pageNumber,10);
+            var Intakes = intakeRepository.GetIntakes(); // for filter by Intake
+            ViewData["Intakes"] = new SelectList(Intakes, "ID", "Name"); 
+            var Courses = courseRepository.GetCourses2(pageNumber,10);
             ViewBag.PageNumber = pageNumber;
             ViewBag.TrackID = 0;
+
             return View(Courses);
         }
 
-        public ActionResult CrsIndexByIntakeId(int Id, string trackIds, int pageNumber)
+        public ActionResult CrsIndexByIntakeId(int Id, int pageNumber)
         {
             var Tracks = trackRepository.GetTracksByIntakeID(Id);
             ViewData["Tracks"] = new SelectList(Tracks, "ID", "Name");
 
-            //var trackIdList = /*!string.IsNullOrWhiteSpace(trackIds) ? */trackIds.Split(',').ToList();
-            var trackIdList = trackIds.Split(',')
-                         .Select(idStr => int.Parse(idStr))
-                         .ToList();
-            //.Select(int.Parse).ToLIist() : new List().FirstOrDefault();
+            //var trackIdList = trackIds.Split(',')
+            //             .Select(idStr => int.Parse(idStr))
+            //             .ToList();
 
-
-            ViewBag.SelectedTrackId = trackIdList;
+            //ViewBag.SelectedTrackId = trackIdList;
 
             var Courses = courseRepository.GetCoursesbyIntakeID(Id, pageNumber, 10);
             ViewBag.PageNumber = pageNumber;
@@ -58,6 +61,50 @@ namespace Admin_Panel_ITI.Controllers
             return View(Courses);
 
         }
+
+
+        //to update table for index action
+        public ActionResult UpdateTableData2(int IntakeID, int trackID, int pageNumber)
+        {
+
+            var tracks = trackRepository.getTracks();
+            List<Course> coursesbytrack = new List<Course>();
+
+            if (IntakeID == 0)
+            {
+                if (trackID == 0)
+                {
+                    // Get all courses without filtering by track ID
+                    coursesbytrack = courseRepository.GetCourses2(pageNumber, 10);
+                    if (coursesbytrack.Count == 0 && pageNumber > 1)
+                    {
+                        coursesbytrack = courseRepository.GetCourses2(pageNumber - 1, 10);
+                        pageNumber--;
+                    }
+
+                }
+                else
+                {
+                    // Get tracks filtered by track ID
+                    coursesbytrack = courseRepository.GetCoursesbyTrackID(trackID, pageNumber, 10);
+                    if (coursesbytrack.Count == 0 && pageNumber > 1)
+                    {
+                        coursesbytrack = courseRepository.GetCoursesbyTrackID(trackID, pageNumber - 1, 10);
+                        pageNumber--;
+                    }
+                }
+            }
+
+            ViewData["Tracks"] = new SelectList(tracks, "ID", "Name");
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.trackID = trackID;
+            ViewBag.IntakeID = IntakeID;
+
+            return PartialView("_TableDataPartial", coursesbytrack);
+        }
+
+
+        //to update table for CrsIndexByIntakeId action
         public ActionResult UpdateTableData(int IntakeID,int trackID, int pageNumber)
         {
 
@@ -80,10 +127,10 @@ namespace Admin_Panel_ITI.Controllers
                 else
                 {
                     // Get tracks filtered by intake ID
-                    coursesbytrack = courseRepository.GetCoursesbyTrackID(trackID, pageNumber, 10);
+                    coursesbytrack = courseRepository.GetCoursesbyTrackIDitc(trackID, pageNumber, 10);
                     if (coursesbytrack.Count == 0 && pageNumber > 1)
                     {
-                        coursesbytrack = courseRepository.GetCoursesbyTrackID(trackID, pageNumber - 1, 10);
+                        coursesbytrack = courseRepository.GetCoursesbyTrackIDitc(trackID, pageNumber - 1, 10);
                         pageNumber--;
                     }
                 }
@@ -119,19 +166,13 @@ namespace Admin_Panel_ITI.Controllers
                 }
             }
 
-           
-
-
-
             ViewData["Tracks"] = new SelectList(tracks, "ID", "Name");
             ViewBag.PageNumber = pageNumber;
             ViewBag.trackID = trackID;
             ViewBag.IntakeID = IntakeID;
 
-            return PartialView("_TableDataPartial", coursesbytrack);
+            return PartialView("_TableDataPartialFilteredbyIntakes", coursesbytrack);
         }
-        //Test merge
-
 
 
         // GET: CourseController/DetailsForManager/5
@@ -249,37 +290,39 @@ namespace Admin_Panel_ITI.Controllers
             courseRepository.DeleteCourse(selectedCourseIds);
 
             var tracks = trackRepository.getTracks();
-            List<Intake_Track_Course> coursesbytrack;
+            List<Course> courses;
+            List<Intake_Track_Course> coursesbytrackitc;
 
-            if (trackID == 0)
+            if (trackID != 0)
             {
-                // Get all tracks without filtering by intake ID
-                coursesbytrack = courseRepository.GetCourses(pageNumber, 10);
-                if (coursesbytrack.Count == 0 && pageNumber >= 1)
+                // Get tracks filtered by intake ID
+                coursesbytrackitc = courseRepository.GetCoursesbyTrackIDitc(trackID, pageNumber, 10);
+                if (coursesbytrackitc.Count == 0 && pageNumber >= 1)
                 {
-                    coursesbytrack = courseRepository.GetCourses(pageNumber - 1, 10);
+                    coursesbytrackitc = courseRepository.GetCoursesbyTrackIDitc(trackID, pageNumber - 1, 10);
                     pageNumber--;
                 }
 
+                return PartialView("_TableDataPartialFilteredbyIntakes", coursesbytrackitc);
             }
             else
             {
-                // Get tracks filtered by intake ID
-                coursesbytrack = courseRepository.GetCoursesbyTrackID(trackID, pageNumber, 10);
-                if (coursesbytrack.Count == 0 && pageNumber >= 1)
+                // Get all courses without filtering by track ID
+                courses = courseRepository.GetCourses2(pageNumber, 10);
+                if (courses.Count == 0 && pageNumber >= 1)
                 {
-                    coursesbytrack = courseRepository.GetCoursesbyTrackID(trackID, pageNumber - 1, 10);
+                    courses = courseRepository.GetCourses2(pageNumber - 1, 10);
                     pageNumber--;
                 }
-            }
 
-           
+                return PartialView("_TableDataPartial", courses);
+            }
 
             ViewData["Tracks"] = new SelectList(tracks, "ID", "Name");
             ViewBag.PageNumber = pageNumber;
             ViewBag.TrackID = trackID;
-            return PartialView("_TableDataPartial", coursesbytrack);
         }
+
 
         // POST: CourseController/Delete/5
         //[HttpPost]

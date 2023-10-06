@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<Admin_Panel_ITI.Models.Intake_Track_Course>
 
 
-
 <div class="col-9 col-md-10 text-center content">
     <div class="container-fluid">
         <div class="row">
@@ -13,7 +12,7 @@
                 <div style="display: flex; margin: auto;">
 
                 <div class="dropdown" id="trackDropdown" style="margin: 0 0 0 16px;">
-                    <button class="btn" id="trackDropdownBtn">
+                    <button class="btn trackDropdown">
                         <!-- Added an ID to the button -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
                             <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"></path>
@@ -30,8 +29,6 @@
                         }
                     </div>
                 </div>
-
-
                 <div>
                     <button type="button" id="customdeletebtn_kordy" class="btn logoutbtn deletebtn" style=" margin: 0 0 0 8px; ">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
@@ -53,7 +50,7 @@
                     <h3>Courses' Table</h3>
                     <div class="student_div_01" style="display: flex;">
                         <div class="dropdown" id="trackDropdown" style="margin: 0 0 0 16px;">
-                            <button class="btn" id="trackDropdownBtn">
+                            <button class="btn trackDropdownBtn" >
                                 <!-- Added an ID to the button -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
                                     <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"></path>
@@ -70,8 +67,6 @@
                                 }
                             </div>
                         </div>
-
-
                         <div>
                             <button type="button" id="customdeletebtn_kordy" class="btn logoutbtn deletebtn" style=" margin: 0 0 0 8px; ">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
@@ -87,10 +82,7 @@
 
 
         </div>
-        <partial name="_TableDataPartial" />
-
-
+        <partial name="_TableDataPartialFilteredbyIntakes" />
     </div>
-
 
 </div>

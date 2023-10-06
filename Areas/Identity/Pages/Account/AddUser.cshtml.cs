@@ -146,6 +146,7 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
 
             if (result.Succeeded)
             {
+                ViewData["SuccessMessage"] = "Registration was successful!";
 
 
                 user.LockoutEnabled = false;
