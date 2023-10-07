@@ -3,7 +3,6 @@
 @{
     int Id = ViewBag.Id;
     string courseName = ViewBag.Name;
-
     string trackName = ViewBag.TrackName;
     string intakeName = ViewBag.IntakeName;
     int intakeID = ViewBag.IntakeID;
@@ -157,7 +156,7 @@
                                                 @uniqueStudentCount
                                             </td>
                                             <td style="padding-left: 24px;">
-                                                <a asp-action="Delete" asp-route-CourseId="@item.Course.ID" asp-route-ExamID="@item.ID" class="btn btn-danger">Delete</a>
+                                            <a asp-action="Delete" asp-route-CourseId="@item.Course.ID" asp-route-ExamID="@item.ID" class="btn btn-danger @(uniqueStudentCount > 0 ? "disabled" : "")">Delete</a>
                                             </td>
                                         </tr>
                                     }
