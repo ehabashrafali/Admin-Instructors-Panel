@@ -23,7 +23,7 @@ namespace Admin_Panel_ITI.Models
         public string Answer { get; set; }
 
         [Required]
-        public double Mark { get; set; }
+        public int Mark { get; set; }
 
         public virtual IEnumerable<Exam_Std_Question>? Student_Quest_Exam { get; set; }
 

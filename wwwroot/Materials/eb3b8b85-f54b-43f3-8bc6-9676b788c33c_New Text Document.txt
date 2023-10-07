@@ -1,0 +1,4 @@
+client id : 75118888152-bjl772gk8oc716s4tfqki9vhka84tfcu.apps.googleusercontent.com
+
+client secret : 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
+

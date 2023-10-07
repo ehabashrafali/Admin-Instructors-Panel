@@ -55,7 +55,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
 
 
-        //id(course id) , name(course name)  ---> Materials & Tsak Table 
+        //id(course id) , name(course name)  ---> Materials & Task Table 
         public ActionResult Details(int id, string name, int intakeID, int trackID, string intakeName, string trackName, int coursedayID, int coursedayNum)
         {
             ViewBag.Id = id;
@@ -71,6 +71,15 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             ViewBag.Materials = new List<IFormFile>();
             ViewBag.Tasks = new List<IFormFile>();
 
+            var courseDay = courseDayRepo.GetCourseDaybyID(coursedayID);
+            var taskPath = courseDay.TaskPath;
+
+            // Use Path.GetFileName to get the file name with extension
+            string[] fileNameWithExtension = (Path.GetFileName(taskPath)).Split('.');
+
+            ViewBag.taskName = fileNameWithExtension[0];
+            ViewBag.taskExtension = fileNameWithExtension[1];
+
             return View(courseDayMaterialRepo.GetCourseDaysbyCourseDayID(coursedayID));
         }
 
@@ -78,7 +87,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
         [HttpPost]
         public ActionResult Details(List<IFormFile> Materials, IFormFile Task, int id, string name, int intakeID, int trackID, string intakeName, string trackName, int coursedayID, int coursedayNum)
         {
-            if (ModelState.IsValid)
+            if (true)
             {
                 string? instructorID = userManager.GetUserId(User);
                 string? uniqueFileName = null; //varaible to store the materials/Task name after make it uniqe using GUID
@@ -119,8 +128,8 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
                 {
                     string TaskFilePath = Path.Combine(webHostingEnvironment.WebRootPath, "Tasks"); //where the Tasks gonna be store(~/wwwroot/Tasks/)
 
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + Task.FileName;
-                    string TaskPath = Path.Combine(TaskFilePath, uniqueFileName);
+                    //uniqueFileName = Guid.NewGuid().ToString() + "||" + Task.FileName;
+                    string TaskPath = Path.Combine(TaskFilePath, Task.FileName);
 
                     Task.CopyTo(new FileStream(TaskPath, FileMode.Create));
 
@@ -150,9 +159,6 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
             return View(new {id, name,  intakeID, trackID, intakeName, trackName, coursedayID, coursedayNum });
         }
-
-
-
 
 
 

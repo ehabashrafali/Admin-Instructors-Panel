@@ -41,9 +41,9 @@
     background-color: #1977f3;
 }
 
-    .button:hover .button__icon-wrapper {
-        color: blue;
-    }
+.button:hover .button__icon-wrapper {
+    color: blue;
+}
 
 .button__icon-svg--copy {
     position: absolute;
@@ -109,4 +109,7 @@
     }
 }
 
-
+.deleteBtn {
+    cursor: not-allowed;
+    padding-left: 24px;
+}
