@@ -33,6 +33,16 @@
     <link rel="stylesheet" href="~/Instructor/SideBar_BreadCrumb.css">
 
     <style>
+
+        .Material {
+            background-image: linear-gradient(to top, #00c6fb 0%, #005bea 100%);
+            padding: 6px;
+            border-radius: 22px;
+            font-size: 14px;
+            color: white;
+        }
+
+
         .file-upload {
             display: block;
             text-align: center;
@@ -308,10 +318,11 @@
                                 </form>
 
 
-                                @*                        <div class="file btn courseBtns">
+                                @*<div class="file btn courseBtns">
                                 Upload Task
                                 <input type="file" name="file" multiple />
                                 </div>*@
+
                             </div>
                         </div>
                     </div>
@@ -323,7 +334,14 @@
                             <thead class="table-secondary">
                                 <tr>
                                     <th style="padding-left: 24px;">
-                                        Material
+                                        <span class="Material">
+                                            Materials
+                                        </span>
+                                        &nbsp;&
+                                        <span class="Task">
+                                            Tasks
+                                        </span>
+                                       
                                         <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16"
                                              height="16" fill="currentColor" class="bi bi-caret-down-fill"
                                              viewBox="0 0 16 16">
