@@ -86,16 +86,21 @@
             }
         });
 
-
-        //NOT WORKING YET//
-        //logic to make the error message disapear once the admin statrs to select instructor(client-side validation)
-        document.getElementById("SelectedInstructorIds").addEventListener("change", function ()
+        var item = document.querySelector('.input-container');
+        item.addEventListener('mouseleave', function () 
         {
-            console.log("Change event triggered");
-            document.getElementById("instructorsValidation").style.display = "none"; //hide the error message when a selection is made
+            var items = document.querySelectorAll('.item-container');
+
+            if (items.length > 0) {
+                document.getElementById("instructorsValidation").style.display = "none"; //hide the error message when a selection is made
+            }else {
+                document.getElementById("instructorsValidation").style.display = "block";
+            }
         });
+
     });
 </script>
+
 <script src="~/multiSelect.js"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
