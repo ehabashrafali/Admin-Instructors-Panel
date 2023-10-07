@@ -17,6 +17,7 @@
     margin-left: 5px;
     transform: translateY(-100%); /* Initially positioned above the element */
     transition: transform 1.5s ease-in-out; /* Animation for sliding in */
+    font-size:12px;
 }
 
     .validation-error ul {

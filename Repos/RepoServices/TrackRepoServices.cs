@@ -2,7 +2,7 @@
 using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using NuGet.DependencyResolver;
+
 
 namespace Admin_Panel_ITI.Repos
 {
