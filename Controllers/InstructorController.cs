@@ -31,103 +31,50 @@ namespace Admin_Panel_ITI.Controllers
         {
             var instructors = instructorRepository.GetInstructors(pageNumber, 10);
             ViewBag.PageNumber = pageNumber;
+            ViewBag.IntakeID = 0;
             return View(instructors);
         }
-
-        public ActionResult UpdateTableData(int pageNumber)
-        {
-
-
-            var instructors = instructorRepository.GetInstructors(pageNumber, 10);
-            if (instructors.Count == 0 && pageNumber > 1)
-            {
-                instructors = instructorRepository.GetInstructors(pageNumber - 1, 10);
-                pageNumber--;
-            }
-
-
-            ViewBag.PageNumber = pageNumber;
-            return PartialView("_TableDataPartial", instructors);
-        }
-
-
         public ActionResult InsIndexByIntakeId(int Id, int pageNumber)
         {
             var intakes = intakeRepository.GetAllIntakes();
             ViewData["Intakes"] = new SelectList(intakes, "ID", "Name");
-            var Instructors = intake_InstructorRepository.getInstructorbyIntakeID(Id, pageNumber, 10);
+            //var Instructors = intake_InstructorRepository.getInstructorbyIntakeID(Id, pageNumber, 10);
+            var Instructors = instructorRepository.getInstructorbyIntakeID(Id, pageNumber, 10);
             ViewBag.PageNumber = pageNumber;
             ViewBag.IntakeID = Id;
             return View(Instructors);
+
         }
 
+        public ActionResult UpdateTableData(int pageNumber, int intakeId)
+        {
+            if (intakeId == 0)
+            {
+                var instructors = instructorRepository.GetInstructors(pageNumber, 10);
+                if (instructors.Count == 0 && pageNumber > 1)
+                {
+                    instructors = instructorRepository.GetInstructors(pageNumber - 1, 10);
+                    pageNumber--;
+                }
+                ViewBag.PageNumber = pageNumber;
+                return PartialView("_TableDataPartial", instructors);
+            }
+            else
+            {
+                var instructors = instructorRepository.getInstructorbyIntakeID(intakeId, pageNumber, 10);
 
-        //public ActionResult Details(string id)
-        //{
-        //    var instructor = instructorRepository.GetInstructorbyID(id);
-        //    ViewData["tracks"] = instructor.Tracks.Select(t => t.Name).Distinct().ToList();
-        //    ViewData["intakes"] = instructor.IntakeInstructors
-        //            .Select(itc => itc.Intake.Name)
-        //            .Distinct()
-        //            .ToList();
-        //    ViewData["courses"] = instructor.InstructorCourses
-        //            .Select(itc => itc.Course.Name)
-        //            .Distinct()
-        //            .ToList();
-
-        //    return View(instructor);
-        //}
-
-        // GET: InstructorController/Details/5
-        //public ActionResult Details(string id)
-        //{
-        //    var instructor = instructorRepository.GetInstructorbyID(id);
-        //    ViewData["tracks"] = instructor.Tracks.Select(t=>t.Name).Distinct().ToList();
-        //    ViewData["intakes"] = instructor.IntakeInstructors
-        //            .Select(itc => itc.Intake.Name)
-        //            .Distinct()
-        //            .ToList();
-        //    ViewData["courses"] = instructor.InstructorCourses
-        //            .Select(itc => itc.Course.Name)
-        //            .Distinct()
-        //            .ToList();
-
-        //    return View(instructor);
-        //}
-
-        // GET: TrackController/Create
-        //public ActionResult Create()
-        //{
-
-        //    var intakes = intakeRepository.GetAllIntakes();
-        //    ViewBag.AllIntakes = new SelectList(intakes, "ID", "Name");
-        //    return View();
-        //}
-
-
-
-
-        ////POST: TrackController/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //async public Task<ActionResult> Create(Instructor instructor)
-        //{
-        //    var intakes = intakeRepository.GetAllIntakes();
-        //    ViewBag.AllIntakes = new SelectList(intakes, "ID", "Name");
-        //    var user = await _userManager.GetUserAsync(User);
-        //    if (user != null)
-        //    {
-        //        string userId = user.Id;
-        //        instructor.AdminID = "admin1";
-        //    }
-        //    if (ModelState.IsValid)
-        //    {
-        //        instructorRepository.CreateInstructor(instructor);
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(instructor);
-        //}
-
+                if (instructors.Count == 0 && pageNumber > 1)
+                {
+                    instructors = instructorRepository.getInstructorbyIntakeID(intakeId, pageNumber - 1, 10);
+                    pageNumber--;
+                }
+                var intakes = intakeRepository.GetAllIntakes();
+                ViewData["Intakes"] = new SelectList(intakes, "ID", "Name");
+                ViewBag.PageNumber = pageNumber;
+                ViewBag.IntakeID = intakeId;
+                return PartialView("_TableDataPartial", instructors);
+            }
+        }
 
 
         // GET: InstructorController/Edit/5
@@ -181,23 +128,39 @@ namespace Admin_Panel_ITI.Controllers
             return RedirectToAction("Edit", new { id = insID });
         }
 
-
-        public ActionResult Delete(List<string> selectedInstructorIds,int pageNumber)
+        public ActionResult Delete(List<string> selectedInstructorIds, int pageNumber, int intakeId)
         {
             instructorRepository.DeleteInstructor(selectedInstructorIds);
 
-
-            var instructors = instructorRepository.GetInstructors(pageNumber, 10);
-            if (instructors.Count == 0 && pageNumber > 1)
+            if (intakeId == 0)
             {
-                instructors = instructorRepository.GetInstructors(pageNumber - 1, 10);
-                pageNumber--;
+                var instructors = instructorRepository.GetInstructors(pageNumber, 10);
+                if (instructors.Count == 0 && pageNumber > 1)
+                {
+                    instructors = instructorRepository.GetInstructors(pageNumber - 1, 10);
+                    pageNumber--;
+                }
+                ViewBag.PageNumber = pageNumber;
+                return PartialView("_TableDataPartial", instructors);
             }
+            else
+            {
+                var instructors = instructorRepository.getInstructorbyIntakeID(intakeId, pageNumber - 1, 10);
 
-
-
-            ViewBag.PageNumber = pageNumber;
-            return PartialView("_TableDataPartial", instructors);
+                if (instructors.Count == 0 && pageNumber > 1)
+                {
+                    instructors = instructorRepository.getInstructorbyIntakeID(intakeId, pageNumber - 1, 10);
+                    pageNumber--;
+                }
+                var intakes = intakeRepository.GetAllIntakes();
+                ViewData["Intakes"] = new SelectList(intakes, "ID", "Name");
+                ViewBag.PageNumber = pageNumber;
+                ViewBag.IntakeID = intakeId;
+                return PartialView("_TableDataPartial", instructors);
+            }
         }
     }
 }
+
+
+

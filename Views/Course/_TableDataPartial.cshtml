@@ -1,6 +1,30 @@
-﻿@{
+﻿@using Admin_Panel_ITI.Models
+@using Admin_Panel_ITI.Repos;
+
+@inject ITrackRepository trackRepo;
+@inject IIntakeRepository intakeRepo;
+
+
+@{
     var courseList = ((IEnumerable<Admin_Panel_ITI.Models.Course>)Model).ToList();
+    var tracks_involved = (bool)ViewBag.tracks_involved;
+    var intakes_involved = (bool)ViewBag.intakes_involved;
+    var trackName = "";
+    var intakeName = "";
+    if (ViewBag.TrackID != 0)
+    {
+        var id = ViewBag.TrackID;
+        trackName = trackRepo.getTrackName(id);
+    }
+
+    if (ViewBag.IntakeID != 0)
+    {
+        var id = ViewBag.IntakeID;
+        intakeName = intakeRepo.getIntakeName(ViewBag.IntakeID);
+    }
 }
+
+
 
 
 <div id="partialTable">
@@ -15,18 +39,27 @@
                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                         </svg>
                     </th>
-                    <th>
-                        Track
-                        <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                        </svg>
-                    </th>
-                    <th>
-                        Intake
-                        <svg onclick="sortTable(3)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                        </svg>
-                    </th>
+                    @if (tracks_involved)
+                    {
+                        <th>
+                            Track
+                            <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                            </svg>
+                        </th>
+                      
+                      
+                    }
+                    @if (intakes_involved)
+                    {
+                        <th>
+                            Intake
+                            <svg onclick="sortTable(3)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                            </svg>
+                        </th>
+                    }
+              
                     <th>
                         Duration
                         <svg onclick="sortTable(4)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
@@ -42,12 +75,21 @@
                     <tr>
                         <td><input type="checkbox" name="selectedCourseIds[]" class="course-checkbox" value="@courseList[i].ID"></td>
                         <td style="cursor: pointer;" onclick="editCourse(@courseList[i].ID)">@courseList[i].Name</td>
+                        @if (tracks_involved)
+                        {
+                            <td style="cursor: pointer;" onclick="editCourse(@courseList[i].ID)">
+                                @trackName
+                            </td>
+                           
+                      
+                        }
+
+                        @if (intakes_involved)
+                        {
                         <td style="cursor: pointer;" onclick="editCourse(@courseList[i].ID)">
-                            @(courseList[i].IntakeTrackCourse?.FirstOrDefault()?.Track?.Name ?? "Not Assigned To Track")
+                            @intakeName
                         </td>
-                        <td style="cursor: pointer;" onclick="editCourse(@courseList[i].ID)">
-                            @(courseList[i].IntakeTrackCourse?.FirstOrDefault()?.Intake?.Name ?? "Not Assigned To Intake")
-                        </td>
+                        }
                         <td>@courseList[i].Duration</td>
                         <td style="padding: 5px 8px">
                             <a asp-action="edit" asp-route-id="@courseList[i].ID">
@@ -129,7 +171,7 @@
     // Function to handle the "Next" button click event
     $('#nextPageBtn').on('click', function (e) {
         e.preventDefault();
-        selectedTrackId = $(this).data('track-value') || @ViewBag.trackID;
+        selectedTrackId = $(this).data('track-value') || @ViewBag.TrackID;
 
         var nextPage = @ViewBag.PageNumber +1; // Get the previous page number
 
@@ -156,7 +198,7 @@
     // Function to handle the "Prev" button click event
     $('#prevPageBtn').on('click', function (e) {
         e.preventDefault();
-        selectedTrackId = $(this).data('track-value') || @ViewBag.trackID; // Get the selected intake ID
+        selectedTrackId = $(this).data('track-value') || @ViewBag.TrackID; // Get the selected intake ID
 
         var prevPage = @ViewBag.PageNumber -1; // Get the previous page number
 
@@ -198,8 +240,9 @@
         }
 
         // Get the intake ID and page number from the hidden input fields
-        var trackID = parseInt(@ViewBag.trackID);
+        var trackID = parseInt(@ViewBag.TrackID);
         var pageNumber = parseInt(@ViewBag.PageNumber);
+        var intakeID = parseInt(@ViewBag.IntakeID);
 
         // Make an AJAX POST request to the Delete action with parameters
         $.ajax({
@@ -209,6 +252,7 @@
             data: {
                 selectedCourseIds: selectedCourseIds,
                 trackID: trackID,
+                intakeID:intakeID,
                 pageNumber: pageNumber
             },
             success: function (result) {

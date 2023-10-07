@@ -1,21 +1,9 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using System.ComponentModel.DataAnnotations;
 using Admin_Panel_ITI.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
 {
@@ -73,10 +61,8 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
 
             returnUrl ??= Url.Content("~/");
 
-            // Clear the existing external cookie to ensure a clean login process
+            //clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             ReturnUrl = returnUrl;
         }
@@ -98,7 +84,7 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
                     {
                         _logger.LogInformation("User logged in.");
 
-                        // Check the login user Role
+                        //check the login user Role
                         if (await _userManager.IsInRoleAsync(user, "Admin"))
                             returnUrl = Url.Action("Index", "Home");
                         else if (await _userManager.IsInRoleAsync(user, "Instructor"))
@@ -108,11 +94,10 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
                     }
                 }
 
-                //ModelState.AddModelError(string.Empty , "There is no such user in the system!");
                 ModelState.AddModelError(string.Empty, "Invalid Credentials!");
             }
 
-            // If we got this far, something failed, redisplay form
+            //if we got this far, something failed, redisplay login form
             return Page();
         }
     }

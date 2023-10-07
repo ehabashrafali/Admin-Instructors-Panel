@@ -24,6 +24,8 @@ namespace Admin_Panel_ITI.Repos
         public void DeleteTrack(List<int> trackIDs);
 
 
+        public string getTrackName(int trackID);
+
         public void CreateTrack(Track track);
 
 

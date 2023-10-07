@@ -1,14 +1,20 @@
 ﻿
+.validationWrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+
 
 .validation-error {
-    color: #ff0000; /* Red color for error messages */
-    font-size: 14px;
+    color: #ff0000; 
     display: block;
     list-style: none;
     opacity: 0; /* Initially hidden */
     animation: fadeIn 0.5s ease-in-out forwards; /* Animation for fading in */
-    margin-left: 15px;
-
+    margin-left: 5px;
     transform: translateY(-100%); /* Initially positioned above the element */
     transition: transform 1.5s ease-in-out; /* Animation for sliding in */
 }
