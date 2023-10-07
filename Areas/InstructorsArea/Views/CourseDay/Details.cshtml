@@ -15,7 +15,7 @@
     int CourseDayNum = ViewBag.CourseDayNum;
 
     List<IFormFile>? Materials = (List<IFormFile>)ViewBag.Materials;
-    List<IFormFile>? Task= (List<IFormFile>)ViewBag.Tasks;
+    List<IFormFile>? Task = (List<IFormFile>)ViewBag.Tasks;
 }
 
 <!DOCTYPE html>
@@ -308,7 +308,7 @@
 
                                     <div class="file-upload">
                                         <div class="file-select">
-                                            <div class="file-select-button" id="fileName">Add New Task</div>
+                                            <div class="file-select-button" id="fileName">Update Task</div>
                                             <input asp-for="@Task" id="choosenFile2" class="form-control" aria-label="Sizing example input">
                                         </div>
                                     </div>
