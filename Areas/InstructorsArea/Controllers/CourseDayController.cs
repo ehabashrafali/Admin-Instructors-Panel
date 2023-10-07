@@ -58,7 +58,6 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
         //id(course id) , name(course name)  ---> Materials & Tsak Table 
         public ActionResult Details(int id, string name, int intakeID, int trackID, string intakeName, string trackName, int coursedayID, int coursedayNum)
         {
-
             ViewBag.Id = id;
             ViewBag.Name = name;
 
@@ -70,23 +69,24 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             ViewBag.CourseDayNum = coursedayNum;
 
             ViewBag.Materials = new List<IFormFile>();
+            ViewBag.Tasks = new List<IFormFile>();
 
             return View(courseDayMaterialRepo.GetCourseDaysbyCourseDayID(coursedayID));
         }
 
 
         [HttpPost]
-        public ActionResult Details(List<IFormFile> Materials, int id, string name, int intakeID, int trackID, string intakeName, string trackName, int coursedayID, int coursedayNum)
+        public ActionResult Details(List<IFormFile> Materials, IFormFile Task, int id, string name, int intakeID, int trackID, string intakeName, string trackName, int coursedayID, int coursedayNum)
         {
             if (ModelState.IsValid)
             {
-                string? uniqueFileName = null; //varaible to store the materials name after make it uniqe using GUID.
                 string? instructorID = userManager.GetUserId(User);
+                string? uniqueFileName = null; //varaible to store the materials/Task name after make it uniqe using GUID
 
-                List<Material> materials = new();
-
-                if (Materials != null)
+                if (Materials?.Count != 0)
                 {
+                    List<Material> materials = new();
+
                     string MaterialsFilePath = Path.Combine(webHostingEnvironment.WebRootPath, "Materials"); //where the materials gonna be store(~/wwwroot/Materials/)
 
                     foreach (var material in Materials)
@@ -114,10 +114,41 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
                     return RedirectToAction(nameof(Details), new { id, name, intakeID, trackID, intakeName, trackName, coursedayID, coursedayNum });
                 }
+
+                if(Task != null)
+                {
+                    string TaskFilePath = Path.Combine(webHostingEnvironment.WebRootPath, "Tasks"); //where the Tasks gonna be store(~/wwwroot/Tasks/)
+
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + Task.FileName;
+                    string TaskPath = Path.Combine(TaskFilePath, uniqueFileName);
+
+                    Task.CopyTo(new FileStream(TaskPath, FileMode.Create));
+
+                    CourseDay oldCourseDay =  courseDayRepo.GetCourseDaybyID(coursedayID);
+                    if(oldCourseDay != null)
+                    {
+                        CourseDay NewCourseDay = new CourseDay()
+                        {
+                            DayNumber = oldCourseDay.DayNumber,
+                            Date = oldCourseDay.Date,
+                            DeadLine = oldCourseDay.DeadLine,
+                            TaskPath = TaskPath  //update the task path
+                        };
+
+                        //FileInfo fileInfo = new FileInfo(oldCourseDay.TaskPath);
+                        //if (fileInfo.Exists)
+                        //{
+                        //    fileInfo.Replace(TaskPath, oldCourseDay.TaskPath);
+                        //}
+
+                        courseDayRepo.UpdateCourseDay(coursedayID, NewCourseDay);
+
+                        return RedirectToAction(nameof(Details), new { id, name, intakeID, trackID, intakeName, trackName, coursedayID, coursedayNum });
+                    }
+                }
             }
 
-            return View();
-
+            return View(new {id, name,  intakeID, trackID, intakeName, trackName, coursedayID, coursedayNum });
         }
 
 
