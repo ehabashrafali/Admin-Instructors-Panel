@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<Course_Day_Material>
 
+    @{
+        Layout = null;
+    }
+
 @{
     int courseID = ViewBag.Id;
     string courseName = ViewBag.Name;
@@ -10,11 +14,9 @@
     int CourseDayID = ViewBag.CourseDayId;
     int CourseDayNum = ViewBag.CourseDayNum;
 
-    List<IFormFile> Materials = (List<IFormFile>)ViewBag.Materials;
+    List<IFormFile>? Materials = (List<IFormFile>)ViewBag.Materials;
+    List<IFormFile>? Task = (List<IFormFile>)ViewBag.Tasks;
 }
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -172,6 +174,23 @@
 
     </head>
     <body>
+    <nav class="navbar navbar-expand-sm bg-body-tertiary slide-down">
+        <div class="container-fluid">
+            <a class="navbar-brand" id="logo" asp-action="Index" asp-controller="Intake" asp-area="InstructorsArea">
+                <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
+                <div class="iti-hub-devider">
+                    <span> Hub </span>
+                </div>
+            </a>
+            <div class="d-flex navbar-user-buttons">
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button id="logout" type="submit" style="color:white; padding:10px 38px" class="nav-link btn btn-link border-0 hvr-bounce-to-right logoutbtn">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+
         <div class="">
             <div class="row">
                 <!-- Sidebar -->
@@ -270,6 +289,7 @@
                                 <div>
                                     <form id="uploadForm" enctype="multipart/form-data" asp-action="Details" asp-controller="CourseDay">
                                         <input type="hidden" name="Materials" value="@Materials" />
+                                        <input type="hidden" name="Materials" value="@Task" />
                                         <input type="hidden" name="id" value="@courseID" />
                                         <input type="hidden" name="name" value="@courseName" />
                                         <input type="hidden" name="intakeID" value="@IntakeID" />
@@ -282,15 +302,18 @@
                                         <div class="file-upload">
                                             <div class="file-select">
                                                 <div class="file-select-button" id="fileName">Add New Materials</div>
-                                                <input asp-for="@Materials" id="choosenFile" class="form-control" aria-label="Sizing example input" multiple>
+                                            <input asp-for="@Materials" id="choosenFile" class="form-control " aria-label="Sizing example input" multiple>
                                             </div>
                                         </div>
-                                    </form>
 
-                                    @*<div class="file btn courseBtns">
-                                    Upload Task
-                                    <input type="file" name="file" multiple />
-                                    </div>*@
+                                    <div class="file-upload">
+                                        <div class="file-select">
+                                            <div class="file-select-button" id="fileName">Update Task</div>
+                                            <input asp-for="@Task" id="choosenFile2" class="form-control" aria-label="Sizing example input">
+                                        </div>
+                                    </div>
+
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -351,7 +374,7 @@
                             </table>
 
                             <div>
-                                @Html.DisplayFor(m => m.FirstOrDefault().CourseDay.TaskPath)
+                                @Html.DisplayFor(model => model.FirstOrDefault().CourseDay.TaskPath)
                             </div>
 
                             <!--Modal of Deletion-->
@@ -406,69 +429,97 @@
         </div>
 
 
-        <!--Confirm Deletion Script-->
-        <script>
-            $(document).ready(function ()
-            {
 
-                // Show the modal when the "Delete" link is clicked
-                $(".delete-link").click(function () {
-                    $("#confirm-delete-modal").modal("show");
+    <!--Confirm Deletion Script-->
+    <script>
+        $(document).ready(function () {
 
-                    // Get the value on the delete btn(materialID)
-                    var buttonValue = $(this).val(); 
+            // Show the modal when the "Delete" link is clicked
+            $(".delete-link").click(function () {
+                $("#confirm-delete-modal").modal("show");
 
-                    // Update the hidden input field in the modal form with the button value
-                    $("#buttonValue").val(buttonValue); 
-                });
+                // Get the value on the delete btn(materialID)
+                var buttonValue = $(this).val();
 
-                //cancel btn
-                $("#cancelDeletion").click(function () {
-                    $("#confirm-delete-modal").modal("hide");
-                });
-
-                //// Handle the "Delete" button click in the modal
-                //var _url = 'Url./*Action("Delete", "CourseDay")*/';
-                //$("#confirm-delete").click(function () {
-                //    $.ajax({
-                //        url: _url,
-                //        type: "POST", 
-                //        success: function (response) {
-                //            // Handle success (e.g., remove the item from the UI)
-                //            $("#confirm-delete-modal").modal("hide");
-                //            console.log("ad");
-                //        }
-                //    });
-
-
-                //    // After deletion is successful, close the modal
-                //    $("#confirm-delete-modal").modal("hide");
-                //});
+                // Update the hidden input field in the modal form with the button value
+                $("#buttonValue").val(buttonValue);
             });
 
-            //Add Material script
-            $('#choosenFile').bind('change', function () {
-                var filenames = [];
-                var files = $("#choosenFile")[0].files;
 
-                for (var i = 0; i < files.length; i++) {
-                    filenames.push(files[i].name);
-                }
-
-                if (filenames.length === 0) 
-                {
-                    $(".file-upload").removeClass('active');
-                }
-                else 
-                {
-                    //Get the form html element
-                    var form = document.getElementById("uploadForm");
-
-                    //Submit the form
-                    form.submit();
-                }
+            //cancel btn
+            $("#cancelDeletion").click(function () {
+                $("#confirm-delete-modal").modal("hide");
             });
-        </script>
+
+
+            //// Handle the "Delete" button click in the modal
+            //var _url = 'Url./*Action("Delete", "CourseDay")*/';
+            //$("#confirm-delete").click(function () {
+            //    $.ajax({
+            //        url: _url,
+            //        type: "POST",
+            //        success: function (response) {
+            //            // Handle success (e.g., remove the item from the UI)
+            //            $("#confirm-delete-modal").modal("hide");
+            //            console.log("ad");
+            //        }
+            //    });
+
+
+            //    // After deletion is successful, close the modal
+            //    $("#confirm-delete-modal").modal("hide");
+            //});
+        });
+    </script>
+
+
+    <!--Add Material script-->
+    <script>
+        $('#choosenFile').bind('change', function () {
+            var filenames = [];
+            var files = $("#choosenFile")[0].files;
+
+            for (var i = 0; i < files.length; i++) {
+                filenames.push(files[i].name);
+            }
+
+            if (filenames.length === 0) {
+                $(".file-upload").removeClass('active');
+            }
+            else {
+                //Get the form html element
+                var form = document.getElementById("uploadForm");
+
+                //Submit the form
+                form.submit();
+            }
+        });
+    </script>
+
+
+
+    <!--Add Tasks script-->
+    <script>
+        $('#choosenFile2').bind('change', function () {
+            var filenames = [];
+            var files = $("#choosenFile2")[0].files;
+
+            for (var i = 0; i < files.length; i++) {
+                filenames.push(files[i].name);
+            }
+
+            if (filenames.length === 0) {
+                $(".file-upload").removeClass('active');
+            }
+            else {
+                //Get the form html element
+                var form = document.getElementById("uploadForm");
+
+                //Submit the form
+                form.submit();
+            }
+        });
+    </script>
     </body>
 </html>
 
