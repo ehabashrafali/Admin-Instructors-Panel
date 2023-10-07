@@ -22,25 +22,8 @@
 </head>
 <body>
 
-    <!-- navbar -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="light">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-action="Index" asp-controller="Intake" style="margin-left: 24px;">
-                <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
-            </a>
-            <div class="navbarvr"></div>
-            <span class="collapse navbar-collapse  navbar-brand">Hub</span>
-            <div class="justify-content-end" id="navbarSupportedContent">
-                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
-                    <button type="submit" class="nav-link btn btn-link border-0 logoutbtn">Logout</button>
-                </form>
-            </div>
-        </div>
-    </nav>
-
     <div class="">
         <div class="row">
-
             <!-- Sidebar -->
             <div class="col-md-2 sidebar">
                 <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary" style="width: 280px; height: 93vh;">
@@ -81,25 +64,25 @@
                                     </th>
                                     <th style="padding-left: 24px;">
                                         Duration
-                                        <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                                         </svg>
                                     </th>
                                     <th style="padding-left: 24px;">
                                         Start Date
-                                        <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                                         </svg>
                                     </th>
                                     <th style="padding-left: 24px;">
                                         End Date
-                                        <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <svg onclick="sortTable(3)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                                         </svg>
                                     </th>
                                     <th>
                                         No. of Students
-                                        <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <svg onclick="sortTable(4)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                         </svg>
                                     </th>
@@ -130,8 +113,8 @@
 
                                         <td style="text-align: right; padding-right: 16px;">               
                                             <a asp-controller="Track" asp-action="DetailsForManager" asp-route-id="@intake.IntakeID" asp-route-name="@intake.Intake.Name" class="btn regbtn" style="padding: 8px 16px;">Tracks You Manage</a>
-                                          @* <a href="#" data-intake-id="@intake.IntakeID" data-intake-name="@intake.Intake.Name" class="managedTracksLink btn regbtn" style="padding: 8px 16px;">Tracks You Manage</a>*@
-                                          <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@intake.IntakeID" asp-route-name="@intake.Intake.Name" class="btn regbtn" style="padding: 8px 16px;">Tracks You Teach In</a>
+                                            @* <a href="#" data-intake-id="@intake.IntakeID" data-intake-name="@intake.Intake.Name" class="managedTracksLink btn regbtn" style="padding: 8px 16px;">Tracks You Manage</a>*@
+                                            <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@intake.IntakeID" asp-route-name="@intake.Intake.Name" class="btn regbtn" style="padding: 8px 16px;">Tracks You Teach In</a>
                                         </td>
                                     </tr>
                                 }
