@@ -14,6 +14,7 @@ namespace Admin_Panel_ITI.Repos
 
         public List<Student_Submission> GetStudent_SubmissionsByStdIDCrsDayID(int studentID,int courseDayID);
         public List<Student_Submission> GetStudent_SubmissionsByStdIDCrsDayID(int studentIDs);
+        public List<Student_Submission> GetAll_SubmissionsByCrsDay(int courseDayID);
 
 
 
@@ -31,5 +32,6 @@ namespace Admin_Panel_ITI.Repos
 
         public void CreateStudent_Submission(Student_Submission student_Submission);
         public void CreateStudent_Submission(int stdID, int crsDayID, string submissionPath);
+        public void UpdateGrade(string studentID, int courseDay, int grade);
     }
 }

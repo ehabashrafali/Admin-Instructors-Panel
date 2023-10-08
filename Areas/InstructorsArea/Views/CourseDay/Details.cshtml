@@ -323,7 +323,24 @@
                                             </div>
                                         </div>
 
+                                
+
+
                                     </form>
+                                <div class="d-flex navbar-user-buttons">
+                                    <form id="logoutForm" class="form-inline"   asp-controller="Submissions" asp-action="Index" 
+                                                                                asp-route-crsDay=@CourseDayID
+                                                                                asp-route-id="@courseID"
+                                                                                asp-route-name="@courseName"
+                                                                                asp-route-intakeID="@IntakeID"
+                                                                                asp-route-trackID="@TrackID"
+                                                                                asp-route-intakeName="@IntakeName"
+                                                                                asp-route-trackName="@TrackName"
+                                                                                asp-route-CourseDayNum="@CourseDayNum"
+                                                                                >
+                                        <button id="logout" type="submit" style="color:white; padding:10px 38px" class="nav-link btn btn-link border-0 hvr-bounce-to-right logoutbtn">View Submissions</button>
+                                    </form>
+                                </div>
                                 </div>
                             </div>
                         </div>
