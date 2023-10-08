@@ -23,23 +23,6 @@
     <link rel="stylesheet" href="~/Instructor/SideBar_BreadCrumb.css">
 </head>
 <body>
-
-    <!-- navbar -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="light">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-action="Index" asp-controller="Intake" style="margin-left: 24px;">
-                <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
-            </a>
-            <div class="navbarvr"></div>
-            <span class="collapse navbar-collapse  navbar-brand">ITI-Hub</span>
-            <div class="justify-content-end" id="navbarSupportedContent">
-                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
-                    <button type="submit" class="nav-link btn btn-link border-0 logoutbtn">Logout</button>
-                </form>
-            </div>
-        </div>
-    </nav>
-
     <div class="">
         <div class="row">
             <!-- Sidebar -->
@@ -80,26 +63,8 @@
             <div class="col-md-10 text-center content">
                 <div class="container-fluid">
                     <div class="row col-md-12">
-
                         <div class="r1">
                             <h3 style="padding-left: 33px;">Tracks Table</h3>
-
-                            @*<h3 style="padding-left: 33px;">The tracks you manage in [ @IntakeName ] </h3>*@
-                            @* <div>
-                            <div class="dropdown" style="margin: 0 0 0 16px;">
-                            <button class="btn" style="width:200px; padding: 8px 0;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
-                            <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"></path>
-                            </svg>
-                            Filter by tracks
-                            </button>
-                            <div class="dropdown-content" style="right: 15px; border-radius: 8px; overflow-y: auto; height: 98px;">
-                            <a href="managedTracks.html">Managed Tracks</a>
-                            <hr style="padding: 0; margin: 0; color: gray;">
-                            <a href="teachedTracks.html">Tracks you teach in</a>
-                            </div>
-                            </div>
-                            </div>*@
                         </div>
                     </div>
 
@@ -143,24 +108,6 @@
                             </tbody>
                         </table>
                     </div>
-
-
-                    <!--Tracks managed by any instructor will never exceed 4. No need for pages-->
-                    @*<div class="footer">
-                    <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-end">
-                    <li class="page-item disabled">
-                    <a class="page-link">Previous</a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                    </li>
-                    </ul>
-                    </nav>
-                    </div>*@
                 </div>
             </div>
         </div>

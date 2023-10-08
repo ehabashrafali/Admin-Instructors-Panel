@@ -5,8 +5,6 @@
     Layout = null; // or false
 }
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +18,6 @@
 
     <!-- Main css -->
     <link rel="stylesheet" href="~/register/css/style.css">
-
 
     <link rel="stylesheet" href="~/validationStyle.css" />
 
@@ -44,20 +41,29 @@
                     <div class="signin-form slide-down" style="display:table;width:auto;margin:50px auto !important;">
                         <h2 class="form-title">Sign In</h2>
                         <form  id="account" method="POST" class="register-form" >
-                            <div class="form-group">
-                                <label asp-for="Input.UserName"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input asp-for="Input.UserName" type="text"  placeholder="Enter your username"/>
+
+                            <div class="validationWrapper">
+                                <div class="form-group">
+                                    <label asp-for="Input.UserName"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                    <input asp-for="Input.UserName" class="form-control" aria-label="Sizing example input" placeholder="Enter track name">
+                                </div>
+                                <span asp-validation-for="Input.UserName" class="validation-error" style=" width:auto"></span>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Input.Password"><i class="zmdi zmdi-lock"></i></label>
-                                <input asp-for="Input.Password"  type="password"  placeholder="Enter your password" />
+
+                            <div class="validationWrapper">
+                                <div class="form-group">
+                                    <label asp-for="Input.Password"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                    <input asp-for="Input.Password" class="form-control" aria-label="Sizing example input" placeholder="Enter track name">
+                                </div>
+                                <span asp-validation-for="Input.Password" class="validation-error" style=" width:auto"></span>
                             </div>
+
                             <div class="form-group">
                                 <input asp-for="Input.RememberMe" type="checkbox"  class="agree-term" />
                                 <label asp-for="Input.RememberMe" class="label-agree-term"><span><span></span></span>Remember me</label>
                             </div>
 
-                            <div asp-validation-summary="All" class="validation-error"></div>
+                            <div asp-validation-summary="ModelOnly" class="validation-error"></div>
 
                             <div class="form-group form-button">
                                 <button id="login-submit" type="submit" class="form-submit loginBbtn" style="width:100%">Log in</button>
@@ -69,7 +75,6 @@
         </section>
 
     </div>
-
 
     @section Scripts 
     {

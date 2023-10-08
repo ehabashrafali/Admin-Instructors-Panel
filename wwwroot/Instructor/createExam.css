@@ -1,0 +1,249 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    padding-top: 24px;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.link {
+    margin: 16px auto 0;
+    padding: 20px;
+    color: dimgrey;
+    border: 2px solid #333;
+    border-radius: 10px;
+    max-width: 400px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-size: 19px;
+}
+
+.googleLink {
+    text-decoration: none;
+    color: dimgray;
+}
+
+.googleLink:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.link:hover {
+    background-color: white;
+}
+
+h1 {
+    font-size: 24px;
+    margin-top: 0;
+}
+
+h6 {
+    text-align: center;
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    /* display: block; */
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+input[type="text"]:not(.ans),
+input[type="radio"],
+input[type="number"] {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    margin: 8px 0;
+}
+
+input[type="text"],
+input[type="number"] {
+    margin-top: 0;
+}
+
+input[type="radio"] {
+    width: auto;
+    display: inline-block;
+}
+
+.ans {
+    width: 65%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    display: inline-block;
+    margin: 8px 0;
+}
+
+button[type="submit"],
+button#submitExam {
+    padding: 10px 15px;
+    /*            background-color: #4caf50;*/
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button[type="submit"] {
+    background-color: dodgerblue;
+}
+
+button[type="submit"]:hover {
+    background-color: steelblue;
+}
+
+button#submitExam {
+    background-color: #4caf50;
+}
+
+button#submitExam:hover {
+    background-color: #45a049;
+}
+
+#examQuestions {
+    margin-top: 20px;
+}
+
+.question {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.question h3 {
+    margin-top: 0;
+}
+
+.question ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.question ul li {
+    margin-bottom: 5px;
+}
+
+.question p {
+    margin-top: 10px;
+    color: #888;
+}
+
+.add-answer {
+    width: 100%;
+    padding: 10px 0;
+}
+
+
+/*-----------------------------------------------*/
+
+
+
+.exam-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 20px;
+}
+
+.question-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.choice {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    align-items: center; /* Vertically center the elements */
+}
+
+.choice input {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.choice .delete-choice {
+    color: red;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+
+.add-choice {
+    color: green;
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+
+
+.tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+
+#correctOption:hover + .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.answer {
+    display: flex;
+    align-items: center;
+}
+
+
+.answer input[type="text"] {
+    flex-grow: 5;
+    width: 380px;
+}
+
+.answer input[type="radio"] {
+    margin-left: 3px;
+}
+

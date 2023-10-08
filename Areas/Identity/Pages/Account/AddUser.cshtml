@@ -36,6 +36,19 @@
     <!-- Alert css -->
     <link rel="stylesheet" href="/register/css/alertStyle.css">
 
+    <style>
+        label {
+            top: 8px;
+            transform: translateY(0);
+            width: 16px;
+        }
+
+        #roleAdmin {
+            top: 2px;
+            width: 132px;
+        }
+    </style>
+
 </head>
 <body>
     <!-- Alert content goes here -->
@@ -54,21 +67,20 @@
                 <div class="signup-content">
                     <div class="screen"></div>
                     <div class="signin-image" style="width: auto; margin: 0">
-                        <div class="logo">
+                        <a class="logo" asp-action="Index" asp-controller="Home" style="text-decoration: none;">
                             <span class="navbar-brand" style="margin-left: 24px;">
                                 <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
                             </span>
                             <div class="navbarvr"></div>
                             <span>Hub</span>
-
-                        </div>
+                        </a>
                     </div>
                     <div class="signup-form slide-down" style="display:table;width:300px;margin:20px auto !important;">
                         <h2 class="form-title">Add New User</h2>
 
                         <form method="post" id="registerForm" asp-route-returnUrl="@Model.ReturnUrl">
                             <div class="col-lg-5 form-group">
-                                <label for="roles"><i class="zmdi zmdi-accounts material-icons-name"></i> Choose user role:</label>
+                                <label id="roleAdmin" for="roles"><i class="zmdi zmdi-accounts material-icons-name"></i> Choose user role:</label>
                                 <div style="margin-left: 190px;">
                                     <select asp-for="Input.userType" id="userTypeSelect" class="form-select-sm" aria-label="Small select example">
                                         <option selected value="Admin">Admin</option>

@@ -5,430 +5,139 @@
 @{
     int Id = ViewBag.Id;
     string name = ViewBag.Name;
-
     string trackName = ViewBag.TrackName;
     string intakeName = ViewBag.IntakeName;
     int intakeID = ViewBag.IntakeID;
     int trackID = ViewBag.TrackID;
     int DayNumber = ViewBag.CourseDaysCount + 1;
-    
 }
 
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITI - Hub</title>
-    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="~/styles.css">
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/assets/js/bootstrap.bundle.js"></script>
-    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ITI - Hub</title>
+        <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/styles.css">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/assets/js/bootstrap.bundle.js"></script>
+        <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="~/Instructor/addDay.css" />
+    </head>
+    <body>
 
-    <style>
+        <div class="">
+            <div class="row">
+                <!-- Main (tales + btns) -->
+                <div class="col-md-10 text-center content">
+                    <div class="container-fluid">
+                        <div class="row col-md-12">
+                            <div class="r1">
+                                <h3 style="padding-left: 450px;">Fill Day Details:</h3>
+                            </div>
+                        </div>
+                        <div class="row col-md-10" style="margin-left: 450px; margin-top:-10px">
 
-        /* Tasks */
-        .file-upload {
-            display: block;
-            text-align: center;
-        }
+                            <form enctype="multipart/form-data" asp-action="Create" asp-controller="CourseDay" asp-area="InstructorsArea" style="margin-top: 32px; text-align: left; width: 75%;">
+                                <input type="hidden" asp-for="Date" />
+                                <input type="hidden" asp-for="@Id" />
+                                <input type="hidden" asp-for="@name" />
+                                <input type="hidden" asp-for="@trackName" />
+                                <input type="hidden" asp-for="@intakeName" />
+                                <input type="hidden" asp-for="@intakeID" />
+                                <input type="hidden" asp-for="@trackID" />
+                                <input type="hidden" asp-for="@DayNumber" />
 
-            .file-upload .file-select {
-                display: block;
-                border: 2px solid #dce4ec;
-                color: #34495e;
-                cursor: pointer;
-                height: 40px;
-                line-height: 40px;
-                text-align: left;
-                background: #FFFFFF;
-                overflow: hidden;
-                position: relative;
-            }
+                                <label style="font-size: 19px;" class="form-label">Day Number</label>
 
-                .file-upload .file-select .file-select-button {
-                    background: #dce4ec;
-                    padding: 0 10px;
-                    display: inline-block;
-                    height: 40px;
-                    line-height: 40px;
-                }
+                                <input asp-for="DayNumber" placeholder="@DayNumber" value="@DayNumber" class="form-control" aria-label="Sizing example input" disabled>
+                                <span asp-validation-for="DayNumber" class="text-danger"></span>
+                                <br />
+                                <div class="file-upload2">
+                                    <div class="file-select2">
+                                        <div class="file-select-button2" id="fileName">Upload Materials</div>
+                                        <div class="file-select-name2" id="noFileChosen">No file chosen..</div>
+                                        <input asp-for="Materials" id="choosenFile" class="form-control" aria-label="Sizing example input" multiple>
+                                        <span asp-validation-for="Materials" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="file-upload">
+                                    <div class="file-select">
+                                        <div class="file-select-button" id="fileName">Upload Task</div>
+                                        <div class="file-select-name" id="noFile">Choose File..</div>
+                                        <input asp-for="Task" id="chooseFile" class="form-control" aria-label="Sizing example input">
+                                        <span asp-validation-for="Task" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <label style="font-size: 19px;" class="form-label">Task Deadline</label>
+                                <input asp-for="DeadLine" class="form-control" aria-label="Sizing example input">
+                                <span asp-validation-for="DeadLine" class="text-danger"></span>
+                                <br />
 
-                .file-upload .file-select .file-select-name {
-                    line-height: 40px;
-                    display: inline-block;
-                    padding: 0 10px;
-                }
-
-                .file-upload .file-select:hover {
-                    border-color: #34495e;
-                    transition: all .2s ease-in-out;
-                    -moz-transition: all .2s ease-in-out;
-                    -webkit-transition: all .2s ease-in-out;
-                    -o-transition: all .2s ease-in-out;
-                }
-
-                    .file-upload .file-select:hover .file-select-button {
-                        background: #34495e;
-                        color: #FFFFFF;
-                        transition: all .2s ease-in-out;
-                        -moz-transition: all .2s ease-in-out;
-                        -webkit-transition: all .2s ease-in-out;
-                        -o-transition: all .2s ease-in-out;
-                    }
-
-            .file-upload.active .file-select {
-                border-color: #3fa46a;
-                transition: all .2s ease-in-out;
-                -moz-transition: all .2s ease-in-out;
-                -webkit-transition: all .2s ease-in-out;
-                -o-transition: all .2s ease-in-out;
-            }
-
-                .file-upload.active .file-select .file-select-button {
-                    background: #3fa46a;
-                    color: #FFFFFF;
-                    transition: all .2s ease-in-out;
-                    -moz-transition: all .2s ease-in-out;
-                    -webkit-transition: all .2s ease-in-out;
-                    -o-transition: all .2s ease-in-out;
-                }
-
-            .file-upload .file-select input[type=file] {
-                z-index: 100;
-                cursor: pointer;
-                position: absolute;
-                height: 100%;
-                width: 100%;
-                top: 0;
-                left: 0;
-                opacity: 0;
-                filter: alpha(opacity=0);
-            }
-
-            .file-upload .file-select.file-select-disabled {
-                opacity: 0.65;
-            }
-
-                .file-upload .file-select.file-select-disabled:hover {
-                    cursor: default;
-                    display: block;
-                    border: 2px solid #dce4ec;
-                    color: #34495e;
-                    cursor: pointer;
-                    height: 40px;
-                    line-height: 40px;
-                    margin-top: 5px;
-                    text-align: left;
-                    background: #FFFFFF;
-                    overflow: hidden;
-                    position: relative;
-                }
-
-                    .file-upload .file-select.file-select-disabled:hover .file-select-button {
-                        background: #dce4ec;
-                        color: #666666;
-                        padding: 0 10px;
-                        display: inline-block;
-                        height: 40px;
-                        line-height: 40px;
-                    }
-
-                    .file-upload .file-select.file-select-disabled:hover .file-select-name {
-                        line-height: 40px;
-                        display: inline-block;
-                        padding: 0 10px;
-                    }
-
-
-
-
-
-        /* Materials*/
-
-        .file-upload2 {
-            display: block;
-            text-align: center;
-        }
-
-            .file-upload2 .file-select2 {
-                display: block;
-                border: 2px solid #dce4ec;
-                color: #34495e;
-                cursor: pointer;
-                height: 40px;
-                line-height: 40px;
-                text-align: left;
-                background: #FFFFFF;
-                overflow: hidden;
-                position: relative;
-            }
-
-                .file-upload2 .file-select2 .file-select-button2 {
-                    background: #dce4ec;
-                    padding: 0 10px;
-                    display: inline-block;
-                    height: 40px;
-                    line-height: 40px;
-                }
-
-                .file-upload2 .file-select2 .file-select-name2 {
-                    line-height: 40px;
-                    display: inline-block;
-                    padding: 0 10px;
-                }
-
-                .file-upload2 .file-select2:hover {
-                    border-color: #34495e;
-                    transition: all .2s ease-in-out;
-                    -moz-transition: all .2s ease-in-out;
-                    -webkit-transition: all .2s ease-in-out;
-                    -o-transition: all .2s ease-in-out;
-                }
-
-                    .file-upload2 .file-select2:hover .file-select-button2 {
-                        background: #34495e;
-                        color: #FFFFFF;
-                        transition: all .2s ease-in-out;
-                        -moz-transition: all .2s ease-in-out;
-                        -webkit-transition: all .2s ease-in-out;
-                        -o-transition: all .2s ease-in-out;
-                    }
-
-            .file-upload2.active .file-select2 {
-                border-color: #3fa46a;
-                transition: all .2s ease-in-out;
-                -moz-transition: all .2s ease-in-out;
-                -webkit-transition: all .2s ease-in-out;
-                -o-transition: all .2s ease-in-out;
-            }
-
-                .file-upload2.active .file-select2 .file-select-button2 {
-                    background: #3fa46a;
-                    color: #FFFFFF;
-                    transition: all .2s ease-in-out;
-                    -moz-transition: all .2s ease-in-out;
-                    -webkit-transition: all .2s ease-in-out;
-                    -o-transition: all .2s ease-in-out;
-                }
-
-            .file-upload2 .file-select2 input[type=file] {
-                z-index: 100;
-                cursor: pointer;
-                position: absolute;
-                height: 100%;
-                width: 100%;
-                top: 0;
-                left: 0;
-                opacity: 0;
-                filter: alpha(opacity=0);
-            }
-
-            .file-upload2 .file-select2.file-select2-disabled {
-                opacity: 0.65;
-            }
-
-                .file-upload2 .file-select2.file-select2-disabled:hover {
-                    cursor: default;
-                    display: block;
-                    border: 2px solid #dce4ec;
-                    color: #34495e;
-                    cursor: pointer;
-                    height: 40px;
-                    line-height: 40px;
-                    margin-top: 5px;
-                    text-align: left;
-                    background: #FFFFFF;
-                    overflow: hidden;
-                    position: relative;
-                }
-
-                    .file-upload2 .file-select2.file-select2-disabled:hover .file-select-button2 {
-                        background: #dce4ec;
-                        color: #666666;
-                        padding: 0 10px;
-                        display: inline-block;
-                        height: 40px;
-                        line-height: 40px;
-                    }
-
-                    .file-upload2 .file-select2.file-select2-disabled:hover .file-select-name2 {
-                        line-height: 40px;
-                        display: inline-block;
-                        padding: 0 10px;
-                    }
-    </style>
-
-</head>
-<body>
-
-    <!-- navbar -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.html" style="margin-left: 24px;">
-                <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
-            </a>
-            <div class="navbarvr"></div>
-            <span class="collapse navbar-collapse  navbar-brand">ITI-Hub</span>
-            <div class="justify-content-end" id="navbarSupportedContent">
-                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="~/Identity/Account/Login" method="post">
-                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                </form>
-            </div>
-        </div>
-    </nav>
-
-    <div class="">
-        <div class="row">
-            <!-- Sidebar -->
-@*            <div class="col-md-2 sidebar">
-                <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary" style="width: 280px; height: 93vh;">
-                    <span class="d-flex align-items-center mb-3 mb-md-0 me-md-auto ">
-                        <span class="nav-title">Navigation</span>
-                    </span>
-
-                    <hr>
-
-                    <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item navs">
-                            <a href="index.html" class="nav-link link-body-emphasis act" aria-current="page">
-                                <img src="~/assets/images/White/intake.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"/>
-                                <span style="color: white;">Intakes</span>
-                            </a>
-                        </li>
-                        <li class="nav-item navs">
-                            <a href="managedTracks.html" class="nav-link link-body-emphasis">
-                                <img src="~/assets/images/Gray/track.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"/>
-                                Tracks
-                            </a>
-                        </li>
-                        <li class="nav-item navs">
-                            <a href="courses.html" class="nav-link link-body-emphasis">
-                                <img src="~/assets/images/Gray/courses.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"/>
-                                Courses you teach
-                            </a>
-                        </li>
-                    </ul>
-
-                </div>
-            </div>*@
-
-
-            <!-- Main (tales + btns) -->
-            <div class="col-md-10 text-center content">
-                <div class="container-fluid">
-                    <div class="row col-md-12">
-                        <div class="r1">
-                            <h3 style="padding-left: 450px;">Fill Day Details:</h3>
+                                <div class="form-group">
+                                    <input type="submit" value="Add" class="btn btn-primary" />
+                                    <a asp-action="Index"
+                                       asp-route-id="@Id"
+                                       asp-route-name="@name"
+                                       asp-route-intakeID="@intakeID"
+                                       asp-route-trackID="@trackID"
+                                       asp-route-intakeName="@intakeName"
+                                       asp-route-DayNumber="@DayNumber"
+                                       asp-route-trackName="@trackName" class="btn btn-dark">Back to List
+                                   </a>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    <div class="row col-md-10" style="margin-left: 450px; margin-top:-10px">
-                       
-                        <form enctype="multipart/form-data" asp-action="Create" asp-controller="CourseDay" asp-area="InstructorsArea" style="margin-top: 32px; text-align: left; width: 75%;">
-                           
-                            <input type="hidden" asp-for="Date" />
-
-                            <input type="hidden" asp-for="@Id" />
-                            <input type="hidden" asp-for="@name" />
-                            <input type="hidden" asp-for="@trackName" />
-                            <input type="hidden" asp-for="@intakeName" />
-                            <input type="hidden" asp-for="@intakeID" />
-                            <input type="hidden" asp-for="@trackID" />
-                            <input type="hidden" asp-for="@DayNumber" />
-
-                            <label style="font-size: 19px;" class="form-label">Day Number</label>
-                   
-                            <input asp-for="DayNumber" placeholder="@DayNumber" value="@DayNumber" class="form-control" aria-label="Sizing example input" disabled>
-                            <span asp-validation-for="DayNumber" class="text-danger"></span>
-                            <br />
-                            <div class="file-upload2">
-                                <div class="file-select2">
-                                    <div class="file-select-button2" id="fileName">Upload Materials</div>
-                                    <div class="file-select-name2" id="noFileChosen">No file chosen..</div>
-                                    <input asp-for="Materials" id="choosenFile" class="form-control" aria-label="Sizing example input" multiple>
-                                    <span asp-validation-for="Materials" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <br />
-                            <div class="file-upload">
-                                <div class="file-select">
-                                    <div class="file-select-button" id="fileName">Upload Task</div>
-                                    <div class="file-select-name" id="noFile">Choose File..</div>
-                                    <input asp-for="Task" id="chooseFile" class="form-control" aria-label="Sizing example input">
-                                    <span asp-validation-for="Task" class="text-danger"></span>
-                                 </div>
-                            </div>  
-                            <br />
-                            <label style="font-size: 19px;" class="form-label">Task Deadline</label>
-                            <input asp-for="DeadLine" class="form-control" aria-label="Sizing example input">
-                            <span asp-validation-for="DeadLine" class="text-danger"></span>
-                            <br />
-
-                            <div class="form-group">
-                                <input type="submit" value="Add" class="btn btn-primary" />
-                                <a asp-action="Index"
-                                   asp-route-id="@Id"
-                                   asp-route-name="@name"
-                                   asp-route-intakeID="@intakeID"
-                                   asp-route-trackID="@trackID"
-                                   asp-route-intakeName="@intakeName"
-                                   asp-route-DayNumber="@DayNumber"
-                                   asp-route-trackName="@trackName" class="btn btn-dark">Back to List</a>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="~/script.js"></script>
+        <script>
+            //Material
+            $('#choosenFile').bind('change', function () {
+                var filenames = [];
+                var files = $("#choosenFile")[0].files;
 
-    <!--Material-->
-    <script>
-        $('#choosenFile').bind('change', function () {
-            var filenames = [];
-            var files = $("#choosenFile")[0].files;
+                for (var i = 0; i < files.length; i++) {
+                    filenames.push(files[i].name);
+                }
 
-            for (var i = 0; i < files.length; i++) {
-                filenames.push(files[i].name);
-            }
+                if (filenames.length === 0) {
+                    $(".file-upload2").removeClass('active');
+                    $("#noFileChosen").text("No file chosen...");
+                }
+                else {
+                    $(".file-upload2").addClass('active');
+                    $("#noFileChosen").text(filenames.join(', '));
+                    //$("noFileChosen").text(filename.replace("C:\\fakepath\\", filenames.join(', '));
+                }
+            });
 
-            if (filenames.length === 0) {
-                $(".file-upload2").removeClass('active');
-                $("#noFileChosen").text("No file chosen...");
-            }
-            else {
-                $(".file-upload2").addClass('active');
-                $("#noFileChosen").text(filenames.join(', '));
-                //$("noFileChosen").text(filename.replace("C:\\fakepath\\", filenames.join(', '));
-            }
-        });
-    </script>
+            //Task
+            $('#chooseFile').bind('change', function () {
+                var filename = $("#chooseFile").val();
+                if (/^\s*$/.test(filename)) {
+                    $(".file-upload").removeClass('active');
+                    $("#noFile").text("No file chosen...");
+                }
+                else {
+                    $(".file-upload").addClass('active');
+                    $("#noFile").text(filename.replace("C:\\fakepath\\", ""));
 
-    <!--Task-->
-    <script>
-        $('#chooseFile').bind('change', function () {
-            var filename = $("#chooseFile").val();
-            if (/^\s*$/.test(filename)) {
-                $(".file-upload").removeClass('active');
-                $("#noFile").text("No file chosen...");
-            }
-            else {
-                $(".file-upload").addClass('active');
-                $("#noFile").text(filename.replace("C:\\fakepath\\", ""));
+                    console.log(filename);
+                }
+            });
+        </script>
 
-                console.log(filename);
-            }
-        });
-    </script>
-
-</body>
+    </body>
 </html>
 
 

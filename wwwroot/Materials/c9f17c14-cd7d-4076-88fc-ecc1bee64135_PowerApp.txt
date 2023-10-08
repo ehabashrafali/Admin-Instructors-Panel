@@ -1,6 +1,0 @@
-1- work on Env1 environment 
-2- create solution "ITI Management system"
-3- assign a Puplisher "Assem Adel"
-4- Create Tables
-5- Create App 
-6- creat bpf on student table

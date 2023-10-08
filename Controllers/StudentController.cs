@@ -33,7 +33,7 @@ namespace Admin_Panel_ITI.Controllers
             var students = studentRepository.getStudents(pageNumber, 10);
             ViewBag.PageNumber = pageNumber;
             ViewBag.IntakeID = 0;
-
+           
             return View(students);
         }
 
