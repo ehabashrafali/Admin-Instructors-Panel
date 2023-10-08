@@ -290,34 +290,6 @@
                             <div class="r1">
                                 <h3 style="padding-left: 33px;">Day @CourseDayNum Materials & Tasks</h3>
                                 <div>
-                                  @*  <form id="uploadForm" enctype="multipart/form-data" asp-action="Details" asp-controller="CourseDay">
-                                        <input type="hidden" name="Materials" value="@Materials" />
-                                        <input type="hidden" name="Materials" value="@Task" />
-                                        <input type="hidden" name="id" value="@courseID" />
-                                        <input type="hidden" name="name" value="@courseName" />
-                                        <input type="hidden" name="intakeID" value="@IntakeID" />
-                                        <input type="hidden" name="trackID" value="@TrackID" />
-                                        <input type="hidden" name="intakeName" value="@IntakeName" />
-                                        <input type="hidden" name="trackName" value="@TrackName" />
-                                        <input type="hidden" name="coursedayID" value="@CourseDayID" />
-
-
-                                        <div class="file-upload">
-                                            <div class="file-select">
-                                                <div class="file-select-button" id="fileName">Add New Materials</div>
-                                            <input asp-for="@Materials" id="choosenFile" class="form-control " aria-label="Sizing example input" multiple>
-                                            </div>
-                                        </div>
-
-                                        <div class="file-upload">
-                                            <div class="file-select">
-                                                <div class="file-select-button" id="fileName">Update Task</div>
-                                                <input asp-for="@Task" id="choosenFile2" class="form-control" aria-label="Sizing example input">
-                                            </div>
-                                        </div>
-                                    </form>*@
-
-
                                 <form id="uploadForm" enctype="multipart/form-data" asp-action="Detailss" asp-controller="CourseDay" method="post">
                                     <input type="hidden" name="Materials" value="@Materials" />
                                     <input type="hidden" name="Task" value="@Task" />
@@ -349,7 +321,7 @@
                                           asp-route-trackID="@TrackID"
                                           asp-route-CourseDayId=@CourseDayID>
                                                                                 
-                                        <button id="logout" type="submit" style="color:white; padding:10px 38px" class="nav-link btn btn-link border-0 hvr-bounce-to-right logoutbtn"> Students Submissions</button>
+                                        <button id="logout" type="submit" style="color:white; padding:10px 38px" class="nav-link btn btn-link border-0 hvr-bounce-to-right logoutbtn"> Tasks Submissions</button>
                                     </form>
                                 </div>
                                 </div>

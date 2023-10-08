@@ -10,6 +10,7 @@
     string intakeName = ViewBag.IntakeName;
     int intakeID = ViewBag.IntakeID;
     int trackID = ViewBag.TrackID;
+    string examName = ViewBag.ExamName;
 }
 
 <!DOCTYPE html>
@@ -41,7 +42,6 @@
                 </div>
             </a>
             <div class="d-flex navbar-user-buttons">
-                <a asp-area="Identity" asp-page="/Account/AddUser" class="btn regbtn hvr-bounce-to-right">Add User</a>
                 <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                     <button id="logout" type="submit" style="color:white; padding:10px 38px" class="nav-link btn btn-link border-0 hvr-bounce-to-right logoutbtn">Logout</button>
                 </form>
@@ -150,28 +150,29 @@
                                             </svg>
                                         </th>
                                         <th>
-                                            Students submitted
+                                            No. Students submitted
                                             <svg onclick="sortTable(3)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                                                 <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                                             </svg>
                                         </th>
+                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
+                                         <tr>
                                             <td style="padding-left: 24px;">
                                                 @Html.DisplayFor(modelItem => item.Name)
                                             </td>
-                                            <td style="padding-left: 24px;">
+                                            <td style="padding-left: 40px;">
                                                 @Html.DisplayFor(modelItem => item.Duration)
                                             </td>
-                                            <td>
+                                        <td style="padding-left: 40px;">
                                                 @Html.DisplayFor(modelItem => item.CreationDate)
                                             </td>
-                                            <td style="padding-left: 24px;">
+                                            <td style="padding-left: 70px;">
                                                 @{
                                                     // Get the number of unique students by counting distinct StudentIDs
                                                     var uniqueStudentCount = item.Student_Quest_Exam.Select(sq => sq.StudentID).Distinct().Count();
@@ -187,10 +188,16 @@
                                                         data-value2="@item.ID"
                                                         data-value3="@intakeID"
                                                         data-value4="@trackID">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16" style="margin: 0 4px 4px 0; color: #b72025;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16" style="margin: 0 4px 4px 0; color: #b72025;" >
                                                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
                                                     </svg>
                                                 </button>
+                                            </td>
+
+                                            <td style="padding: 5px 8px">
+                                                <a asp-action="Details" asp-controller="Exam" asp-route-ExamId="@item.ID" , asp-route-id="@Id", asp-route-intakeID="@intakeID", asp-route-trackID = "@trackID">
+                                                    <img style='width: 20px; height: 20px;' src='~/assets/images/details.png' alt='details' title="Details">
+                                                </a>
                                             </td>
                                         </tr>
                                     }
@@ -235,6 +242,8 @@
 
             </div>
         </div>
+
+
          <!--Confirm Deletion Script-->
     <script>
 
@@ -272,8 +281,6 @@
                 document.getElementById("deleteModal").submit();
             });
         });
-
-
     </script>
     </body>
 

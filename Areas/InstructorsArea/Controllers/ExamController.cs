@@ -45,7 +45,6 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
         [Route("Index/{courseId?}/{intakeID?}/{trackID?}")]
         public ActionResult Index(int courseId, int intakeID, int trackID)
         {
-
             ViewBag.Id = courseId;
             ViewBag.IntakeID = intakeID;
             ViewBag.TrackID = trackID;
@@ -64,10 +63,22 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             return View(exams);
         }
 
-        // GET: ExamController/Details/5
-        public ActionResult Details(int id)
+
+        [Route("ED/{ExamId?}/{id?}/{trackID?}/{intakeID?}")]
+        public ActionResult Details(int ExamId , int id, int trackID, int intakeID)
         {
-            return View();
+            var Submetions = exam_Std_QuestionRepository.GetExam(ExamId);
+
+            ViewBag.Id = id;
+            ViewBag.intakeID = intakeID;
+            ViewBag.TrackID = trackID;
+            ViewBag.ExamName = examRepo.GetExambyID(ExamId).Name;
+
+            ViewBag.crsName = courseRepository.GetCourseName(id);
+            ViewBag.trackName = trackRepo.getTrackName(trackID);
+            ViewBag.intakeName = intakeRepo.getIntakeName(intakeID);
+
+            return View(Submetions);
         }
 
 

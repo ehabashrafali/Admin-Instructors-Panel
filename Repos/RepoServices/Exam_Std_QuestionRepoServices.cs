@@ -1,7 +1,11 @@
-﻿using Admin_Panel_ITI.Data;
+﻿using Admin_Panel_ITI.Areas.InstructorsArea.ViewModels;
+using Admin_Panel_ITI.Data;
 using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Admin_Panel_ITI.Repos.RepoServices
 {
@@ -22,10 +26,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.Exam_Std_Questions.Add(esq);
             Context.SaveChanges();
         }
-
-
-
-
 
         void IExam_Std_QuestionRepository.DeleteExam_Std_Question(int examID, string studentID, int questionID)
         {
@@ -83,5 +83,41 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
             Context.SaveChanges();
         }
+
+        public List<ExamSubmitionsVM> GetExam(int examID)
+        {
+
+            List<ExamSubmitionsVM> ESList = new(); 
+
+            var result = Context.Exam_Std_Questions
+                .Where(se => se.ExamID == examID)
+                .GroupBy(se => new { se.StudentID, se.Student.AspNetUser.FullName})
+                .Select(g => new
+                {
+                    StudentFullName = g.Key.FullName,
+                    TotalGrade = g.Sum(se => se.StudentGrade)
+                })
+                .ToList();
+
+            foreach(var item in result)
+            {
+                ExamSubmitionsVM esM = new ExamSubmitionsVM()
+                {
+                    StdFullName = item.StudentFullName,
+                    TotalGrade = item.TotalGrade
+                };
+
+                ESList.Add(esM);
+            }
+
+            return ESList;
+
+        }
+
+        //public int SumGrades(int examID, string studentID)
+        //{
+        //    return Context.Exam_Std_Questions.Where(esq => esq.ExamID == examID & esq.StudentID == studentID)
+        //        .Select(esq => esq.StudentGrade).Sum(); 
+        //}
     }
 }
