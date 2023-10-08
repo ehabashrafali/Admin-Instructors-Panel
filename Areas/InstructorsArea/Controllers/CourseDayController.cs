@@ -67,7 +67,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
         //id(course id)
         [HttpGet]
-        [Route("CDDG/{id?}/{intakeID?}/{trackID?}/{coursedayID?}")]
+        [Route("DDDG/{id?}/{intakeID?}/{trackID?}/{coursedayID?}")]
         public ActionResult Details(int id, int intakeID, int trackID, int coursedayID)
         {
             ViewBag.Id = id;
@@ -176,7 +176,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
 
         [HttpPost]
-        [Route("CDDP/{id?}/{intakeID?}/{trackID?}/{coursedayID?}")]
+        [Route("DDDP/{id?}/{intakeID?}/{trackID?}/{coursedayID?}")]
         public ActionResult Detailss(List<IFormFile> Materials, IFormFile Task, int id, int intakeID, int trackID, int coursedayID)
         {
 
@@ -251,23 +251,25 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
         }
 
 
-        [HttpGet]
-        public ActionResult Create(int Id, string name, int intakeID, int trackID, string intakeName, string trackName, int CourseDaysCount)
-        {
-            ViewBag.Id = Id;
-            ViewBag.Name = name;
 
-            ViewBag.IntakeName = intakeName;
-            ViewBag.TrackName = trackName;
+        [Route("CreateG/{id?}/{intakeID?}/{trackID?}/{CourseDaysCount?}")]
+        public ActionResult Create(int id, int intakeID, int trackID, int CourseDaysCount)
+        {
+            ViewBag.Id = id;
             ViewBag.IntakeID = intakeID;
             ViewBag.TrackID = trackID;
             ViewBag.CourseDaysCount = CourseDaysCount;
+
+            ViewBag.Name = courseRepo.GetCourseName(id);
+            ViewBag.IntakeName = intakeRepo.getIntakeName(intakeID);
+            ViewBag.TrackName = trackRepo.getTrackName(trackID);
 
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(CourseDay_Material_TaskVM model, int Id, string name, int intakeID, int trackID, string intakeName, string trackName)
+        [Route("CreateP/{model?}/{Id?}/{intakeID?}/{trackID?}")]
+        public ActionResult Createe(CourseDay_Material_TaskVM model, int Id, int intakeID, int trackID)
         {
             if (ModelState.IsValid)
             {
@@ -326,7 +328,9 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
                 return RedirectToAction(nameof(Index), new { Id, intakeID, trackID});
             }
 
-            return RedirectToAction("Create", new { Id, name, intakeID, trackID, intakeName, trackName });
+            int CourseDaysCount = model.DayNumber;
+            int id = Id;
+            return RedirectToAction(nameof(Create), new { id, intakeID, trackID, CourseDaysCount }); 
         }
 
 

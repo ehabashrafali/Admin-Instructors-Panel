@@ -98,12 +98,10 @@
                                 <h3 style="padding-left: 33px;">Course Days Cards</h3>
                                 <div>
                                     <a asp-controller="CourseDay" asp-action="Create" class="btn courseBtns"
-                                       asp-route-Id="@courseID"
-                                       asp-route-name="@courseName"
+                                       asp-route-id="@courseID"
+
                                        asp-route-intakeID="@IntakeID"
                                        asp-route-trackID="@TrackID"
-                                       asp-route-intakeName="@IntakeName"
-                                       asp-route-trackName="@TrackName"
                                        asp-route-CourseDaysCount="@ViewBag.CourseDaysCount">Add Day
                                     </a>
                                     <a asp-action="Index" asp-controller="Exam"
