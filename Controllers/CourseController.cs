@@ -59,8 +59,8 @@ namespace Admin_Panel_ITI.Controllers
             ViewBag.PageNumber = pageNumber;
             ViewBag.IntakeID = Id;
             ViewBag.TrackID = 0;
-            ViewBag.intakes_involved = false;
-            ViewBag.tracks_involved = false;
+            ViewBag.intakes_involved = true;
+            ViewBag.tracks_involved = true;
 
             return View(Courses);
 
@@ -338,28 +338,29 @@ namespace Admin_Panel_ITI.Controllers
             courseRepository.DeleteCourse(selectedCourseIds);
 
             var tracks = trackRepository.getTracks();
-            List<Intake_Track_Course> coursesbytrack;
+            List<Course> coursesbytrack = new List<Course>();
+            List<Intake_Track_Course> intakeTrackcourse = new List<Intake_Track_Course>();
 
             if (intakeID == 0)
             {
                 if (trackID == 0)
                 {
-                    // Get all tracks without filtering by intake ID
-                    coursesbytrack = courseRepository.GetCourses(pageNumber, 10);
+                    // Get all courses without filtering by track ID
+                    coursesbytrack = courseRepository.GetCourses2(pageNumber, 10);
                     if (coursesbytrack.Count == 0 && pageNumber > 1)
                     {
-                        coursesbytrack = courseRepository.GetCourses(pageNumber - 1, 10);
+                        coursesbytrack = courseRepository.GetCourses2(pageNumber - 1, 10);
                         pageNumber--;
                     }
 
                 }
                 else
                 {
-                    // Get tracks filtered by intake ID
-                    coursesbytrack = courseRepository.GetCoursesbyTrackIDitc(trackID, pageNumber, 10);
+                    // Get tracks filtered by track ID
+                    coursesbytrack = courseRepository.GetCoursesbyTrackID(trackID, pageNumber, 10);
                     if (coursesbytrack.Count == 0 && pageNumber > 1)
                     {
-                        coursesbytrack = courseRepository.GetCoursesbyTrackIDitc(trackID, pageNumber - 1, 10);
+                        coursesbytrack = courseRepository.GetCoursesbyTrackID(trackID, pageNumber - 1, 10);
                         pageNumber--;
                     }
                 }
@@ -368,28 +369,22 @@ namespace Admin_Panel_ITI.Controllers
             {
                 if (trackID == 0)
                 {
-
-                    //  get course by intakeonly
-
-
-
-                    coursesbytrack = courseRepository.GetCoursesbyIntakeID(intakeID, pageNumber, 10);
-                    if (coursesbytrack.Count == 0 && pageNumber > 1)
+                    // Get all courses without filtering by track ID
+                    intakeTrackcourse = courseRepository.GetCoursesbyIntakeID(intakeID,pageNumber, 10);
+                    if (intakeTrackcourse.Count == 0 && pageNumber > 1)
                     {
-                        coursesbytrack = courseRepository.GetCoursesbyIntakeID(intakeID, pageNumber - 1, 10);
+                        intakeTrackcourse = courseRepository.GetCoursesbyIntakeID(intakeID,pageNumber - 1, 10);
                         pageNumber--;
                     }
 
                 }
                 else
                 {
-                    // edit to get courses by both intake and track id
-
-                    // Get tracks filtered by intake ID
-                    coursesbytrack = courseRepository.GetCoursesByIntakeTrackID(intakeID, trackID, pageNumber, 10);
+                    // Get tracks filtered by track ID
+                    intakeTrackcourse = courseRepository.GetCoursesByIntakeTrackID(intakeID, trackID, pageNumber, 10);
                     if (coursesbytrack.Count == 0 && pageNumber > 1)
                     {
-                        coursesbytrack = courseRepository.GetCoursesByIntakeTrackID(intakeID, trackID, pageNumber - 1, 10);
+                        intakeTrackcourse = courseRepository.GetCoursesByIntakeTrackID(intakeID, trackID, pageNumber - 1, 10);
                         pageNumber--;
                     }
                 }
@@ -418,11 +413,20 @@ namespace Admin_Panel_ITI.Controllers
             }
             else
             {
-                ViewBag.intakes_involved = false;
+                ViewBag.intakes_involved = true;
 
             }
 
-            return PartialView("_TableDataPartialFilteredbyIntakes", coursesbytrack);
+
+
+           
+
+            if(!ViewBag.intakes_involved)
+            {
+                return PartialView("_TableDataPartial", coursesbytrack);
+            }
+
+            return PartialView("_TableDataPartialFilteredbyIntakes", intakeTrackcourse);
 
 
         }

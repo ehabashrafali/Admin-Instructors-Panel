@@ -195,6 +195,7 @@
         // Get the intake ID and page number from the hidden input fields
         var trackID = parseInt(@ViewBag.trackID);
         var pageNumber = parseInt(@ViewBag.PageNumber);
+        var intakeID = parseInt(@ViewBag.IntakeID);
 
         // Make an AJAX POST request to the Delete action with parameters
         $.ajax({
@@ -204,6 +205,7 @@
             data: {
                 selectedCourseIds: selectedCourseIds,
                 trackID: trackID,
+                intakeID: intakeID,
                 pageNumber: pageNumber
             },
             success: function (result) {
