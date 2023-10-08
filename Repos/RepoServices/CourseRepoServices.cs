@@ -92,9 +92,9 @@ namespace Admin_Panel_ITI.Repos
             var course = Context.Courses
                 .Include(c => c.Admin)
                 .Include(c => c.InstructorCourses)
-                    .ThenInclude(cc=>cc.Instructor)
+                .ThenInclude(cc=>cc.Instructor)
                 .Include(c => c.IntakeTrackCourse)
-                    .ThenInclude(itc => itc.Track)
+                .ThenInclude(itc => itc.Track)
                 .FirstOrDefault(c => c.ID == courseID);
 
             if (course != null)
@@ -308,5 +308,9 @@ namespace Admin_Panel_ITI.Repos
             return query;
         }
 
+        public string GetCourseName(int courseID)
+        {
+            return Context.Courses.FirstOrDefault(c => c.ID == courseID).Name;
+        }
     }
 }

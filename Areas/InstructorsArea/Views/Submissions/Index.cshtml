@@ -11,6 +11,7 @@
     int CourseDayID = ViewBag.CourseDayId;
     int CourseDayNum = ViewBag.CourseDayNum;
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,14 +27,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="~/Instructor/SideBar_BreadCrumb.css">
-
-   
-
 </head>
 <body>
-
-   
-
     <div class="">
         <div class="row">
             <!-- Sidebar -->
@@ -79,8 +74,6 @@
                                asp-action="DetailsForTeacher"
                                asp-route-intakeId="@IntakeID"
                                asp-route-trackId="@TrackID"
-                               asp-route-name="@TrackName"
-                               asp-route-name2="@IntakeName"
                                style="--clr: #7808d0" class="button">
                                 <span class="button__icon-wrapper">
                                     <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
@@ -98,11 +91,8 @@
                             <a asp-action="Index"
                                asp-controller="CourseDay"
                                asp-route-id="@courseID"
-                               asp-route-name="@courseName"
                                asp-route-intakeID="@IntakeID"
                                asp-route-trackID="@TrackID"
-                               asp-route-intakeName="@IntakeName"
-                               asp-route-trackName="@TrackName"
                                style="--clr: #7808d0" class="button">
                                 <span class="button__icon-wrapper">
                                     <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
@@ -116,17 +106,13 @@
                                 Day @CourseDayNum
                             </a>
                         </li>
-                        <li class="nav-item navs3">
+@*                        <li class="nav-item navs3">
                             <a asp-action="Details"
                                asp-controller="CourseDay"
                                asp-route-id="@courseID"
-                               asp-route-name="@courseName"
                                asp-route-intakeID="@IntakeID"
                                asp-route-trackID="@TrackID"
-                               asp-route-intakeName="@IntakeName"
-                               asp-route-trackName="@TrackName"
                                asp-route-coursedayID="@CourseDayID"
-                               asp-route-coursedayNum="@CourseDayNum"
                                style="--clr: #7808d0" class="button">
                                 <span class="button__icon-wrapper">
                                     <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
@@ -139,7 +125,7 @@
                                 </span>
                                 Materials/Tasks
                             </a>
-                        </li>
+                        </li>*@
                         <li class="nav-item navs3">
                             <p style="border-radius:50px;">Submissions</p>
                         </li>

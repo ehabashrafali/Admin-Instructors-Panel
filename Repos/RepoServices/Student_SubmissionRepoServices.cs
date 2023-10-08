@@ -53,9 +53,9 @@ namespace Admin_Panel_ITI.Repos
         List<Student_Submission> IStudent_SubmissionRepository.GetAll_SubmissionsByCrsDay(int courseDayID)
         {
             var all_submissions = Context.Student_Submissions
-                                         .Where(ss=>ss.CourseDayID==courseDayID)
-                                         .Include(ss=>ss.Student)
-                                         .ThenInclude(ss=>ss.AspNetUser)
+                                         .Where(ss=> ss.CourseDayID == courseDayID)
+                                         .Include(ss=> ss.Student)
+                                         .ThenInclude(s=> s.AspNetUser)
                                          .ToList();
             return all_submissions;
         }

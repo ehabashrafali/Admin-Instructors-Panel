@@ -159,7 +159,7 @@ namespace Admin_Panel_ITI.Repos
 
         string IIntakeRepository.getIntakeName(int intakeID)
         {
-            var intake = Context.Intakes.FirstOrDefault(it=>it.ID == intakeID);
+            var intake = Context.Intakes.FirstOrDefault(i => i.ID == intakeID);
             return intake.Name;
         }
     }

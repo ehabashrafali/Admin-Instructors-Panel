@@ -11,23 +11,26 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
     {
         private readonly ITrackRepository itrackRepo;
         private readonly UserManager<AppUser> userManager;
+        private readonly IIntakeRepository intakeRepo;
         public TrackController(
             ITrackRepository _itrackRepo,
-            UserManager<AppUser> _userManager)
+            UserManager<AppUser> _userManager, 
+            IIntakeRepository _intakeRepo)
         {
             itrackRepo = _itrackRepo;
             userManager = _userManager;
+            intakeRepo = _intakeRepo;
         }
 
 
-        //get the tracks in this intake, and only the tracks this instructor manage :: id(intake ID) , name(Intake ExamName)
-        [HttpGet]
-        public ActionResult DetailsForManager(int id, string name)
+        //get the tracks in a specific intake, and only the tracks this instructor manage | id = intake id
+        [Route("DFM/{id?}")]
+        public ActionResult DetailsForManager(int id)
         {
             string? UserID = userManager.GetUserId(User);
 
             ViewBag.IntakeID = id;
-            ViewBag.intakeName = name;
+            ViewBag.intakeName = intakeRepo.getIntakeName(id);
 
             return View(itrackRepo.getTracks(UserID, id));
 
@@ -40,10 +43,11 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
 
 
-        //get the tracks in this intake, and only the tracks this instructor Teach in :: id(intake ID) , name(Intake Name)
-        public ActionResult DetailsForTeacher(int id, string name)
+        //get the tracks in a specific intake, and only the tracks this instructor Teach in | id = intake id
+        [Route("/DFT/{id?}")]
+        public ActionResult DetailsForTeacher(int id)
         {
-            ViewBag.IntakeName = name;
+            ViewBag.IntakeName = intakeRepo.getIntakeName(id);
             ViewBag.IntakeID = id;
 
             return View(itrackRepo.GetTracksByTeacher(id, userManager.GetUserId(User)));

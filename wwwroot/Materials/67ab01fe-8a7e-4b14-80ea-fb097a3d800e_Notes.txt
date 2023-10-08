@@ -1,0 +1,23 @@
+DbContextOptions<MainDBContext> options
+
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            builder.Services.AddDbContext<MainDBContext>(options =>
+                options.UseSqlServer(connectionString));
+
+
+
+
+<select>
+                @foreach(var trainee in Model.Trainees)
+                {
+                  <option>
+                      @trainee.Name
+                  </option>
+                }
+            </select>
+
+------------------------------------------------
+1- user documentation & developer doc
+2- uml diagram & use case diagram (database)
+3- user stories (instructor - student - admin)

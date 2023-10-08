@@ -33,7 +33,6 @@
                     </span>
                     <hr>
 
-
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item navs1">
                             <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index">
@@ -100,8 +99,8 @@
                                             @studentRepo.GetStudentsNumberbyIntakeTrackID(IntakeID, track.ID)
                                         </td>
                                         <td style="padding-right: 16px; text-align: right;">
-                                            <a asp-controller="Course" asp-action="DetailsForManager" asp-route-id="@track.ID" asp-route-iid="@IntakeID" asp-route-name="@track.Name" asp-route-name2="@IntakeName" class="btn regbtn" style="padding: 8px 16px;">Display Courses</a>
-                                            <a asp-controller="Student" asp-action="Details" asp-route-id="@track.ID" asp-route-iid="@IntakeID" asp-route-name="@track.Name" asp-route-name2="@IntakeName" class="btn regbtn" style="padding: 8px 16px;">Display Students</a>
+                                            <a asp-controller="Course" asp-action="DetailsForManager" asp-route-iid="@track.ID" asp-route-id="@IntakeID" class="btn regbtn" style="padding: 8px 16px;">Display Courses</a>
+                                            <a asp-controller="Student" asp-action="Details" asp-route-id="@track.ID" asp-route-iid="@IntakeID" class="btn regbtn" style="padding: 8px 16px;">Display Students</a>
                                         </td>
                                     </tr>
                                 }
