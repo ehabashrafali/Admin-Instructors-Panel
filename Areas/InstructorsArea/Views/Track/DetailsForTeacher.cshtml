@@ -1,12 +1,9 @@
 ﻿@using Admin_Panel_ITI.Repos;
-
 @model IEnumerable<Track>
-
 @{
     int IntakeID = ViewBag.IntakeID;
     string IntakeName = ViewBag.intakeName;
 }
-
 @inject IStudentRepository studentRepo;
 
 
@@ -103,7 +100,7 @@
                                             @studentRepo.GetStudentsNumberbyIntakeTrackID(IntakeID, track.ID)
                                         </td>
                                         <td style="padding-right: 16px; text-align: right;">
-                                            <a asp-controller="Course" asp-action="DetailsForTeacher" asp-route-trackId="@track.ID" asp-route-intakeId="@IntakeID" asp-route-name="@track.Name" asp-route-name2="@IntakeName" class="btn regbtn" style="padding: 8px 16px;">Display Courses</a>
+                                            <a asp-controller="Course" asp-action="DetailsForTeacher" asp-route-trackId="@track.ID" asp-route-intakeId="@IntakeID" class="btn regbtn" style="padding: 8px 16px;">Display Courses</a>
                                         </td>
                                     </tr>
                                 }

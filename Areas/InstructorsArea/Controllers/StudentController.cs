@@ -1,4 +1,5 @@
-﻿using Admin_Panel_ITI.Repos;
+﻿using Admin_Panel_ITI.Models;
+using Admin_Panel_ITI.Repos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,17 +9,23 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
     public class StudentController : Controller
     {
         private readonly IStudentRepository studentRepo;
-        public StudentController(IStudentRepository _studentRepo)
+        private readonly IIntakeRepository intakeRepo;
+        private readonly ITrackRepository trackRepo;
+        public StudentController(IStudentRepository _studentRepo,
+            IIntakeRepository _intakeRepo,
+            ITrackRepository _trackRepo)
         {
             studentRepo = _studentRepo;
+            intakeRepo = _intakeRepo;
+            trackRepo = _trackRepo;
         }
 
 
-        public ActionResult Details(int iid , int id, string name, string name2) //id(TrackID) , iid(IntakeID), name(TrackName) , name2(intakeName)
+        [Route("SD/{id?}/{iid?}")]
+        public ActionResult Details(int id , int iid) //id(TrackID) , iid(IntakeID)
         {
-            ViewBag.TrackName = name;
-            ViewBag.IntakeName = name2;
-
+            ViewBag.TrackName = trackRepo.getTrackName(id);
+            ViewBag.IntakeName = intakeRepo.getIntakeName(iid);
             ViewBag.TrackID = id;
             ViewBag.IntakeID = iid;
 

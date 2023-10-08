@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
 {
@@ -89,6 +90,8 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
                             returnUrl = Url.Action("Index", "Home");
                         else if (await _userManager.IsInRoleAsync(user, "Instructor"))
                             returnUrl = Url.Action("Index", "Intake", new { area = "InstructorsArea" });
+                        else
+                            returnUrl = "~/ERROR404/Error.html"; 
 
                         return LocalRedirect(returnUrl);
                     }
