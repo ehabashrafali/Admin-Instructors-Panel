@@ -3,7 +3,7 @@
 @model CourseDay_Material_TaskVM
 
 @{
-    int Id = ViewBag.Id;
+    int id = ViewBag.Id;
     string name = ViewBag.Name;
     string trackName = ViewBag.TrackName;
     string intakeName = ViewBag.IntakeName;
@@ -43,9 +43,9 @@
                         </div>
                         <div class="row col-md-10" style="margin-left: 450px; margin-top:-10px">
 
-                            <form enctype="multipart/form-data" asp-action="Createe" asp-controller="CourseDay" asp-area="InstructorsArea" style="margin-top: 32px; text-align: left; width: 75%;">
+                            <form enctype="multipart/form-data" asp-action="Createe" asp-controller="CourseDay" style="margin-top: 32px; text-align: left; width: 75%;">
                                 <input type="hidden" asp-for="Date" />
-                                <input type="hidden" asp-for="@Id" />
+                                <input type="hidden" asp-for="@id" />
                                 <input type="hidden" asp-for="@intakeID" />
                                 <input type="hidden" asp-for="@trackID" />
                                 <input type="hidden" asp-for="@DayNumber" />
@@ -79,9 +79,11 @@
                                 <br />
 
                                 <div class="form-group">
+
                                     <input type="submit" value="Add" class="btn btn-primary" />
+
                                     <a asp-action="Index"
-                                       asp-route-id="@Id"
+                                       asp-route-id="@id"
                                        asp-route-name="@name"
                                        asp-route-intakeID="@intakeID"
                                        asp-route-trackID="@trackID"

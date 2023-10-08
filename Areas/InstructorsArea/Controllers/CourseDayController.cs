@@ -45,19 +45,19 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
 
         // id = course id
-        [Route("CDI/{Id?}/{intakeID?}/{trackID?}")]
-        public ActionResult Index(int Id, int intakeID, int trackID)
+        [Route("CDI/{id?}/{intakeID?}/{trackID?}")]
+        public ActionResult Index(int id, int intakeID, int trackID)
         {
-            ViewBag.Id = Id;
-            ViewBag.Name = courseRepo.GetCourseName(Id);
+            ViewBag.Id = id;
+            ViewBag.Name = courseRepo.GetCourseName(id);
             ViewBag.IntakeName = intakeRepo.getIntakeName(intakeID);
             ViewBag.TrackName = trackRepo.getTrackName(trackID);
             ViewBag.IntakeID = intakeID;
             ViewBag.TrackID = trackID;
-            ViewBag.CourseDaysCount = courseDayRepo.GetCourseDaysCount(Id);
+            ViewBag.CourseDaysCount = courseDayRepo.GetCourseDaysCount(id);
 
 
-            return View(courseDayRepo.GetCourseDaysByCourseID(Id));
+            return View(courseDayRepo.GetCourseDaysByCourseID(id));
         }
 
 
@@ -268,8 +268,8 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
         }
 
         [HttpPost]
-        [Route("CreateP/{model?}/{Id?}/{intakeID?}/{trackID?}")]
-        public ActionResult Createe(CourseDay_Material_TaskVM model, int Id, int intakeID, int trackID)
+        //[Route("CreateP/{model?}/{id?}/{intakeID?}/{trackID?}")]
+        public ActionResult Createe(CourseDay_Material_TaskVM model, int id, int intakeID, int trackID)
         {
             if (ModelState.IsValid)
             {
@@ -319,17 +319,16 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
                     List<Course_Day_Material> cdms = new();
                     foreach (var material in materials)
                     {
-                        cdms.Add(new Course_Day_Material() { CourseID = Id, CourseDayID = newCourseDay.ID, MaterialID = material.ID });
+                        cdms.Add(new Course_Day_Material() { CourseID = id, CourseDayID = newCourseDay.ID, MaterialID = material.ID });
                     }
 
                     courseDayMaterialRepo.CreateCourseDayMaterial(cdms);
                 }
 
-                return RedirectToAction(nameof(Index), new { Id, intakeID, trackID});
+                return RedirectToAction("Index", new { id, intakeID, trackID});
             }
 
             int CourseDaysCount = model.DayNumber;
-            int id = Id;
             return RedirectToAction(nameof(Create), new { id, intakeID, trackID, CourseDaysCount }); 
         }
 
