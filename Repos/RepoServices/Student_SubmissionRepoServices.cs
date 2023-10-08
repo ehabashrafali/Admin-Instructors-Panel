@@ -1,5 +1,6 @@
 ﻿using Admin_Panel_ITI.Data;
 using Admin_Panel_ITI.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Admin_Panel_ITI.Repos
@@ -46,6 +47,17 @@ namespace Admin_Panel_ITI.Repos
         {
             var student_submission = Context.Student_Submissions.Where(ss => ss.StudentID == studentID.ToString() && ss.CourseDayID == courseDayID).ToList();
             return student_submission;
+        }
+
+
+        List<Student_Submission> IStudent_SubmissionRepository.GetAll_SubmissionsByCrsDay(int courseDayID)
+        {
+            var all_submissions = Context.Student_Submissions
+                                         .Where(ss=>ss.CourseDayID==courseDayID)
+                                         .Include(ss=>ss.Student)
+                                         .ThenInclude(ss=>ss.AspNetUser)
+                                         .ToList();
+            return all_submissions;
         }
 
         List<Student_Submission> IStudent_SubmissionRepository.GetStudent_SubmissionsByStdIDCrsDayID(int studentID)
@@ -124,6 +136,14 @@ namespace Admin_Panel_ITI.Repos
             {
                 Context.Student_Submissions.Remove(submission);
             }
+            Context.SaveChanges();
+        }
+
+
+        void IStudent_SubmissionRepository.UpdateGrade(string studentId, int courseDayId, int grade)
+        {
+            var sub_grade = Context.Student_Submissions.SingleOrDefault(ss => ss.StudentID == studentId && ss.CourseDayID == courseDayId);
+            sub_grade.SubmissionGrade = grade;
             Context.SaveChanges();
         }
     }
