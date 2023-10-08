@@ -191,12 +191,11 @@ namespace Admin_Panel_ITI.Controllers
 
 
 
-        [HttpGet]
+        
         public ActionResult Delete(List<int> selectedIntakeIds, int duration, int pageNumber)
         {
 
             intakeRepository.DeleteIntake(selectedIntakeIds);
-            ViewBag.AlertMessage = "Intakes with any number of students will not be deleted";
 
 
             var intakes = intakeRepository.GetAllIntakes();

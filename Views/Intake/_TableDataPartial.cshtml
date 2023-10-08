@@ -33,18 +33,7 @@
 </style>
 
 
-@*ALERT COMMENTED CECAUSE IT APPEARS ABOVE THE DELETE MODAL (from line 33 to 43) *@
-@*
-@if (!string.IsNullOrEmpty(ViewBag.AlertMessage))
-{
-    <script>
-        $(document).ready(function () {
-            // Display an alert with the message
-            alert('@ViewBag.AlertMessage');
-        });
-    </script>
-}
-*@
+
 
 
     <div id ="partialTable">
@@ -184,14 +173,14 @@
 
 
 
-    //Delete Process: where Modal exists(from line 219)
-    $('.customdeletebtn_kordy').on('click', function () 
-    {
+    
+
+    $('.customdeletebtn_kordy').off('click').on('click', function () {
+
         // Get the selected checkboxes
         var selectedIntakeIds = $('input[name="selectedIntakeIds[]"]:checked').map(function () {
             return $(this).val();
         }).get();
-
 
 
         if (selectedIntakeIds.length === 0) {
@@ -199,53 +188,29 @@
             return;
         }
 
-
-        $("#confirm-delete-modal").modal("show");
-
-        //// Get the value on the delete btn(materialID)
-        //var buttonValue = $(this).val();
-
-        //// Update the hidden input field in the modal form with the button value
-        //$("#buttonValue").val(buttonValue);
-
-
-        //cancel btn
-        $("#cancelDeletion").click(function () {
-            $("#confirm-delete-modal").modal("hide");
-        });
-
-
         // Get the intake ID and page number from the hidden input fields
         var duration = parseInt(@ViewBag.duration);
         var pageNumber = parseInt(@ViewBag.PageNumber);
 
-
-
-
-     /*MAKE THE AJAX COMMENTED TO TEST THE DELETE MODAL FIRST, WHEN IT WORKS UN-COMMENT THE AJAX. (from line 218 to 237)*/
-
         // Make an AJAX POST request to the Delete action with parameters
-        //$.ajax({
-        //    url: 'Url.Action("Delete", "Intake")',
-        //    type: 'GET',
-        //    traditional: true, // Use traditional serialization for arrays
-        //    data: {
-        //        selectedIntakeIds: selectedIntakeIds,
-        //        duration: duration,
-        //        pageNumber: pageNumber
-        //    },
-        //    success: function (result) {
-        //        // Handle the success response as needed
-        //        // For example, you can update the table with the new data
-        //        $('#partialTable').html(result);
-        //    },
-        //    error: function () {
-        //        // Handle errors here
-        //        alert('Error occurred while deleting data.');
-        //    }
-        //});
-
-
+        $.ajax({
+            url: '@Url.Action("Delete", "Intake")',
+            type: 'GET',
+            traditional: true, // Use traditional serialization for arrays
+            data: {
+                selectedIntakeIds: selectedIntakeIds,
+                duration: duration,
+                pageNumber: pageNumber
+            },
+            success: function (result) {
+                alert("Intakes with any number of students will not be deleted");
+                $('#partialTable').html(result);
+            },
+            error: function () {
+                // Handle errors here
+                alert('Error occurred while deleting data.');
+            }
+        });
     });
 
     function editIntake(intakeID) {

@@ -428,7 +428,6 @@ namespace Admin_Panel_ITI.Controllers
 
             return PartialView("_TableDataPartialFilteredbyIntakes", intakeTrackcourse);
 
-
         }
 
 
