@@ -45,7 +45,7 @@
             <div class="validationWrapper">
                 <div class="input-group mb-2 input-group-lg" style="margin-top: 16px;">
                     <span class="input-group-text">Duration</span>
-                    <input asp-for="Duration" class="form-control" aria-label="Sizing example input" placeholder="Enter intake duration in months">
+                    <input asp-for="Duration" class="form-control" readonly aria-label="Sizing example input" placeholder="Enter intake duration in months">
                 </div>
                 <span asp-validation-for="Duration" class="text-danger" style="padding-left:10px; width:auto"></span>
             </div>
@@ -66,6 +66,32 @@
 </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        // Function to calculate duration when start and end date change
+        function calculateDuration() {
+            var startDate = new Date($('#StartDate').val());
+            var endDate = new Date($('#EndDate').val());
+
+            // Check if both dates are valid
+            if (!isNaN(startDate) && !isNaN(endDate)) {
+                // Check if end date is before start date
+                if (endDate < startDate) {
+                    // Reset end date and display an error message
+                    $('#EndDate').val('');
+                    alert('End date cannot be before the start date.');
+                } else {
+                    var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+                    var durationInMonths = Math.ceil(timeDiff / (1000 * 3600 * 24 * 30));
+                    $('#Duration').val(durationInMonths);
+                }
+            }
+        }
+        // Attach event listeners to the start and end date fields
+        $('#StartDate').on('change', calculateDuration);
+        $('#EndDate').on('change', calculateDuration);
+    });
+</script>
 
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
