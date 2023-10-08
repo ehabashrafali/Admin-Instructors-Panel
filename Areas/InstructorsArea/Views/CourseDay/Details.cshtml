@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<Course_Day_Material>
 
-    @{
-        Layout = null;
-    }
+@{
+    Layout = null;
+}
 
 @{
     int courseID = ViewBag.Id;
@@ -13,6 +13,8 @@
     int TrackID = ViewBag.TrackID;
     int CourseDayID = ViewBag.CourseDayId;
     int CourseDayNum = ViewBag.CourseDayNum;
+    string taskName = ViewBag.taskName;
+    string taskExtension = ViewBag.taskExtension;
 
     List<IFormFile>? Materials = (List<IFormFile>)ViewBag.Materials;
     List<IFormFile>? Task = (List<IFormFile>)ViewBag.Tasks;
@@ -37,11 +39,19 @@
         <style>
 
             .Material {
-                background-image: linear-gradient(to top, #00c6fb 0%, #005bea 100%);
-                padding: 6px;
+                background-color: #D4F8D3;
+                padding: 6px 10px;
                 border-radius: 22px;
                 font-size: 14px;
-                color: white;
+                color: black;
+            }            
+            
+            .Task {
+                background-color: #FFF0BB;
+                padding: 6px 25px;
+                border-radius: 22px;
+                font-size: 14px;
+                color: black;
             }
 
 
@@ -174,21 +184,21 @@
 
     </head>
     <body>
-    <nav class="navbar navbar-expand-sm bg-body-tertiary slide-down">
-        <div class="container-fluid">
-            <a class="navbar-brand" id="logo" asp-action="Index" asp-controller="Intake" asp-area="InstructorsArea">
-                <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
-                <div class="iti-hub-devider">
-                    <span> Hub </span>
+        <nav class="navbar navbar-expand-sm bg-body-tertiary slide-down">
+            <div class="container-fluid">
+                <a class="navbar-brand" id="logo" asp-action="Index" asp-controller="Intake" asp-area="InstructorsArea">
+                    <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
+                    <div class="iti-hub-devider">
+                        <span> Hub </span>
+                    </div>
+                </a>
+                <div class="d-flex navbar-user-buttons">
+                    <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button id="logout" type="submit" style="color:white; padding:10px 38px" class="nav-link btn btn-link border-0 hvr-bounce-to-right logoutbtn">Logout</button>
+                    </form>
                 </div>
-            </a>
-            <div class="d-flex navbar-user-buttons">
-                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <button id="logout" type="submit" style="color:white; padding:10px 38px" class="nav-link btn btn-link border-0 hvr-bounce-to-right logoutbtn">Logout</button>
-                </form>
             </div>
-        </div>
-    </nav>
+        </nav>
 
 
         <div class="">
@@ -306,14 +316,31 @@
                                             </div>
                                         </div>
 
-                                    <div class="file-upload">
-                                        <div class="file-select">
-                                            <div class="file-select-button" id="fileName">Update Task</div>
-                                            <input asp-for="@Task" id="choosenFile2" class="form-control" aria-label="Sizing example input">
+                                        <div class="file-upload">
+                                            <div class="file-select">
+                                                <div class="file-select-button" id="fileName">Update Task</div>
+                                                <input asp-for="@Task" id="choosenFile2" class="form-control" aria-label="Sizing example input">
+                                            </div>
                                         </div>
-                                    </div>
+
+                                
+
 
                                     </form>
+                                <div class="d-flex navbar-user-buttons">
+                                    <form id="logoutForm" class="form-inline"   asp-controller="Submissions" asp-action="Index" 
+                                                                                asp-route-crsDay=@CourseDayID
+                                                                                asp-route-id="@courseID"
+                                                                                asp-route-name="@courseName"
+                                                                                asp-route-intakeID="@IntakeID"
+                                                                                asp-route-trackID="@TrackID"
+                                                                                asp-route-intakeName="@IntakeName"
+                                                                                asp-route-trackName="@TrackName"
+                                                                                asp-route-CourseDayNum="@CourseDayNum"
+                                                                                >
+                                        <button id="logout" type="submit" style="color:white; padding:10px 38px" class="nav-link btn btn-link border-0 hvr-bounce-to-right logoutbtn">View Submissions</button>
+                                    </form>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -323,14 +350,14 @@
                                 <thead class="table-secondary">
                                     <tr>
                                         <th style="padding-left: 24px;">
-                                            <span class="Material">
+@*                                          <span class="Material">
                                                 Materials
                                             </span>
                                             &nbsp;&
                                             <span class="Task">
                                                 Tasks
-                                            </span>
-                                       
+                                            </span>*@
+                                            Materials & Tasks
                                             <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16"
                                                  height="16" fill="currentColor" class="bi bi-caret-down-fill"
                                                  viewBox="0 0 16 16">
@@ -340,6 +367,14 @@
                                         <th>
                                             Type
                                             <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16"
+                                                 height="16" fill="currentColor" class="bi bi-caret-down-fill"
+                                                 viewBox="0 0 16 16">
+                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                            </svg>
+                                        </th>
+                                        <th>
+                                            File Type
+                                            <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16"
                                                  height="16" fill="currentColor" class="bi bi-caret-down-fill"
                                                  viewBox="0 0 16 16">
                                                 <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
@@ -356,26 +391,48 @@
                                                 @Html.DisplayFor(modelItem => item.MaterialOfDay.Name)
                                             </td>
 
+                                            <td>
+                                                <span class="Material">
+                                                    Materials
+                                                </span>
+                                            </td>
+
                                             <td style="padding-top: 16px;">
                                                 @Html.DisplayFor(modelItem => item.MaterialOfDay.Type)
                                             </td>
 
                                             <td style="text-align: right; padding-right: 24px;">
-                                                <button value="@item.MaterialID" id="customdeletebtn_kordy" class="btn logoutbtn deletebtn delete-link" style=" margin: 0 0 0 8px; ">
+                                                @*<button value="@item.MaterialID" id="customdeletebtn_kordy" class="btn logoutbtn deletebtn delete-link" style=" margin: 0 0 0 8px; ">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
                                                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
                                                     </svg>
-                                                    Delete
+                                                    @*Delete
+                                                </button>*@
+                                                <button value="@item.MaterialID" id="customdeletebtn_kordy" class="delete-link" style="background-color: transparent; border: none;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16" style="margin: 0 4px 4px 0; color: #b72025;">
+                                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
+                                                    </svg>
                                                 </button>
                                             </td>
                                         </tr>
                                     }
+                                    <tr>
+                                    <td style="padding-left: 24px; padding-top: 16px;">
+                                            @taskName
+                                        </td> 
+                                        <td>
+                                            <span class="Task">
+                                                Task
+                                            </span>
+                                        </td>  
+                                        <td>
+                                        .@taskExtension
+                                        </td> 
+                                        <td>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
-
-                            <div>
-                                @Html.DisplayFor(model => model.FirstOrDefault().CourseDay.TaskPath)
-                            </div>
 
                             <!--Modal of Deletion-->
                             <form id="deleteModal" method="post">
@@ -432,6 +489,7 @@
 
     <!--Confirm Deletion Script-->
     <script>
+
         $(document).ready(function () {
 
             // Show the modal when the "Delete" link is clicked
@@ -470,11 +528,9 @@
             //    $("#confirm-delete-modal").modal("hide");
             //});
         });
-    </script>
 
 
-    <!--Add Material script-->
-    <script>
+        //Add Material script
         $('#choosenFile').bind('change', function () {
             var filenames = [];
             var files = $("#choosenFile")[0].files;
@@ -494,12 +550,8 @@
                 form.submit();
             }
         });
-    </script>
 
-
-
-    <!--Add Tasks script-->
-    <script>
+        //Add Tasks script
         $('#choosenFile2').bind('change', function () {
             var filenames = [];
             var files = $("#choosenFile2")[0].files;

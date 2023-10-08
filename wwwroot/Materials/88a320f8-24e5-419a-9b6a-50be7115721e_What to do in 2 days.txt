@@ -1,0 +1,25 @@
+5- change the blue color of navigation according to the page [ kordy ] 				 ===> Done
+6- Yzbot el 3 no2at el 3la el shemal fe kol el tables[ kordy ]				         ===> Done
+7- Add user background changes when change roles [ Kordy ] 					 ===> Done
+												 
+												 
+18- Courses instructor teach  design is bad bo3ad 3n b3d w lon w7sh [ Kordy ]			 ===> Done
+19- Course days is bad bo3ad 3n b3d w lon w7sh [ Kordy ]					 ===> Done
+20- In add_track_courses page, modify the intake names place and color [ Kordy ]     		 ===> Done
+												 
+												 
+21- Home design add route to intakes and make the words of cards bold and plural [ Kordy ]	 ===> searching for intake picture (Walid)
+												 
+												 
+												 
+												 
+												 
+												 
+												 
+												 
+9- Sort in reverse order not working [ Kordy ]							 ===> Done
+
+
+
+
+16- Navigation in instructor is not important [ Kordy ]
