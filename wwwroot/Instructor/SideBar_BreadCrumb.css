@@ -17,7 +17,7 @@
     transition: background-color .5s;
     margin-bottom: 16px;
     position: relative; /* Position relative for arrow */
-    width:240px;
+    /*width:240px;*/
 
 /*    text-decoration: underline;
     text-underline-offset: 4px;*/
@@ -113,3 +113,727 @@
     cursor: not-allowed;
     padding-left: 24px;
 }
+
+.sideBarEllipse {
+    text-overflow: ellipsis;
+    max-width: 110px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/*======================================*/
+/*======================================*/
+/*======================================*/
+/*======================================*/
+/*taher updates*/
+
+/*general*/
+span.spannn {
+    text-overflow: ellipsis;
+    max-width: 70px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/*.instructor-area-intake-index*/
+.instructor-area-intake-index .sidebar {
+    height: 100vh;
+}
+.instructor-area-intake-index .r1 h3
+{
+    padding:30px 0;
+}
+
+/*instructor-area-track-details-for-manager*/
+.instructor-area-track-details-for-manager .sidebar {
+    height: 100vh;
+}
+.instructor-area-track-details-for-manager .r1 h3 {
+    padding: 30px 0;
+}
+.instructor-area-track-details-for-manager .button
+{
+    width: auto;
+}
+
+/*instructor-area-track-details-for-teacher */
+.instructor-area-track-details-for-teacher .sidebar {
+    height: 100vh;
+}
+
+.instructor-area-track-details-for-teacher .r1 h3 {
+    padding: 30px 0;
+}
+
+.instructor-area-track-details-for-teacher .button {
+    width: auto;
+}
+/*instructor-area-course-details-for-teacher*/
+.instructor-area-course-details-for-teacher .sidebar {
+    height: 100vh;
+}
+.instructor-area-course-details-for-teacher a.box.card h4
+{
+    margin-top: 4rem !important; 
+    margin-bottom: 4rem !important; 
+}
+.instructor-area-course-details-for-teacher .r1 h3 {
+    padding: 30px 0;
+}
+
+.instructor-area-course-details-for-teacher .button {
+    font-size: 14px;
+}
+/*instructor-area-course-day-index*/
+.instructor-area-course-day-index .sidebar {
+    height: 100vh;
+}
+
+.instructor-area-course-day-index .r1 h3 {
+    padding: 30px 0;
+}
+
+.instructor-area-course-day-index .button {
+    font-size: 14px;
+}
+.instructor-area-course-day-index .cardss
+{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+/*.instructor-area-exam-index*/
+.instructor-area-exam-index .sidebar {
+    height: 100vh;
+}
+
+.instructor-area-exam-index .r1 h3 {
+    padding: 30px 0;
+}
+
+.instructor-area-exam-index .button {
+    font-size: 14px;
+}
+/*instructor-area-course-day-details*/
+.instructor-area-course-day-details .sidebar {
+    height: 100vh;
+    padding: 30px;
+}
+.instructor-area-course-day-details .uploads-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.instructor-area-course-day-details .file-upload
+{
+    display: inline-block;
+}
+.instructor-area-course-day-details button#logout {
+    background-color: #dce4ec;
+}
+.instructor-area-course-day-details .r1 h3 {
+    padding: 30px 0;
+}
+
+.instructor-area-course-day-detais .button {
+    font-size: 14px;
+}
+/*.uploads-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}*/
+
+
+.uploads-container .d-flex.navbar-user-buttons, .uploads-container .file-upload {
+    margin-bottom: 10px;
+}
+/*instructor-area-submition-index*/
+.instructor-area-submition-index .sidebar {
+    height: 100vh;
+}
+
+.instructor-area-submition-index .r1 h3 {
+    padding: 30px 0;
+}
+
+.instructor-area-submition-index .button {
+    font-size: 14px;
+}
+/*instructor-area-course-details-for-manager*/
+.instructor-area-course-details-for-manager .sidebar {
+    height: 100vh;
+}
+
+.instructor-area-course-details-for-manager .r1 h3 {
+    padding: 30px 0;
+}
+
+.instructor-area-course-details-for-manager .button {
+    font-size: 14px;
+}
+.instructor-area-course-details-for-manager .cards-container {
+    /*margin: 16px 40px;*/
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+   /* justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row*/
+}
+/*instructor-area-student-details*/
+.instructor-area-student-details .sidebar {
+    height: 100vh;
+}
+
+.instructor-area-student-details .r1 h3 {
+    padding: 30px 0;
+}
+
+.instructor-area-student-details .button {
+    font-size: 14px;
+}
+
+/*instructor-area-exam-details*/
+.instructor-area-exam-details .sidebar {
+    height: 100vh;
+}
+
+.instructor-area-exam-details .r1 h3 {
+    padding: 30px 0;
+}
+
+.instructor-area-exam-details .button {
+    font-size: 14px;
+}
+
+
+
+
+/*==================================================================================================*/
+/*=======================*/
+/*=======================*/
+/*media query*/
+@media (min-width: 991px) and (max-width: 1146px) {
+    /*general*/
+    span.spannn {
+        max-width: 40px;
+    }
+    .sidebar .nav-item p {
+        text-overflow: ellipsis;
+        max-width: 70px;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .instructor-area-intake-index th, .instructor-area-intake-index td, .instructor-area-intake-index td a {
+        font-size: 10px;
+    }
+    .instructor-area-intake-index .buttons-01 {
+        display: flex;
+    }
+    .instructor-area-intake-index tr
+    {
+        /*border-style: none !important;*/
+    }
+
+    /*instructor-area-track-details-for-manager*/
+    .instructor-area-track-details-for-manager th, .instructor-area-track-details-for-manager td, .instructor-area-track-details-for-manager td a {
+        font-size: 10px;
+    }
+    /*instructor-area-track-details-for-teacher*/
+    .instructor-area-track-details-for-teacher th, .instructor-area-track-details-for-teacher td, .instructor-area-track-details-for-teacher td a {
+        font-size: 10px;
+    }
+    .instructor-area-track-details-for-teacher .button {
+        padding: 8px;
+    }
+    /*instructor-area-course-details-for-teacher*/
+    .instructor-area-course-details-for-teacher th, .instructor-area-course-details-for-teacher td, .instructor-area-course-details-for-teacher td a {
+        font-size: 10px;
+    }
+    /*instructor-area-exam-index*/
+    .instructor-area-exam-index th, .instructor-area-exam-index td, .instructor-area-exam-index td a {
+        font-size: 10px;
+    }
+    /*instructor-area-course-day-details*/
+    .instructor-area-course-day-details th, .instructor-area-course-day-details td, .instructor-area-course-day-details td a {
+        font-size: 10px;
+    }
+    /*instructor-area-submition-index*/
+    .instructor-area-submition-index th, .instructor-area-submition-index td, .instructor-area-submition-index td a {
+        font-size: 10px;
+    }
+    /*instructor-area-course-details-for-manager*/
+    .instructor-area-course-details-for-manager th, .instructor-area-course-details-for-manager td, .instructor-area-course-details-for-manager td a {
+        font-size: 10px;
+    }
+    /*instructor-area-student-details*/
+    .instructor-area-student-details th, .instructor-area-student-details td, .instructor-area-student-details td a {
+        font-size: 10px;
+    }
+        /*instructor-area-exam-details*/
+    .instructor-area-exam-details th, .instructor-area-exam-details td, .instructor-area-exam-details td a {
+        font-size: 10px;
+    }
+}
+
+
+
+@media (max-width: 991px) {
+    .instructor-area-intake-index th, .instructor-area-intake-index td, .instructor-area-intake-index td a {
+        font-size: 10px;
+    }
+    /*instructor-area-track-details-for-manager*/
+    .instructor-area-track-details-for-manager th, .instructor-area-track-details-for-manager td, .instructor-area-track-details-for-manager td a {
+        font-size: 10px;
+    }
+    /*instructor-area-track-details-for-teacher*/
+    .instructor-area-track-details-for-teacher th, .instructor-area-track-details-for-teacher td, .instructor-area-track-details-for-teacher td a {
+        font-size: 10px;
+    }
+    /*instructor-area-track-details-for-teacher*/
+    /*    .instructor-area-track-details-for-teacher .button {
+        padding: 10px;
+    }*/
+
+
+    /*instructor-area-course-details-for-teacher*/
+    .instructor-area-course-details-for-teacher th, .instructor-area-course-details-for-teacher td, .instructor-area-course-details-for-teacher td a {
+        font-size: 10px;
+    }
+
+    .instructor-area-course-details-for-teacher .button {
+        max-width: 100%;
+        font-size: 10px;
+        padding: 8px;
+    }
+    /*instructor-area-course-day-index*/
+    .instructor-area-course-day-index .button {
+        max-width: 100%;
+        font-size: 10px;
+        padding: 8px;
+    }
+    /*instructor-area-exam-index*/
+    .instructor-area-exam-index .button {
+        max-width: 100%;
+        font-size: 10px;
+        padding: 8px;
+    }
+
+    .instructor-area-exam-index th, .instructor-area-exam-index td, .instructor-area-exam-index td a {
+        font-size: 10px;
+    }
+    /*instructor-area-course-day-details*/
+    .instructor-area-course-day-details th, .instructor-area-course-day-details td, .instructor-area-course-day-details td a {
+        font-size: 10px;
+    }
+    /*instructor-area-submition-index*/
+    .instructor-area-submition-index .button {
+        max-width: 100%;
+        font-size: 10px;
+        padding: 8px;
+    }
+
+    .instructor-area-submition-index th, .instructor-area-submition-index td, .instructor-area-submition-index td a {
+        font-size: 10px;
+    }
+    /*instructor-area-course-details-for-manager*/
+    .instructor-area-course-details-for-manager .button {
+        max-width: 100%;
+        font-size: 10px;
+        padding: 8px;
+    }
+
+    .instructor-area-course-details-for-manager th, .instructor-area-course-details-for-manager td, .instructor-area-course-details-for-manager td a {
+        font-size: 10px;
+    }
+
+    .instructor-area-course-details-for-manager .cards-container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    /*instructor-area-student-details*/
+    .instructor-area-student-details .button {
+        max-width: 100%;
+        font-size: 10px;
+        padding: 8px;
+    }
+
+    .instructor-area-student-details th, .instructor-area-student-details td, .instructor-area-student-details td a {
+        font-size: 10px;
+    }
+    /*instructor-area-exam-details*/
+    .instructor-area-exam-details .button {
+        max-width: 100%;
+        font-size: 10px;
+        padding: 8px;
+    }
+
+    .instructor-area-exam-details th, .instructor-area-exam-details td, .instructor-area-exam-details td a {
+        font-size: 10px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .instructor-area-intake-index table {
+        width: 135%;
+    }
+    /*instructor-area-track-details-for-teacher*/
+    .instructor-area-track-details-for-teacher .button {
+        padding: 10px;
+    }
+    /*instructor-area-exam-index*/
+    .instructor-area-exam-index table {
+        width: 110%;
+    }
+    /*instructor-area-course-day-details*/
+    .instructor-area-course-day-details table {
+        width: 110%;
+    }
+    /*instructor-area-submition-index*/
+    .instructor-area-submition-index table {
+        width: 110%;
+    }
+    /*instructor-area-course-details-for-manager*/
+    .instructor-area-course-details-for-manager table {
+        width: 110%;
+    }
+
+    .list-group-item.list-group-item-action {
+        width: 250px !important;
+    }
+    /*instructor-area-student-details*/
+    .instructor-area-student-details table {
+        width: 110%;
+    }
+    /*.instructor-area-exam-index*/
+    .instructor-area-exam-index .sidebar ul.nav.nav-pills.flex-column.mb-auto {
+        position: relative;
+        left: 10px;
+    }
+    .instructor-area-exam-index .sidebar .spannn
+    {
+        max-width: 40px;
+    }
+
+}
+@media (max-width: 768px) {
+    .instructor-area-intake-index table {
+        width: 200%;
+    }
+
+    .instructor-area-intake-index .nav-item p {
+        padding: 10px;
+        font-size: 12px;
+    }
+    /*instructor-area-track-details-for-manager*/
+    .instructor-area-track-details-for-manager table {
+        width: 130%;
+    }
+
+    .instructor-area-track-details-for-manager .nav-item p {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .instructor-area-track-details-for-manager .button__icon-wrapper {
+        width: 18px;
+        height: 18px;
+    }
+    /*instructor-area-track-details-for-teacher*/
+    .instructor-area-track-details-for-teacher .button__icon-wrapper {
+        width: 18px;
+        height: 18px;
+    }
+
+    .instructor-area-track-details-for-teacher .nav-item p {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .instructor-area-track-details-for-teacher table {
+        /*width: 130%;*/
+    }
+
+    /*instructor-area-course-details-for-teacher*/
+    .instructor-area-course-details-for-teacher .button__icon-wrapper {
+        width: 18px;
+        height: 18px;
+    }
+
+    .instructor-area-course-details-for-teacher .nav-item p {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .instructor-area-course-details-for-teacher table {
+        width: 130%;
+    }
+    /*instructor-area-course-day-index*/
+    .instructor-area-course-day-index .button__icon-wrapper {
+        width: 18px;
+        height: 18px;
+    }
+
+    .instructor-area-course-day-index .nav-item p {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .instructor-area-course-day-index .courseBtns {
+        display: flex;
+        flex-direction: column;
+        margin: 10px;
+    }
+    /*instructor-area-exam-index*/
+    .instructor-area-exam-index .button__icon-wrapper {
+        width: 18px;
+        height: 18px;
+    }
+
+    .instructor-area-exam-index .nav-item p {
+        padding: 10px;
+        font-size: 12px;
+    }
+    .instructor-area-exam-index table {
+        width: 166%;
+    }
+    /*instructor-area-course-day-details*/
+    .instructor-area-course-day-details .button__icon-wrapper {
+        width: 18px;
+        height: 18px;
+    }
+
+    .instructor-area-course-day-details .nav-item p {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .instructor-area-course-day-details table {
+        width: 166%;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    /*.instructor-area-course-day-details .uploads-container, .instructor-area-course-day-details .d-flex.navbar-user-buttons {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+    .instructor-area-course-day-details .file-upload {
+        display: block;
+    }*/
+
+
+
+
+    .instructor-area-course-day-details .uploads-container
+    {
+        flex-direction: column;
+    }
+    .instructor-area-course-day-details .file-upload {
+        display: flex;
+    }
+    .instructor-area-course-day-details .d-flex.navbar-user-buttons button {
+        border-radius: 0;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    .instructor-area-course-day-details .d-flex.navbar-user-buttons button {
+        margin: 0;
+    }
+    /*instructor-area-submition-index*/
+    .instructor-area-submition-index .button__icon-wrapper {
+        width: 18px;
+        height: 18px;
+    }
+
+    .instructor-area-submition-index .nav-item p {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .instructor-area-submition-index table {
+        width: 166%;
+    }
+    /*instructor-area-course-details-for-manager*/
+    .instructor-area-course-details-for-manager .button__icon-wrapper {
+        width: 18px;
+        height: 18px;
+    }
+
+    .instructor-area-course-details-for-manager .nav-item p {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .instructor-area-course-details-for-manager table {
+        width: 166%;
+    }
+    .list-group-item.list-group-item-action
+    {
+        width: 230px !important;
+    }
+    /*instructor-area-student-details*/
+    .instructor-area-student-details .button__icon-wrapper {
+        width: 18px;
+        height: 18px;
+    }
+
+    .instructor-area-student-details .nav-item p {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .instructor-area-student-details table {
+        width: 166%;
+    }
+
+    /*instructor-area-exam-details*/
+    .instructor-area-exam-details .button__icon-wrapper {
+        width: 18px;
+        height: 18px;
+    }
+
+    .instructor-area-exam-details .nav-item p {
+        padding: 10px;
+        font-size: 12px;
+    }
+    /*.instructor-area-exam-index*/
+    .instructor-area-exam-index .sidebar ul.nav.nav-pills.flex-column.mb-auto {
+        position: relative;
+        left: 10px;
+    }
+}
+@media (min-width: 425px) and (max-width: 600px) {
+    /*general*/
+/*    .sidebar {
+        height: auto !important;
+    }*/
+    .instructor-area-intake-index table {
+        width: 300%;
+    }
+    /*instructor-area-track-details-for-manager*/
+    .instructor-area-track-details-for-manager table {
+        width: 200%;
+    }
+    /*instructor-area-track-details-for-teacher*/
+    .instructor-area-track-details-for-teacher table
+    {
+        width: 100%;
+    }
+    .instructor-area-track-details-for-teacher .button {
+        padding: 5px;
+    }
+    .instructor-area-track-details-for-teacher .content 
+    {
+        padding: 0;
+    }
+    .instructor-area-track-details-for-teacher th, .instructor-area-track-details-for-teacher td, .instructor-area-track-details-for-teacher td a {
+        font-size: 8px;
+        margin: 0 !important;
+        padding-left: 10px !important;
+    }
+    .instructor-area-track-details-for-teacher td a {
+        padding: 8px 4px !important;
+    }
+    .instructor-area-track-details-for-teacher svg
+    {
+        width: 10px;
+    }
+    /*.instructor-area-course-details-for-teacher*/
+    .instructor-area-course-details-for-teacher a.box.card h4
+    {
+        font-size: 16px;
+        margin: 4rem auto !important;
+    }
+    .instructor-area-course-details-for-teacher table {
+        width: 135%;
+    }
+
+    .instructor-area-course-details-for-teacher .button {
+        padding: 5px;
+    }
+    /*instructor-area-course-day-index*/
+    .instructor-area-course-day-index .button {
+        padding: 5px;
+    }
+    /*instructor-area-exam-index*/
+    .instructor-area-exam-index .button {
+        padding: 5px;
+    }
+    .instructor-area-exam-index table {
+        width: 255%;
+    }
+    /*instructor-area-course-day-details*/
+
+    .instructor-area-course-day-details .button {
+        padding: 5px;
+    }
+
+    .instructor-area-course-day-details table {
+        width: 200%;
+    }
+    /*instructor-area-submition-index*/
+    .instructor-area-submition-index .button {
+        padding: 5px;
+    }
+    .instructor-area-submition-index .content {
+        padding: 0;
+    }
+    .instructor-area-submition-index table {
+        width: 200%;
+    }
+
+    /*instructor-area-course-details-for-manager*/
+    .instructor-area-course-details-for-manager .content
+    {
+        padding: 0;
+    }
+    .instructor-area-course-details-for-manager .button {
+        padding: 5px;
+    }
+
+    .instructor-area-course-details-for-manager table {
+        width: 200%;
+    }
+    /*instructor-area-student-details*/
+    .instructor-area-student-details .button {
+        padding: 5px;
+    }
+
+    .instructor-area-student-details table {
+        width: 220%;
+    }
+    /*instructor-area-exam-details*/
+    .instructor-area-exam-details .button {
+        padding: 5px;
+    }
+    /*.instructor-area-exam-index*/
+    .instructor-area-exam-index .sidebar ul.nav.nav-pills.flex-column.mb-auto {
+        position: relative;
+        left: 10px;
+    }
+
+}
+

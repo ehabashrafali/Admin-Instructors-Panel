@@ -13,12 +13,10 @@ namespace Admin_Panel_ITI.Repos
 
         public void CreateIntake(Intake intake);
         public List<Intake> GetIntakesbyDuration(int duration, int pageNumber, int pageSize);
-
         public string getIntakeName(int intakeID);
 
 
         //---------------------- asem_updates ---------------------------------------//
-
         public List<Intake> GetAllIntakes();
         public List<Intake> GetAllIntakes(int pageNumber, int pageSize);
         public List<Intake> GetCurrentAvIntakes();

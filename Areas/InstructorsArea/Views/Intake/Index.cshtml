@@ -22,7 +22,7 @@
 </head>
 <body>
 
-    <div class="">
+   @*  <div class="">
         <div class="row">
             <!-- Sidebar -->
             <div class="col-md-2 sidebar">
@@ -114,14 +114,14 @@
                                         <td style="text-align: right; padding-right: 16px;">               
                                             <a asp-controller="Track" asp-action="DetailsForManager" asp-route-id="@intake.IntakeID" asp-route-name="@intake.Intake.Name" class="btn regbtn" style="padding: 8px 16px;">Tracks You Manage</a>
                                             @* <a href="#" data-intake-id="@intake.IntakeID" data-intake-name="@intake.Intake.Name" class="managedTracksLink btn regbtn" style="padding: 8px 16px;">Tracks You Manage</a>*@
-                                            <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@intake.IntakeID" asp-route-name="@intake.Intake.Name" class="btn regbtn" style="padding: 8px 16px;">Tracks You Teach In</a>
+       @*                                      <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@intake.IntakeID" asp-route-name="@intake.Intake.Name" class="btn regbtn" style="padding: 8px 16px;">Tracks You Teach In</a>
                                         </td>
                                     </tr>
                                 }
                             </tbody>
 
                         </table>
-                    </div>
+                    </div> *@
 
 
                     <!--pagination-->
@@ -141,10 +141,150 @@
                         </nav>
                     </div>*@
 
+@*                 </div>
+            </div>
+        </div>
+    </div>  *@
+
+
+
+
+
+
+
+
+
+
+    @*===========================================================*@
+    @*===========================================================*@
+    @*===========================================================*@
+    @*========================= mahmoud taher updates ========================*@
+    <div class=" instructor-area-intake-index">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-3 col-md-2 sidebar">
+                <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary">
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item navs1">
+                            <p style="border-radius:50px;">ITI Intakes</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <!-- Main (tales + btns) -->
+            <div class="col-9 col-md-10 text-center content">
+                <div class="container-fluid">
+                        <div class="r1">
+                            <h3>Intakes Table</h3>
+                        </div>
+                        <table class="table" id="myTable">
+
+                            <!--Table Head-->
+                            <thead class="table-secondary">
+                                <tr>
+                                    <th style="padding-left: 24px;">
+                                        Name
+                                        <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                        </svg>
+                                    </th>
+                                    <th style="padding-left: 24px;">
+                                        Duration
+                                        <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                        </svg>
+                                    </th>
+                                    <th style="padding-left: 24px;">
+                                        Start Date
+                                        <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                        </svg>
+                                    </th>
+                                    <th style="padding-left: 24px;">
+                                        End Date
+                                        <svg onclick="sortTable(3)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                        </svg>
+                                    </th>
+                                    <th>
+                                        No. of Students
+                                        <svg onclick="sortTable(4)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                        </svg>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <!--Table Body-->
+                            <tbody>
+                                @foreach (var intake in Model)
+                                {
+                                    <tr>
+                                        <td style="padding-left: 24px; padding-top: 16px;">
+                                            @Html.DisplayFor(modelItem => intake.Intake.Name)
+                                        </td>
+                                        <td style="padding-left: 24px; padding-top: 16px;">
+                                            @Html.DisplayFor(modelItem => intake.Intake.Duration)
+                                        </td>
+                                        <td style="padding-left: 24px; padding-top: 16px;">
+                                            @Html.DisplayFor(modelItem => intake.Intake.StartDate)
+                                        </td>
+                                        <td style="padding-left: 24px; padding-top: 16px;">
+                                            @Html.DisplayFor(modelItem => intake.Intake.EndDate)
+                                        </td>
+                                        <td style="padding-top: 16px; padding-left: 55px">
+                                            @studentRepository.getStudentNumberbyIntakeID(intake.IntakeID)
+                                        </td>
+
+                                        <td style="text-align: right; padding-right: 16px;" class="buttons-01">
+                                            <a asp-controller="Track" asp-action="DetailsForManager" asp-route-id="@intake.IntakeID" class="btn regbtn" style="padding: 8px 16px;">Tracks You Manage</a>
+                                            @* <a href="#" data-intake-id="@intake.IntakeID" data-intake-name="@intake.Intake.Name" class="managedTracksLink btn regbtn" style="padding: 8px 16px;">Tracks You Manage</a>*@
+                                            <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@intake.IntakeID" class="btn regbtn" style="padding: 8px 16px;">Tracks You Teach In</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+
+
+                    <!--pagination-->
+                    @* <div class="footer">
+                    <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-end">
+                    <li class="page-item disabled">
+                    <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                    </li>
+                    </ul>
+                    </nav>
+                    </div>*@
+
                 </div>
             </div>
         </div>
     </div>
+
+
+            
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -3,13 +3,11 @@
 @{
     int courseID = ViewBag.Id;
     string courseName = ViewBag.Name;
-
     string TrackName = ViewBag.TrackName;
     string IntakeName = ViewBag.IntakeName;
     int IntakeID = ViewBag.IntakeID;
     int TrackID = ViewBag.TrackID;
 }
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +26,7 @@
         <link rel="stylesheet" href="~/Instructor/SideBar_BreadCrumb.css">
     </head>
     <body>
-        <div class="">
+       @*  <div class="">
             <div class="row">
                 <!-- Sidebar -->
                 <div class="col-md-2 sidebar">
@@ -55,7 +53,7 @@
                                 </a>
                             </li>
                             <li class="nav-item navs2">
-                                <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@IntakeID" asp-route-name="@IntakeName" style="--clr: #7808d0" class="button">
+                                <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@IntakeID" style="--clr: #7808d0" class="button">
                                     <span class="button__icon-wrapper">
                                         <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
                                             <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
@@ -73,8 +71,6 @@
                                    asp-action="DetailsForTeacher"
                                    asp-route-intakeId="@IntakeID"
                                    asp-route-trackId="@TrackID"
-                                   asp-route-name="@TrackName"
-                                   asp-route-name2="@IntakeName"
                                    style="--clr: #7808d0" class="button">
                                     <span class="button__icon-wrapper">
                                         <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
@@ -102,24 +98,25 @@
                                 <h3 style="padding-left: 33px;">Course Days Cards</h3>
                                 <div>
                                     <a asp-controller="CourseDay" asp-action="Create" class="btn courseBtns"
-                                       asp-route-Id="@courseID"
-                                       asp-route-name="@courseName"
+                                       asp-route-id="@courseID"
+
                                        asp-route-intakeID="@IntakeID"
                                        asp-route-trackID="@TrackID"
-                                       asp-route-intakeName="@IntakeName"
-                                       asp-route-trackName="@TrackName"
                                        asp-route-CourseDaysCount="@ViewBag.CourseDaysCount">Add Day
                                     </a>
                                     <a asp-action="Index" asp-controller="Exam"
-                                       asp-route-CourseId="@courseID"
-                                       asp-route-name="@courseName"
+                                       asp-route-courseId="@courseID"
                                        asp-route-intakeID="@IntakeID"
                                        asp-route-trackID="@TrackID"
-                                       asp-route-intakeName="@IntakeName"
-                                       asp-route-trackName="@TrackName"
                                        class="btn courseBtns">Show Exams
                                     </a>
-                                    <a asp-action="Create" asp-controller="Exam" asp-route-Id="@courseID" class="btn courseBtns">Create Exam</a>
+                                    <a asp-action="Create" asp-controller="Exam" 
+                                        asp-route-Id="@courseID" 
+                                        asp-route-intakeID="@IntakeID"
+                                        asp-route-trackID="@TrackID" 
+                                        class="btn courseBtns">
+                                        Create Exam
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -130,14 +127,11 @@
                                 <div class="col-md-4 mb-3 " style="flex-wrap: wrap; justify-content: center;  margin-top: 16px;">
                                     <a asp-action="Details"
                                        asp-controller="CourseDay"
-                                       asp-route-Id="@courseID"
-                                       asp-route-name="@courseName"
+                                       asp-area="InstructorsArea"
+                                       asp-route-id="@courseID"
                                        asp-route-intakeID="@IntakeID"
                                        asp-route-trackID="@TrackID"
-                                       asp-route-intakeName="@IntakeName"
-                                       asp-route-trackName="@TrackName"
                                        asp-route-coursedayID="@courseDay.ID"
-                                       asp-route-coursedayNum="@courseDay.DayNumber"
                                        class="box card" style="width:210px">
 
                                         <div class="card-body text-center">
@@ -150,6 +144,142 @@
                     </div>
                 </div>
             </div>
+        </div> *@
+
+
+
+
+
+
+
+
+
+
+
+    @*===========================================================*@
+    @*===========================================================*@
+    @*===========================================================*@
+    @*========================= mahmoud taher updates ========================*@
+    <div class=" instructor-area-course-day-index">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-4 col-md-2 sidebar">
+                <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary">
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item navs1">
+                            <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index" title="@IntakeName">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                <span class="spannn">
+                                    @IntakeName
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item navs2">
+                            <a title="@TrackName" asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@IntakeID" style="--clr: #7808d0" class="button">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                <span class="spannn">
+                                    @TrackName
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item navs2">
+                            <a asp-controller="Course"
+                               asp-action="DetailsForTeacher"
+                               asp-route-intakeId="@IntakeID"
+                               asp-route-trackId="@TrackID"
+                               style="--clr: #7808d0" class="button" title="@courseName">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                <span class="spannn">
+                                    @courseName
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item navs3">
+                            <p style="border-radius:50px;">Course Days</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--btns-->
+            <div class="col-8 col-md-10 text-center content">
+                <div class="container-fluid">
+                        <div class="r1">
+                            <h3>Course Days Cards</h3>
+                            <div>
+                                <a asp-controller="CourseDay" asp-action="Create" class="btn courseBtns"
+                                   asp-route-Id="@courseID"
+                                   asp-route-intakeID="@IntakeID"
+                                   asp-route-trackID="@TrackID"
+                                   asp-route-CourseDaysCount="@ViewBag.CourseDaysCount">
+                                    Add Day
+                                </a>
+                                <a asp-action="Index" asp-controller="Exam"
+                                   asp-route-CourseId="@courseID"
+                                   asp-route-intakeID="@IntakeID"
+                                   asp-route-trackID="@TrackID"
+                                   class="btn courseBtns">
+                                    Show Exams
+                                </a>
+                                <a asp-action="Create" asp-controller="Exam"
+                                   asp-route-Id="@courseID"
+                                   asp-route-intakeID="@IntakeID"
+                                   asp-route-trackID="@TrackID"
+                                   class="btn courseBtns">
+                                    Create Exam
+                                </a>
+                            </div>
+                        </div>
+                    <!--cards-->
+                    <div class="cardss">
+                        @foreach (var courseDay in Model)
+                        {
+                            <div class="mb-3 " style="flex-wrap: wrap; justify-content: center;  margin-top: 16px;">
+                                <a asp-action="Details"
+                                   asp-controller="CourseDay"
+                                   asp-route-Id="@courseID"
+                                   asp-route-intakeID="@IntakeID"
+                                   asp-route-trackID="@TrackID"
+                                   asp-route-coursedayID="@courseDay.ID"
+                                   class="box card" style="width:210px">
+
+                                    <div class="card-body text-center">
+                                        <h2 class="my-5">Day @courseDay.DayNumber</h2>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+
+
+
+
     </body>
 </html>

@@ -334,9 +334,10 @@ input[type="file"] {
     margin-left: 8px;
 }
 
-    .courseBtns:hover {
-        background-color: #cececc;
-    }
+.courseBtns:hover {
+    background-color: #cececc;
+}
+
 
 
 

@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="~/Instructor/SideBar_BreadCrumb.css">
     </head>
     <body>
-        <div class="">
+       @*  <div class="">
             <div class="row">
                 <!-- Sidebar -->
                 <div class="col-md-2 sidebar">
@@ -43,7 +43,7 @@
                                 </a>
                             </li>
                             <li class="nav-item navs2">
-                                <a style="--clr: #7808d0" class="button" asp-controller="Track" asp-action="DetailsForManager" asp-route-id="@ViewBag.IntakeID" asp-route-name="@ViewBag.IntakeName">
+                                <a style="--clr: #7808d0" class="button" asp-controller="Track" asp-action="DetailsForManager" asp-route-id="@ViewBag.IntakeID">
                                     <span class="button__icon-wrapper">
                                         <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
                                             <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
@@ -134,6 +134,138 @@
                     </div>
                 </div>
             </div>
+        </div> *@
+
+
+
+
+
+
+
+
+
+    @*===========================================================*@
+    @*===========================================================*@
+    @*===========================================================*@
+    @*========================= mahmoud taher updates ========================*@
+
+
+    <div class=" instructor-area-student-details">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-4 col-md-2 sidebar">
+                <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary">
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item navs1">
+                            <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index" title="@ViewBag.IntakeName">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                <span class="spannn">
+                                    @ViewBag.IntakeName
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item navs2">
+                            <a title="@ViewBag.TrackName" style="--clr: #7808d0" class="button" asp-controller="Track" asp-action="DetailsForManager" asp-route-id="@ViewBag.IntakeID">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                <span class="spannn">
+                                    @ViewBag.TrackName Track
+                                </span>
+                                
+                            </a>
+                        </li>
+                        <li class="nav-item navs3">
+                            <p style="border-radius:50px;">Students</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main (tales + btns) -->
+            <div class="col-8 col-md-10 text-center content">
+                <div class="container-fluid">
+                        <div class="r1">
+                            <h3>Students Table</h3>
+                        </div>
+                </div>
+                    <table class="table" id="myTable">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th style="padding-left: 24px;">
+                                    Name
+                                    <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                    </svg>
+                                </th>
+                                <th style="padding-left: 80px;">
+                                    E-mail
+                                    <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                    </svg>
+                                </th>
+                                <th style="padding-left: 24px;">
+                                    Phone Number
+                                    <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                    </svg>
+                                </th>
+                                <th style="padding-left: 24px;">
+                                    Graduated
+                                    <svg onclick="sortTable(3)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                    </svg>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var student in Model)
+                            {
+                                <tr>
+                                    <td style="padding-left: 24px; padding-top: 16px;">
+                                        @Html.DisplayFor(modelItem => student.AspNetUser.FullName)
+                                    </td>
+                                    <td style="padding-top: 16px; padding-left: 55px">
+                                        @Html.DisplayFor(modelItem => student.AspNetUser.Email)
+                                    </td>
+                                    <td style="padding-top: 16px; padding-left: 55px">
+                                        @Html.DisplayFor(modelItem => student.AspNetUser.PhoneNumber)
+                                    </td>
+                                    <td style="padding-top: 16px; padding-left: 55px">
+                                        @if (student.IsGraduated)
+                                        {
+                                            <img src="~/images/true.svg" width="24" height="24" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/images/false.svg" width="16" height="16" />
+                                        }
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+            </div>
         </div>
+    </div>
+
+
+
     </body>
 </html>

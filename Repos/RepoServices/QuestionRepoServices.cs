@@ -8,7 +8,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
     {
         private readonly IExam_Std_QuestionRepository exam_Std_QuestionRepository;
         private readonly IExam_QuestionRepository exam_QuestionRepository;
-        public MainDBContext Context { get; set; }
+        private MainDBContext Context { get; set; }
 
         public QuestionRepoServices(MainDBContext context, 
             IExam_Std_QuestionRepository exam_Std_QuestionRepository, 
@@ -62,13 +62,10 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             return Context.Questions.ToList();
         }
 
-
-
         int IQuestionRepository.getQuestionsNumber()
         {
             return Context.Questions.Count();
         }
-
 
         void IQuestionRepository.UpdateQuestion(int questionID, Question question)
         {
@@ -79,10 +76,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             question_updated.Answer = question.Answer;
             Context.SaveChanges();
         }
-
-
-
-
 
         public void DeleteQuestions(List<int> QuestionsIDs)
         {

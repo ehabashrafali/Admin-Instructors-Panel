@@ -3,7 +3,7 @@
 @model CourseDay_Material_TaskVM
 
 @{
-    int Id = ViewBag.Id;
+    int id = ViewBag.Id;
     string name = ViewBag.Name;
     string trackName = ViewBag.TrackName;
     string intakeName = ViewBag.IntakeName;
@@ -31,7 +31,7 @@
     </head>
     <body>
 
-        <div class="">
+        @* <div class="">
             <div class="row">
                 <!-- Main (tales + btns) -->
                 <div class="col-md-10 text-center content">
@@ -43,12 +43,9 @@
                         </div>
                         <div class="row col-md-10" style="margin-left: 450px; margin-top:-10px">
 
-                            <form enctype="multipart/form-data" asp-action="Create" asp-controller="CourseDay" asp-area="InstructorsArea" style="margin-top: 32px; text-align: left; width: 75%;">
+                            <form enctype="multipart/form-data" asp-action="Createe" asp-controller="CourseDay" style="margin-top: 32px; text-align: left; width: 75%;">
                                 <input type="hidden" asp-for="Date" />
-                                <input type="hidden" asp-for="@Id" />
-                                <input type="hidden" asp-for="@name" />
-                                <input type="hidden" asp-for="@trackName" />
-                                <input type="hidden" asp-for="@intakeName" />
+                                <input type="hidden" asp-for="@id" />
                                 <input type="hidden" asp-for="@intakeID" />
                                 <input type="hidden" asp-for="@trackID" />
                                 <input type="hidden" asp-for="@DayNumber" />
@@ -82,15 +79,19 @@
                                 <br />
 
                                 <div class="form-group">
+
                                     <input type="submit" value="Add" class="btn btn-primary" />
+
                                     <a asp-action="Index"
-                                       asp-route-id="@Id"
+                                       asp-route-id="@id"
                                        asp-route-name="@name"
                                        asp-route-intakeID="@intakeID"
                                        asp-route-trackID="@trackID"
                                        asp-route-intakeName="@intakeName"
                                        asp-route-DayNumber="@DayNumber"
-                                       asp-route-trackName="@trackName" class="btn btn-dark">Back to List
+                                       asp-route-trackName="@trackName" 
+                                       class="btn btn-dark">
+                                       Back to List
                                    </a>
                                 </div>
                             </form>
@@ -98,7 +99,99 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @*===========================================================*@
+    @*===========================================================*@
+    @*===========================================================*@
+    @*========================= mahmoud taher updates ========================*@
+    <div class=" instructor-area-course-day-create">
+            <!-- Main (tales + btns) -->
+            <div class="text-center content">
+                <div class="container-fluid">
+                        <div class="r1">
+                            <h3>Fill Day Details:</h3>
+                        </div>
+                    <div class="content-container">
+
+                        <form enctype="multipart/form-data" asp-action="Createe" asp-controller="CourseDay" style="margin-top: 32px; text-align: left; width: 75%;">
+                            <input type="hidden" asp-for="Date" />
+                            <input type="hidden" asp-for="@id" />
+                            <input type="hidden" asp-for="@intakeID" />
+                            <input type="hidden" asp-for="@trackID" />
+                            <input type="hidden" asp-for="@DayNumber" />
+
+                            <label style="font-size: 19px;" class="form-label">Day Number</label>
+
+                            <input asp-for="DayNumber" placeholder="@DayNumber" value="@DayNumber" class="form-control" aria-label="Sizing example input" disabled>
+                            <span asp-validation-for="DayNumber" class="text-danger"></span>
+                            <br />
+                            <div class="file-upload2">
+                                <div class="file-select2">
+                                    <div class="file-select-button2" id="fileName">Upload Materials</div>
+                                    <div class="file-select-name2" id="noFileChosen">No file chosen..</div>
+                                    <input asp-for="Materials" id="choosenFile" class="form-control" aria-label="Sizing example input" multiple>
+                                    <span asp-validation-for="Materials" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="file-upload">
+                                <div class="file-select">
+                                    <div class="file-select-button" id="fileName">Upload Task</div>
+                                    <div class="file-select-name" id="noFile">Choose File..</div>
+                                    <input asp-for="Task" id="chooseFile" class="form-control" aria-label="Sizing example input">
+                                    <span asp-validation-for="Task" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <br />
+                            <label style="font-size: 19px;" class="form-label">Task Deadline</label>
+                            <input asp-for="DeadLine" class="form-control" aria-label="Sizing example input">
+                            <span asp-validation-for="DeadLine" class="text-danger"></span>
+                            <br />
+
+                            <div class="form-group">
+                                <input type="submit" value="Add" class="btn btn-primary" />
+                                <a asp-action="Index"
+                                   asp-route-id="@id"
+                                   asp-route-intakeID="@intakeID"
+                                   asp-route-trackID="@trackID"
+                                   class="btn btn-dark">
+                                    Back to List
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
 
         <script>
             //Material

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Card</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .exam-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        .question-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .choice {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .choice input {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .choice .delete-choice {
+            color: red;
+            cursor: pointer;
+        }
+
+        /* Add CSS for the green plus sign */
+        .add-choice {
+            color: green;
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="exam-card">
+                    <div class="form-group">
+                        <label for="examName">Exam Name:</label>
+                        <input type="text" class="form-control" id="examName">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="examDuration">Exam Duration:</label>
+                        <input type="text" class="form-control" id="examDuration">
+                    </div>
+
+                    <div class="question-card">
+                        <div class="form-group">
+                            <label for="questionType">Question Type:</label>
+                            <select class="form-control" id="questionType">
+                                <option value="paragraph">Paragraph</option>
+                                <option value="mcq">MCQ</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="questionBody">Question Body:</label>
+                            <textarea class="form-control" id="questionBody" rows="3"></textarea>
+                        </div>
+
+                        <div id="choices" style="display: none;">
+                            <div class="form-group choice">
+                                <span class="add-choice">+</span>
+                                <input type="text" class="form-control" placeholder="Choice">
+                                <span class="delete-choice">X</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const questionTypeSelect = document.getElementById("questionType");
+            const choicesContainer = document.getElementById("choices");
+            const deleteQuestionButton = document.getElementById("deleteQuestion");
+
+            // Event listener for question type change
+            questionTypeSelect.addEventListener("change", function () {
+                if (questionTypeSelect.value === "mcq") {
+                    choicesContainer.style.display = "block";
+                } else {
+                    choicesContainer.style.display = "none";
+                }
+            });
+
+            // Event listener for adding a choice
+            choicesContainer.addEventListener("click", function (e) {
+                if (e.target.classList.contains("add-choice")) {
+                    const choiceDiv = document.createElement("div");
+                    choiceDiv.classList.add("form-group", "choice");
+                    choiceDiv.innerHTML = `
+                        <span class="add-choice">+</span>
+                        <input type="text" class="form-control" placeholder="Choice">
+                        <span class="delete-choice">X</span>
+                    `;
+                    choicesContainer.insertBefore(choiceDiv, e.target.parentElement);
+                }
+            });
+
+            // Event listener for removing a choice
+            choicesContainer.addEventListener("click", function (e) {
+                if (e.target.classList.contains("delete-choice")) {
+                    e.target.parentElement.remove();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

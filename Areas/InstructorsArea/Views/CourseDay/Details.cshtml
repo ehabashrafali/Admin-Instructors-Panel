@@ -61,14 +61,14 @@
             }
 
             .file-upload .file-select {
-                display: block;
+                display: inline-block;
                 border: 2px solid #dce4ec;
                 color: #34495e;
                 cursor: pointer;
                 height: 40px;
                 line-height: 40px;
                 text-align: left;
-                background: #FFFFFF;
+                /* background: #FFFFFF; */
                 overflow: hidden;
                 position: relative;
             }
@@ -180,6 +180,10 @@
                 transform: translate(0, 0);
                 opacity: 1;
             }
+            .uploads-container
+            {
+
+            }
         </style>
 
     </head>
@@ -201,7 +205,7 @@
         </nav>
 
 
-        <div class="">
+        @* <div class="">
             <div class="row">
                 <!-- Sidebar -->
                 <div class="col-md-2 sidebar">
@@ -228,7 +232,7 @@
                                 </a>
                             </li>
                             <li class="nav-item navs2">
-                                <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@IntakeID" asp-route-name="@IntakeName" style="--clr: #7808d0" class="button">
+                                <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@IntakeID" style="--clr: #7808d0" class="button">
                                     <span class="button__icon-wrapper">
                                         <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
                                             <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
@@ -246,8 +250,6 @@
                                    asp-action="DetailsForTeacher"
                                    asp-route-intakeId="@IntakeID"
                                    asp-route-trackId="@TrackID"
-                                   asp-route-name="@TrackName"
-                                   asp-route-name2="@IntakeName"
                                    style="--clr: #7808d0" class="button">
                                     <span class="button__icon-wrapper">
                                         <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
@@ -265,11 +267,8 @@
                                 <a asp-action="Index"
                                    asp-controller="CourseDay"
                                    asp-route-id="@courseID"
-                                   asp-route-name="@courseName"
                                    asp-route-intakeID="@IntakeID"
                                    asp-route-trackID="@TrackID"
-                                   asp-route-intakeName="@IntakeName"
-                                   asp-route-trackName="@TrackName"
                                    style="--clr: #7808d0" class="button">
                                     <span class="button__icon-wrapper">
                                         <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
@@ -284,7 +283,7 @@
                                 </a>
                             </li>
                             <li class="nav-item navs3">
-                                <p style="border-radius:50px;">Materials/Tasks</p>
+                                <p style="border-radius:50px;">Materials & Tasks</p>
                             </li>
                         </ul>
                     </div>
@@ -297,48 +296,38 @@
                             <div class="r1">
                                 <h3 style="padding-left: 33px;">Day @CourseDayNum Materials & Tasks</h3>
                                 <div>
-                                    <form id="uploadForm" enctype="multipart/form-data" asp-action="Details" asp-controller="CourseDay">
-                                        <input type="hidden" name="Materials" value="@Materials" />
-                                        <input type="hidden" name="Materials" value="@Task" />
-                                        <input type="hidden" name="id" value="@courseID" />
-                                        <input type="hidden" name="name" value="@courseName" />
-                                        <input type="hidden" name="intakeID" value="@IntakeID" />
-                                        <input type="hidden" name="trackID" value="@TrackID" />
-                                        <input type="hidden" name="intakeName" value="@IntakeName" />
-                                        <input type="hidden" name="trackName" value="@TrackName" />
-                                        <input type="hidden" name="coursedayID" value="@CourseDayID" />
-                                        <input type="hidden" name="coursedayNum" value="@CourseDayNum" />
+                                <form id="uploadForm" enctype="multipart/form-data" asp-action="Detailss" asp-controller="CourseDay" method="post">
+                                    <input type="hidden" name="Materials" value="@Materials" />
+                                    <input type="hidden" name="Task" value="@Task" />
+                                    <input type="hidden" name="id" value="@courseID" />
+                                    <input type="hidden" name="intakeID" value="@IntakeID" />
+                                    <input type="hidden" name="trackID" value="@TrackID" />
+                                    <input type="hidden" name="coursedayID" value="@CourseDayID" />
 
-                                        <div class="file-upload">
-                                            <div class="file-select">
-                                                <div class="file-select-button" id="fileName">Add New Materials</div>
+
+                                    <div class="file-upload">
+                                        <div class="file-select">
+                                            <div class="file-select-button" id="fileName">Add New Materials</div>
                                             <input asp-for="@Materials" id="choosenFile" class="form-control " aria-label="Sizing example input" multiple>
-                                            </div>
                                         </div>
+                                    </div>
 
-                                        <div class="file-upload">
-                                            <div class="file-select">
-                                                <div class="file-select-button" id="fileName">Update Task</div>
-                                                <input asp-for="@Task" id="choosenFile2" class="form-control" aria-label="Sizing example input">
-                                            </div>
+                                    <div class="file-upload">
+                                        <div class="file-select">
+                                            <div class="file-select-button" id="fileName">Update Task</div>
+                                            <input asp-for="@Task" id="choosenFile2" class="form-control" aria-label="Sizing example input">
                                         </div>
+                                    </div>
+                                </form>
 
-                                
-
-
-                                    </form>
                                 <div class="d-flex navbar-user-buttons">
-                                    <form id="logoutForm" class="form-inline"   asp-controller="Submissions" asp-action="Index" 
-                                                                                asp-route-crsDay=@CourseDayID
-                                                                                asp-route-id="@courseID"
-                                                                                asp-route-name="@courseName"
-                                                                                asp-route-intakeID="@IntakeID"
-                                                                                asp-route-trackID="@TrackID"
-                                                                                asp-route-intakeName="@IntakeName"
-                                                                                asp-route-trackName="@TrackName"
-                                                                                asp-route-CourseDayNum="@CourseDayNum"
-                                                                                >
-                                        <button id="logout" type="submit" style="color:white; padding:10px 38px" class="nav-link btn btn-link border-0 hvr-bounce-to-right logoutbtn">View Submissions</button>
+                                    <form id="logoutForm" class="form-inline" asp-controller="Submissions" asp-action="Index"
+                                         asp-route-id="@courseID"
+                                          asp-route-intakeID="@IntakeID"
+                                          asp-route-trackID="@TrackID"
+                                          asp-route-CourseDayId=@CourseDayID>
+                                                                                
+                                        <button id="logout" type="submit" style="color:white; padding:10px 38px" class="nav-link btn btn-link border-0 hvr-bounce-to-right logoutbtn"> Tasks Submissions</button>
                                     </form>
                                 </div>
                                 </div>
@@ -357,7 +346,7 @@
                                             <span class="Task">
                                                 Tasks
                                             </span>*@
-                                            Materials & Tasks
+                                          @*   Materials & Tasks
                                             <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16"
                                                  height="16" fill="currentColor" class="bi bi-caret-down-fill"
                                                  viewBox="0 0 16 16">
@@ -401,14 +390,14 @@
                                                 @Html.DisplayFor(modelItem => item.MaterialOfDay.Type)
                                             </td>
 
-                                            <td style="text-align: right; padding-right: 24px;">
+                                            <td style="text-align: right; padding-right: 24px;"> *@
                                                 @*<button value="@item.MaterialID" id="customdeletebtn_kordy" class="btn logoutbtn deletebtn delete-link" style=" margin: 0 0 0 8px; ">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
                                                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
                                                     </svg>
                                                     @*Delete
                                                 </button>*@
-                                                <button value="@item.MaterialID" id="customdeletebtn_kordy" class="delete-link" style="background-color: transparent; border: none;">
+                                         @*        <button value="@item.MaterialID" id="customdeletebtn_kordy" class="delete-link" style="background-color: transparent; border: none;">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16" style="margin: 0 4px 4px 0; color: #b72025;">
                                                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
                                                     </svg>
@@ -483,7 +472,292 @@
                 </div>
 
             </div>
+        </div>  *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @*===========================================================*@
+    @*===========================================================*@
+    @*===========================================================*@
+    @*========================= mahmoud taher updates ========================*@
+    <div class=" instructor-area-course-day-details">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-4 col-md-2 sidebar">
+                <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary">
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item navs1">
+                            <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index" title="@IntakeName">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                <span class="spannn"> @IntakeName </span>
+                                
+                            </a>
+                        </li>
+                        <li class="nav-item navs2">
+                            <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@IntakeID" style="--clr: #7808d0" class="button" title="@TrackName">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                <span class="spannn">
+                                    @TrackName
+                                </span>
+                                
+                            </a>
+                        </li>
+                        <li class="nav-item navs2">
+                            <a asp-controller="Course"
+                               asp-action="DetailsForTeacher"
+                               asp-route-intakeId="@IntakeID"
+                               asp-route-trackId="@TrackID"
+                               style="--clr: #7808d0" class="button" title="@courseName">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                <span class="spannn">
+                                    @courseName
+                                </span>
+                                
+                            </a>
+                        </li>
+                        <li class="nav-item navs3">
+                            <a asp-action="Index"
+                               asp-controller="CourseDay"
+                               asp-route-id="@courseID"
+                               asp-route-intakeID="@IntakeID"
+                               asp-route-trackID="@TrackID"
+                               style="--clr: #7808d0" class="button" title="@CourseDayNum">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                <span class="spannn">
+                                    Day @CourseDayNum
+                                </span>
+                                
+                            </a>
+                        </li>
+                        <li class="nav-item navs3">
+                            <p style="border-radius:50px;">Materials/Tasks</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main (tales + btns) -->
+            <div class="col-8 col-md-10 text-center content">
+                <div class="container-fluid">
+                        <div class="r1">
+                            <h3>Day @CourseDayNum Materials & Tasks</h3>
+                            <div class="uploads-container">
+                                <form id="uploadForm" enctype="multipart/form-data" asp-action="Detailss" asp-controller="CourseDay" method="post">
+                                    <input type="hidden" name="Materials" value="@Materials" />
+                                    <input type="hidden" name="Task" value="@Task" />
+                                    <input type="hidden" name="id" value="@courseID" />
+                                    <input type="hidden" name="intakeID" value="@IntakeID" />
+                                    <input type="hidden" name="trackID" value="@TrackID" />
+                                    <input type="hidden" name="coursedayID" value="@CourseDayID" />
+
+
+                                    <div class="file-upload">
+                                        <div class="file-select">
+                                            <div class="file-select-button" id="fileName">Add New Materials</div>
+                                            <input asp-for="@Materials" id="choosenFile" class="form-control " aria-label="Sizing example input" multiple>
+                                        </div>
+                                    </div>
+
+                                    @*<input type="file" asp-for="@Materials" id="choosenFile" class="form-control " aria-label="Sizing example input" multiple>*@
+
+
+                                    <div class="file-upload">
+                                        <div class="file-select">
+                                            <div class="file-select-button" id="fileName">Update Task</div>
+                                            <input asp-for="@Task" id="choosenFile2" class="form-control" aria-label="Sizing example input">
+                                        </div>
+                                    </div>
+                                </form>
+
+                            <div class="d-flex navbar-user-buttons">
+                                    <form id="logoutForm" class="form-inline" asp-controller="Submissions" asp-action="Index"
+                                          asp-route-id="@courseID"
+                                          asp-route-intakeID="@IntakeID"
+                                          asp-route-trackID="@TrackID"
+                                          asp-route-CourseDayId=@CourseDayID>
+                                    <button id="logout" type="submit" style="color:#34495e; padding:10px 38px" class="nav-link btn btn-link border-0 hvr-bounce-to-right logoutbtn">View Submissions</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Material Table-->
+                        <table class="table table-hover" id="myTable">
+                            <thead class="table-secondary">
+                                <tr>
+                                    <th style="padding-left: 24px;">
+                                        Materials & Tasks
+                                        <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16"
+                                             height="16" fill="currentColor" class="bi bi-caret-down-fill"
+                                             viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                        </svg>
+                                    </th>
+                                    <th>
+                                        Type
+                                        <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16"
+                                             height="16" fill="currentColor" class="bi bi-caret-down-fill"
+                                             viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                        </svg>
+                                    </th>
+                                    <th>
+                                        File Type
+                                        <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16"
+                                             height="16" fill="currentColor" class="bi bi-caret-down-fill"
+                                             viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                        </svg>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td style="padding-left: 24px; padding-top: 16px;">
+                                            @Html.DisplayFor(modelItem => item.MaterialOfDay.Name)
+                                        </td>
+
+                                        <td>
+                                            <span class="Material">
+                                                Materials
+                                            </span>
+                                        </td>
+
+                                        <td style="padding-top: 16px;">
+                                            @Html.DisplayFor(modelItem => item.MaterialOfDay.Type)
+                                        </td>
+
+                                            <td style="text-align: right; padding-right: 24px;">
+                                                <button value="@item.MaterialID" id="customdeletebtn_kordy" class="delete-link" style="background-color: transparent; border: none;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16" style="margin: 0 4px 4px 0; color: #b72025;">
+                                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
+                                                    </svg>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                    <td style="padding-left: 24px; padding-top: 16px;">
+                                        @taskName
+                                    </td>
+                                    <td>
+                                        <span class="Task">
+                                            Task
+                                        </span>
+                                    </td>
+                                    <td>
+                                        .@taskExtension
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!--Modal of Deletion-->
+                        <form id="deleteModal" method="post">
+
+                            <!-- Hidden input field to store the desired delete material id -->
+                            <input type="hidden" id="buttonValue" name="MaterialID" value="">
+
+                                <div class="modal fade" tabindex="-1" role="dialog" id="confirm-delete-modal" style="display:none">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Confirm Deletion</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure you want to delete this Material?
+                                            </div>
+                                            <div class="modal-footer">
+
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelDeletion">
+                                                Cancel
+                                            </button>
+
+                                            <button asp-action="Deletee"
+                                                    asp-controller="CourseDay"
+                                                    asp-route-id="@courseID"
+                                                    asp-route-intakeID="@IntakeID"
+                                                    asp-route-trackID="@TrackID"
+                                                    asp-route-coursedayID="@CourseDayID"
+                                                    type="submit" class="btn btn-danger" id="confirm-delete">
+                                                Delete
+                                            </button> <!--confirm delete-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <br />
+                        <br />
+                </div>
+            </div>
+
         </div>
+    </div>
+
+
+
+
+
+
+
+
 
 
 
@@ -508,30 +782,12 @@
             $("#cancelDeletion").click(function () {
                 $("#confirm-delete-modal").modal("hide");
             });
-
-
-            //// Handle the "Delete" button click in the modal
-            //var _url = 'Url./*Action("Delete", "CourseDay")*/';
-            //$("#confirm-delete").click(function () {
-            //    $.ajax({
-            //        url: _url,
-            //        type: "POST",
-            //        success: function (response) {
-            //            // Handle success (e.g., remove the item from the UI)
-            //            $("#confirm-delete-modal").modal("hide");
-            //            console.log("ad");
-            //        }
-            //    });
-
-
-            //    // After deletion is successful, close the modal
-            //    $("#confirm-delete-modal").modal("hide");
-            //});
         });
 
 
         //Add Material script
-        $('#choosenFile').bind('change', function () {
+        $('#choosenFile').bind('change', function () 
+        {
             var filenames = [];
             var files = $("#choosenFile")[0].files;
 
@@ -550,6 +806,7 @@
                 form.submit();
             }
         });
+
 
         //Add Tasks script
         $('#choosenFile2').bind('change', function () {

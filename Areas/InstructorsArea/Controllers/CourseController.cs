@@ -4,6 +4,7 @@ using Admin_Panel_ITI.Repos;
 using Admin_Panel_ITI.Repos.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
 
 namespace Studebt_Panel_ITI.Areas.InstructorsArea.Controllers
 {
@@ -12,33 +13,37 @@ namespace Studebt_Panel_ITI.Areas.InstructorsArea.Controllers
     {
         private readonly ICourseRepository icourseRepo;
         private readonly UserManager<AppUser> userManager;
-        private readonly IIntake_Track_CourseRepository intakeTrackCourseRepo;
         private readonly IInstructor_CourseRepository instructorCourseRepo;
+        private readonly IIntakeRepository intakeRepo;
+        private readonly ITrackRepository trackRepo;
         public CourseController(
             ICourseRepository _icourseRepo,
             UserManager<AppUser> _userManager,
-            IIntake_Track_CourseRepository _intaketrackCourseRepo,
-            IInstructor_CourseRepository _instructorCourseRepo)
+            IInstructor_CourseRepository _instructorCourseRepo, 
+            IIntakeRepository _intakeRepo, 
+            ITrackRepository _trackRepo)
         {
             icourseRepo = _icourseRepo;
             userManager = _userManager;
-            intakeTrackCourseRepo = _intaketrackCourseRepo;
             instructorCourseRepo = _instructorCourseRepo;
+            intakeRepo = _intakeRepo;
+            trackRepo = _trackRepo;
         }
 
 
 
         //get the courses in this track in this specific Intake. id(intakeID) , iid(TrackID) , name2(IntakeName)
-        public ActionResult DetailsForManager(int id, int iid, string name, string name2)
+        [Route("DFM/{id?}/{iid?}")]
+        public ActionResult DetailsForManager(int id, int iid)
         {
-            ViewBag.TrackName = name; 
-            ViewBag.IntakeName = name2; 
-            ViewBag.IntakeID = id;
-            ViewBag.TrackID = iid;
+            ViewBag.TrackName = trackRepo.getTrackName(id); 
+            ViewBag.IntakeName = intakeRepo.getIntakeName(iid);
+            ViewBag.IntakeID = iid;
+            ViewBag.TrackID = id;
 
             List<InstructorCourseVM> instructorCourseVM = new(); //list of the new view model
 
-            var AllcoursesInTrack = icourseRepo.GetCoursesByIntakeTrackID(id, iid); //all courses in a specific track and intake
+            var AllcoursesInTrack = icourseRepo.GetCoursesByIntakeTrackID(iid, id); //all courses in a specific track and intake
 
             foreach (var course in AllcoursesInTrack)
             {
@@ -63,11 +68,12 @@ namespace Studebt_Panel_ITI.Areas.InstructorsArea.Controllers
         }
 
 
-        //id (intakeid)  ,  iid(trackid)
-        public ActionResult DetailsForTeacher(int trackId, int intakeId, string name, string name2)
+    
+        [Route("DFT/{trackId?}/{intakeId?}")]
+        public ActionResult DetailsForTeacher(int trackId, int intakeId)
         {
-            ViewBag.TrackName = name;
-            ViewBag.IntakeName = name2;
+            ViewBag.TrackName = trackRepo.getTrackName(trackId);
+            ViewBag.IntakeName = intakeRepo.getIntakeName(intakeId);
             ViewBag.IntakeID = intakeId;
             ViewBag.TrackID = trackId;
 

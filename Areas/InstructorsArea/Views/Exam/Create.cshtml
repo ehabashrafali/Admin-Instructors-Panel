@@ -2,6 +2,11 @@
 @{
     Layout = null;
 }
+@{
+    int cid = ViewBag.Courseid;
+    int intakeID = ViewBag.IntakeID;
+    int trackID = ViewBag.TrackID;
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,19 +32,25 @@
         <div class="container">
             <h1>Create Exam</h1>
             <form id="examForm" asp-action="Createe" asp-controller="Exam" method="post">
+
+                <input name="Questions" id="Questions" type="hidden" />  <!--hidden input its value is the questions in a form of JSON serialized string-->
+                <input name="CourseId" value="@cid" type="hidden" />
+                <input name="Mark" id="questionType" required class="form-control" type="hidden" />
+                <input name="intakeID" value="@intakeID" required class="form-control" type="hidden" />
+                <input name="trackID" value="@trackID" required class="form-control" type="hidden" />
+
+
                 <div class="form-group">
                     <div>
                         <label for="examName">Exam Name:</label>
                         <input name="ExamName" id="examName" required class="form-control">
                     </div>
                     <div>
-                        <label for="examDuration">Exam Duration:</label>
+                    <label for="examDuration">Exam Duration<span style="font-size:12px;">&nbsp;(in Minutes)</span>:</label>
                         <input name="Duration" id="examDuration" required class="form-control" type="number" />
                     </div>
                 </div>
 
-                <input id="Questions" type="hidden" name="Questions" /> <!--hidden input its value is the questions in a form of JSON serialized string-->
-                <input  type="hidden" name="CourseId" value="@ViewBag.Courseid" />
 
 
                 <div id="questionsContainer" class="form-group">
@@ -50,9 +61,6 @@
                             <option value="Paragraph">Paragraph</option>
                             <option value="MCQ">MCQ</option>
                         </select>*@
-
-
-                        <input  name="Mark" id="questionType" required class="form-control" type="hidden" />
 
                         <div class="form-group">
                             <label for="Mark">Grade:</label>

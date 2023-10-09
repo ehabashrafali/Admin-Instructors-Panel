@@ -7,15 +7,9 @@ namespace Admin_Panel_ITI.Repos
         public int getStudentNumber();
         public int getStudentNumberbyIntakeID(int? intakeID);
         public int getStudentNumberbyTrackID(int trackID);
-        
-
-
-
         public Student getStudentbyID(string studentbyID);
         public List<Student> getStudents(int pageNumber, int pageSize);
         public void UpdateStudent(string studentID, Student student);
-
-
         public void DeleteStudent(string studentID);
         public void DeleteStudent(List<string> studentIDs);
         public List<Student> getStudentsbyTrackID(int trackid, int pageNumber, int pageSize);

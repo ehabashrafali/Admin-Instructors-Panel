@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<Exam>
+@{
+    Layout = null;
+}
 
 @{
     int Id = ViewBag.Id;
@@ -7,6 +10,7 @@
     string intakeName = ViewBag.IntakeName;
     int intakeID = ViewBag.IntakeID;
     int trackID = ViewBag.TrackID;
+    string examName = ViewBag.ExamName;
 }
 
 <!DOCTYPE html>
@@ -14,159 +18,423 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../styles.css">
-        <script src="../assets/js/bootstrap.bundle.js"></script>
-        <script src="../assets/js/bootstrap.bundle.min.js"></script>
+        <title>Exams</title>
+        <link rel="stylesheet" href="~/Instructor/SideBar_BreadCrumb.css">
+        <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/styles.css">
+        <script src="~/assets/js/bootstrap.bundle.js"></script>
+        <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
-        <link rel="stylesheet" href="~/Instructor/SideBar_BreadCrumb.css">
 
     </head>
     <body>
-        <div class="">
-            <div class="row">
-                <!-- Sidebar -->
-                <div class="col-md-2 sidebar">
-                    <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary" style="width: 280px; height: 93vh;">
-                        <span class="d-flex align-items-center mb-3 mb-md-0 me-md-auto ">
-                            <span class="nav-title">Navigation</span>
-                        </span>
-                        <hr />
-                        <ul class="nav nav-pills flex-column mb-auto">
-                            <li class="nav-item navs1">
-                                <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index">
-                                    <span class="button__icon-wrapper">
-                                        <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
-                                            <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                                        </svg>
 
-                                        <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
-                                            <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                                        </svg>
-                                    </span>
-                                    @intakeName
-                                </a>
-                            </li>
-
-                            <li class="nav-item navs2">
-                                <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@intakeID" asp-route-name="@intakeName" style="--clr: #7808d0" class="button">
-                                    <span class="button__icon-wrapper">
-                                        <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
-                                            <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                                        </svg>
-
-                                        <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
-                                            <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                                        </svg>
-                                    </span>
-                                    @trackName
-                                </a>
-                            </li>
-
-                            <li class="nav-item navs2">
-                                <a asp-controller="Course"
-                                   asp-action="DetailsForTeacher"
-                                   asp-route-intakeId="@intakeID"
-                                   asp-route-trackId="@trackID"
-                                   asp-route-name="@trackName"
-                                   asp-route-name2="@intakeName"
-                                   style="--clr: #7808d0" class="button">
-                                    <span class="button__icon-wrapper">
-                                        <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
-                                            <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                                        </svg>
-
-                                        <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
-                                            <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                                        </svg>
-                                    </span>
-                                    @courseName
-                                </a>
-                            </li>
-
-                            <li class="nav-item navs3">
-                                <p style="border-radius:50px;">Exams</p>
-                            </li>
-
-                        </ul>
-                    </div>
+    <nav class="navbar navbar-expand-sm bg-body-tertiary slide-down">
+        <div class="container-fluid">
+            <a class="navbar-brand" id="logo" asp-action="Index" asp-controller="Home">
+                <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
+                <div class="iti-hub-devider">
+                    <span> Hub </span>
                 </div>
-                <!-- Main (tales + btns) -->
-                <div class="col-md-10 text-center content">
-                    <div class="container-fluid">
-
-                        <div class="row col-md-12">
-                            <div class="r1">
-                                <h3 style="padding-left: 33px;">Exams Card</h3>
-                            </div>
-                        </div>
-
-                        <div class="row col-md-11">
-                            <table class="table table-hover" id="myTable">
-                                <thead class="table-secondary">
-                                    <tr>
-                                        <th style="padding-left: 24px;">
-                                            Exam Name
-                                            <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                                            </svg>
-                                        </th>
-                                        <th style="padding-left: 24px;">
-                                            Duration
-                                            <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                                            </svg>
-                                        </th>
-                                        <th style="padding-left: 24px;">
-                                            Creation Date
-                                            <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                                            </svg>
-                                        </th>
-                                        <th>
-                                            Students submitted
-                                            <svg onclick="sortTable(3)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                                            </svg>
-                                        </th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td style="padding-left: 24px;">
-                                                @Html.DisplayFor(modelItem => item.Name)
-                                            </td>
-                                            <td style="padding-left: 24px;">
-                                                @Html.DisplayFor(modelItem => item.Duration)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CreationDate)
-                                            </td>
-                                            <td style="padding-left: 24px;">
-                                                @{
-                                                    // Get the number of unique students by counting distinct StudentIDs
-                                                    var uniqueStudentCount = item.Student_Quest_Exam.Select(sq => sq.StudentID).Distinct().Count();
-                                                }
-                                                @uniqueStudentCount
-                                            </td>
-                                            <td class=" @(uniqueStudentCount > 0 ? "deleteBtn" : "")">
-                                                <a asp-action="Delete" asp-route-CourseId="@item.Course.ID" asp-route-ExamID="@item.ID" class="btn btn-danger @(uniqueStudentCount > 0 ? "disabled" : "")">Delete</a>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
+            </a>
+            <div class="d-flex navbar-user-buttons">
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button id="logout" type="submit" style="color:white; padding:10px 38px" class="nav-link btn btn-link border-0 hvr-bounce-to-right logoutbtn">Logout</button>
+                </form>
             </div>
         </div>
+    </nav>
+
+
+    <div class="instructor-area-exam-index">
+        <div class="row">
+
+            <!-- Sidebar -->
+            <div class="col-4 col-md-2 sidebar">
+                <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary"@* style="width: 280px; height: 93vh;"*@>
+                    @*<span class="d-flex align-items-center mb-3 mb-md-0 me-md-auto ">
+                        <span class="nav-title">Navigation</span>
+                    </span>
+                    <hr />*@
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item navs1">
+                            <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index" title="@intakeName">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                <span class="spannn">
+                                    @intakeName
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item navs2">
+                            <a title="@trackName" asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@intakeID" style="--clr: #7808d0" class="button">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                <span class="spannn">
+                                    @trackName
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item navs2">
+                            <a asp-controller="Course"
+                                asp-action="DetailsForTeacher"
+                                asp-route-intakeId="@intakeID"
+                                asp-route-trackId="@trackID"
+                                style="--clr: #7808d0" class="button" title="@courseName">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                <span class="spannn">@courseName</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item navs3">
+                            <p style="border-radius:50px;">Exams</p>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <!-- Main (tales + btns) -->
+            <div class="col-8 col-md-10 text-center content">
+                <div class="container-fluid">
+
+                    <div class="row col-md-12">
+                        <div class="r1">
+                            <h3 style="padding-left: 33px;">Exams Table</h3>
+                        </div>
+                    </div>
+
+                    <table class="table table-hover" id="myTable">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th style="padding-left: 24px;">
+                                    Exam Name
+                                    <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                    </svg>
+                                </th>
+                                <th style="padding-left: 24px;">
+                                    Duration
+                                    <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                    </svg>
+                                </th>
+                                <th style="padding-left: 24px;">
+                                    Creation Date
+                                    <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                    </svg>
+                                </th>
+                                <th>
+                                    No. Students submitted
+                                    <svg onclick="sortTable(3)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                    </svg>
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                    <tr>
+                                    <td style="padding-left: 24px;">
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td style="padding-left: 40px;">
+                                        @Html.DisplayFor(modelItem => item.Duration)
+                                    </td>
+                                <td style="padding-left: 40px;">
+                                        @Html.DisplayFor(modelItem => item.CreationDate)
+                                    </td>
+                                    <td style="padding-left: 70px;">
+                                        @{
+                                            // Get the number of unique students by counting distinct StudentIDs
+                                            var uniqueStudentCount = item.Student_Quest_Exam.Select(sq => sq.StudentID).Distinct().Count();
+                                        }
+                                        @uniqueStudentCount
+                                    </td>
+
+                                    <td style="text-align: right; padding-right: 24px;">
+                                        <button id="customdeletebtn_kordy"
+                                                class="delete-link @(uniqueStudentCount > 0 ? "deleteBtn" : "")"
+                                                style="background-color: transparent; border: none;"
+                                                data-value1="@item.Course.ID"
+                                                data-value2="@item.ID"
+                                                data-value3="@intakeID"
+                                                data-value4="@trackID">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16" style="margin: 0 4px 4px 0; color: #b72025;" >
+                                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
+                                            </svg>
+                                        </button>
+                                    </td>
+
+                                    <td style="padding: 5px 8px">
+                                        <a asp-action="Details" asp-controller="Exam" asp-route-ExamId="@item.ID" , asp-route-id="@Id", asp-route-intakeID="@intakeID", asp-route-trackID = "@trackID">
+                                            <img style='width: 20px; height: 20px;' src='~/assets/images/details.png' alt='details' title="Details">
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                        <!--Modal of Deletion-->
+                    <form id="deleteModal" method="post" asp-action="Delete" asp-controller="Exam" >
+
+                        <!-- Hidden input field to store the desired delete material id -->
+                        <input type="hidden" id="buttonValue" name="CourseId" value="">
+                        <input type="hidden" id="buttonValue2" name="ExamID" value="">
+                        <input type="hidden" id="buttonValue3" name="intakeID" value="">
+                        <input type="hidden" id="buttonValue4" name="trackID" value="">
+
+                        <div class="modal fade" tabindex="-1" role="dialog" id="confirm-delete-modal" style="display:none">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Confirm Deletion</h5>
+                                   
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete this Exam?
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelDeletion">
+                                            Cancel
+                                        </button>
+
+                                        <button type="submit" class="btn btn-danger" id="confirm-delete">
+                                            Delete
+                                        </button> <!--confirm delete-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+         <!--Confirm Deletion Script-->
+    <script>
+
+        $(document).ready(function () {
+
+            // Show the modal when the "Delete" link is clicked
+            $(".delete-link").click(function () {
+                $("#confirm-delete-modal").modal("show");
+
+                // // Get the value on the delete btn(materialID)
+                // var buttonValue = $(this).val();
+                // Get the data-value attributes from the clicked button
+                var value1 = $(this).data("value1");
+                var value2 = $(this).data("value2");
+                var value3 = $(this).data("value3");
+                var value4 = $(this).data("value4");
+
+                // Update the hidden input field in the modal form with the button value
+                $("#buttonValue").val(value1);
+                $("#buttonValue2").val(value2);
+                $("#buttonValue3").val(value3);
+                $("#buttonValue4").val(value4);
+            });
+
+
+            //cancel btn
+            $("#cancelDeletion").click(function () {
+                $("#confirm-delete-modal").modal("hide");
+            });
+
+
+            //save btn 
+            $("#confirm-delete").click(function () {
+                $("#confirm-delete-modal").modal("hide");
+                document.getElementById("deleteModal").submit();
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @*===========================================================*@
+    @*===========================================================*@
+    @*===========================================================*@
+    @*========================= mahmoud taher updates ========================*@
+    @*<div class=" instructor-area-exam-index">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-4 col-md-3 sidebar">
+                <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary">
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item navs1">
+                            <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                @intakeName
+                            </a>
+                        </li>
+
+                        <li class="nav-item navs2">
+                            <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@intakeID" asp-route-name="@intakeName" style="--clr: #7808d0" class="button">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                @trackName
+                            </a>
+                        </li>
+
+                        <li class="nav-item navs2">
+                            <a asp-controller="Course"
+                               asp-action="DetailsForTeacher"
+                               asp-route-intakeId="@intakeID"
+                               asp-route-trackId="@trackID"
+                               style="--clr: #7808d0" class="button">
+                                <span class="button__icon-wrapper">
+                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+
+                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                    </svg>
+                                </span>
+                                @courseName
+                            </a>
+                        </li>
+
+                        <li class="nav-item navs3">
+                            <p style="border-radius:50px;">Exams</p>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <!-- Main (tales + btns) -->
+            <div class="col-8 col-md-9 text-center content">
+                <div class="container-fluid">
+
+                    <div class="r1">
+                        <h3>Exams Card</h3>
+                    </div>
+
+                    <table class="table table-hover" id="myTable">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th style="padding-left: 24px;">
+                                    Exam Name
+                                    <svg onclick="sortTable(0)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                    </svg>
+                                </th>
+                                <th style="padding-left: 24px;">
+                                    Duration
+                                    <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                    </svg>
+                                </th>
+                                <th style="padding-left: 24px;">
+                                    Creation Date
+                                    <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                    </svg>
+                                </th>
+                                <th>
+                                    Students submitted
+                                    <svg onclick="sortTable(3)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                    </svg>
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td style="padding-left: 24px;">
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td style="padding-left: 24px;">
+                                        @Html.DisplayFor(modelItem => item.Duration)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreationDate)
+                                    </td>
+                                    <td style="padding-left: 24px;">
+                                        @{
+                                            // Get the number of unique students by counting distinct StudentIDs
+                                            var uniqueStudentCount = item.Student_Quest_Exam.Select(sq => sq.StudentID).Distinct().Count();
+                                        }
+                                        @uniqueStudentCount
+                                    </td>
+                                    <td class=" @(uniqueStudentCount > 0 ? "deleteBtn" : "")">
+                                        <a asp-action="Delete" asp-route-CourseId="@item.Course.ID" asp-route-ExamID="@item.ID" class="btn btn-danger @(uniqueStudentCount > 0 ? "disabled" : "")">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>*@
     </body>
+
 </html>

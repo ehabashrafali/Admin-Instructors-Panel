@@ -7,10 +7,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 {
     public class MaterialRepoServices : IMaterialRepository
     {
-
-        public MainDBContext Context { get; set; }
-
-
+        private MainDBContext Context { get; set; }
 
         public MaterialRepoServices(MainDBContext context)
         {
@@ -43,12 +40,11 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             return Context.Materials.ToList();
         }
 
-        
-
         int IMaterialRepository.GetMaterialNumber()
         {
             return Context.Materials.Count();
         }
+
         int IMaterialRepository.GetMaterialNumber(int courseID, int crsDayID)
         {
             return Context.Materials.Include(m=>m.CourseDayMaterials).ThenInclude(cdm=>cdm.CourseDayID == crsDayID && cdm.CourseID == courseID).Count();
@@ -71,12 +67,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             }
             Context.SaveChanges();
         }
-
-
-
-
-
-
 
 
         /*---------------------------------------------- Instructor Services -----------------------------------------------*/

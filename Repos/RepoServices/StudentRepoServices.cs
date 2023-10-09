@@ -13,7 +13,7 @@ namespace Admin_Panel_ITI.Repos
         private readonly IStudent_SubmissionRepository student_SubmissionRepository;
         private readonly IExam_Std_QuestionRepository exam_Std_QuestionRepository;
 
-        public MainDBContext Context { get; set; }
+        private MainDBContext Context { get; set; }
 
         public StudentRepoServices(MainDBContext context, 
             IStudent_CourseRepository student_CourseRepository, 
@@ -49,7 +49,6 @@ namespace Admin_Panel_ITI.Repos
             
             Context.SaveChanges();
         }
-
 
         void IStudentRepository.DeleteStudent(string studentID)
         {

@@ -23,6 +23,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
 
         //---// //List of all intakes that instructor works in only
+        [Route("Index")]
         public ActionResult Index()
         {
             ViewBag.InstructorName = userManager.GetUserAsync(User).Result.FullName;

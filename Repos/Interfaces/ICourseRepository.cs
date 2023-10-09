@@ -15,8 +15,6 @@ namespace Admin_Panel_ITI.Repos
         public void UpdateCourse(int CourseID, Course course);
         public void DeleteCourse(int courseID);
         public void CreateCourse(Course course);
-
-
         public void DeleteCourse(List<int> courseids);
 
 
@@ -25,5 +23,6 @@ namespace Admin_Panel_ITI.Repos
         public List<Course> GetCoursesByIntakeTrackID(int intakeID, int trackID);
         public List<Course> GetTeacherCourses(int intakeID, int trackID, string instructorID);
         public List<Intake_Track_Course> GetCoursesbyIntakeID(int intakeid, int pageNumber, int pageSize);
+        public string GetCourseName(int courseID); 
     }
 }
