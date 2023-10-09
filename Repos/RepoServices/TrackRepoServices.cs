@@ -10,16 +10,15 @@ namespace Admin_Panel_ITI.Repos
     {
         private readonly IStudentRepository _studentRepository;
         private readonly IIntake_Track_CourseRepository _intake_Track_CourseRepository;
+        private MainDBContext Context { get; set; }
 
-    
-
-        public MainDBContext Context { get; set; }
         public TrackRepoServices( MainDBContext context, IStudentRepository studentRepository,  IIntake_Track_CourseRepository intake_Track_CourseRepository)
         {
             Context = context;
             _studentRepository = studentRepository;
             _intake_Track_CourseRepository = intake_Track_CourseRepository;
         }
+
         Track ITrackRepository.getTrackbyID(int trackID)
         {
             var track =  Context.Tracks.Include(t=>t.Manager)
@@ -84,8 +83,6 @@ namespace Admin_Panel_ITI.Repos
 
         }
 
-
-        // Check should we update virtual navigation properties 
         void ITrackRepository.UpdateTrack(int trackID, Track track)
         {
             var trackUpdated  = Context.Tracks.FirstOrDefault(t=>t.ID == trackID);
@@ -111,7 +108,6 @@ namespace Admin_Panel_ITI.Repos
             }
 
         }
-
 
         void ITrackRepository.DeleteTrack(List<int> trackIDs)
         {
@@ -141,9 +137,6 @@ namespace Admin_Panel_ITI.Repos
             Context.Tracks.Add(track);
             Context.SaveChanges();
         }
-        
-
-        // check null or na
 
         void ITrackRepository.RemoveManager(string managerID)
         {
@@ -154,7 +147,6 @@ namespace Admin_Panel_ITI.Repos
             }
             Context.SaveChanges();
         }
-
 
         public List<Track> GetTracksByIntakeId(int intakeid, int pageNumber, int pageSize)
         {
@@ -178,7 +170,6 @@ namespace Admin_Panel_ITI.Repos
 
         }
 
-        //--//
         public List<Track> GetTracksByIntakeID(int intakeid)
         {
             var query = 
@@ -191,7 +182,6 @@ namespace Admin_Panel_ITI.Repos
 
             return query;
         }
-
 
 
 
@@ -210,7 +200,6 @@ namespace Admin_Panel_ITI.Repos
         }
 
 
-
         //get the tracks a specific Instructor teach in, in a specific intake
         public List<Track> GetTracksByTeacher(int intakeID, string InstructorID)
         {
@@ -225,6 +214,7 @@ namespace Admin_Panel_ITI.Repos
 
             return query;
         }
+
 
         string ITrackRepository.getTrackName(int trackID)
         {

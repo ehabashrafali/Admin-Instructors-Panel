@@ -11,6 +11,7 @@
     int CourseDayID = ViewBag.CourseDayId;
     int CourseDayNum = ViewBag.CourseDayNum;
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,14 +27,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="~/Instructor/SideBar_BreadCrumb.css">
-
-   
-
 </head>
 <body>
-
-   
-
     <div class="">
         <div class="row">
             <!-- Sidebar -->
@@ -79,8 +74,6 @@
                                asp-action="DetailsForTeacher"
                                asp-route-intakeId="@IntakeID"
                                asp-route-trackId="@TrackID"
-                               asp-route-name="@TrackName"
-                               asp-route-name2="@IntakeName"
                                style="--clr: #7808d0" class="button">
                                 <span class="button__icon-wrapper">
                                     <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
@@ -98,11 +91,8 @@
                             <a asp-action="Index"
                                asp-controller="CourseDay"
                                asp-route-id="@courseID"
-                               asp-route-name="@courseName"
                                asp-route-intakeID="@IntakeID"
                                asp-route-trackID="@TrackID"
-                               asp-route-intakeName="@IntakeName"
-                               asp-route-trackName="@TrackName"
                                style="--clr: #7808d0" class="button">
                                 <span class="button__icon-wrapper">
                                     <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
@@ -114,30 +104,6 @@
                                     </svg>
                                 </span>
                                 Day @CourseDayNum
-                            </a>
-                        </li>
-                        <li class="nav-item navs3">
-                            <a asp-action="Details"
-                               asp-controller="CourseDay"
-                               asp-route-id="@courseID"
-                               asp-route-name="@courseName"
-                               asp-route-intakeID="@IntakeID"
-                               asp-route-trackID="@TrackID"
-                               asp-route-intakeName="@IntakeName"
-                               asp-route-trackName="@TrackName"
-                               asp-route-coursedayID="@CourseDayID"
-                               asp-route-coursedayNum="@CourseDayNum"
-                               style="--clr: #7808d0" class="button">
-                                <span class="button__icon-wrapper">
-                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
-                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                                    </svg>
-
-                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
-                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                                    </svg>
-                                </span>
-                                Materials/Tasks
                             </a>
                         </li>
                         <li class="nav-item navs3">
@@ -188,7 +154,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="footer">
+@*                    <div class="footer">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-end">
                                 <li class="page-item disabled">
@@ -202,7 +168,7 @@
                                 </li>
                             </ul>
                         </nav>
-                    </div>
+                    </div>*@
                 </div>
             </div>
         </div>

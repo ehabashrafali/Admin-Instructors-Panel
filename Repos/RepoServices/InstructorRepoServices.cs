@@ -14,8 +14,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         private readonly IMaterialRepository materialRepository;
         private readonly IInstructor_CourseRepository instructor_CourseRepository;
         private readonly IIntake_InstructorRepository intake_InstructorRepository;
-
-        public MainDBContext Context { get; set; }
+        private MainDBContext Context { get; set; }
 
 
         public InstructorRepoServices(MainDBContext context, ITrackRepository trackRepository, IExamRepository examRepository, IMaterialRepository materialRepository, IInstructor_CourseRepository instructor_CourseRepository, IIntake_InstructorRepository intake_InstructorRepository )
@@ -27,7 +26,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             this.instructor_CourseRepository = instructor_CourseRepository;
             this.intake_InstructorRepository = intake_InstructorRepository;
         }
-
 
         void IInstructorRepository.CreateInstructor(Instructor instructor)
         {
@@ -87,7 +85,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             
             Context.SaveChanges();
         }
-
 
         Instructor IInstructorRepository.GetInstructorbyID(string instructorID)
         {
@@ -181,6 +178,5 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             return instructors;
         }
 
-       
     }
 }

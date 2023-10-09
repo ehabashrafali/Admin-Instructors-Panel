@@ -8,10 +8,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
     public class Course_Day_MaterialRepoServices : ICourse_Day_MaterialRepository
     {
         private readonly IMaterialRepository materialRepository;
-
-        public MainDBContext Context { get; set; }
-
-
+        private MainDBContext Context { get; set; }
 
         public Course_Day_MaterialRepoServices(MainDBContext context, IMaterialRepository materialRepository)
         {
@@ -19,7 +16,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             this.materialRepository = materialRepository;
         }
 
-       
         void ICourse_Day_MaterialRepository.CreateCourseDayMaterial(Course_Day_Material cdm)
         {
             Context.Course_Day_Materials.Add(cdm);
@@ -46,7 +42,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 
         }
         
-
         void ICourse_Day_MaterialRepository.DeleteCourseDayMaterialbyCourseDayID(int courseDayID)
         {
             var cdm = Context.Course_Day_Materials.Where(cdm => cdm.CourseDayID == courseDayID);
@@ -104,15 +99,12 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.Course_Day_Materials.AddRange(cdm); 
             Context.SaveChanges();
         }
-
-
         public void DeleteCourseDayMaterial(int materialID)
         {
             var cdm = Context.Course_Day_Materials.FirstOrDefault(cdm => cdm.MaterialID == materialID);
             Context.Course_Day_Materials.Remove(cdm);
             Context.SaveChanges();
         }
-
 
     }
 }

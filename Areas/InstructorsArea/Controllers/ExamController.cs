@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using NuGet.DependencyResolver;
 
 
 namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
@@ -18,12 +19,17 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
         private readonly UserManager<AppUser> userManager;
         private readonly ICourseRepository courseRepository;
         private readonly IExam_Std_QuestionRepository exam_Std_QuestionRepository;
-
+        private readonly IIntakeRepository intakeRepo;
+        private readonly ITrackRepository trackRepo;
 
         public ExamController(IExamRepository _examRepo,
             IQuestionRepository _questionRepo,
             IExam_QuestionRepository _examQuestionRepo,
-            UserManager<AppUser> _userManager, ICourseRepository _courseRepository, IExam_Std_QuestionRepository _exam_Std_QuestionRepository)
+            UserManager<AppUser> _userManager,
+            ICourseRepository _courseRepository, 
+            IExam_Std_QuestionRepository _exam_Std_QuestionRepository,
+            IIntakeRepository _intakeRepo,
+            ITrackRepository _trackRepo)
         {
             examRepo = _examRepo;
             questionRepo = _questionRepo;
@@ -31,45 +37,63 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             userManager = _userManager;
             courseRepository = _courseRepository;
             exam_Std_QuestionRepository = _exam_Std_QuestionRepository;
+            intakeRepo = _intakeRepo;
+            trackRepo = _trackRepo;
         }
 
 
-        // GET: ExamController
-        public ActionResult Index(int CourseId, string name, int intakeID, int trackID, string intakeName, string trackName)
+        [Route("Index/{courseId?}/{intakeID?}/{trackID?}")]
+        public ActionResult Index(int courseId, int intakeID, int trackID)
         {
-
-            ViewBag.Id = CourseId;
-            ViewBag.Name = name;
-
-            ViewBag.IntakeName = intakeName;
-            ViewBag.TrackName = trackName;
+            ViewBag.Id = courseId;
             ViewBag.IntakeID = intakeID;
             ViewBag.TrackID = trackID;
-
+            ViewBag.Name = courseRepository.GetCourseName(courseId);
+            ViewBag.IntakeName = intakeRepo.getIntakeName(intakeID);
+            ViewBag.TrackName = trackRepo.getTrackName(trackID);
 
             string UserID = userManager.GetUserId(User);
 
-            var exams = examRepo.GetExamsByInstructorIDAndCourseID(UserID, CourseId);
+            var exams = examRepo.GetExamsByInstructorIDAndCourseID(UserID, courseId);
 
-            var course = courseRepository.GetCoursebyID(CourseId);
+            var course = courseRepository.GetCoursebyID(courseId);
 
             ViewBag.Course = course;
 
             return View(exams);
         }
 
-        // GET: ExamController/Details/5
-        public ActionResult Details(int id)
+
+        [Route("ED/{ExamId?}/{id?}/{trackID?}/{intakeID?}")]
+        public ActionResult Details(int ExamId , int id, int trackID, int intakeID)
         {
+            var Submetions = exam_Std_QuestionRepository.GetExam(ExamId);
+
+            ViewBag.Id = id;
+            ViewBag.intakeID = intakeID;
+            ViewBag.TrackID = trackID;
+            ViewBag.ExamName = examRepo.GetExambyID(ExamId).Name;
+
+            ViewBag.crsName = courseRepository.GetCourseName(id);
+            ViewBag.trackName = trackRepo.getTrackName(trackID);
+            ViewBag.intakeName = intakeRepo.getIntakeName(intakeID);
+
+            return View(Submetions);
+        }
+
+
+
+        [Route("CE/{Id?}")]
+        public ActionResult Create(int Id, int intakeID, int trackID)
+        {
+            ViewBag.Courseid = Id;
+            ViewBag.IntakeID = intakeID;
+            ViewBag.TrackID = trackID;
+
             return View();
         }
 
-        [HttpGet]
-        public ActionResult Create(int id)
-        {
-            ViewBag.Courseid = id;
-            return View();
-        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -78,14 +102,16 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             string InstructorId = userManager.GetUserId(User);
             string ExamName = collection["ExamName"];
             int Duration = int.Parse(collection["Duration"]);
-            int CourseId = int.Parse(collection["CourseId"]);
+            int courseId = int.Parse(collection["CourseId"]);
+            int intakeID = int.Parse(collection["intakeID"]);
+            int trackID = int.Parse(collection["trackID"]);
             string Json_Questions = collection["Questions"];
 
             Exam newExam = new Exam()
             {
                 Name = ExamName,
                 Duration = Duration,
-                CourseID = CourseId,
+                CourseID = courseId,
                 InstructorID = InstructorId,
                 CreationDate = DateTime.Now.Date,
             };
@@ -111,12 +137,12 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
             examQuestionRepo.CreateExam_Question(exam_Questions);
 
-            return RedirectToAction("Index", new { CourseId = CourseId });
+            return RedirectToAction(nameof(Index), new {courseId, intakeID , trackID });
         }
 
 
-
-        public ActionResult Delete(int ExamID, int CourseId)
+        [Route("D/{ExamID?}/{CourseId?}/{intakeID?}/{trackID?}")]
+        public ActionResult Delete(int ExamID, int CourseId , int intakeID, int trackID)
         {
             exam_Std_QuestionRepository.DeleteExam_Std_Question(ExamID);
 
@@ -126,22 +152,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
             examRepo.DeleteExam(ExamID);
 
-            return RedirectToAction("Index", new { CourseId = CourseId });
+            return RedirectToAction(nameof(Index), new { CourseId, intakeID, trackID });
         }
-
-        // POST: ExamController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
     }
 }

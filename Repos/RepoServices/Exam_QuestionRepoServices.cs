@@ -9,9 +9,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 {
     public class Exam_QuestionRepoServices : IExam_QuestionRepository
     {
-
-        public MainDBContext Context { get; set; }
-
+       private MainDBContext Context { get; set; }
 
         public Exam_QuestionRepoServices(MainDBContext context)
         {
@@ -37,7 +35,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
-
         void IExam_QuestionRepository.CreateExam_QuestionForExams(List<int> examIDs, int qid)
         {
             foreach (var exid in examIDs)
@@ -51,10 +48,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             }
             Context.SaveChanges();
         }
-
-      
-
-
 
         void IExam_QuestionRepository.CreateExam_Question(List<Exam_Question> exam_question)
         {
@@ -71,15 +64,12 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             return Context.Exam_Questions.Where(es => es.ExamID == exID).Include(e=>e.Question).ToList();
         }
 
-
-
         void IExam_QuestionRepository.DeleteExam_Question(int examID, int questionID)
         {
             var exam_question = Context.Exam_Questions.SingleOrDefault(eq => eq.ExamID == examID && eq.QuestionID == questionID);
             Context.Exam_Questions.Remove(exam_question);
             Context.SaveChanges();
         }
-
 
         void IExam_QuestionRepository.DeleteExam_Question(int questionID)
         {
@@ -101,9 +91,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             return Context.Exam_Questions.Where(eq => eq.ExamID == examiD).Count();
 
         }
-
-
-
 
         List<int> IExam_QuestionRepository.DeleteExamQuestions(int examID)
         {

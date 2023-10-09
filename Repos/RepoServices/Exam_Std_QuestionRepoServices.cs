@@ -1,16 +1,17 @@
-﻿using Admin_Panel_ITI.Data;
+﻿using Admin_Panel_ITI.Areas.InstructorsArea.ViewModels;
+using Admin_Panel_ITI.Data;
 using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Admin_Panel_ITI.Repos.RepoServices
 {
     public class Exam_Std_QuestionRepoServices : IExam_Std_QuestionRepository
     {
-
         public MainDBContext Context { get; set; }
-
-
 
         public Exam_Std_QuestionRepoServices(MainDBContext context)
         {
@@ -22,10 +23,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.Exam_Std_Questions.Add(esq);
             Context.SaveChanges();
         }
-
-
-
-
 
         void IExam_Std_QuestionRepository.DeleteExam_Std_Question(int examID, string studentID, int questionID)
         {
@@ -82,6 +79,36 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             esq.QuestionID = main_esq.QuestionID;
 
             Context.SaveChanges();
+        }
+
+        public List<ExamSubmitionsVM> GetExam(int examID)
+        {
+
+            var result = Context.Exam_Std_Questions
+                .Where(esq => esq.ExamID == examID)
+                .GroupBy(esq => new { esq.StudentID, esq.Student.AspNetUser.FullName})
+                .Select(obj => new
+                {
+                    StudentFullName = obj.Key.FullName,
+                    TotalGrade = obj.Sum(esq => esq.StudentGrade)
+                })
+                .ToList();
+
+
+            List<ExamSubmitionsVM> ESList = new();
+
+            foreach (var item in result)
+            {
+                ExamSubmitionsVM esM = new ExamSubmitionsVM()
+                {
+                    StdFullName = item.StudentFullName,
+                    TotalGrade = item.TotalGrade
+                };
+
+                ESList.Add(esM);
+            }
+
+            return ESList;
         }
     }
 }

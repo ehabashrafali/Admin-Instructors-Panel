@@ -5,26 +5,17 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 {
     public class AdminRepoServices : IAdminRepository
     {
-        public MainDBContext Context { get; set; }
+        private MainDBContext Context { get; set; }
         public AdminRepoServices(MainDBContext context)
         {
             Context = context;
         }
-
 
         void IAdminRepository.CreateAdmin(Admin admin)
         {
             Context.Admins.Add(admin);
             Context.SaveChanges();
         }
-
-        //void IAdminRepository.CreateAdmin(string adminID)
-        //{
-        //    var admin = Context.Admins.FirstOrDefault(a => a.Id == adminID);
-        //    Console.WriteLine(admin);
-        //    //Context.Admins.Add(admin);
-        //    //Context.SaveChanges();
-        //}
 
         void IAdminRepository.DeleteAdmin(int adminID)
         {

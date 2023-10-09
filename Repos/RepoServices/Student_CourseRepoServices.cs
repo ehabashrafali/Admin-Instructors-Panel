@@ -6,9 +6,7 @@ namespace Admin_Panel_ITI.Repos
 {
     public class Student_CourseRepoServices : IStudent_CourseRepository
     {
-
-        public MainDBContext Context { get; set; }
-
+        private MainDBContext Context { get; set; }
 
         public Student_CourseRepoServices(MainDBContext context)
         {
@@ -40,6 +38,7 @@ namespace Admin_Panel_ITI.Repos
             Context.Student_Courses.Remove(student_course);
             Context.SaveChanges();
         }
+
         void IStudent_CourseRepository.DeleteStudent_Course(string studentID)
         {
             var student_course = Context.Student_Courses.Where(sc=>sc.StudentID==studentID.ToString());
@@ -49,6 +48,7 @@ namespace Admin_Panel_ITI.Repos
             }
             Context.SaveChanges() ;
         }   
+
         void IStudent_CourseRepository.DeleteStudent_CourseByCourseID(int courseID)
         {
             var student_course = Context.Student_Courses.Where(sc=>sc.CourseID== courseID);

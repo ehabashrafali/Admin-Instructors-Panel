@@ -31,19 +31,19 @@ document.getElementById('examForm').addEventListener('submit', function (event) 
     if (questionType === 'Paragraph') {
 
         var questionHtml = `
-                                                    <div class="question" id="${id}" style="position: relative;">
-                                                        <div>
-                                                            <h5 style="display: inline-block;">Question Body: </h5>
-                                                            <input type="textbox" value="${question}" style="border: none; font-size: 20px; color: blue;">
-                                                        </div>
-                                                        <div>
-                                                            <h5 style="display: inline-block;">Answer: </h5>
-                                                            <input type="textbox" value="${paragraphAnswer}" style="border: none; color: green;">
-                                                        </div>
+                        <div class="question" id="${id}" style="position: relative;">
+                            <div>
+                                <h5 style="display: inline-block;">Question Body: </h5>
+                                <input type="textbox" value="${question}" style="border: none; font-size: 20px; color: blue;">
+                            </div>
+                            <div>
+                                <h5 style="display: inline-block;">Answer: </h5>
+                                <input type="textbox" value="${paragraphAnswer}" style="border: none; color: green;">
+                            </div>
 
-                                                        <a class="btn btn-primary editBtn" onclick = "modalEditP(this)">Edit</a>
-                                                        <a class="btn btn-danger"  onclick = "modalDeleteP(this)">Delete</a>
-                                                    </div>
+                            <a class="btn btn-primary editBtn" onclick = "modalEditP(this)">Edit</a>
+                            <a class="btn btn-danger"  onclick = "modalDeleteP(this)">Delete</a>
+                        </div>
                         `;
 
         //display the created qesution with the correct answer
@@ -263,25 +263,25 @@ saveButton.addEventListener('click', function () {
     Mark = editMark.value;
 
     var newquestionHtml = `
-                                                    <div>
-                                                        <h5 style="display: inline-block;">Question Body: </h5>
-                                                        <span class="editable-paragraph" style="border: none; font-size: 20px; color: blue; word-break: break-all;">${question}</span>
-                                                    </div>
-                                                    <div>
-                                                        <h5 style="display: inline-block;">Choices: </h5>
-                                                        <span class="editable-paragraph" style="border: none; color: blue; word-break: break-all;">${optionsHtml}</span>
-                                                    </div>
-                                                    <div>
-                                                        <h5 style="display: inline-block;">Correct Answer: </h5>
-                                                        <span class="editable-paragraph"  style="border: none; color: green; word-break: break-all;">${correctAns}</span>
-                                                    </div>
-                                                <div>
-                                                    <h5 style="display: inline-block;">Grade: </h5>
-                                                    <span class="editable-paragraph"  style="border: none; color: blue; word-break: break-all;">${Mark}</span>
-                                                </div>
+                        <div>
+                            <h5 style="display: inline-block;">Question Body: </h5>
+                            <span class="editable-paragraph" style="border: none; font-size: 20px; color: blue; word-break: break-all;">${question}</span>
+                        </div>
+                        <div>
+                            <h5 style="display: inline-block;">Choices: </h5>
+                            <span class="editable-paragraph" style="border: none; color: blue; word-break: break-all;">${optionsHtml}</span>
+                        </div>
+                        <div>
+                            <h5 style="display: inline-block;">Correct Answer: </h5>
+                            <span class="editable-paragraph"  style="border: none; color: green; word-break: break-all;">${correctAns}</span>
+                        </div>
+                    <div>
+                        <h5 style="display: inline-block;">Grade: </h5>
+                        <span class="editable-paragraph"  style="border: none; color: blue; word-break: break-all;">${Mark}</span>
+                    </div>
 
-                                                    <a class="btn btn-primary" onclick = "modalEditM(this)">Edit</a>
-                                                    <a class="btn btn-danger"  onclick = "modalDeleteM(this)">Delete</a>
+                        <a class="btn btn-primary" onclick = "modalEditM(this)">Edit</a>
+                        <a class="btn btn-danger"  onclick = "modalDeleteM(this)">Delete</a>
                     `;
 
     document.getElementById(parentId).innerHTML = ''; //clear the old inner html
@@ -364,7 +364,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // Submit the whole Exam
-document.getElementById('submitExam').addEventListener('click', function () {
+document.getElementById('submitExam').addEventListener('click', function ()
+{
     if (QuestionsListObjects.length === 0) {
         alert("The exam must contain at least one question!");
         return;
