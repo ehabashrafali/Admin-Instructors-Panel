@@ -359,24 +359,24 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
 
 
-
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        
+        //[Route("GetD/{id?}")]
+        //public ActionResult Delete(int id)
+        //{
+        //    return View();
+        //}
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int MaterialID, int id, string name, int intakeID, int trackID, string intakeName, string trackName, int coursedayID, int coursedayNum)
+        public ActionResult Deletee(int MaterialID, int id, int intakeID, int trackID, int coursedayID)
         {
             if (ModelState.IsValid)
             {
                 courseDayMaterialRepo.DeleteCourseDayMaterial(MaterialID);
                 materialRepo.DeleteMaterial(MaterialID);
 
-                return RedirectToAction(nameof(Details), new { id, name, intakeID, trackID, intakeName, trackName, coursedayID, coursedayNum });
+                return RedirectToAction(nameof(Details), new { id, intakeID, trackID, coursedayID });
             }
 
             return View();
