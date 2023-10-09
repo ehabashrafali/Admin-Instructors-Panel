@@ -15,8 +15,5 @@ namespace Admin_Panel_ITI.Repos.Interfaces
         public void CreateExam_Std_Question(Exam_Std_Question esq);
 
         public List<ExamSubmitionsVM> GetExam(int examID);
-
-        //public int SumGrades(int examID , string studentID);
-
     }
 }

@@ -11,10 +11,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 {
     public class Exam_Std_QuestionRepoServices : IExam_Std_QuestionRepository
     {
-
         public MainDBContext Context { get; set; }
-
-
 
         public Exam_Std_QuestionRepoServices(MainDBContext context)
         {
@@ -87,19 +84,20 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         public List<ExamSubmitionsVM> GetExam(int examID)
         {
 
-            List<ExamSubmitionsVM> ESList = new(); 
-
             var result = Context.Exam_Std_Questions
-                .Where(se => se.ExamID == examID)
-                .GroupBy(se => new { se.StudentID, se.Student.AspNetUser.FullName})
-                .Select(g => new
+                .Where(esq => esq.ExamID == examID)
+                .GroupBy(esq => new { esq.StudentID, esq.Student.AspNetUser.FullName})
+                .Select(obj => new
                 {
-                    StudentFullName = g.Key.FullName,
-                    TotalGrade = g.Sum(se => se.StudentGrade)
+                    StudentFullName = obj.Key.FullName,
+                    TotalGrade = obj.Sum(esq => esq.StudentGrade)
                 })
                 .ToList();
 
-            foreach(var item in result)
+
+            List<ExamSubmitionsVM> ESList = new();
+
+            foreach (var item in result)
             {
                 ExamSubmitionsVM esM = new ExamSubmitionsVM()
                 {
@@ -111,13 +109,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             }
 
             return ESList;
-
         }
-
-        //public int SumGrades(int examID, string studentID)
-        //{
-        //    return Context.Exam_Std_Questions.Where(esq => esq.ExamID == examID & esq.StudentID == studentID)
-        //        .Select(esq => esq.StudentGrade).Sum(); 
-        //}
     }
 }

@@ -8,7 +8,7 @@ namespace Admin_Panel_ITI.Repos
     public class Student_SubmissionRepoServices : IStudent_SubmissionRepository
     {
 
-        public MainDBContext Context { get; set; }
+        private MainDBContext Context { get; set; }
 
         public Student_SubmissionRepoServices(MainDBContext context)
         {
@@ -19,24 +19,17 @@ namespace Admin_Panel_ITI.Repos
         {
             return Context.Student_Submissions.Count();
         }        
+
         int IStudent_SubmissionRepository.GetStudent_SubmissionNumber(int stdid)
         {
             return Context.Student_Submissions.Where(ss=>ss.StudentID==stdid.ToString()).Count();
         }
 
-        //Student_Submission IStudent_SubmissionRepository.GetStudent_Submission(int studentID, int courseDayID, int submissionID)
-        //{
-        //    var student_submission = Context.Student_Submissions.SingleOrDefault(ss => ss.StudentID == studentID.ToString() && ss.CourseDayID == courseDayID && ss.SubmessionID == submissionID);
-        //    return student_submission;
-        //}  
-        
         Student_Submission IStudent_SubmissionRepository.GetStudent_Submission(int studentID, int courseDayID)
         {
             var student_submission = Context.Student_Submissions.SingleOrDefault(ss => ss.StudentID == studentID.ToString() && ss.CourseDayID == courseDayID);
             return student_submission;
         }
-
-        
 
         List<Student_Submission> IStudent_SubmissionRepository.GetStudent_Submissions()
         {
@@ -84,17 +77,6 @@ namespace Admin_Panel_ITI.Repos
             Context.SaveChanges();
 
         }
-        //void IStudent_SubmissionRepository.DeleteStudent_SubmissionbySubmissionID(int submissionID)
-        //{
-        //    var student_submission = Context.Student_Submissions.Where(ss => ss.SubmessionID == submissionID);
-        //    foreach (var item in student_submission)
-        //    {
-        //        Context.Student_Submissions.Remove(item);
-        //    }
-        //    Context.SaveChanges();
-
-        //}
-
 
         void IStudent_SubmissionRepository.DeleteStudent_Submission(string studentID)
         {
@@ -106,12 +88,14 @@ namespace Admin_Panel_ITI.Repos
             Context.SaveChanges();
 
         }
+
         void IStudent_SubmissionRepository.CreateStudent_Submission(Student_Submission student_Submission)
         {
 
             Context.Student_Submissions.Add(student_Submission);
             Context.SaveChanges();
         }
+
         void IStudent_SubmissionRepository.CreateStudent_Submission(int stdID, int crsDayID, string submissionPath)
         {
        
@@ -138,7 +122,6 @@ namespace Admin_Panel_ITI.Repos
             }
             Context.SaveChanges();
         }
-
 
         void IStudent_SubmissionRepository.UpdateGrade(string studentId, int courseDayId, int grade)
         {

@@ -10,9 +10,6 @@ namespace Admin_Panel_ITI.Repos.Interfaces
         public List<Instructor_Course> GetCoursesbyInstructorID(int instructorID);
         public List<Instructor_Course> GetInstructor_Courses();
         public void UpdateInstructor_Course(int CourseID, int intstructorID, Instructor_Course instructor_course);
-
-
-        //public void DeleteInstructor_Course(int courseID, int instructorID);
         public void DeleteInstructor_Course( string instructorID);
         public void DeleteInstructor_CourseByCourseID( int courseID);
         public void DeleteInstructor_Course(int courseID, string instructorID);
@@ -24,7 +21,6 @@ namespace Admin_Panel_ITI.Repos.Interfaces
 
 
         /*---------------------------------------------- Instructor Repos -----------------------------------------------*/
-
         public Instructor_Course GetInstructorTeachCourse(int courseId);
 
     }

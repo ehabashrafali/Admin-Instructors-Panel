@@ -15,8 +15,6 @@ namespace Admin_Panel_ITI.Repos
         public void UpdateCourse(int CourseID, Course course);
         public void DeleteCourse(int courseID);
         public void CreateCourse(Course course);
-
-
         public void DeleteCourse(List<int> courseids);
 
 

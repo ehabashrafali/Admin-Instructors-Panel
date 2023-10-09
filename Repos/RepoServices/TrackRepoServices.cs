@@ -10,14 +10,14 @@ namespace Admin_Panel_ITI.Repos
     {
         private readonly IStudentRepository _studentRepository;
         private readonly IIntake_Track_CourseRepository _intake_Track_CourseRepository;
-        public MainDBContext Context { get; set; }
+        private MainDBContext Context { get; set; }
+
         public TrackRepoServices( MainDBContext context, IStudentRepository studentRepository,  IIntake_Track_CourseRepository intake_Track_CourseRepository)
         {
             Context = context;
             _studentRepository = studentRepository;
             _intake_Track_CourseRepository = intake_Track_CourseRepository;
         }
-
 
         Track ITrackRepository.getTrackbyID(int trackID)
         {
@@ -83,7 +83,6 @@ namespace Admin_Panel_ITI.Repos
 
         }
 
-        // Check should we update virtual navigation properties 
         void ITrackRepository.UpdateTrack(int trackID, Track track)
         {
             var trackUpdated  = Context.Tracks.FirstOrDefault(t=>t.ID == trackID);
@@ -187,7 +186,6 @@ namespace Admin_Panel_ITI.Repos
 
 
 
-
         /*---------------------------------------------- Instructor Services -----------------------------------------------*/
 
         //get the tracks based on specific intake, and specific manager.
@@ -200,7 +198,6 @@ namespace Admin_Panel_ITI.Repos
                  select t).Distinct()
                  .ToList();
         }
-
 
 
         //get the tracks a specific Instructor teach in, in a specific intake
@@ -217,6 +214,7 @@ namespace Admin_Panel_ITI.Repos
 
             return query;
         }
+
 
         string ITrackRepository.getTrackName(int trackID)
         {

@@ -9,7 +9,8 @@ namespace Admin_Panel_ITI.Repos
     {
         private readonly IStudentRepository studentRepository;
         private readonly IIntake_Track_CourseRepository intake_Track_CourseRepository;
-        public MainDBContext Context { get; set; }
+        private MainDBContext Context { get; set; }
+
         public IntakeRepoServices(
             MainDBContext context,
             IStudentRepository studentRepository,
@@ -25,19 +26,6 @@ namespace Admin_Panel_ITI.Repos
             Context.Intakes.Add(intake);
             Context.SaveChanges();
         }
-
-        //void IIntakeRepository.DeleteIntake(int intakeID)
-        //{
-        //    var intake_students = studentRepository.getStudentsbyIntakeID(intakeID);
-
-        //    if(intake_students.Count() == 0)
-        //    {
-        //        intake_TrackRepository.DeleteIntake_Track(intakeID);
-        //        var intake = Context.IntakesIDs.FirstOrDefault(i => i.ID == intakeID);
-        //        Context.IntakesIDs.Remove(intake);
-        //    }
-        //}
-
 
         public Intake getIntakebyID(int intakeID)
         {
@@ -56,8 +44,6 @@ namespace Admin_Panel_ITI.Repos
                                  .Include(c => c.IntakeTrackCourse)
                                  .ToList();
         }
-
-
 
         void IIntakeRepository.UpdateIntake(int IntakeID, Intake intake)
         {

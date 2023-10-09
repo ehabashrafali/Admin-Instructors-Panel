@@ -15,20 +15,24 @@ namespace Admin_Panel_ITI.Repos
         private readonly IInstructor_CourseRepository instructor_CourseRepository;
         private readonly IStudent_CourseRepository student_CourseRepository;
         private readonly ICourse_Day_MaterialRepository course_Day_MaterialRepository;
-        private readonly ICourseDayRepository courseDayRepository;
-        private readonly IMaterialRepository materialRepository;
+        //private readonly ICourseDayRepository courseDayRepository;
+        //private readonly IMaterialRepository materialRepository;
+        private MainDBContext Context { get; set; }
 
-        public MainDBContext Context { get; set; }
-
-        public CourseRepoServices(MainDBContext context, IIntake_Track_CourseRepository Intake_track_CourseRepository, IInstructor_CourseRepository instructor_CourseRepository, IStudent_CourseRepository student_CourseRepository, ICourse_Day_MaterialRepository course_Day_MaterialRepository, ICourseDayRepository courseDayRepository, IMaterialRepository materialRepository)
+        public CourseRepoServices(MainDBContext context,
+            IIntake_Track_CourseRepository Intake_track_CourseRepository, 
+            IInstructor_CourseRepository instructor_CourseRepository, 
+            IStudent_CourseRepository student_CourseRepository,
+            ICourse_Day_MaterialRepository course_Day_MaterialRepository, 
+            ICourseDayRepository courseDayRepository, IMaterialRepository materialRepository)
         {
             Context = context;
             this.intake_track_CourseRepository = Intake_track_CourseRepository;
             this.instructor_CourseRepository = instructor_CourseRepository;
             this.student_CourseRepository = student_CourseRepository;
             this.course_Day_MaterialRepository = course_Day_MaterialRepository;
-            this.courseDayRepository = courseDayRepository;
-            this.materialRepository = materialRepository;
+            //this.courseDayRepository = courseDayRepository;
+            //this.materialRepository = materialRepository;
         }
 
         void ICourseRepository.CreateCourse(Course course)
@@ -132,8 +136,6 @@ namespace Admin_Panel_ITI.Repos
 
             return count;
         }
-
-
         List<Course> ICourseRepository.GetCourses2(int pageNumber, int pageSize)
         {
             if (pageNumber < 1)
@@ -242,6 +244,7 @@ namespace Admin_Panel_ITI.Repos
 
             return query;
         }
+
         List<Course> ICourseRepository.GetCoursesbyTrackID(int trackID, int pageNumber, int pageSize)
         {
             if (pageNumber < 1)
@@ -275,6 +278,7 @@ namespace Admin_Panel_ITI.Repos
             return query2;
 
         }
+
         List<Intake_Track_Course> ICourseRepository.GetCoursesbyIntakeID(int intakeid, int pageNumber, int pageSize)
         {
             if (pageNumber < 1)

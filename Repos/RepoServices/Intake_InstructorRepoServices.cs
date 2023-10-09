@@ -8,8 +8,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 {
     public class Intake_InstructorRepoServices : IIntake_InstructorRepository
     {
-        public MainDBContext Context { get; set; }
-
+        private MainDBContext Context { get; set; }
 
         public Intake_InstructorRepoServices(MainDBContext context)
         {
@@ -31,10 +30,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
-
-        
-
-        //---// //Admin
         public void AddIntake_Instructor(int IntakeID, string instructorID)
         {
             Intake_Instructor intake_Instructor = new Intake_Instructor()
@@ -63,6 +58,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.Intake_Instructors.Remove(ii);
             Context.SaveChanges();
         }
+
         public List<Intake_Instructor> getInstructorbyIntakeID(int intakeID, int pageNumber, int pageSize)
         {
             if (pageNumber < 1)

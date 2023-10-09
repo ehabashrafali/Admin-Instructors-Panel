@@ -7,7 +7,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
 {
     public class Instructor_CourseRepoServices : IInstructor_CourseRepository
     {
-        public MainDBContext Context { get; set; }
+        private MainDBContext Context { get; set; }
 
         public Instructor_CourseRepoServices(MainDBContext context)
         {
@@ -66,8 +66,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             return instructor_courses;
         }
 
-       
-
         int IInstructor_CourseRepository.GetInstructor_CourseNumber()
         {
             return Context.Instructor_Courses.Count();
@@ -77,6 +75,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         {
             return Context.Instructor_Courses.Where(ic=>ic.InstructorID==instructorID.ToString()).ToList().Count(); 
         }        
+
         int IInstructor_CourseRepository.GetInstructor_CourseNumberbyCourseID(int courseID)
         {
             return Context.Instructor_Courses.Where(ic=>ic.CourseID== courseID).ToList().Count(); 
@@ -104,7 +103,6 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             }
             Context.SaveChanges();
         }
-
 
 
 
