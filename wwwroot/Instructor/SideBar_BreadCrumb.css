@@ -114,6 +114,13 @@
     padding-left: 24px;
 }
 
+.sideBarEllipse {
+    text-overflow: ellipsis;
+    max-width: 110px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 /*======================================*/
 /*======================================*/
 /*======================================*/
