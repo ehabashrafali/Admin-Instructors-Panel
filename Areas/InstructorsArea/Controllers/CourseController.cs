@@ -36,14 +36,14 @@ namespace Studebt_Panel_ITI.Areas.InstructorsArea.Controllers
         [Route("DFM/{id?}/{iid?}")]
         public ActionResult DetailsForManager(int id, int iid)
         {
-            ViewBag.TrackName = trackRepo.getTrackName(iid); 
-            ViewBag.IntakeName = intakeRepo.getIntakeName(id);
-            ViewBag.IntakeID = id;
-            ViewBag.TrackID = iid;
+            ViewBag.TrackName = trackRepo.getTrackName(id); 
+            ViewBag.IntakeName = intakeRepo.getIntakeName(iid);
+            ViewBag.IntakeID = iid;
+            ViewBag.TrackID = id;
 
             List<InstructorCourseVM> instructorCourseVM = new(); //list of the new view model
 
-            var AllcoursesInTrack = icourseRepo.GetCoursesByIntakeTrackID(id, iid); //all courses in a specific track and intake
+            var AllcoursesInTrack = icourseRepo.GetCoursesByIntakeTrackID(iid, id); //all courses in a specific track and intake
 
             foreach (var course in AllcoursesInTrack)
             {

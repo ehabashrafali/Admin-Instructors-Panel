@@ -230,3 +230,16 @@
     padding: 0 10px;
 }
 
+/*==============================================*/
+/*==============================================*/
+/*==============================================*/
+/*====================taher updates==============*/
+/*instructor-area-course-day-create*/
+.instructor-area-course-day-create .r1 h3 {
+    padding: 30px 0;
+}
+
+.instructor-area-course-day-create .content-container {
+    display: flex;
+    justify-content: center;
+}
