@@ -31,19 +31,15 @@
 
     </head>
     <body>
-        <div class="">
+    <div class=" instructor-area-exam-details">
             <div class="row">
 
                 <!-- Sidebar -->
-                <div class="col-md-2 sidebar">
-                    <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary" style="width: 280px; height: 93vh;">
-                        <span class="d-flex align-items-center mb-3 mb-md-0 me-md-auto ">
-                            <span class="nav-title">Navigation</span>
-                        </span>
-                        <hr />
+                <div class="col-4 col-md-2 sidebar">
+                    <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary">
                         <ul class="nav nav-pills flex-column mb-auto">
                             <li class="nav-item navs1">
-                                <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index">
+                                <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index" title="@intakeName">
                                     <span class="button__icon-wrapper">
                                         <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
                                             <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
@@ -53,12 +49,14 @@
                                             <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
                                         </svg>
                                     </span>
-                                    @intakeName
+                                <span class="spannn">
+                                    @intakeName Track
+                                </span>
                                 </a>
                             </li>
 
                             <li class="nav-item navs2">
-                                <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@intakeID" style="--clr: #7808d0" class="button">
+                                <a title="@trackName" asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@intakeID" style="--clr: #7808d0" class="button">
                                     <span class="button__icon-wrapper">
                                         <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
                                             <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
@@ -68,7 +66,9 @@
                                             <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
                                         </svg>
                                     </span>
+                                <span class="spannn">
                                     @trackName
+                                </span>
                                 </a>
                             </li>
 
@@ -77,7 +77,7 @@
                                    asp-action="DetailsForTeacher"
                                    asp-route-intakeId="@intakeID"
                                    asp-route-trackId="@trackID"
-                                   style="--clr: #7808d0" class="button">
+                               style="--clr: #7808d0" class="button" title="@courseName">
                                     <span class="button__icon-wrapper">
                                         <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
                                             <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
@@ -87,7 +87,9 @@
                                             <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
                                         </svg>
                                     </span>
+                                <span class="spannn">
                                     @courseName
+                                </span>
                                 </a>
                             </li>
 
@@ -98,7 +100,7 @@
                                asp-route-intakeID="@intakeID"
                                asp-route-trackID="@trackID"
                                asp-route-courseId="@crsId"
-                               style="--clr: #7808d0" class="button">
+                               style="--clr: #7808d0" class="button" title="@examName">
                                 <span class="button__icon-wrapper">
                                     <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
                                         <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
@@ -108,28 +110,27 @@
                                         <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
                                     </svg>
                                 </span>
-                                @examName Exam
+                                <span class="spannn">
+                                    @examName Exam
+                                </span>
                             </a>
                         </li>
 
                             <li class="nav-item navs3">
-                            <p style="border-radius:50px; font-size: 15px;">Students Exam Submission</p>
+                            <p title="Students Exam Submission" style="border-radius:50px; font-size: 15px; text-align: center; ">Students Exam Submission</p>
                             </li>
 
                         </ul>
                     </div>
                 </div>
                 <!-- Main (tales + btns) -->
-                <div class="col-md-10 text-center content">
+                <div class="col-8 col-md-10 text-center content">
                     <div class="container-fluid">
 
-                        <div class="row col-md-12">
                             <div class="r1">
-                                <h3 style="padding-left: 33px;">Exams Card</h3>
+                                <h3>Exams Card</h3>
                             </div>
-                        </div>
 
-                        <div class="row col-md-11">
                             <table class="table table-hover" id="myTable">
                                 <thead class="table-secondary">
                                     <tr>
@@ -160,7 +161,6 @@
                                     }
                                 </tbody>
                             </table>
-                        </div>
                     </div>
                 </div>
 

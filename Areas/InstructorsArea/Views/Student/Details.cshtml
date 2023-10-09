@@ -153,11 +153,11 @@
     <div class=" instructor-area-student-details">
         <div class="row">
             <!-- Sidebar -->
-            <div class="col-4 col-md-3 sidebar">
+            <div class="col-4 col-md-2 sidebar">
                 <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary">
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item navs1">
-                            <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index">
+                            <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index" title="@ViewBag.IntakeName">
                                 <span class="button__icon-wrapper">
                                     <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
                                         <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
@@ -167,11 +167,13 @@
                                         <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
                                     </svg>
                                 </span>
-                                @ViewBag.IntakeName
+                                <span class="spannn">
+                                    @ViewBag.IntakeName
+                                </span>
                             </a>
                         </li>
                         <li class="nav-item navs2">
-                            <a style="--clr: #7808d0" class="button" asp-controller="Track" asp-action="DetailsForManager" asp-route-id="@ViewBag.IntakeID">
+                            <a title="@ViewBag.TrackName" style="--clr: #7808d0" class="button" asp-controller="Track" asp-action="DetailsForManager" asp-route-id="@ViewBag.IntakeID">
                                 <span class="button__icon-wrapper">
                                     <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
                                         <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
@@ -181,7 +183,10 @@
                                         <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
                                     </svg>
                                 </span>
-                                @ViewBag.TrackName Track
+                                <span class="spannn">
+                                    @ViewBag.TrackName Track
+                                </span>
+                                
                             </a>
                         </li>
                         <li class="nav-item navs3">
@@ -192,7 +197,7 @@
             </div>
 
             <!-- Main (tales + btns) -->
-            <div class="col-8 col-md-9 text-center content">
+            <div class="col-8 col-md-10 text-center content">
                 <div class="container-fluid">
                         <div class="r1">
                             <h3>Students Table</h3>

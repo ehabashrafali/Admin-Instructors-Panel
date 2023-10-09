@@ -247,3 +247,20 @@ button#submitExam:hover {
     margin-left: 3px;
 }
 
+/*taher updates*/
+@media (min-width: 425px) and (max-width: 600px) {
+    .container
+    {
+        width: 350px;
+    }
+
+    .answer input[type="text"] {
+        width: 240px;
+    }
+    .link
+    {
+        width: 350px;
+        font-size: 16px;
+    }
+}
+    

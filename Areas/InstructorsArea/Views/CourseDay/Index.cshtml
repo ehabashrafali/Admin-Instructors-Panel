@@ -163,11 +163,11 @@
     <div class=" instructor-area-course-day-index">
         <div class="row">
             <!-- Sidebar -->
-            <div class="col-4 col-md-3 sidebar">
+            <div class="col-4 col-md-2 sidebar">
                 <div class="d-flex flex-column flex-shrink-0 p-lg-4 bg-body-tertiary">
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item navs1">
-                            <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index">
+                            <a style="--clr: #7808d0" class="button" asp-controller="Intake" asp-action="Index" title="@IntakeName">
                                 <span class="button__icon-wrapper">
                                     <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
                                         <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
@@ -177,11 +177,13 @@
                                         <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
                                     </svg>
                                 </span>
-                                @IntakeName
+                                <span class="spannn">
+                                    @IntakeName
+                                </span>
                             </a>
                         </li>
                         <li class="nav-item navs2">
-                            <a asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@IntakeID" style="--clr: #7808d0" class="button">
+                            <a title="@TrackName" asp-controller="Track" asp-action="DetailsForTeacher" asp-route-id="@IntakeID" style="--clr: #7808d0" class="button">
                                 <span class="button__icon-wrapper">
                                     <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
                                         <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
@@ -191,7 +193,9 @@
                                         <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
                                     </svg>
                                 </span>
-                                @TrackName
+                                <span class="spannn">
+                                    @TrackName
+                                </span>
                             </a>
                         </li>
                         <li class="nav-item navs2">
@@ -199,7 +203,7 @@
                                asp-action="DetailsForTeacher"
                                asp-route-intakeId="@IntakeID"
                                asp-route-trackId="@TrackID"
-                               style="--clr: #7808d0" class="button">
+                               style="--clr: #7808d0" class="button" title="@courseName">
                                 <span class="button__icon-wrapper">
                                     <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
                                         <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
@@ -209,7 +213,9 @@
                                         <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
                                     </svg>
                                 </span>
-                                @courseName
+                                <span class="spannn">
+                                    @courseName
+                                </span>
                             </a>
                         </li>
                         <li class="nav-item navs3">
@@ -219,7 +225,7 @@
                 </div>
             </div>
             <!--btns-->
-            <div class="col-8 col-md-9 text-center content">
+            <div class="col-8 col-md-10 text-center content">
                 <div class="container-fluid">
                         <div class="r1">
                             <h3>Course Days Cards</h3>
