@@ -1,4 +1,13 @@
-﻿@model Admin_Panel_ITI.Models.Intake
+﻿@model Intake
+
+<style>
+    .validationWrapper {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+</style>
 
 <div class="col-9 col-md-10 col-sm-9">
 <div class="container-fluid edit-intake">
@@ -6,27 +15,49 @@
 
     <form id="myformcourse" asp-controller="Intake" asp-action="Edit">
 
-        <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text">Intake Name</span>
-            <input asp-for="Name" class="form-control" aria-label="Sizing example input" placeholder="Enter intake name">
-        </div>
-        <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text">Start Date</span>
-            <input asp-for="StartDate" class="form-control" aria-label="Sizing example input" placeholder="Enter start date">
-        </div>
-        <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text">End Date</span>
-            <input asp-for="EndDate" class="form-control" aria-label="Sizing example input" placeholder="Enter end date">
-        </div>
-        <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text">Duration</span>
-            <input asp-for="Duration" class="form-control" aria-label="Sizing example input" placeholder="Enter intake duration in months">
-        </div>
-        <div class="input-group mb-3 input-group-lg" style="margin-top: 16px;">
-            <span class="input-group-text">Creation Date</span>
-            <input asp-for="CreationDate" class="form-control" aria-label="Sizing example input" placeholder="Enter course creation date">
-        </div>
+            <div class="validationWrapper">
+                <div class="input-group mb-2 input-group-lg" style="margin-top: 16px;">
+                    <span class="input-group-text">Intake Name</span>
+                    <input asp-for="Name" class="form-control" aria-label="Sizing example input" placeholder="Enter intake name">
+                </div>
+                <span asp-validation-for="Name" class="text-danger" style="padding-left:10px; width:auto"></span>
+            </div>
 
+
+            <div class="validationWrapper">
+                <div class="input-group mb-2 input-group-lg" style="margin-top: 16px;">
+                    <span class="input-group-text">Start Date</span>
+                    <input asp-for="StartDate" class="form-control" aria-label="Sizing example input" placeholder="Enter start date">
+                </div>
+                <span asp-validation-for="StartDate" class="text-danger" style="padding-left:10px; width:auto;"></span>
+            </div>
+
+
+            <div class="validationWrapper">
+                <div class="input-group mb-2 input-group-lg" style="margin-top: 16px;">
+                    <span class="input-group-text">End Date</span>
+                    <input asp-for="EndDate" class="form-control" aria-label="Sizing example input" placeholder="Enter end date">
+                </div>
+                <span asp-validation-for="EndDate" class="text-danger" style="padding-left:10px; width:auto"></span>
+            </div>
+
+
+            <div class="validationWrapper">
+                <div class="input-group mb-2 input-group-lg" style="margin-top: 16px;">
+                    <span class="input-group-text">Duration</span>
+                    <input asp-for="Duration" class="form-control" aria-label="Sizing example input" placeholder="Enter intake duration in months">
+                </div>
+                <span asp-validation-for="Duration" class="text-danger" style="padding-left:10px; width:auto"></span>
+            </div>
+
+
+            <div class="validationWrapper">
+                <div class="input-group mb-2 input-group-lg" style="margin-top: 16px;">
+                    <span class="input-group-text">Creation Date</span>
+                    <input asp-for="CreationDate" class="form-control" aria-label="Sizing example input" placeholder="Enter course creation date">
+                </div>
+                <span asp-validation-for="CreationDate" class="text-danger" style="padding-left:10px; width:auto"></span>
+            </div>
 
         <div class="form-group">
             <input type="submit" value="Edit Intake" class="btn btn-primary" />
@@ -36,3 +67,5 @@
 </div>
 
 
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

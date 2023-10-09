@@ -1,0 +1,41 @@
+﻿
+.validationWrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+
+
+.validation-error {
+    color: #ff0000; 
+    display: block;
+    list-style: none;
+    opacity: 0; /* Initially hidden */
+    animation: fadeIn 0.5s ease-in-out forwards; /* Animation for fading in */
+    margin-left: 5px;
+    transform: translateY(-100%); /* Initially positioned above the element */
+    transition: transform 1.5s ease-in-out; /* Animation for sliding in */
+    font-size:12px;
+}
+
+    .validation-error ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .validation-error li {
+        margin-bottom: 5px;
+    }
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

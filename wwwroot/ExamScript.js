@@ -1,16 +1,8 @@
-﻿
-//// Initialize CodeMirror
-//var editor = CodeMirror.fromTextArea(document.getElementById("questionBody"), {
-//    mode: "html", // Set the code language mode
-//    lineNumbers: true,   // Enable line numbers
-//    theme: "dracula"    // Choose a code editor theme
-//});
-
-
-
-/*  Add_Question Logic */
+﻿/*  Add_Question Logic */
 var id = 1;
 var openPopupButton = [];
+var QuestionsListObjects = [];
+var correctAns;
 document.getElementById('examForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -20,33 +12,39 @@ document.getElementById('examForm').addEventListener('submit', function (event) 
     if (question.length !== 0) {
         question = question.charAt(question.length - 1) == "?" ? question : question + " ?";
     }
-    var paragraphAnswer = document.querySelector('.question textarea[name="questionAns"]').value; //paragraph answer
     var options = document.querySelectorAll('.question input[name="option"]'); //options: multiple values
     var correctOption = document.querySelector('.question input[name="correctOption"]:checked'); //correct answer
+    var mark = document.getElementById('Mark').value; //Mark
 
     if (question.length === 0) {
-        alert('Please enter a question body');
+        alert('Please enter a question body!');
+        return;
+    }
+
+    if (mark === null) {
+        alert('Please enter a grade for your question!');
         return;
     }
 
 
+    var optionsHtml, isOptionsEmpty;
     if (questionType === 'Paragraph') {
 
         var questionHtml = `
-                                    <div class="question" id="${id}" style="position: relative;">
-                                        <div>
-                                            <h5 style="display: inline-block;">Question Body: </h5>
-                                            <input type="textbox" value="${question}" style="border: none; font-size: 20px; color: blue;">
-                                        </div>
-                                        <div>
-                                            <h5 style="display: inline-block;">Answer: </h5>
-                                            <input type="textbox" value="${paragraphAnswer}" style="border: none; color: green;">
-                                        </div>
+                                                    <div class="question" id="${id}" style="position: relative;">
+                                                        <div>
+                                                            <h5 style="display: inline-block;">Question Body: </h5>
+                                                            <input type="textbox" value="${question}" style="border: none; font-size: 20px; color: blue;">
+                                                        </div>
+                                                        <div>
+                                                            <h5 style="display: inline-block;">Answer: </h5>
+                                                            <input type="textbox" value="${paragraphAnswer}" style="border: none; color: green;">
+                                                        </div>
 
-                                        <a class="btn btn-primary editBtn" onclick = "modalEditP(this)">Edit</a>
-                                        <a class="btn btn-danger"  onclick = "modalDeleteP(this)">Delete</a>
-                                    </div>
-                    `;
+                                                        <a class="btn btn-primary editBtn" onclick = "modalEditP(this)">Edit</a>
+                                                        <a class="btn btn-danger"  onclick = "modalDeleteP(this)">Delete</a>
+                                                    </div>
+                        `;
 
         //display the created qesution with the correct answer
         document.getElementById('examQuestions').insertAdjacentHTML('beforeend', questionHtml);
@@ -56,49 +54,53 @@ document.getElementById('examForm').addEventListener('submit', function (event) 
         document.querySelector('.question textarea[name="questionAns"]').value = '';
     }
     else {
-        var isOptionsEmpty = true;
-        var optionsHtml = '';
+        isOptionsEmpty = true;
+        optionsHtml = '';
 
         options.forEach(function (option) {
             if (option.value.trim() !== '') {
                 isOptionsEmpty = false;
-                optionsHtml += '' + option.value + ', ';
+                optionsHtml += '' + option.value + ',';
             }
         });
 
-        if (isOptionsEmpty) {
-            alert('Please enter at least one answer choice.');
+        if (isOptionsEmpty || optionsHtml.split(',').length <= 2) {
+            alert('Please enter at least two choices!');
             return;
         }
 
         if (correctOption === null) {
-            alert('Please select the correct answer choice.');
+            alert('Please select the correct answer choice!');
             return;
         }
 
-        var correctAns = correctOption.parentElement.querySelector('input[name="option"]').value;
+        correctAns = correctOption.parentElement.querySelector('input[name="option"]').value;
 
 
         /*appear after question is created*/
         var questionHtml2 = `
-                            <div class="question" id="${id}" style="position: relative;">
-                                <div>
-                                    <h5 style="display: inline-block;">Question Body: </h5>
-                                    <span class="editable-paragraph" style="border: none; font-size: 20px; color: blue; word-break: break-all;">${question}</span>
-                                </div>
-                                <div>
-                                    <h5 style="display: inline-block;">Choices: </h5>
-                                    <span class="editable-paragraph" style="border: none; color: blue; word-break: break-all;">${optionsHtml}</span>
-                                </div>
-                                <div>
-                                    <h5 style="display: inline-block;">Correct Answer: </h5>
-                                    <span class="editable-paragraph"  style="border: none; color: green; word-break: break-all;">${correctAns}</span>
-                                </div>
+                                            <div class="question" id="${id}" style="position: relative;">
+                                                <div>
+                                                    <h5 style="display: inline-block;">Question Body: </h5>
+                                                    <span class="editable-paragraph" style="border: none; font-size: 20px; color: blue; word-break: break-all;">${question}</span>
+                                                </div>
+                                                <div>
+                                                    <h5 style="display: inline-block;">Choices: </h5>
+                                                    <span class="editable-paragraph" style="border: none; color: blue; word-break: break-all;">${optionsHtml}</span>
+                                                </div>
+                                                <div>
+                                                    <h5 style="display: inline-block;">Correct Answer: </h5>
+                                                    <span class="editable-paragraph"  style="border: none; color: green; word-break: break-all;">${correctAns}</span>
+                                                </div>
+                                                <div>
+                                                    <h5 style="display: inline-block;">Grade: </h5>
+                                                    <span class="editable-paragraph"  style="border: none; color: blue; word-break: break-all;">${mark}</span>
+                                                </div>
 
-                                <a class="btn btn-primary" onclick = "modalEditM(this)">Edit</a>
-                                <a class="btn btn-danger"  onclick = "modalDeleteM(this)">Delete</a>
-                            </div>
-           `;
+                                                <a class="btn btn-primary" onclick = "modalEditM(this)">Edit</a>
+                                                <a class="btn btn-danger"  onclick = "modalDeleteM(this)">Delete</a>
+                                            </div>
+                `;
 
 
         document.getElementById('examQuestions').insertAdjacentHTML('beforeend', questionHtml2);
@@ -114,34 +116,44 @@ document.getElementById('examForm').addEventListener('submit', function (event) 
         //reset the radio btn input to unchecked
         correctOption.checked = false;
 
-        //enable submit exam btn
-        document.getElementById('submitExam').disabled = false;
     }
 
-    id++;
 
+
+    var QuestionObject =
+    {
+        ID: id,
+        Type: "MCQ",
+        Body: question + " " + optionsHtml,
+        Answer: correctAns,
+        Mark: mark,
+    }
+
+    QuestionsListObjects.push(QuestionObject);
+
+
+    id++;
 });
 
 //--------------------------------------------------------------------------------------------------------------//
 
 
-/* Edit_Question Logic */
+                    /* Edit Question Logic */
 
+
+//Card elements
 const cardModal = new bootstrap.Modal(document.getElementById('cardModal'));
 const editQestionBody = document.getElementById('editableTextarea');
+const editQuestionChoices = document.getElementById('editableInput1');
 const editCorrectAns = document.getElementById('editableInput2');
+const editMark = document.getElementById('EditMark');
 const saveButton = document.getElementById('saveButton');
 
 
 
-var parentId, question, optionsHtml, correctAns;
-function modalEditM(btn) //Edit MCQ Question
-{
-    // Get references to the modal and elements
-
-    const editQuestionChoices = document.getElementById('editableInput1');
-
-
+//Edit MCQ Question
+var parentId, question, optionsHtml, correctAns, Mark;
+function modalEditM(btn) {
     const clickedButton = this.event.target;
 
     // Find the parent element of the clicked button
@@ -155,17 +167,21 @@ function modalEditM(btn) //Edit MCQ Question
     question = parentDiv.children[0].querySelector('span').innerHTML;
     optionsHtml = parentDiv.children[1].querySelector('span').innerHTML;
     correctAns = parentDiv.children[2].querySelector('span').innerHTML;
+    Mark = parentDiv.children[3].querySelector('span').innerHTML;
 
 
     // Show the data of the question in the card
     editQestionBody.value = question;
     editQuestionChoices.value = optionsHtml;
     editCorrectAns.value = correctAns;
+    editMark.value = Mark;
+
 
     cardModal.show();
 }
 
 
+//Delete MCQ Question
 function modalDeleteM(btn) {
     const clickedButton = this.event.target;
 
@@ -178,14 +194,20 @@ function modalDeleteM(btn) {
     }
 
     document.getElementById(parentId).remove();
+
+
+    QuestionsListObjects.splice(parentId,1);
+
+
+    id--;
 }
 
 
 
 
 
-function modalEditP(btn) //Edit Paragraph Question
-{
+//Edit Paragraph Question
+function modalEditP(btn) {
     const cardModal = new bootstrap.Modal(document.getElementById('cardModalP'));
     const editQestionBody = document.getElementById('editableTextareaP');
     const editCorrectAns = document.getElementById('editableInput2P');
@@ -217,41 +239,66 @@ function modalEditP(btn) //Edit Paragraph Question
 
 
 
-
-
-
-
 // Event listener for the "Save" btn
-
 saveButton.addEventListener('click', function () {
-    //save the new values to the initial values
-    var newquestion = editQestionBody.value;
-    var newoptionsHtml = editableInput1.value;
-    var newcorrectAns = editableInput2.value;
+
+    question = editQestionBody.value;
+    /* optionsHtml = editableInput1.value;*/
+    optionsHtml = editQuestionChoices.value;
+    var SplitedOptions = optionsHtml.split(',');
+    var isEqual = false;
+    for (let i = 0; i < SplitedOptions.length; i++) {
+        if (SplitedOptions[i] === editCorrectAns.value) {
+            correctAns = editCorrectAns.value;
+            isEqual = true;
+            break;
+        }
+    }
+
+    if (isEqual == false) {
+        alert(`"${editableInput2.value}" is not one of your question choices! `);
+        return;
+    }
+
+    Mark = editMark.value;
 
     var newquestionHtml = `
-                                    <div>
-                                        <h5 style="display: inline-block;">Question Body: </h5>
-                                        <span class="editable-paragraph" style="border: none; font-size: 20px; color: blue; word-break: break-all;">${newquestion}</span>
-                                    </div>
-                                    <div>
-                                        <h5 style="display: inline-block;">Choices: </h5>
-                                        <span class="editable-paragraph" style="border: none; color: blue; word-break: break-all;">${newoptionsHtml}</span>
-                                    </div>
-                                    <div>
-                                        <h5 style="display: inline-block;">Correct Answer: </h5>
-                                        <span class="editable-paragraph"  style="border: none; color: green; word-break: break-all;">${newcorrectAns}</span>
-                                    </div>
+                                                    <div>
+                                                        <h5 style="display: inline-block;">Question Body: </h5>
+                                                        <span class="editable-paragraph" style="border: none; font-size: 20px; color: blue; word-break: break-all;">${question}</span>
+                                                    </div>
+                                                    <div>
+                                                        <h5 style="display: inline-block;">Choices: </h5>
+                                                        <span class="editable-paragraph" style="border: none; color: blue; word-break: break-all;">${optionsHtml}</span>
+                                                    </div>
+                                                    <div>
+                                                        <h5 style="display: inline-block;">Correct Answer: </h5>
+                                                        <span class="editable-paragraph"  style="border: none; color: green; word-break: break-all;">${correctAns}</span>
+                                                    </div>
+                                                <div>
+                                                    <h5 style="display: inline-block;">Grade: </h5>
+                                                    <span class="editable-paragraph"  style="border: none; color: blue; word-break: break-all;">${Mark}</span>
+                                                </div>
 
-                                    <a class="btn btn-primary" onclick = "modalEditM(this)">Edit</a>
-                                    <a class="btn btn-danger"  onclick = "modalDeleteM(this)">Delete</a>
-        `;
+                                                    <a class="btn btn-primary" onclick = "modalEditM(this)">Edit</a>
+                                                    <a class="btn btn-danger"  onclick = "modalDeleteM(this)">Delete</a>
+                    `;
 
     document.getElementById(parentId).innerHTML = ''; //clear the old inner html
     document.getElementById(parentId).insertAdjacentHTML('beforeend', newquestionHtml); //add the new html
 
     // Close the modal
     cardModal.hide();
+
+
+    //edit the question in the list that will be sent ot the database too
+    for (let i = 0; i < QuestionsListObjects.length; i++) {
+        if (QuestionsListObjects[i].ID == parentId) {
+            QuestionsListObjects[i].Body = question + " " + optionsHtml;
+            QuestionsListObjects[i].correctAns = correctAns;
+            QuestionsListObjects[i].Mark = Mark;
+        }
+    }
 });
 
 
@@ -282,6 +329,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
+
     let counter = 0;
 
     // Event listener for adding a choice
@@ -290,19 +338,20 @@ document.addEventListener("DOMContentLoaded", function () {
             const choiceDiv = document.createElement("div");
             choiceDiv.classList.add("form-group", "choice");
             choiceDiv.innerHTML = `
-                                                        <span class="delete-choice">x</span> &nbsp;
-                                                        <span class="add-choice">+</span>
-                                                        <div class="answer">
-                                                            <input type="text" class="form-control" placeholder="Choice" name="option">
-                                                            <input type="radio" name="correctOption" required  id="correctOption">
-                                                            <span class="tooltiptext">Correct Answer</span>
-                                                        </div>
-                                                        `;
+                                                                        <span class="delete-choice">x</span> &nbsp;
+                                                                        <span class="add-choice">+</span>
+                                                                        <div class="answer">
+                                                                            <input type="text" class="form-control" placeholder="Choice" name="option">
+                                                                            <input type="radio" name="correctOption" required  id="correctOption">
+                                                                            <span class="tooltiptext">Correct Answer</span>
+                                                                        </div>
+                                                                        `;
 
             choicesContainer.insertBefore(choiceDiv, e.target.parentElement);
             counter++;
         }
     });
+
 
     // Event listener for removing a choice
     choicesContainer.addEventListener("click", function (e) {
@@ -314,20 +363,15 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-
-
+// Submit the whole Exam
 document.getElementById('submitExam').addEventListener('click', function () {
-    var examQuestions = document.getElementById('examQuestions').innerHTML;
-    downloadExam(examQuestions);
-});
+    if (QuestionsListObjects.length === 0) {
+        alert("The exam must contain at least one question!");
+        return;
+    }
 
-function downloadExam(examQuestions) {
-    var dataStr = "data:text/plain;charset=utf-8," + encodeURIComponent(examQuestions);
-    var downloadAnchor = document.createElement('a');
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", "exam.txt");
-    downloadAnchor.style.display = "none";
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    document.body.removeChild(downloadAnchor);
-}
+    var serializedArray = JSON.stringify(QuestionsListObjects); //the whole array goes to the input as one string, each index(question) in the array is sperated by comma,
+    document.getElementById("Questions").value = serializedArray;
+
+    document.getElementById('examForm').submit();
+});

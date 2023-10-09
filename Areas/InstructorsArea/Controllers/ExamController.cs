@@ -1,115 +1,135 @@
-﻿using Admin_Panel_ITI.Repos.Interfaces;
+﻿using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos;
+using Admin_Panel_ITI.Repos.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.Protocol.Core.Types;
-using Admin_Panel_ITI.Areas.InstructorsArea.ViewModels;
-using Admin_Panel_ITI.Models;
+using Newtonsoft.Json;
+
 
 namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 {
+    [Area("InstructorsArea")]
     public class ExamController : Controller
     {
-        private readonly IExamRepository examRepository;
-        private readonly ITrackRepository trackRepository;
-        private readonly IIntakeRepository intakeRepository;
-        private readonly IExam_QuestionRepository exam_QuestionRepository;
+        private readonly IExamRepository examRepo;
+        private readonly IQuestionRepository questionRepo;
+        private readonly IExam_QuestionRepository examQuestionRepo;
+        private readonly UserManager<AppUser> userManager;
+        private readonly ICourseRepository courseRepository;
         private readonly IExam_Std_QuestionRepository exam_Std_QuestionRepository;
-        private readonly IInstructorRepository instructorRepository;
-        private readonly ICourseRepository courseRepositoy;
-        private readonly IQuestionRepository questionRepository;
-        public ExamController(IExamRepository examRepository, ITrackRepository trackRepository, 
-            IIntakeRepository intakeRepository, IExam_QuestionRepository exam_QuestionRepository,
-          IExam_Std_QuestionRepository exam_Std_QuestionRepository,
-          IInstructorRepository instructorRepository,
-          ICourseRepository courseRepositoy, IQuestionRepository questionRepository)
+
+
+        public ExamController(IExamRepository _examRepo,
+            IQuestionRepository _questionRepo,
+            IExam_QuestionRepository _examQuestionRepo,
+            UserManager<AppUser> _userManager, ICourseRepository _courseRepository, IExam_Std_QuestionRepository _exam_Std_QuestionRepository)
         {
-            this.examRepository = examRepository;
-            this.trackRepository = trackRepository;
-            this.intakeRepository = intakeRepository;
-            this.exam_QuestionRepository = exam_QuestionRepository;
-            this.exam_Std_QuestionRepository = exam_Std_QuestionRepository;
-            this.instructorRepository = instructorRepository;
-            this.courseRepositoy = courseRepositoy;
-            this.questionRepository = questionRepository;
+            examRepo = _examRepo;
+            questionRepo = _questionRepo;
+            examQuestionRepo = _examQuestionRepo;
+            userManager = _userManager;
+            courseRepository = _courseRepository;
+            exam_Std_QuestionRepository = _exam_Std_QuestionRepository;
         }
 
+
         // GET: ExamController
-        public ActionResult Index()
+        public ActionResult Index(int CourseId, string name, int intakeID, int trackID, string intakeName, string trackName)
         {
-            return View();
+
+            ViewBag.Id = CourseId;
+            ViewBag.Name = name;
+
+            ViewBag.IntakeName = intakeName;
+            ViewBag.TrackName = trackName;
+            ViewBag.IntakeID = intakeID;
+            ViewBag.TrackID = trackID;
+
+
+            string UserID = userManager.GetUserId(User);
+
+            var exams = examRepo.GetExamsByInstructorIDAndCourseID(UserID, CourseId);
+
+            var course = courseRepository.GetCoursebyID(CourseId);
+
+            ViewBag.Course = course;
+
+            return View(exams);
         }
 
         // GET: ExamController/Details/5
         public ActionResult Details(int id)
         {
-            var exam = examRepository.GetExambyID(id);
-            return View(exam);
-        }
-
-        public ActionResult DetailsByCourseID(int Id)
-        {
-            return View(examRepository.GetExamsbycourseID(Id));
-        }
-
-        public ActionResult Create()
-        {
-            var EQ = new Exam_QuestionsVM();
-            return View(EQ);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Exam_QuestionsVM model)
-        {
-            if (ModelState.IsValid)
-            {
-                // Create a new Exam object and populate it with data from the model.
-                var newExam = new Exam
-                {
-                    Name = model.ExamName,
-                    Duration = model.Duration,
-                    // Set other properties as needed
-                };
-
-                // Call the repository method to create the exam.
-                examRepository.CreateExam(newExam);
-                return RedirectToAction("Details", new { id = newExam.ID });
-            }
-            return View(model);
-
-        }
-
-
-        // GET: ExamController/Edit/5
-        public ActionResult Edit(int id)
-        {
             return View();
         }
 
-        // POST: ExamController/Edit/5
+        [HttpGet]
+        public ActionResult Create(int id)
+        {
+            ViewBag.Courseid = id;
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Createe(IFormCollection collection)
         {
-            try
+            string InstructorId = userManager.GetUserId(User);
+            string ExamName = collection["ExamName"];
+            int Duration = int.Parse(collection["Duration"]);
+            int CourseId = int.Parse(collection["CourseId"]);
+            string Json_Questions = collection["Questions"];
+
+            Exam newExam = new Exam()
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+                Name = ExamName,
+                Duration = Duration,
+                CourseID = CourseId,
+                InstructorID = InstructorId,
+                CreationDate = DateTime.Now.Date,
+            };
+
+            examRepo.CreateExam(newExam);
+
+
+            Question[] questionsArray = JsonConvert.DeserializeObject<Question[]>(Json_Questions);
+
+            int[] questionsIDs = await questionRepo.CreateQuestion(questionsArray);
+
+            List<Exam_Question> exam_Questions = new List<Exam_Question>();
+            foreach (int Q in questionsIDs)
             {
-                return View();
+                Exam_Question question = new Exam_Question()
+                {
+                    ExamID = newExam.ID,
+                    QuestionID = Q,
+                };
+
+                exam_Questions.Add(question);
             }
+
+            examQuestionRepo.CreateExam_Question(exam_Questions);
+
+            return RedirectToAction("Index", new { CourseId = CourseId });
         }
 
-        // GET: ExamController/Delete/5
-        public ActionResult Delete(int id)
+
+
+        public ActionResult Delete(int ExamID, int CourseId)
         {
-            examRepository.DeleteExam(id);
-            return RedirectToAction(nameof(Index));
+            exam_Std_QuestionRepository.DeleteExam_Std_Question(ExamID);
+
+            List<int> QuestionIDs = examQuestionRepo.DeleteExamQuestions(ExamID);
+
+            questionRepo.DeleteQuestions(QuestionIDs);
+
+            examRepo.DeleteExam(ExamID);
+
+            return RedirectToAction("Index", new { CourseId = CourseId });
         }
 
-        //// POST: ExamController/Delete/5
+        // POST: ExamController/Delete/5
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public ActionResult Delete(int id, IFormCollection collection)
@@ -122,6 +142,6 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
         //    {
         //        return View();
         //    }
-        }
+        //}
     }
-
+}

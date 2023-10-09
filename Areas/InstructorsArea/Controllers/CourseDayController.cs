@@ -16,10 +16,10 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
         private readonly UserManager<AppUser> userManager;
         private readonly IMaterialRepository materialRepo;
         private readonly ICourse_Day_MaterialRepository courseDayMaterialRepo;
-        public CourseDayController(ICourseDayRepository _courseDayRepo, 
-            IWebHostEnvironment _hostingEnvironment, 
-            UserManager<AppUser> _userManager, 
-            IMaterialRepository _materialRepo, 
+        public CourseDayController(ICourseDayRepository _courseDayRepo,
+            IWebHostEnvironment _hostingEnvironment,
+            UserManager<AppUser> _userManager,
+            IMaterialRepository _materialRepo,
             ICourse_Day_MaterialRepository _courseDayMaterialRepo)
         {
             courseDayRepo = _courseDayRepo;
@@ -34,28 +34,30 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
 
         //id(courseID) , name(courseName)
-        public ActionResult Index(int id , string name, int intakeID, int trackID, string intakeName, string trackName)
+        public ActionResult Index(int Id, string name, int intakeID, int trackID, string intakeName, string trackName)
         {
-            ViewBag.Id = id;    
-            ViewBag.Name = name;  
-            
-            ViewBag.IntakeName = intakeName;    
-            ViewBag.TrackName = trackName;    
-            ViewBag.IntakeID = intakeID;    
-            ViewBag.TrackID = trackID;    
-            
-            return View(courseDayRepo.GetCourseDaysByCourseID(id));
+            ViewBag.Id = Id;
+            ViewBag.Name = name;
+
+            ViewBag.IntakeName = intakeName;
+            ViewBag.TrackName = trackName;
+            ViewBag.IntakeID = intakeID;
+            ViewBag.TrackID = trackID;
+
+            ViewBag.CourseDaysCount = courseDayRepo.GetCourseDaysCount(Id);
+
+
+            return View(courseDayRepo.GetCourseDaysByCourseID(Id));
         }
 
 
 
-        
 
 
-        //id(course id) , name(course name)  ---> Materials & Tsak Table 
-        public ActionResult Details(int id, string name, int intakeID, int trackID, string intakeName, string trackName , int coursedayID, int coursedayNum)
+
+        //id(course id) , name(course name)  ---> Materials & Task Table 
+        public ActionResult Details(int id, string name, int intakeID, int trackID, string intakeName, string trackName, int coursedayID, int coursedayNum)
         {
-     
             ViewBag.Id = id;
             ViewBag.Name = name;
 
@@ -67,23 +69,33 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             ViewBag.CourseDayNum = coursedayNum;
 
             ViewBag.Materials = new List<IFormFile>();
+            ViewBag.Tasks = new List<IFormFile>();
+
+            var courseDay = courseDayRepo.GetCourseDaybyID(coursedayID);
+            var taskPath = courseDay.TaskPath;
+
+            // Use Path.GetFileName to get the file name with extension
+            string[] fileNameWithExtension = (Path.GetFileName(taskPath)).Split('.');
+
+            ViewBag.taskName = fileNameWithExtension[0];
+            ViewBag.taskExtension = fileNameWithExtension[1];
 
             return View(courseDayMaterialRepo.GetCourseDaysbyCourseDayID(coursedayID));
         }
 
 
         [HttpPost]
-        public ActionResult Details(List<IFormFile> Materials,  int id, string name, int intakeID, int trackID, string intakeName, string trackName, int coursedayID, int coursedayNum)
+        public ActionResult Details(List<IFormFile> Materials, IFormFile Task, int id, string name, int intakeID, int trackID, string intakeName, string trackName, int coursedayID, int coursedayNum)
         {
-            if (ModelState.IsValid)
+            if (true)
             {
-                string? uniqueFileName = null; //varaible to store the materials name after make it uniqe using GUID.
                 string? instructorID = userManager.GetUserId(User);
+                string? uniqueFileName = null; //varaible to store the materials/Task name after make it uniqe using GUID
 
-                List<Material> materials = new();
-
-                if (Materials != null)
+                if (Materials?.Count != 0)
                 {
+                    List<Material> materials = new();
+
                     string MaterialsFilePath = Path.Combine(webHostingEnvironment.WebRootPath, "Materials"); //where the materials gonna be store(~/wwwroot/Materials/)
 
                     foreach (var material in Materials)
@@ -111,19 +123,47 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
                     return RedirectToAction(nameof(Details), new { id, name, intakeID, trackID, intakeName, trackName, coursedayID, coursedayNum });
                 }
+
+                if(Task != null)
+                {
+                    string TaskFilePath = Path.Combine(webHostingEnvironment.WebRootPath, "Tasks"); //where the Tasks gonna be store(~/wwwroot/Tasks/)
+
+                    //uniqueFileName = Guid.NewGuid().ToString() + "||" + Task.FileName;
+                    string TaskPath = Path.Combine(TaskFilePath, Task.FileName);
+
+                    Task.CopyTo(new FileStream(TaskPath, FileMode.Create));
+
+                    CourseDay oldCourseDay =  courseDayRepo.GetCourseDaybyID(coursedayID);
+                    if(oldCourseDay != null)
+                    {
+                        CourseDay NewCourseDay = new CourseDay()
+                        {
+                            DayNumber = oldCourseDay.DayNumber,
+                            Date = oldCourseDay.Date,
+                            DeadLine = oldCourseDay.DeadLine,
+                            TaskPath = TaskPath  //update the task path
+                        };
+
+                        //FileInfo fileInfo = new FileInfo(oldCourseDay.TaskPath);
+                        //if (fileInfo.Exists)
+                        //{
+                        //    fileInfo.Replace(TaskPath, oldCourseDay.TaskPath);
+                        //}
+
+                        courseDayRepo.UpdateCourseDay(coursedayID, NewCourseDay);
+
+                        return RedirectToAction(nameof(Details), new { id, name, intakeID, trackID, intakeName, trackName, coursedayID, coursedayNum });
+                    }
+                }
             }
 
-            return  View();
-              
+            return View(new {id, name,  intakeID, trackID, intakeName, trackName, coursedayID, coursedayNum });
         }
 
 
 
-
-
-
         [HttpGet]
-        public ActionResult Create(int Id, string name, int intakeID, int trackID, string intakeName, string trackName)
+        public ActionResult Create(int Id, string name, int intakeID, int trackID, string intakeName, string trackName, int CourseDaysCount)
         {
             ViewBag.Id = Id;
             ViewBag.Name = name;
@@ -132,14 +172,15 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
             ViewBag.TrackName = trackName;
             ViewBag.IntakeID = intakeID;
             ViewBag.TrackID = trackID;
+            ViewBag.CourseDaysCount = CourseDaysCount;
 
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(CourseDay_Material_TaskVM model , int Id, string name, int intakeID, int trackID, string intakeName, string trackName)
+        public ActionResult Create(CourseDay_Material_TaskVM model, int Id, string name, int intakeID, int trackID, string intakeName, string trackName)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 string? uniqueFileName = null; //varaible to store the materials name after make it uniqe using GUID.
                 string? instructorID = userManager.GetUserId(User);
@@ -158,17 +199,17 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
                         material.CopyTo(new FileStream(MaterialPath, FileMode.Create));
 
 
-                        materials.Add(new Material() { Name = material.FileName.Split('.')[0], Path = MaterialPath , Type = Path.GetExtension(material.FileName), InstructorID = instructorID });
+                        materials.Add(new Material() { Name = material.FileName.Split('.')[0], Path = MaterialPath, Type = Path.GetExtension(material.FileName), InstructorID = instructorID });
                     }
                 }
 
                 materialRepo.CreateMaterials(materials);
 
 
-                if(model.Task != null)
+                if (model.Task != null)
                 {
-                    string TaskFilePath = Path.Combine(webHostingEnvironment.WebRootPath, "Tasks"); 
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Task.FileName; 
+                    string TaskFilePath = Path.Combine(webHostingEnvironment.WebRootPath, "Tasks");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Task.FileName;
                     string TaskPath = Path.Combine(TaskFilePath, uniqueFileName);
 
                     model.Task.CopyTo(new FileStream(TaskPath, FileMode.Create));
@@ -185,7 +226,7 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
 
 
                     List<Course_Day_Material> cdms = new();
-                    foreach(var material in materials)
+                    foreach (var material in materials)
                     {
                         cdms.Add(new Course_Day_Material() { CourseID = Id, CourseDayID = newCourseDay.ID, MaterialID = material.ID });
                     }
@@ -193,10 +234,10 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
                     courseDayMaterialRepo.CreateCourseDayMaterial(cdms);
                 }
 
-                return RedirectToAction("Index", new { Id, name, intakeID, trackID, intakeName, trackName  });
+                return RedirectToAction(nameof(Index), new { Id, name, intakeID, trackID, intakeName, trackName });
             }
 
-            return RedirectToAction("Create" , new {Id, name, intakeID, trackID, intakeName, trackName});
+            return RedirectToAction("Create", new { Id, name, intakeID, trackID, intakeName, trackName });
         }
 
 
@@ -238,12 +279,12 @@ namespace Admin_Panel_ITI.Areas.InstructorsArea.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int MaterialID, int id, string name, int intakeID, int trackID, string intakeName, string trackName, int coursedayID, int coursedayNum)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 courseDayMaterialRepo.DeleteCourseDayMaterial(MaterialID);
                 materialRepo.DeleteMaterial(MaterialID);
 
-                return RedirectToAction(nameof(Details), new {id , name, intakeID, trackID, intakeName, trackName, coursedayID, coursedayNum});
+                return RedirectToAction(nameof(Details), new { id, name, intakeID, trackID, intakeName, trackName, coursedayID, coursedayNum });
             }
 
             return View();

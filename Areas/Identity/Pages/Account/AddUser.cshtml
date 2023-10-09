@@ -4,7 +4,7 @@
 @using Microsoft.AspNetCore.Mvc.Rendering
 
 @model AddUserModel
-
+@ViewBag.bag
 @{
     Layout = null;
     var allIntakes = (SelectList)ViewData["AllIntakes"];
@@ -32,53 +32,57 @@
 
     <!-- Main css -->
     <link rel="stylesheet" href="/register/css/style.css">
+
+    <!-- Alert css -->
+    <link rel="stylesheet" href="/register/css/alertStyle.css">
+
+    <style>
+        label {
+            top: 8px;
+            transform: translateY(0);
+            width: 16px;
+        }
+
+        #roleAdmin {
+            top: 2px;
+            width: 132px;
+        }
+    </style>
+
 </head>
 <body>
-    <div id="alertMessage" style="display: none;">
-        <!-- Alert content goes here -->
+    <!-- Alert content goes here -->
+    <div class="error-msg">
+        <i class="fa fa-times-circle"></i>
+        <h6>Invalid inputs. Please try again.</h6>
+    </div>
+    <div class="success-msg">
+        <i class="fa fa-check"></i>
+        User added successfully
     </div>
     <div class="main">
-
         <!-- Sign up form -->
         <section class="signup add-user-form">
             <div class="container" style="background-size:revert-layer">
                 <div class="signup-content">
                     <div class="screen"></div>
                     <div class="signin-image" style="width: auto; margin: 0">
-                        <div class="logo">
+                        <a class="logo" asp-action="Index" asp-controller="Home" style="text-decoration: none;">
                             <span class="navbar-brand" style="margin-left: 24px;">
                                 <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
                             </span>
                             <div class="navbarvr"></div>
-                            <span>ITI-Hub</span>
-
-                        </div>
+                            <span>Hub</span>
+                        </a>
                     </div>
                     <div class="signup-form slide-down" style="display:table;width:300px;margin:20px auto !important;">
                         <h2 class="form-title">Add New User</h2>
 
                         <form method="post" id="registerForm" asp-route-returnUrl="@Model.ReturnUrl">
-
                             <div class="col-lg-5 form-group">
-                                <label for="roles"><i class="zmdi zmdi-accounts material-icons-name"></i> Choose user role:</label>
+                                <label id="roleAdmin" for="roles"><i class="zmdi zmdi-accounts material-icons-name"></i> Choose user role:</label>
                                 <div style="margin-left: 190px;">
                                     <select asp-for="Input.userType" id="userTypeSelect" class="form-select-sm" aria-label="Small select example">
-                                        @*                                        @if(selectedType == "Admin")
-                                        {
-                                        <option selected value="Admin">Admin</option>
-                                        <option value="Instructor">Instructor</option>
-                                        <option value="Student">Student</option>
-                                        }else if(selectedType == "Instructor")
-                                        {
-                                        <option value="Admin">Admin</option>
-                                        <option selected value="Instructor">Instructor</option>
-                                        <option value="Student">Student</option>
-                                        } else
-                                        {
-                                        <option value="Admin">Admin</option>
-                                        <option value="Instructor">Instructor</option>
-                                        <option selected value="Student">Student</option>
-                                        }*@
                                         <option selected value="Admin">Admin</option>
                                         <option value="Instructor">Instructor</option>
                                         <option value="Student">Student</option>
@@ -120,16 +124,7 @@
                                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
                             </div>
 
-
                             <!--Instructor Fields-->
-                            @* <div class="col-lg-5 form-group" id="instructorFields">
-                            <label>Choose Intakes: </label>
-                            <br >
-                            <div >
-                            <select asp-for="Input.IntakesIDs" asp-items="@allIntakes" multiple="multiple"  class="form-select-sm" >
-                            </select>
-                            </div>
-                            </div>*@
                             <div class="form-group" id="instructorFields">
                                 <select asp-for="Input.IntakesIDs" asp-items="@allIntakes" class="form-select" multiple>
                                     <option disabled>Select an Intake</option>
@@ -137,7 +132,7 @@
                             </div>
 
                             <!-- Student Fields - Intake Selection -->
-                            <div class="form-group">
+                            <div class="form-group" id="divStudentFields">
                                 <select asp-for="Input.IntakeID" id="studentFields1" asp-items="@allIntakes" class="form-select">
                                     <option>Select an Intake</option>
                                 </select>
@@ -161,6 +156,10 @@
         </section>
     </div>
 
+
+</body>
+</html>
+
     <!-- JS -->
     <script src="~/vendor/jquery/jquery.min.js"></script>
     <script src="~/js/main.js"></script>
@@ -170,22 +169,74 @@
         const userTypeSelect = document.getElementById("userTypeSelect");
         const instructorFields = document.getElementById("instructorFields");
         const studentFields1 = document.getElementById("studentFields1");
+        const divStudentFields = document.getElementById("divStudentFields");
         const studentFields2 = document.getElementById("studentFields2HTML");
+
+        const form = document.getElementById('registerForm');
+        const errorMsg = document.querySelector(".error-msg");
+        const successMsg = document.querySelector(".success-msg");
+
+        form.addEventListener('submit', event => {
+            //field-validation-error
+            const visibleInputsAndSelects = document.querySelectorAll('.form-group:not([style*="display: none"])');
+            const unvalidElements = document.querySelectorAll('span.field-validation-error');
+            // Check the validity of each form element
+            let allValid = true;
+            for (const element of visibleInputsAndSelects) {
+                const children = element.children;
+                //Iterate over the form group's children
+                for (const child of children) {
+                    if (unvalidElements.length > 0) {
+                        event.preventDefault();
+                        allValid = false;
+                        break;
+                    } else if (child.tagName === 'SELECT') {
+                        if (child.selectedOptions.length === 0) {
+                            event.preventDefault();
+                            allValid = false;
+                            break;
+                        }
+                    } else if (child.tagName === 'INPUT') {
+                        if (!child.value) {
+                            event.preventDefault();
+                            allValid = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (allValid) {
+                event.preventDefault();
+                successMsg.classList.add('active');
+                setTimeout(() => {
+                    successMsg.classList.remove('active');
+                    form.submit();
+                }, 3000);
+            } else {
+                event.preventDefault();
+                errorMsg.classList.add('active');
+                setTimeout(() => {
+                    errorMsg.classList.remove('active');
+                }, 3000);
+            }
+        });
+
+
 
 
         function toggleFormElements(userType) {
             instructorFields.style.display = "none";
-            studentFields1.style.display = "none";
+            divStudentFields.style.display = "none";
             studentFields2.style.display = "none";
 
             if (userType === "Instructor") {
                 instructorFields.style.display = "block";
-                studentFields1.style.display = "none";
+                divStudentFields.style.display = "none";
                 studentFields2.style.display = "none";
             }
             else if (userType === "Student") {
                 instructorFields.style.display = "none";
-                studentFields1.style.display = "block";
+                divStudentFields.style.display = "block";
                 studentFields2.style.display = "block";
             }
         }
@@ -222,9 +273,6 @@
 
     </script>
 
-
-</body>
-</html>
 
 
 

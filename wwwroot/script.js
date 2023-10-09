@@ -8,75 +8,78 @@ function checkUncheck(checkBox) {
   }
 }
 
-// handles the three dots (details)
-$(function () {
-  $('[data-toggle="popover"]').popover({
-    html: true,
-    sanitize: false,
-    content: function () {
-      var content = $(this).attr("data-content");
-      return '<div class="popover-content">' + content + "</div>";
-    },
-  });
-});
-const tooltipTriggerList = document.querySelectorAll(
-  '[data-bs-toggle="tooltip"]'
-);
-const tooltipList = [...tooltipTriggerList].map(
-  (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
-);
 
 
 // sort the table by each row
+var stringSortAscending = true;
+var nuumberSortAscending = true;
+
 function sortTable(columnIndex) {
-  var table, rows, switching, i, x, y, shouldSwitch;
-  table = document.getElementById("myTable");
-  switching = true;
-  while (switching) {
-    switching = false;
-    rows = table.rows;
-    for (i = 1; i < rows.length - 1; i++) {
-      shouldSwitch = false;
-      x = rows[i].getElementsByTagName("td")[columnIndex];
-      y = rows[i + 1].getElementsByTagName("td")[columnIndex];
-     /*  Check if the values are numbers*/
-      var isNum = !isNaN(parseFloat(x.innerHTML)) && isFinite(x.innerHTML);
-      if (isNum) {
-        if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
-          shouldSwitch = true;
-          break;
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("myTable");
+    switching = true;
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < rows.length - 1; i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("td")[columnIndex];
+            y = rows[i + 1].getElementsByTagName("td")[columnIndex];
+            // Check if the values are numbers
+            var isNum = !isNaN(parseFloat(x.innerHTML)) && isFinite(x.innerHTML);
+            if (isNum) {
+                console.log(nuumberSortAscending);
+                if (nuumberSortAscending) {
+                    if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else {
+                    if (parseFloat(x.innerHTML) < parseFloat(y.innerHTML)) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            } else {
+                console.log(stringSortAscending);
+                if (stringSortAscending) {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
         }
-      } else {
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-          shouldSwitch = true;
-          break;
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
         }
-      }
     }
-    if (shouldSwitch) {
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-    }
-  }
+    // Toggle sorting direction for next click
+    stringSortAscending = !stringSortAscending;
+    nuumberSortAscending = !nuumberSortAscending;
 }
 
-
-
 function bubbleSort(arr) {
-  var len = arr.length;
-  var swapped;
-  do {
-    swapped = false;
-    for (var i = 0; i < len - 1; i++) {
-      if (arr[i] > arr[i + 1]) {
-        var temp = arr[i];
-        arr[i] = arr[i + 1];
-        arr[i + 1] = temp;
-        swapped = true;
-      }
-    }
-  } while (swapped);
-  return arr;
+    var len = arr.length;
+    var swapped;
+    do {
+        swapped = false;
+        for (var i = 0; i < len - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+                var temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+                swapped = true;
+            }
+        }
+    } while (swapped);
+    return arr;
 }
 
 // handles the black screen and the delete screen appearance

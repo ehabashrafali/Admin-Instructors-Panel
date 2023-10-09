@@ -8,6 +8,8 @@ using Admin_Panel_ITI.Repos;
 using Admin_Panel_ITI.Repos.Interfaces;
 using PartialViewResult = Microsoft.AspNetCore.Mvc.PartialViewResult;
 using CompareAttribute = System.ComponentModel.DataAnnotations.CompareAttribute;
+//using System.Web.UI.ClientScriptManager;
+//using System.Web.
 
 namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
 {
@@ -129,11 +131,6 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/Identity/Account/AddUser");
 
-            //if (ModelState.IsValid)
-            //{
-
-            //}
-
             var user = CreateUser();
 
             user.FullName = Input.FullName;
@@ -146,8 +143,6 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
 
             if (result.Succeeded)
             {
-
-
                 user.LockoutEnabled = false;
 
                 if (Input.userType == UserType.Admin)
@@ -225,6 +220,10 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
 
                 return LocalRedirect(returnUrl);
             }
+
+            // Show an alert if the form is not valid.
+            //ClientScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('The form is not valid.');", true);
+
 
             foreach (var error in result.Errors)
             {

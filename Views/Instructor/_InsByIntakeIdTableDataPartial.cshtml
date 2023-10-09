@@ -3,7 +3,7 @@
 }
 
 
-    <div id ="partialTable">
+<div id="partialTable">
     <div>
         <table class="table table-hover" id="myTable">
             <thead class="table-secondary">
@@ -65,7 +65,7 @@
                 <li class="page-item active">
                     <a class="page-link" href="#">
                         @{
-                            if(ViewBag.PageNumber == 0)
+                            if (ViewBag.PageNumber == 0)
                             {
                                 ViewBag.PageNumber++;
 
@@ -86,7 +86,7 @@
 
 <script>
 
-    
+
 
 
     // Function to handle the "Next" button click event
@@ -99,12 +99,12 @@
         $.ajax({
             url: '@Url.Action("UpdateTableData", "Instructor")', // Use Url.Action to generate the correct URL
             type: 'GET',
-            data: {  pageNumber: nextPage }, // Pass the selected intake ID and previous page number as parameters
+            data: { pageNumber: nextPage }, // Pass the selected intake ID and previous page number as parameters
             success: function (result) {
                 // Replace the content of the partialTable div with the updated HTML
                 $('#partialTable').html(result);
 
-                
+
                 // Disable the "Prev" button if needed (you may need to add logic here)
                 // Example: if (prevPage <= 0) { $('#prevPageBtn').addClass('disabled'); }
             },
@@ -118,20 +118,20 @@
     // Function to handle the "Prev" button click event
     $('#prevPageBtn').on('click', function (e) {
         e.preventDefault();
-        
+
         var prevPage = @ViewBag.PageNumber -1; // Get the previous page number
 
         // Make an AJAX call to the UpdateTableData action with the previous page number
         $.ajax({
             url: '@Url.Action("UpdateTableData", "Instructor")', // Use Url.Action to generate the correct URL
             type: 'GET',
-            data: {  pageNumber: prevPage }, // Pass the selected intake ID and previous page number as parameters
+            data: { pageNumber: prevPage }, // Pass the selected intake ID and previous page number as parameters
             success: function (result) {
                 // Replace the content of the partialTable div with the updated HTML
                 $('#partialTable').html(result);
 
 
-                 //Disable the "Prev" button if needed (you may need to add logic here)
+                //Disable the "Prev" button if needed (you may need to add logic here)
                 if (nextPage <= 0) {
                     $('#prevPageBtn').addClass('disabled');
                 } else {
@@ -145,7 +145,7 @@
     });
 
 
-    $('#customdeletebtn_kordy').off('click').on('click', function () {
+    $('.customdeletebtn_kordy').off('click').on('click', function () {
         // Get the selected checkboxes
         var selectedInstructorIds = $('input[name="selectedInstructorIds[]"]:checked').map(function () {
             return $(this).val();
@@ -188,5 +188,3 @@
     }
 
 </script>
-
-

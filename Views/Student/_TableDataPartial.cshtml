@@ -17,27 +17,19 @@
                     </th>
                     <th>
                         Graduated
-                  
+                        <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"></path>
+                        </svg>
                     </th>
-                 @*    <th>
-                        CreationDate
-                 
-                    </th> *@
                     <th>
                         Track Name
-                        <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                        <svg onclick="sortTable(3)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"></path>
                         </svg>
                     </th>
                        <th>
-                        Intake No.
-                        <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"></path>
-                        </svg>
-                    </th>
-                    <th>
-                        Duration
-                        <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                        Intake 
+                        <svg onclick="sortTable(4)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"></path>
                         </svg>
                     </th>
@@ -50,17 +42,21 @@
                 <tr>
                         <td><input type="checkbox" name="selectedStudentIds[]" class="course-checkbox" value="@StudentList[i].AspNetUserID"></td>
                         <td style="cursor: pointer;" onclick="editStudent('@StudentList[i].AspNetUserID')"> @StudentList[i].AspNetUser?.FullName</td>
-                        <td>@StudentList[i].IsGraduated</td>
-                        @* <td>@StudentList[i].CreationDate</td> *@
+                        <td>@{
+                            if(@StudentList[i].IsGraduated)
+                            {
+                                <img src="~/images/true.svg" width="24" height="24" />
+                            }else
+                            {
+                                <img src="~/images/false.svg" width="16" height="16" />
+                            }
+                        }</td>
                         <td>@StudentList[i].Track.Name</td>
-                        <td>@StudentList[i].Intake.Name</td>
-                        <td>@StudentList[i].Intake.Duration</td>
-                        <td>
-                            <div class="options-menu">
-                                <span type="button" class="threedots" data-container="body" data-toggle="popover" data-bs-placement="left" data-content="<div style='display:flex; justify-content: space-between;align-items:flex-start;'><a href='#'><a href='#'><img style='width: 20px; height: 20px; margin-top:' src='assets/images/eye.png' alt='details'></a><a style='margin: 0 4px 0 7px;' href='#'><img style='width: 20px; height: 20px;' src='assets/images/edit.png' alt='details'></a><a href='#'><a onclick='clicked()' href='#'><img style='width: 20px; height: 20px;' src='assets/images/delete.png' alt='details'></a></div>">
-                                    <i class="fas fa-ellipsis-v" style="color: gray;"></i>
-                                </span>
-                            </div>
+                        <td>@StudentList[i].Intake.Name - (@StudentList[i].Intake.Duration) M </td>
+                        <td style="padding: 5px 8px">
+                            <a asp-action="edit" asp-route-id="@StudentList[i].AspNetUserID">
+                                <img style='width: 20px; height: 20px;' src='~/assets/images/edit.png' alt='details'>
+                            </a>
                         </td>
                 </tr>
             }
@@ -109,11 +105,11 @@
 
         // Update the button text with the selected intake name
         var selectedIntakeName = $(this).text();
-        $('#intakeDropdownBtn').html(`
+        $('.intakeDropdownBtn').html(`
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16" style="margin: 0 4px 4px 0;">
                         <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"></path>
                     </svg>
-                    Filter by intakes: ${selectedIntakeName}
+                    ${selectedIntakeName}
                 `);
 
         // Make an AJAX call to the UpdateTableData action
@@ -182,7 +178,7 @@
         });
     });
 
-    $('#customdeletebtn_kordy').off('click').on('click', function () {
+    $('.customdeletebtn_kordy').off('click').on('click', function () {
         // Get the selected checkboxes
         var selectedStudentIds = $('input[name="selectedStudentIds[]"]:checked').map(function () {
             return $(this).val();

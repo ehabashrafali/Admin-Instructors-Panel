@@ -38,7 +38,8 @@ namespace Admin_Panel_ITI
 
 
 
-            builder.Services.AddIdentity<AppUser, IdentityRole>()
+
+            builder.Services.AddIdentity<AppUser,IdentityRole>()
                 .AddEntityFrameworkStores<MainDBContext>().AddDefaultTokenProviders();
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();

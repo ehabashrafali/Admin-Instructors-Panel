@@ -22,7 +22,6 @@
 </head>
 <body>
 
-    
     @*=====================================================================*@
     @*=====================================================================*@
     @*mahmoud taher update*@
@@ -35,16 +34,16 @@
 
     <nav class="navbar navbar-expand-sm bg-body-tertiary slide-down">
         <div class="container-fluid">
-            <a class="navbar-brand" asp-action="Index" asp-controller="Home">
+            <a class="navbar-brand" id="logo" asp-action="Index" asp-controller="Home">
                 <img src="~/assets/images/iti-logo.png" alt="Logo" width="33" height="50" class="d-inline-block align-text-top">
                 <div class="iti-hub-devider">
                     <span> Hub </span>
                 </div>
             </a>
-            <div>
-                <form class="d-flex navbar-user-buttons">
-                    <a asp-area="Identity" asp-page="/Account/AddUser" class="btn regbtn hvr-bounce-to-right">Add User</a>
-                    <button class="nav-link btn btn-link text-dark border-0 hvr-bounce-to-right" type="submit">Logout</button>
+            <div class="d-flex navbar-user-buttons">
+                <a asp-area="Identity" asp-page="/Account/AddUser" class="btn regbtn hvr-bounce-to-right">Add User</a>
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button id="logout" type="submit" style="color:white; padding:10px 38px" class="nav-link btn btn-link border-0 hvr-bounce-to-right logoutbtn">Logout</button>
                 </form>
             </div>
         </div>
@@ -60,25 +59,26 @@
                     </span>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item navs">
-                            <a asp-action="Index" asp-controller="Track" class="nav-link link-body-emphasis hvr-bounce-to-right @(current == "Track" ? "act" : "")" aria-current="page">
+                                <a id="trackLink" href="" class="nav-link link-body-emphasis hvr-bounce-to-right @(current == "Track" ? "act" : "")">
                                 <img src="~/assets/images/@(current == "Track" ? "White" : "Gray")/track.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
                                 <span style="color: @(current == "Track" ? "white" : "black")" ;">Tracks</span>
                             </a>
                         </li>
                         <li class="nav-item navs">
-                            <a asp-action="Index" asp-controller="Course" class="nav-link link-body-emphasis hvr-bounce-to-right @(current == "Course" ? "act" : "")">
+                                <a id="courseLink" href="" class="nav-link link-body-emphasis hvr-bounce-to-right @(current == "Course" ? "act" : "")">
                                 <img src="~/assets/images/@(current == "Course" ? "White" : "Gray")/course.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
                                 <span style="color: @(current == "Course" ? "white" : "black")" ;">Courses</span>
                             </a>
                         </li>
                         <li class="nav-item navs">
-                            <a asp-action="Index" asp-controller="Instructor" class="nav-link link-body-emphasis hvr-bounce-to-right @(current == "Instructor" ? "act" : "")">
+                            <a id="instructorLink" href="" class="nav-link link-body-emphasis hvr-bounce-to-right @(current == "Instructor" ? "act" : "")">
                                 <img src="~/assets/images/@(current == "Instructor" ? "White" : "Gray")/instructor.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
-                                <span style="color: @(current == "Instructor" ? "white" : "black")" ;">Instructors</span>
+                                <span style="color: @(current == "Instructor" ? "white" : "black")">Instructors</span>
                             </a>
+
                         </li>
                         <li class="nav-item navs">
-                            <a asp-action="Index" asp-controller="Student" class="nav-link link-body-emphasis hvr-bounce-to-right @(current == "Student" ? "act" : "")">
+                            <a id="studentLink" href="" class="nav-link link-body-emphasis hvr-bounce-to-right @(current == "Student" ? "act" : "")">
                                 <img src="~/assets/images/@(current == "Student" ? "White" : "Gray")/student.svg" class="bi pe-none me-2" width="32" height="32" style="margin-bottom: 4px;"></img>
                                 <span style="color: @(current == "Student" ? "white" : "black")" ;">Students</span>
                             </a>
@@ -103,5 +103,50 @@
     <script src="~/script.js"></script>
     <script src="~/preloader.js"></script>
 
+    <script>
+        // Read the selected intake ID from local storage
+        var selectedIntakeID = parseInt(localStorage.getItem('selectedIntakeID'));
+        var instructorLink = document.getElementById("instructorLink");
+        var studentLink = document.getElementById("studentLink");
+        var courseLink = document.getElementById("courseLink");
+        var logo = document.getElementById("logo");
+
+        logo.addEventListener('click', () => {
+            localStorage.setItem('selectedIntakeID', 0);//to take intake id
+        });
+
+        // Use the selected intake ID to view filtered Instructors
+
+        if (selectedIntakeID != 0) {
+            instructorLink.setAttribute('href', '/Instructor/InsIndexByIntakeId/' + selectedIntakeID);
+        } else {
+            instructorLink.setAttribute('href', '/Instructor/Index');
+        }
+
+        // Use the selected intake ID to view filtered Students
+        if (selectedIntakeID != 0) {
+            studentLink.setAttribute('href', '/Student/StdIndexByIntakeId/' + selectedIntakeID);
+        } else {
+            studentLink.setAttribute('href', '/Student/Index');
+        }
+        // Use the selected intake ID to view filtered Tracks
+        if (selectedIntakeID != 0) {
+            trackLink.setAttribute('href', '/Track/TracksByInakeId/' + selectedIntakeID);
+        } else {
+            trackLink.setAttribute('href', '/Track/Index');
+        }
+
+        // Use the selected intake ID to view filtered Courses
+        if (selectedIntakeID != 0) {
+            courseLink.setAttribute('href', '/Course/CrsIndexByIntakeId/' + selectedIntakeID);
+        } else {
+            courseLink.setAttribute('href', '/Course/Index');
+        }
+
+
+    </script>
+
+
 </body>
 </html>
+

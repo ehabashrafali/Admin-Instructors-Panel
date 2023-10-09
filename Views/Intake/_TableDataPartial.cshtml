@@ -3,15 +3,38 @@
     var intakeList = ((IEnumerable<Admin_Panel_ITI.Models.Intake>)Model).ToList();
 }
 
-@if (!string.IsNullOrEmpty(ViewBag.AlertMessage))
-{
-    <script>
-        $(document).ready(function () {
-            // Display an alert with the message
-            alert('@ViewBag.AlertMessage');
-        });
-    </script>
-}
+
+@*style for the modal*@
+<style>
+    .modal {
+        z-index: 10000;
+    }
+    .modal.fade .modal-dialog {
+        transform: translate(0, -50px);
+        opacity: 0;
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            z-index: 5;
+    }
+
+    .modal.fade.show .modal-dialog {
+        transform: translate(0, 0);
+        opacity: 1;
+            z-index: 10000;
+    }
+
+    .modal-backdrop {
+        z-index: 5;
+    }
+
+    .modal-content {
+        z-index: 10006;
+    }
+
+</style>
+
+
+
+
 
     <div id ="partialTable">
     <div class="row">
@@ -26,14 +49,14 @@
                         </svg>
                     </th>
                     <th>
-                        Duration
-                        <svg onclick="sortTable(1)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                        Duration (M)
+                        <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                         </svg>
                     </th>
                     <th>
-                        No. of Students
-                        <svg onclick="sortTable(2)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                        No.of Students
+                        <svg onclick="sortTable(3)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
                         </svg>
                     </th>
@@ -50,7 +73,7 @@
                         <td>@numOfStudsInEachIntake[i]</td>
                         <td style="padding: 5px 8px">
                             <a asp-action="edit" asp-route-id="@intakeList[i].ID">
-                                <img style='width: 20px; height: 20px;' src='assets/images/edit.png' alt='details'>
+                                <img style='width: 20px; height: 20px;' src='~/assets/images/edit.png' alt='details'>
                             </a>
                         </td>
                     </tr>
@@ -91,11 +114,6 @@
 
 
 <script>
-
-   
-
-
-
     // Function to handle the "Next" button click event
     $('#nextPageBtn').on('click', function (e) {
         e.preventDefault();
@@ -154,12 +172,15 @@
     });
 
 
-    $('#customdeletebtn_kordy').off('click').on('click', function () {
+
+    
+
+    $('.customdeletebtn_kordy').off('click').on('click', function () {
+
         // Get the selected checkboxes
         var selectedIntakeIds = $('input[name="selectedIntakeIds[]"]:checked').map(function () {
             return $(this).val();
         }).get();
-
 
 
         if (selectedIntakeIds.length === 0) {
@@ -182,8 +203,7 @@
                 pageNumber: pageNumber
             },
             success: function (result) {
-                // Handle the success response as needed
-                // For example, you can update the table with the new data
+                alert("Intakes with any number of students will not be deleted");
                 $('#partialTable').html(result);
             },
             error: function () {

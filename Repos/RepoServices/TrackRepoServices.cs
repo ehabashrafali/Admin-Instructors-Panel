@@ -2,7 +2,7 @@
 using Admin_Panel_ITI.Models;
 using Admin_Panel_ITI.Repos.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using NuGet.DependencyResolver;
+
 
 namespace Admin_Panel_ITI.Repos
 {
@@ -226,6 +226,10 @@ namespace Admin_Panel_ITI.Repos
             return query;
         }
 
-      
+        string ITrackRepository.getTrackName(int trackID)
+        {
+            var track = Context.Tracks.FirstOrDefault(t=>t.ID == trackID);
+            return track.Name;
+        }
     }
 }

@@ -19,6 +19,8 @@ namespace Admin_Panel_ITI.Repos.Interfaces
 
 
         public void DeleteExam_Std_Question(int examID, string studentID, int questionID);
+        public void DeleteExam_Std_Question(int examID);
+
         public void DeleteExam_Std_Question(string studentID);
 
 

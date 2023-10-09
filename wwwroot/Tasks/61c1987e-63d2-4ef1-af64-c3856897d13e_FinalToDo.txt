@@ -1,0 +1,49 @@
+12- Change true or false in currently working in instructors table [ Kordy ]  xxxxxxxxxxxxxxxxxxxx
+13- add edit icon in student rows, change true or false, replace filter by intakes word by the choosen intake  xxxxxxxxxxxxxxxxxxxxxxxx
+14- in student's table, delete creation date column, duration column, add duration beside intake [ Kordy ]     xxxxxxxxxxxxxxxxxxxxxxxx			
+19- Redirect After Add user problem ( Alert ) [ Kordy ] xxxxxxxxxxxxxxxxxxxxx
+
+
+
+
+				Admin
+
+1- Validation in Login Page [ Assem ]
+3- Add Are you sure to delete after delete button in all tables [ Assem ]
+5- Validation in All Edit and Create in all tables [ Ali & Assem ]
+6- Add days word after duration in courses [ Ehab ]
+7- Add monthes word after duration in intakes [ Ehab ]
+9- Check last page in course pagination [ Ali ]
+10- Get Distinct courses while getting all courses without intake filtration [ Ehab ]
+11- Filtering in courses by track without any intake filtrration has some problems ( maybe replace track column by intake column ) [ Ehab ]
+15- in intakes' table, Create intake, change duration to be automatically computed. [ Ehab ]
+18- Fix Filtration for another columns in navigation after entering with intake filtration [ Ali & Ehab ] 
+
+
+
+2- Padding in Add User Page for background xxxxxxxxxxxxxxx
+4- in tracks table, in filter dropdown, replace filter by intakes word by the choosen intake xxxxxxxxxxxx
+8- in courses, in filter dropdown, replace filter by tracks word by the choosen track xxxxxxxxxxxx
+17- Change logout button design xxxxxxxxxxxxxxx
+16- Delete intake with no students is working [ Ali ] xxxxxxxxxxxxxxxx
+
+				Instructor
+
+1- Edit all view in instructor to render partial not the whole view [ Ali ]
+4- Sort in table is not working and reverse in all tables [ Kordy ]
+7- Add pagination to the display students for manager [ Ali ]
+8- change graduation state to the same design made in Admin [ Ehab ]
+11- make delete exam disabled if there are student submissions ( change design ) [ Ehab ]
+13- In course day display submissions, ass`ign grades [ Ali ]
+14- Edit task upload, task edit, how to show task [ Assem ]
+
+
+2- Change log out button xxxxxxxxxxxxxxx
+3- Change intakes blue color to lighter blue xxxxxxxxxxxxxxx
+5- ITI logo on the left top click is not working xxxxxxxxxxxxxxx
+6- Navigation on the left for instructor xxxxxxxxxxxxxxx
+9- Add title to course days page, courses' page xxxxxxxxxxxxxxx
+10- make day number automatic xxxxxxxxxxxxxxx
+12- Remove course name column in exams table xxxxxxxxxxxxxxx
+
+				Student

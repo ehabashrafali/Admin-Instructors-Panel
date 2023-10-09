@@ -48,10 +48,11 @@
                     <span> Hub </span>
                 </div>
             </a>
-            <div>
-                <form class="d-flex navbar-user-buttons">
-                    <a asp-area="Identity" asp-page="/Account/AddUser" class="btn regbtn hvr-bounce-to-right">Add User</a>
-                    <button class="nav-link btn btn-link text-dark border-0 hvr-bounce-to-right" type="submit">Logout</button>
+  
+            <div class="d-flex navbar-user-buttons">
+                <a asp-area="Identity" asp-page="/Account/AddUser" class="btn regbtn hvr-bounce-to-right">Add User</a>
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button id="logout" type="submit" style="color:white; padding:10px 38px" class="nav-link btn btn-link border-0 hvr-bounce-to-right logoutbtn">Logout</button>
                 </form>
             </div>
         </div>

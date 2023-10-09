@@ -34,8 +34,6 @@ namespace Admin_Panel_ITI.Controllers
         {
             var intakes = intakeRepository.GetAllIntakes(pageNumber,10);
 
-
-
             List<int> studentNumsforIntake = studentRepository.getStudentNumberforIntakes(intakes);
 
             ViewData["NumOfStudsInEachIntake"] = studentNumsforIntake;
@@ -95,7 +93,6 @@ namespace Admin_Panel_ITI.Controllers
 
         public ActionResult Create()
         {
-
             return View();
         }
 
@@ -189,16 +186,16 @@ namespace Admin_Panel_ITI.Controllers
                 }
 
             }
+
         }
 
 
 
-        [HttpGet]
+        
         public ActionResult Delete(List<int> selectedIntakeIds, int duration, int pageNumber)
         {
 
             intakeRepository.DeleteIntake(selectedIntakeIds);
-            ViewBag.AlertMessage = "Intakes with any number of students will not be deleted";
 
 
             var intakes = intakeRepository.GetAllIntakes();

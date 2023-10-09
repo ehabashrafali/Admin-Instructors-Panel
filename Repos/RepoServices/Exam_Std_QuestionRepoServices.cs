@@ -32,8 +32,15 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             var esq = Context.Exam_Std_Questions.SingleOrDefault(esq => esq.ExamID == examID && esq.StudentID == studentID.ToString() && esq.QuestionID == questionID);
             Context.Exam_Std_Questions.Remove(esq);
             Context.SaveChanges();
-        }        
-        
+        }
+
+        void IExam_Std_QuestionRepository.DeleteExam_Std_Question(int examID)
+        {
+            var esq = Context.Exam_Std_Questions.Where(sq => sq.ExamID == examID);
+            Context.Exam_Std_Questions.RemoveRange(esq);
+            Context.SaveChanges();
+        }
+
         void IExam_Std_QuestionRepository.DeleteExam_Std_Question(string studentID)
         {
             var esq = Context.Exam_Std_Questions.Where(esq=> esq.StudentID == studentID.ToString() );

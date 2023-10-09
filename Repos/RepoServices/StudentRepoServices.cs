@@ -107,14 +107,16 @@ namespace Admin_Panel_ITI.Repos
             {
                 pageNumber = 1;
             }
-            return Context.Students.Include(s=>s.Admin)
-                                   .Include(s=>s.Intake)
-                                   .Include(s=>s.Track)
-                                   .Include(s=>s.AspNetUser)
-                                   .Include(s=>s.StudentCourses)
-                                   .Skip((pageNumber - 1) * pageSize)
-                                   .Take(pageSize)
-                                   .ToList();
+
+            return Context.Students.Include(s => s.Admin)
+                        .Include(s => s.Intake)
+                        .Include(s => s.Track)
+                        .Include(s => s.AspNetUser)
+                        .Include(s => s.StudentCourses)
+                        .Skip((pageNumber - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+
         }
 
 
@@ -144,21 +146,23 @@ namespace Admin_Panel_ITI.Repos
             return students;
         }        
         
-         List<Student> IStudentRepository.getStudentsbyIntakeID(int intakeID, int pageNumber, int pageSize)
-         {
-            if (pageNumber < 1)
-            {
-                pageNumber = 1;
-            }
-            return Context.Students.Include(s => s.Admin)
-                                  .Include(s => s.Intake)
-                                  .Include(s => s.Track)
-                                  .Include(s => s.AspNetUser)
-                                  .Include(s => s.StudentCourses)
-                                  .Where(s => s.IntakeID == intakeID)
-                                  .Skip((pageNumber - 1) * pageSize)
-                                  .Take(pageSize)
-                                  .ToList();
+        List<Student> IStudentRepository.getStudentsbyIntakeID(int intakeID, int pageNumber, int pageSize)
+        {
+        if (pageNumber < 1)
+        {
+            pageNumber = 1;
+        }
+
+        return Context.Students.Include(s => s.Admin)
+                                .Include(s => s.Intake)
+                                .Include(s => s.Track)
+                                .Include(s => s.AspNetUser)
+                                .Include(s => s.StudentCourses)
+                                .Where(s => s.IntakeID == intakeID)
+                                .Skip((pageNumber - 1) * pageSize)
+                                .Take(pageSize)
+                                .ToList();
+
         }
 
         List<Student> IStudentRepository.getStudentsbyIntakeID(int intakeID)

@@ -9,10 +9,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
     {
         private readonly ICourse_Day_MaterialRepository course_Day_MaterialRepository;
         private readonly IStudent_SubmissionRepository student_SubmissionRepository;
-
         public MainDBContext Context { get; set; }
-
-
         public CourseDayRepoServices(MainDBContext context, ICourse_Day_MaterialRepository course_Day_MaterialRepository, IStudent_SubmissionRepository student_SubmissionRepository)
         {
             Context = context;
@@ -82,6 +79,17 @@ namespace Admin_Panel_ITI.Repos.RepoServices
                     .Select(cdm => cdm.CourseDay)
                     .Distinct()
                     .ToList();
+        }
+
+
+        //get the count of course days in a specific course
+        public int GetCourseDaysCount(int courseID)
+        {
+            return Context.Course_Day_Materials
+                    .Where(cdm => cdm.CourseID == courseID)
+                    .Select(cdm => cdm.CourseDayID)
+                    .Distinct()
+                    .Count();
         }
 
     }

@@ -119,10 +119,6 @@ namespace Admin_Panel_ITI.Repos
                                   .ToList();
         }
 
-
-
-
-
         void IIntakeRepository.DeleteIntake(int intakeID)
         {
             var intake_students = studentRepository.getStudentsbyIntakeID(intakeID);
@@ -159,6 +155,12 @@ namespace Admin_Panel_ITI.Repos
             }
             Context.SaveChanges();
 
+        }
+
+        string IIntakeRepository.getIntakeName(int intakeID)
+        {
+            var intake = Context.Intakes.FirstOrDefault(it=>it.ID == intakeID);
+            return intake.Name;
         }
     }
 }

@@ -8,10 +8,11 @@ namespace Admin_Panel_ITI.Repos.RepoServices
     {
         private readonly IExam_Std_QuestionRepository exam_Std_QuestionRepository;
         private readonly IExam_QuestionRepository exam_QuestionRepository;
-
         public MainDBContext Context { get; set; }
 
-        public QuestionRepoServices(MainDBContext context, IExam_Std_QuestionRepository exam_Std_QuestionRepository, IExam_QuestionRepository exam_QuestionRepository)
+        public QuestionRepoServices(MainDBContext context, 
+            IExam_Std_QuestionRepository exam_Std_QuestionRepository, 
+            IExam_QuestionRepository exam_QuestionRepository)
         {
             Context = context;
             this.exam_Std_QuestionRepository = exam_Std_QuestionRepository;
@@ -24,11 +25,20 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
+        async Task<int[]> IQuestionRepository.CreateQuestion(Question[] qs)
+        {
+            Context.AddRange(qs); // Add the questions to the context
+            Context.SaveChanges(); // Save changes to the database
+            // After saving, retrieve the IDs of the added questions
+            int[] addQuestionIds = qs.Select(q => q.ID).ToArray();
+            return addQuestionIds;
+        }
+
         void IQuestionRepository.DeleteQuestion(int questionID)
         {
             var exams_related = exam_Std_QuestionRepository.GetExamsbyqid(questionID);
 
-            if(exams_related.Count() == 0)
+            if (exams_related.Count() == 0)
             {
 
                 exam_QuestionRepository.DeleteExam_Question(questionID);
@@ -44,7 +54,7 @@ namespace Admin_Panel_ITI.Repos.RepoServices
         {
             var question = Context.Questions.FirstOrDefault(x => x.ID == questionID);
             return question;
-            
+
         }
 
         List<Question> IQuestionRepository.getQuestions()
@@ -52,12 +62,13 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             return Context.Questions.ToList();
         }
 
-  
+
 
         int IQuestionRepository.getQuestionsNumber()
         {
             return Context.Questions.Count();
         }
+
 
         void IQuestionRepository.UpdateQuestion(int questionID, Question question)
         {
@@ -68,5 +79,21 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             question_updated.Answer = question.Answer;
             Context.SaveChanges();
         }
+
+
+
+
+
+        public void DeleteQuestions(List<int> QuestionsIDs)
+        {
+            foreach (int id in QuestionsIDs)
+            {
+                var question = Context.Questions.FirstOrDefault(q => q.ID == id);   
+                Context.Questions.Remove(question); 
+            }
+
+            Context.SaveChanges ();
+        }
+
     }
 }

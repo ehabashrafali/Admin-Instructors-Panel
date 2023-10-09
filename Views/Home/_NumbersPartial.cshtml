@@ -1,5 +1,4 @@
 ﻿
-
 <div id="intakeDataContainer">
     <!-- 4 Cards ( Tracks, Courses, Instructor, Student ) -->
     <div class="container text-center slide-down">
@@ -67,7 +66,7 @@
 <script>
     // JavaScript function to handle the click event on the course card
     function handleCourseCardClick() {
-        var intakeId = @Model.IntakeId; // Replace with the appropriate value for the intakeId
+        var intakeId = @Model.IntakeId; 
         var trackIds = @Html.Raw(Json.Serialize(Model.TrackIds));
 
         if (intakeId === 0) {
@@ -78,9 +77,9 @@
             var url = '/Course/CrsIndexByIntakeId?Id=' + intakeId + '&pageNumber=1';
 
             // Add trackIds as a query parameter (comma-separated string)
-            if (trackIds.length > 0) {
-                url += '&trackIds=' + trackIds.join(',');
-            }
+            // if (trackIds.length > 0) {
+            //     url += '&trackIds=' + trackIds.join(',');
+            // }
 
             // Navigate to the URL
             window.location.href = url;
@@ -91,19 +90,3 @@
     var courseLink = document.getElementById('courseLink');
     courseLink.addEventListener('click', handleCourseCardClick);
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

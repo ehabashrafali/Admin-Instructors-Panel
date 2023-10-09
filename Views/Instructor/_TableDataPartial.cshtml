@@ -30,10 +30,18 @@
                     <tr>
                         <td><input type="checkbox" name="selectedInstructorIds[]" class="course-checkbox" value="@instructorList[i].AspNetUserID"></td>
                         <td style="cursor: pointer;" onclick="editInstructor('@instructorList[i].AspNetUserID')">@instructorList[i].AspNetUser.FullName</td>
-                        <td>@instructorList[i].CurrentlyWorking</td>
+                        <td>@{
+                                if (instructorList[i].CurrentlyWorking)
+                                {
+                                    <img src="~/images/true.svg" width="24" height="24"/>
+                                } else
+                                {
+                                    <img src="~/images/false.svg" width="16" height="16"/>
+                                }
+                            }</td>
                         <td style="padding: 5px 8px">
                             <a asp-action="edit" asp-route-id="@instructorList[i].AspNetUserID">
-                                <img style='width: 20px; height: 20px;' src='assets/images/edit.png' alt='details'>
+                                <img style='width: 20px; height: 20px;' src='~/assets/images/edit.png' alt='details'>
                             </a>
                         </td>
                     </tr>
@@ -76,51 +84,27 @@
 <script>
 
 
-
+    var intakeID = @Html.Raw(Json.Serialize(ViewBag.IntakeID));
 
     // Function to handle the "Next" button click event
     $('#nextPageBtn').on('click', function (e) {
         e.preventDefault();
 
-        var nextPage = @ViewBag.PageNumber +1; // Get the previous page number
+        var nextPage = @ViewBag.PageNumber + 1; // Get the next page number
 
-        // Make an AJAX call to the UpdateTableData action with the previous page number
+        // Make an AJAX call to the UpdateTableData action
         $.ajax({
             url: '@Url.Action("UpdateTableData", "Instructor")', // Use Url.Action to generate the correct URL
             type: 'GET',
-            data: { pageNumber: nextPage }, // Pass the selected intake ID and previous page number as parameters
-            success: function (result) {
-                // Replace the content of the partialTable div with the updated HTML
-                $('#partialTable').html(result);
-
-
-                // Disable the "Prev" button if needed (you may need to add logic here)
-                // Example: if (prevPage <= 0) { $('#prevPageBtn').addClass('disabled'); }
+            data: {
+                pageNumber: nextPage,
+                intakeId: intakeID // Send the intakeID as a parameter
             },
-            error: function () {
-                alert('Error occurred while fetching data.');
-            }
-        });
-    });
-
-
-    // Function to handle the "Prev" button click event
-    $('#prevPageBtn').on('click', function (e) {
-        e.preventDefault();
-
-        var prevPage = @ViewBag.PageNumber -1; // Get the previous page number
-
-        // Make an AJAX call to the UpdateTableData action with the previous page number
-        $.ajax({
-            url: '@Url.Action("UpdateTableData", "Instructor")', // Use Url.Action to generate the correct URL
-            type: 'GET',
-            data: { pageNumber: prevPage }, // Pass the selected intake ID and previous page number as parameters
             success: function (result) {
                 // Replace the content of the partialTable div with the updated HTML
                 $('#partialTable').html(result);
 
-
-                //Disable the "Prev" button if needed (you may need to add logic here)
+                // Disable the "Prev" button if needed
                 if (nextPage <= 0) {
                     $('#prevPageBtn').addClass('disabled');
                 } else {
@@ -133,8 +117,39 @@
         });
     });
 
+    // Function to handle the "Prev" button click event
+    $('#prevPageBtn').on('click', function (e) {
+        e.preventDefault();
 
-    $('#customdeletebtn_kordy').off('click').on('click', function () {
+        var prevPage = @ViewBag.PageNumber - 1; // Get the previous page number
+
+        // Make an AJAX call to the UpdateTableData action
+        $.ajax({
+            url: '@Url.Action("UpdateTableData", "Instructor")', // Use Url.Action to generate the correct URL
+            type: 'GET',
+            data: {
+                pageNumber: prevPage,
+                intakeId: intakeID // Send the intakeID as a parameter
+            },
+            success: function (result) {
+                // Replace the content of the partialTable div with the updated HTML
+                $('#partialTable').html(result);
+
+                // Disable the "Prev" button if needed
+                if (prevPage <= 0) {
+                    $('#prevPageBtn').addClass('disabled');
+                } else {
+                    $('#prevPageBtn').removeClass('disabled');
+                }
+            },
+            error: function () {
+                alert('Error occurred while fetching data.');
+            }
+        });
+    });
+
+
+    $('.customdeletebtn_kordy').off('click').on('click', function () {
         // Get the selected checkboxes
         var selectedInstructorIds = $('input[name="selectedInstructorIds[]"]:checked').map(function () {
             return $(this).val();
@@ -157,10 +172,10 @@
             traditional: true, // Use traditional serialization for arrays
             data: {
                 selectedInstructorIds: selectedInstructorIds,
-                pageNumber: pageNumber
+                pageNumber: pageNumber,
+                intakeId: intakeID
             },
             success: function (result) {
-                // Handle the success response as needed
                 // For example, you can update the table with the new data
                 $('#partialTable').html(result);
             },
