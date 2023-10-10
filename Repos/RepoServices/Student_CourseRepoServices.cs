@@ -19,7 +19,7 @@ namespace Admin_Panel_ITI.Repos
             Context.SaveChanges();
         }        
         
-        void IStudent_CourseRepository.CreateStudent_Course(List<int> courseids, int studentid)
+        void IStudent_CourseRepository.CreateStudent_Course(List<int> courseids, string studentid)
         {
             foreach (var id in courseids)
             {

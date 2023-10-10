@@ -60,5 +60,19 @@ namespace Admin_Panel_ITI.Repos.RepoServices
             Context.SaveChanges();
         }
 
+
+        List<int> IIntake_Track_CourseRepository.getCoursesForTrack(int? trackID, int? intakeID)
+        {
+            List<int> ids = new List<int>();
+            var records = Context.Intake_Track_Courses.Where(it=>it.TrackID == trackID && it.IntakeID == intakeID)
+                                                      .ToList();
+
+            foreach (var item in records)
+            {
+                ids.Add(item.CourseID);
+            }
+            return ids;
+                                                      
+        }
     }
 }

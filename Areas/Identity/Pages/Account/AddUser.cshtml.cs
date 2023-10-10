@@ -26,6 +26,8 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
         private readonly IIntakeRepository intakeRepository;
         private readonly IIntake_InstructorRepository intakeInstructorRepository;
         private readonly ITrackRepository trackRepository;
+        private readonly IIntake_Track_CourseRepository intake_Track_CourseRepository;
+        private readonly IStudent_CourseRepository student_CourseRepository;
 
         public AddUserModel(
             UserManager<AppUser> userManager,
@@ -37,6 +39,8 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
             IInstructorRepository _instructorRepository, 
             IIntakeRepository _intakeRepository,
             IIntake_InstructorRepository _intakeInstructorRepository,
+            IIntake_Track_CourseRepository _intake_Track_CourseRepository,
+            IStudent_CourseRepository _student_CourseRepository,
             ITrackRepository _trackRepository)
         {
             _userManager = userManager;
@@ -50,6 +54,8 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
             intakeRepository = _intakeRepository;
             intakeInstructorRepository = _intakeInstructorRepository;
             trackRepository = _trackRepository;
+            intake_Track_CourseRepository = _intake_Track_CourseRepository;
+            student_CourseRepository = _student_CourseRepository;
         }
 
 
@@ -198,6 +204,10 @@ namespace Admin_Panel_ITI.Areas.Identity.Pages.Account
                             AdminID = _userManager.GetUserId(User)
                         };
                         studentRepository.CreateStudent(std);
+
+                        var courseIDs = intake_Track_CourseRepository.getCoursesForTrack(Input.TrackID,Input.IntakeID);
+
+                        student_CourseRepository.CreateStudent_Course(courseIDs, newStudentID);
                     }
 
 

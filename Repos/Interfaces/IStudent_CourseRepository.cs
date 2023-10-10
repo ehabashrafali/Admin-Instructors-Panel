@@ -13,6 +13,6 @@ namespace Admin_Panel_ITI.Repos
         public void DeleteStudent_CourseByCourseID(int courseID);
         public void DeleteStudent_Course(string studentID);
         public void CreateStudent_Course(Student_Course student_course);
-        public void CreateStudent_Course(List<int> courseids, int studentid);
+        public void CreateStudent_Course(List<int> courseids, string studentid);
     }
 }
